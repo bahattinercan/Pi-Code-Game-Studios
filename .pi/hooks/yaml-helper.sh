@@ -1465,7 +1465,7 @@ resolve_code_root() {
   legacy="$_YH_ROOT/.pi/docs/technical-preferences.md"
   if [ -z "$ename" ] && [ -f "$legacy" ]; then
     ename=$(grep -iE '^[[:space:]]*[-*]?[[:space:]]*\*{0,2}Engine\*{0,2}[[:space:]]*:' "$legacy" 2>/dev/null \
-            | head -1 | sed 's/.*://' | tr -d '\r' \
+            | head -1 | sed 's/^[^:]*:[[:space:]]*//' | tr -d '\r' \
             | sed 's/^[[:space:]]*//; s/[[:space:]].*$//; s/\*//g')
     case "$ename" in
       *"[TO BE CONFIGURED]"*|"["*) ename="" ;;

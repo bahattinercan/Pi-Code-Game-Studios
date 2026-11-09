@@ -52,7 +52,7 @@ Extract the milestone name (`current` or a specific name).
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -207,20 +207,20 @@ the count moved.
 - `lean` → skip (not a PHASE-GATE). Note: "PR-MILESTONE skipped — Lean mode." Present the Go/No-Go section without a producer verdict.
 - `full` → spawn as normal.
 
-Before generating the Go/No-Go recommendation, spawn `producer` via `Agent` using gate **PR-MILESTONE** (`.pi/docs/director-gates/pr-milestone.md`).
+Before generating the Go/No-Go recommendation, spawn `producer` via `agent()` using gate **PR-MILESTONE** (`.pi/docs/director-gates/pr-milestone.md`).
 
 Pass: milestone name and target date, current completion percentage, blocked story count, velocity data from sprint reports (if available), list of cut candidates.
 
 Present the producer's assessment inline within the Go/No-Go section. The producer's verdict (ON TRACK / AT RISK / OFF TRACK) informs the overall recommendation.
 
-If OFF TRACK, use `AskUserQuestion` before generating the recommendation:
+If OFF TRACK, use `ask_user_question` before generating the recommendation:
 - Prompt: "Producer verdict: OFF TRACK. The milestone is in jeopardy. This review will recommend NO-GO. How do you want to proceed?"
 - Options:
   - `[A] Accept NO-GO — generate the full review with that recommendation`
   - `[B] Override to CONDITIONAL GO — I'll document the accepted risks myself`
   - `[C] Stop — I want to address blockers before generating the review`
 
-If AT RISK, use `AskUserQuestion`:
+If AT RISK, use `ask_user_question`:
 - Prompt: "Producer verdict: AT RISK. Milestone may slip. How should the Go/No-Go section be framed?"
 - Options:
   - `[A] CONDITIONAL GO — include producer's conditions in the review`

@@ -46,7 +46,7 @@ For each pattern (existing or new), document:
 **Reference**: [Screenshot path or ASCII example, if available]
 ```
 
-Work through patterns in groups. Use `AskUserQuestion`:
+Work through patterns in groups. Use `ask_user_question`:
 - "How do you want to work through these patterns?"
 - Options: "Draft the first batch from existing specs (faster)", "Define them one by one (more control)", "Start with the most-used pattern first"
 

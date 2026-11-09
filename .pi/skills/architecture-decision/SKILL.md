@@ -20,7 +20,7 @@ When this skill is invoked:
 
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -88,7 +88,7 @@ Scan `docs/architecture/` for existing ADRs to find the next number.
 
 ## 6. Closing Next Steps
 
-After the ADR is written (and registry optionally updated), close with `AskUserQuestion`.
+After the ADR is written (and registry optionally updated), close with `ask_user_question`.
 
 Before generating the widget:
 1. Read the `## Required ADRs` section of `docs/architecture/architecture.md` (by section) and list `docs/architecture/adr-*.md`: a required ADR with no file is still unwritten. Without `architecture.md`, look for ADRs flagged in technical-preferences.md or systems-index.md as prerequisites

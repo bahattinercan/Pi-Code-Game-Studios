@@ -13,7 +13,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation
 
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -146,7 +146,7 @@ Identify the system category (engine, gameplay, AI, networking, UI, tools) and e
 
 ## Phase 7: Specialist Reviews (Parallel)
 
-Spawn all applicable specialists simultaneously via `Agent` — do not wait for one before starting the next.
+Put every applicable specialist in one `parallel()` batch via the workflow tool — do not await one before starting the next.
 
 > **Verify every specialist finding before reporting it. Do not pass findings
 > through unchecked.** For each finding, record in the report:
@@ -178,7 +178,7 @@ Also spawn the **Primary Specialist** for any file touching engine architecture 
 
 ### QA Testability Review
 
-For Logic and Integration stories, also spawn `qa-tester` via `Agent` in parallel with the engine specialists. Pass:
+For Logic and Integration stories, also spawn `qa-tester` via `agent()` in parallel with the engine specialists. Pass:
 - The implementation files being reviewed
 - The story's `## QA Test Cases` section (the pre-written test specs from qa-lead)
 - The story's `## Acceptance Criteria`
@@ -255,7 +255,7 @@ This skill is read-only — no files are written.
 
 ## Phase 9: Next Steps
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "Code review complete — verdict: [NOT ASSESSED / APPROVED / APPROVED WITH SUGGESTIONS / CHANGES REQUIRED]. How would you like to proceed?" (the Phase 8 verdict, word for word)
 - Options (adjust based on verdict):
   - If APPROVED:

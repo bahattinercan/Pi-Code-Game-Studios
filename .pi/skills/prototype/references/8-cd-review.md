@@ -8,7 +8,7 @@
 **Review mode check:**
 - `solo` → skip. Note: "CD-PLAYTEST skipped — Solo mode."
 - `lean` → skip. Note: "CD-PLAYTEST skipped — Lean mode."
-- `full` → spawn `creative-director` via `Agent` using gate **CD-PLAYTEST** if
+- `full` → spawn `creative-director` via `agent()` using gate **CD-PLAYTEST** if
   `design/gdd/game-concept.md` exists with game pillars defined, or
   `design/game-brief.md` exists (the `rigor: minimal` brief has no pillars — its
   pitch and "what they feel" line stand in). If neither is available, note:
@@ -26,10 +26,10 @@ ASSESSED when it could not judge. Apply it to the recommendation:
 
 - **APPROVE** → the recommendation stands.
 - **CONCERNS** → show the concerns alongside the recommendation, then use
-  `AskUserQuestion`: `Revise the recommendation` / `Accept with noted concerns` /
+  `ask_user_question`: `Revise the recommendation` / `Accept with noted concerns` /
   `Discuss further`. The user decides; the director does not.
 - **REJECT** (the core fantasy is not present) → a PROCEED recommendation cannot
-  stand. Use `AskUserQuestion` to ask the user to choose `PIVOT` or `KILL`, and run
+  stand. Use `ask_user_question` to ask the user to choose `PIVOT` or `KILL`, and run
   Phase 9 for that choice. A PIVOT or KILL recommendation stands.
 - **NOT ASSESSED** (the director lacked an input — `.pi/docs/director-gates.md`)
   → not an approval. Name what was missing; supply it and re-run the gate, or

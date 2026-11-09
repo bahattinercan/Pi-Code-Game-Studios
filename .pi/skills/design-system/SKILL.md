@@ -77,11 +77,11 @@ If two rows fit, spawn the union of their Primary agents and say why.
 | Visual effects, particles, shaders | `game-designer` | `art-director` (VFX visual direction), `technical-artist` (performance budget, shader complexity), `systems-designer` (trigger/state integration) |
 | Character systems (stats, archetypes) | `game-designer` | `art-director` (character visual archetype), `narrative-director` (character arc alignment), `systems-designer` (stat formulas) |
 
-**When delegating via the `Agent` tool**:
+**When delegating via the workflow tool (`agent(prompt, { agentType })`)**:
 - Provide: system name, game concept summary, dependency GDD excerpts, the specific
   section being worked on, and what question needs expert input
 - The agent returns analysis/proposals to the main session
-- The main session presents the agent's output to the user via `AskUserQuestion`
+- The main session presents the agent's output to the user via `ask_user_question`
 - The user decides; the main session writes to file
 - Agents do NOT write to files directly — the main session owns all file writes
 
@@ -114,7 +114,7 @@ applies universally.
 This skill follows the collaborative design principle at every step:
 
 1. **Question -> Options -> Decision -> Draft -> Approval** for every section
-2. **AskUserQuestion** at every decision point (Explain -> Capture pattern):
+2. **ask_user_question** at every decision point (Explain -> Capture pattern):
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): Design questions, approach options, draft approval

@@ -10,7 +10,7 @@
 
 ## Engine & Language
 
-- **Engine**: [TO BE CONFIGURED — run /skill:setup-engine]
+- **Engine**: [TO BE CONFIGURED — run the setup-engine skill]
 - **Language**: [TO BE CONFIGURED]
 - **Rendering**: [TO BE CONFIGURED]
 - **Physics**: [TO BE CONFIGURED]
@@ -70,7 +70,7 @@
 <!-- Read by /skill:code-review, /skill:architecture-decision, /skill:architecture-review, and team skills -->
 <!-- to know which specialist to spawn for engine-specific validation. -->
 
-- **Primary**: [TO BE CONFIGURED — run /skill:setup-engine]
+- **Primary**: [TO BE CONFIGURED — run the setup-engine skill]
 - **Language/Code Specialist**: [TO BE CONFIGURED]
 - **Shader Specialist**: [TO BE CONFIGURED]
 - **UI Specialist**: [TO BE CONFIGURED]

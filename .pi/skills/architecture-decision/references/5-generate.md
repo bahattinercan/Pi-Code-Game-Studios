@@ -150,7 +150,7 @@ user, with the four values as options. Never take it from an epic that
 references the ADR, and never reuse a `Domain` value (the template's note under
 Engine Compatibility says why).
 
-5.5. **Engine Specialist Validation** — Before saving, spawn the **primary engine specialist** via `Agent` to validate the drafted ADR:
+5.5. **Engine Specialist Validation** — Before saving, spawn the **primary engine specialist** via `agent()` to validate the drafted ADR:
    - Resolve the primary specialist: `<engine>-specialist` derived from `engine.name` in `project.yaml` (Godot→`godot-specialist`, Unity→`unity-specialist`, Unreal→`unreal-specialist`); if `engine.name` is absent or empty, read the Primary line of the `## Engine Specialists` section in `.pi/docs/technical-preferences.md`
    - If no engine is configured (neither source yields an engine), skip this step **Record ``Engine validation: NOT ASSESSED — no engine configured (`engine.name` unset in `project.yaml`)`` in this run's output.** A skipped check that says nothing is indistinguishable from a check that passed; the reader cannot tell engine guidance was never sought.
    - Spawn `subagent_type: [primary specialist]` with: the ADR's Engine Compatibility section, Decision section, Key Interfaces, and the engine reference docs path. Ask them to:
@@ -165,7 +165,7 @@ Engine Compatibility says why).
 - `lean` → skip (not a PHASE-GATE). Note: "TD-ADR skipped — Lean mode." Proceed to Step 5.7 (GDD sync check).
 - `full` → spawn as normal.
 
-5.6. **Technical Director Strategic Review** — After the engine specialist validation, spawn `technical-director` via `Agent` using gate **TD-ADR** (`.pi/docs/director-gates/td-adr.md`):
+5.6. **Technical Director Strategic Review** — After the engine specialist validation, spawn `technical-director` via `agent()` using gate **TD-ADR** (`.pi/docs/director-gates/td-adr.md`):
    - Pass: the ADR file path (or draft content), engine version, domain, any existing ADRs in the same domain
    - The TD validates architectural coherence (is this decision consistent with the whole system?) — distinct from the engine specialist's API-level check
    - On CONCERNS: show them to the user verbatim and ask with the standard options from `director-gates.md` — `Revise flagged items` / `Accept and proceed` / `Discuss further`. Revise the flagged Decision or Alternatives sections only on `Revise flagged items`.
@@ -203,7 +203,7 @@ branch and render like a clean result.
 
 Only the warning block itself is conditional; the check always reports.
 
-5. **Write approval** — Use `AskUserQuestion`:
+5. **Write approval** — Use `ask_user_question`:
 
 If GDD sync issues were found:
 - "ADR draft is complete. How would you like to proceed?"
@@ -246,7 +246,7 @@ Registry candidates from this ADR:
 
 **BLOCKING — do not write to `docs/registry/architecture.yaml` without explicit user approval.**
 
-Ask using `AskUserQuestion`:
+Ask using `ask_user_question`:
 - "May I update `docs/registry/architecture.yaml` with these [N] new stances?"
   - Options: "Yes — update the registry", "Not yet — I want to review the candidates", "Skip registry update"
 

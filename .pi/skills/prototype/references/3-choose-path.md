@@ -135,7 +135,7 @@ the player feels something? If it takes more than 3-4 exchanges, the opening is 
 
 ---
 
-Assess which path best fits the hypothesis, then use `AskUserQuestion` with your
+Assess which path best fits the hypothesis, then use `ask_user_question` with your
 recommendation pre-stated:
 
 - **Prompt**: "Which prototype path would you like to use? (Based on your concept, I'd recommend [path] — [one sentence reason].)"

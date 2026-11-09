@@ -21,7 +21,7 @@ defaults in `.pi/docs/config-resolution.md`.
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -100,7 +100,7 @@ approved section then replaces its own `[To be designed]` line with `Edit`;
 keep the headings as the template has them.
 
 **A section's approval names its write.** Every section is approved through an
-`AskUserQuestion` whose approving option is `[A] Lock this in and write it to
+`ask_user_question` whose approving option is `[A] Lock this in and write it to
 design/art/art-bible.md` (Section 1's full option list is below). Choosing it is
 the approval to write that section; no section is written without it, fresh or
 retrofit.
@@ -113,7 +113,7 @@ Extract performance budgets and the engine for asset standard constraints: read 
 
 Present the session context and ask two questions before authoring anything:
 
-Use `AskUserQuestion` with two tabs:
+Use `ask_user_question` with two tabs:
 - Tab **"Scope"** — "Which sections need to be authored today?"
   Options: `Full bible — all 9 sections` / `Visual identity core (sections 1–4 only)` / `Asset standards only (section 8)` / `Resume — fill in missing sections`
 
@@ -172,11 +172,11 @@ If a visual anchor exists from game-concept.md: present it and ask:
 - "Revise it before expanding?"
 - "Start fresh with new options?"
 
-**Agent delegation (MANDATORY)**: Spawn `art-director` via `Agent`:
+**Agent delegation (MANDATORY)**: Delegate to `art-director` with the workflow tool: `agent("<the brief below>", { agentType: "art-director" })`:
 - Provide: game concept (elevator pitch, core fantasy), full pillar set, platform target, any reference games/art from Phase 1 framing, the visual anchor if it exists
 - Ask: "Draft a Visual Identity Statement for this game. Provide: (1) a one-line visual rule that could resolve any visual decision ambiguity, (2) 2–3 supporting visual principles, each with a one-sentence design test ('when X is ambiguous, this principle says choose Y'). Anchor all principles directly in the stated pillars — each principle must serve a specific pillar. (From a one-page brief, which has no pillars, anchor them in its pitch and "what they feel" line.)"
 
-Present the art-director's draft to the user. Use `AskUserQuestion`:
+Present the art-director's draft to the user. Use `ask_user_question`:
 - Options: `[A] Lock this in and write it to design/art/art-bible.md` / `[B] Revise the one-liner` / `[C] Revise a supporting principle` / `[D] Describe my own direction`
 
 Write the approved section to file immediately.
@@ -192,7 +192,7 @@ For each major game state (e.g., exploration, combat, victory, defeat, menus —
 - Energy level (frenetic / measured / contemplative / etc.)
 
 **Agent delegation for Sections 2–4 — one call, issued here.** Spawn
-`art-director` via `Agent` with the locked Visual Identity Statement and pillar set,
+`art-director` via `agent()` with the locked Visual Identity Statement and pillar set,
 and ask for all three sections in a single brief:
 
 1. **Mood & atmosphere** — "Define mood and atmosphere targets for each major game state in this game. Be specific — 'dark and foreboding' is not enough. Name the exact emotional target, the lighting character (warm/cool, high/low contrast, time of day direction), and at least one visual element that carries the mood. Each game state must feel visually distinct from the others."
@@ -273,7 +273,7 @@ Write the approved section to file.
 - **`art-director`**: Visual style for UI — diegetic vs. screen-space HUD, typography direction (font personality, weight, size hierarchy), iconography style (flat/outlined/illustrated/photorealistic), animation feel for UI elements
 - **`ux-designer`**: UX alignment check — does the visual direction support the interaction patterns this game requires? Flag any conflicts between art direction and readability/accessibility needs.
 
-Collect both. If they conflict (e.g., art-director wants elaborate diegetic UI but ux-designer flags it would reduce combat readability), surface the conflict explicitly with both positions. Do NOT silently resolve — use `AskUserQuestion` to let the user decide.
+Collect both. If they conflict (e.g., art-director wants elaborate diegetic UI but ux-designer flags it would reduce combat readability), surface the conflict explicitly with both positions. Do NOT silently resolve — use `ask_user_question` to let the user decide.
 
 Write the approved section to file.
 
@@ -283,7 +283,7 @@ Write the approved section to file.
 - **`art-director`**: File format preferences, naming convention direction, texture resolution tiers, LOD level expectations, export settings philosophy
 - **`technical-artist`**: Engine-specific hard constraints — poly count budgets per asset category, texture memory limits, material slot counts, importer constraints, anything from the performance budgets (`performance.*` in `project.yaml`, falling back to `.pi/docs/technical-preferences.md`)
 
-If any art preference conflicts with a technical constraint (e.g., art-director wants 4K textures but performance budget requires 2K for mobile), surface the conflict explicitly with both positions — the ideal and the constrained standard, and the tradeoff. Do NOT silently resolve it — use `AskUserQuestion` to let the user pick (options: the ideal standard, the constrained standard, or document both and let per-asset judgment apply). Ambiguity in asset standards is where production costs are born.
+If any art preference conflicts with a technical constraint (e.g., art-director wants 4K textures but performance budget requires 2K for mobile), surface the conflict explicitly with both positions — the ideal and the constrained standard, and the tradeoff. Do NOT silently resolve it — use `ask_user_question` to let the user pick (options: the ideal standard, the constrained standard, or document both and let per-asset judgment apply). Ambiguity in asset standards is where production costs are born.
 
 Write the approved section to file.
 
@@ -293,7 +293,7 @@ Write the approved section to file.
 
 **Goal**: A curated reference set that is specific about what to take and what to avoid from each source.
 
-**Agent delegation**: Spawn `art-director` via `Agent` with the completed sections 1–8. Ask: "Compile a reference direction for this game. Provide 3–5 reference sources (games, films, art styles, or specific artists). For each: name it, specify exactly what visual element to draw from it (not 'the general aesthetic' — a specific technique, color choice, or compositional rule), and specify what to explicitly avoid or diverge from (to prevent the 'trying to copy X' reading). References should be additive — no two references should be pointing in exactly the same direction."
+**Agent delegation**: Delegate to `art-director` with the workflow tool: `agent("<the brief below>", { agentType: "art-director" })` with the completed sections 1–8. Ask: "Compile a reference direction for this game. Provide 3–5 reference sources (games, films, art styles, or specific artists). For each: name it, specify exactly what visual element to draw from it (not 'the general aesthetic' — a specific technique, color choice, or compositional rule), and specify what to explicitly avoid or diverge from (to prevent the 'trying to copy X' reading). References should be additive — no two references should be pointing in exactly the same direction."
 
 Write the approved section to file.
 
@@ -314,7 +314,7 @@ On either skip, ask "May I record the skipped sign-off in
 `> **Art Director Sign-Off (AD-ART-BIBLE)**: SKIPPED [date] — [solo|lean] mode`
 — the gate accepts either form as a recorded sign-off.
 
-After all sections are complete (or the scoped set from Phase 1 is complete), spawn `art-director` via `Agent` using gate **AD-ART-BIBLE** (`.pi/docs/director-gates/ad-art-bible.md`).
+After all sections are complete (or the scoped set from Phase 1 is complete), spawn `art-director` via `agent()` using gate **AD-ART-BIBLE** (`.pi/docs/director-gates/ad-art-bible.md`).
 
 Pass: the art bible path (`design/art/art-bible.md`); the game pillars and core
 fantasy; the platform and performance constraints (`platform.*` and
@@ -349,7 +349,7 @@ Before presenting next steps, check project state:
 - Does `design/gdd/gdd-cross-review-*.md` exist? → review-all-gdds is done
 - Do GDDs exist (check above)? → include /skill:consistency-check option
 
-Use `AskUserQuestion` for next steps. Only include options that are genuinely next based on the state check above:
+Use `ask_user_question` for next steps. Only include options that are genuinely next based on the state check above:
 
 At `workflow: minimal`, the pool is `/skill:create-stories` (no stories yet) or
 `/skill:dev-story [next story]`, plus Stop here — the GDD/architecture pool below is

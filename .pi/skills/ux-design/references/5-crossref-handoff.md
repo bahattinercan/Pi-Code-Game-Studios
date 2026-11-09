@@ -13,7 +13,7 @@ this screen have a corresponding element in this spec? Present any gaps.
 **2. Pattern library alignment**: Are all interaction patterns used in this spec
 referenced by name? If a new pattern was invented during this spec session, flag
 it for addition to the pattern library:
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "This spec uses [pattern name], which isn't in the pattern library yet. What should we do?"
 - Options: "Add it to the pattern library now", "Flag it as a gap and continue", "Skip — this pattern is one-off"
 
@@ -58,7 +58,7 @@ Before presenting options, state clearly:
 > requires all key screen specs to have passed `/skill:ux-review` at `workflow: full`
 > (recommended at `standard`)."
 
-Then use `AskUserQuestion`:
+Then use `ask_user_question`:
 - "Run `/skill:ux-review [filename]` now, or do something else first?"
   - Options:
     - "Run `/skill:ux-review` now — validate this spec"

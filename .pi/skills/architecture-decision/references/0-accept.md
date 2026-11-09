@@ -43,7 +43,7 @@ never leaves.
    is enforced rather than reported.
 4. **Confirm with the user, always.** Per `CONTRACT.md`, acceptance authority is
    **the user, or `technical-director` on the user's explicit confirmation — no
-   other agent, and never this skill on its own.** Use `AskUserQuestion`:
+   other agent, and never this skill on its own.** Use `ask_user_question`:
    - Prompt: "Accept ADR-NNNN — [title]? This is what unblocks stories and epics
      that depend on it."
    - Options: `[A] Yes — accept it` / `[B] Not yet — leave it Proposed`

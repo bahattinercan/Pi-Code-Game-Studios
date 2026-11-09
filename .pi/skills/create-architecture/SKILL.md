@@ -23,7 +23,7 @@ This skill creates the whole-system blueprint that gives ADRs their context.
 
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -98,7 +98,7 @@ This skill follows the collaborative design principle at every phase:
 3. **Ask before deciding** — present options for each architectural choice
 4. **Draft before approval** — show the content inline before asking to write it.
    Never ask approval for a section the user has not yet seen.
-5. **Use `AskUserQuestion` for write approvals** — plain text "May I?" is not
+5. **Use `ask_user_question` for write approvals** — plain text "May I?" is not
    sufficient. Use the structured tool with labeled options [A]/[B]/[C] (write now /
    show full draft first / not yet). For multi-file changesets, list every file
    and what changes, then ask once grouped — not separate plain-text asks per file.

@@ -5,7 +5,7 @@
 
 ## Phase 1: Define the Question
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -16,7 +16,7 @@ at the bottom of this skill.
 exists for this concept (or an earlier version of it), read it and start from its
 revised hypothesis instead of forming one from scratch — say which note you used.
 
-Then, unless `--spike` sent you to Spike Mode, use `AskUserQuestion` to confirm
+Then, unless `--spike` sent you to Spike Mode, use `ask_user_question` to confirm
 intent before proceeding — with or without a carry-forward note:
 
 - **Prompt**: "How would you like to use this prototype session?"

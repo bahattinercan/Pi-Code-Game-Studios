@@ -95,7 +95,7 @@ This is the largest and most interactive section. Work through it in sub-section
   area, action bar, sidebar, etc.).
 - Offer 2-3 zone arrangements with rationale for each. Reference platform and
   input context gathered from game concept.
-- Use `AskUserQuestion` to capture the choice:
+- Use `ask_user_question` to capture the choice:
   - "Which zone arrangement fits best?"
   - Options: [the 2-3 named arrangements you just presented] + "None — build a custom arrangement"
 
@@ -109,7 +109,7 @@ This is the largest and most interactive section. Work through it in sub-section
 
 **Sub-section 4 — ASCII Wireframe**:
 - Offer to generate an ASCII wireframe based on the zone layout and component list.
-- Use `AskUserQuestion`: "Want an ASCII wireframe as part of this spec?"
+- Use `ask_user_question`: "Want an ASCII wireframe as part of this spec?"
   - Options: "Yes, include one", "No, I'll attach a separate file"
 - If yes, produce the wireframe in conversation first. Ask for feedback before
   writing it to file.
@@ -281,6 +281,6 @@ Write at least 5 specific, testable criteria that a QA tester can verify without
 - 1 accessibility criterion (per committed tier)
 - 1 criterion specific to this screen's core purpose
 
-Use `AskUserQuestion` to confirm:
+Use `ask_user_question` to confirm:
 - "Do these acceptance criteria cover what would make this screen 'done' for your QA process?"
 - Options: "Yes — these are solid", "Add one more criterion", "Remove or rephrase one"

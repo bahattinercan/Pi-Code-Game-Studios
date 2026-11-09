@@ -13,7 +13,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation,workflow
 
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -88,12 +88,12 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 Ask the user for the description and affected files (plain text prompts).
 
 **Run as a subagent?** `lead-programmer` preloads this skill, and a subagent has
-no `AskUserQuestion`. Return the three questions below (category, effort,
+no `ask_user_question`. Return the three questions below (category, effort,
 impact) in one reply, each as a short list of its options, and stop: whoever
 called you asks the user. Nothing goes into the register until the answers
 come back.
 
-Then use `AskUserQuestion` to collect the **category**:
+Then use `ask_user_question` to collect the **category**:
 - Prompt: "What category does this tech debt belong to?"
 - Options:
   - `[A] Architecture Debt — wrong abstractions, missing patterns, coupling issues`
@@ -103,7 +103,7 @@ Then use `AskUserQuestion` to collect the **category**:
   - `[E] Dependency Debt — outdated packages, deprecated APIs, version conflicts`
   - `[F] Performance Debt — known slow paths, memory issues, unoptimized queries`
 
-Then use `AskUserQuestion` to collect the **estimated fix effort**:
+Then use `ask_user_question` to collect the **estimated fix effort**:
 - Prompt: "What is the estimated effort to fix this item?"
 - Options:
   - `[A] S — Small (under 1 day)`
@@ -111,7 +111,7 @@ Then use `AskUserQuestion` to collect the **estimated fix effort**:
   - `[C] L — Large (3–7 days)`
   - `[D] XL — Extra Large (over 1 week)`
 
-Then use `AskUserQuestion` to collect the **impact if left unfixed** — the
+Then use `ask_user_question` to collect the **impact if left unfixed** — the
 register's Impact column, which `/skill:tech-debt prioritize` scores:
 - Prompt: "What does this cost if it is never fixed?"
 - Options: `[A] Low` / `[B] Med` / `[C] High` / `[D] Critical`

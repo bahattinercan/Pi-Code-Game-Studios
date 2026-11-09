@@ -5,7 +5,7 @@
 
 ## Phase 6: Write Report and Flag GDDs
 
-Use `AskUserQuestion` for write permission:
+Use `ask_user_question` for write permission:
 - Prompt: "May I write this review to `design/gdd/gdd-cross-review-[date].md`?"
 - Options: `[A] Yes — write the report` / `[B] No — skip`
 
@@ -19,7 +19,7 @@ Use `AskUserQuestion` for write permission:
 > quiet-escape failure the three fixes documented at the top of that script
 > exist to prevent.
 
-If any GDDs are flagged for revision, use a second `AskUserQuestion`:
+If any GDDs are flagged for revision, use a second `ask_user_question`:
 - Prompt: "Should I update the systems index to mark these GDDs as needing revision? ([list of flagged GDDs])"
 - Options: `[A] Yes — update systems index` / `[B] No — leave as-is`
 - If yes: update each flagged GDD's Status field in systems-index.md to "Needs Revision".

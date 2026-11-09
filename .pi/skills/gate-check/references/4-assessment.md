@@ -64,7 +64,7 @@ UX spec set for them to assess.
 > the strictest verdict returned by *whoever ran* still wins. Do not infer PASS
 > from a perspective that was never consulted.
 
-Before generating the final verdict, spawn the directors for the resolved tier as **parallel subagents** via `Agent` using the parallel gate protocol from `.pi/docs/director-gates.md`. Issue all the `Agent` calls simultaneously — do not wait for one before starting the next.
+Before generating the final verdict, spawn the directors for the resolved tier as **parallel subagents** via `agent()` using the parallel gate protocol from `.pi/docs/director-gates.md`. Issue all the `agent()` calls simultaneously — do not wait for one before starting the next.
 
 **Gate IDs:**
 

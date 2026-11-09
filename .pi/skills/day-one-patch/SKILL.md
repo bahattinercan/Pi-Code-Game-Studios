@@ -77,7 +77,7 @@ For each open bug, evaluate:
 
 ### Step 2b — Present patch scope to user
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "Based on open bugs and cert feedback, here is the proposed day-one patch scope. Does this look right?"
 - Show: table of included bugs (ID, severity, description, estimated effort)
 - Show: table of deferred bugs (ID, severity, reason deferred)
@@ -90,7 +90,7 @@ If [C]: output "No day-one patch required. Proceed to `/skill:launch-checklist`.
 Sum estimated effort. If total exceeds 1 day of work:
 > "⚠️ Patch scope is [N hours] — this exceeds a safe day-one window. Consider deferring lower-priority items to patch 1.1. A bloated day-one patch introduces more risk than it removes."
 
-Use `AskUserQuestion` to confirm proceeding or reduce scope.
+Use `ask_user_question` to confirm proceeding or reduce scope.
 
 ---
 
@@ -98,7 +98,7 @@ Use `AskUserQuestion` to confirm proceeding or reduce scope.
 
 Before any code is written, define the rollback procedure. This is non-negotiable.
 
-Spawn `release-manager` via `Agent`. Ask them to produce a rollback plan covering:
+Delegate to `release-manager` with the workflow tool: `agent("<the brief below>", { agentType: "release-manager" })`. Ask them to produce a rollback plan covering:
 - How to revert to the gold master build on each target platform
 - Platform-specific rollback constraints (some platforms cannot roll back cert builds)
 - Who is responsible for triggering the rollback
@@ -114,7 +114,7 @@ Do not proceed to Phase 4 until the rollback plan is written.
 
 For each code fix in the approved scope, spawn a focused implementation loop:
 
-1. Spawn `lead-programmer` via `Agent` with:
+1. Delegate to `lead-programmer` with the workflow tool: `agent("<the brief below>", { agentType: "lead-programmer" })` with:
    - The bug report (exact reproduction steps and root cause if known)
    - The constraint: minimum viable fix only, no cleanup
    - The affected files (from bug report Technical Context section)
@@ -125,13 +125,13 @@ For each code fix in the approved scope, spawn a focused implementation loop:
 2. Ask once, for the whole set: "May I apply these fixes? [BUG-ID → files, one
    line each]". No code changes before this approval.
 
-3. On yes, hand each approved fix back to `lead-programmer` (a new `Agent` call
+3. On yes, hand each approved fix back to `lead-programmer` (a new `agent()` call
    carrying its plan) to implement it and run targeted tests with `commands.test`
    from `project.yaml`, narrowed to the affected suite where the runner allows —
    never a runner line written from memory. If `commands.test` is unset, say so
    and record `Tests: NOT RUN — commands.test unset` for that bug.
 
-4. Spawn `qa-tester` via `Agent` to verify: does the bug reproduce after the fix?
+4. Delegate to `qa-tester` with the workflow tool: `agent("<the brief below>", { agentType: "qa-tester" })` to verify: does the bug reproduce after the fix?
 
 For config/data-only fixes: make the change directly (no programmer agent needed). First ask, naming the file and the change: "May I edit `[config file]` — `[key]`: [old value] → [new value]?" Confirm the value changed and re-run any relevant smoke test.
 
@@ -141,7 +141,7 @@ For config/data-only fixes: make the change directly (no programmer agent needed
 
 This is a lightweight QA pass — not a full `/skill:team-qa`. The patch is already QA-approved from the release gate; we are only re-verifying the changed areas.
 
-Spawn `qa-lead` via `Agent` with:
+Delegate to `qa-lead` with the workflow tool: `agent("<the brief below>", { agentType: "qa-lead" })` with:
 - List of all changed files
 - List of bugs fixed (with verification status from Phase 4)
 - The smoke check scope for the affected systems
@@ -242,7 +242,7 @@ After the patch record is written:
 **If any S1 bugs remain open after the patch:**
 > "⚠️ S1 bugs remain open and were not patched. These are accepted risks. Document them in the rollback plan trigger conditions — if they occur at scale, rollback may be preferable to a follow-up patch."
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "Day-one patch complete. What's next?"
 - Options:
   - `[A] Run /skill:patch-notes — generate player-facing patch notes`

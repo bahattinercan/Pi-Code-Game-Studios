@@ -19,7 +19,7 @@ After completing the review and writing approved files, present:
 3. **Rerun trigger**: "Re-run `/skill:architecture-review` after each new ADR is written
    to verify coverage improves"
 
-Then close with `AskUserQuestion` tailored to the pre-gate checklist state:
+Then close with `ask_user_question` tailored to the pre-gate checklist state:
 - If ADR gaps remain or any pre-gate item is ❌:
   - "Architecture review complete. What would you like to do next?"
     - [A] Write a missing ADR — open a fresh session and run `/skill:architecture-decision [system]`

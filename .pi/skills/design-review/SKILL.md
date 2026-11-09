@@ -24,7 +24,7 @@ wins and `--depth` is ignored — say so. No block → defaults in
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -74,7 +74,7 @@ existed and covers nothing.
 - **All `UNCHANGED`** and the log's latest entry carries a verdict — surface it:
   *"This document is byte-identical to its last review on [date] ([mode]
   review, verdict: [verdict])."* If that verdict was APPROVED and that review
-  covers this run, offer via `AskUserQuestion`:
+  covers this run, offer via `ask_user_question`:
   `[A] Use the prior verdict (Recommended)` / `[B] Re-review anyway` —
   `guided` proceeds with [A] and notes it; `autonomous` logs via
   `log_decision` and uses the prior verdict. If it was APPROVED but the
@@ -246,12 +246,12 @@ These are the most common baselines — but not required for pure UI specs, audi
 
 ### Step 2 — Spawn all relevant specialists in parallel
 
-**CRITICAL: `Agent` in this skill spawns a SUBAGENT — a separate independent Claude session
+**CRITICAL: `agent()` in this skill spawns a SUBAGENT — a separate independent Claude session
 with its own context window. It is NOT task tracking. Do NOT simulate specialist
 perspectives internally. Do NOT reason through domain views yourself. You MUST issue
-actual `Agent` calls. A simulated review is not a specialist review.**
+actual `agent()` calls. A simulated review is not a specialist review.**
 
-Issue all `Agent` calls simultaneously. Do NOT spawn one at a time.
+Issue all `agent()` calls simultaneously. Do NOT spawn one at a time.
 
 **Prompt each specialist adversarially:**
 > "Here is the GDD for [system] and the main review's structural findings so far.
@@ -360,7 +360,7 @@ This skill is read-only — no files are written during Phase 4.
 
 ## Phase 5: Next Steps
 
-Use `AskUserQuestion` for ALL closing interactions. Never plain text.
+Use `ask_user_question` for ALL closing interactions. Never plain text.
 
 **First widget — what to do next:**
 
@@ -379,9 +379,9 @@ If NEEDS REVISION or MAJOR REVISION NEEDED, build the options from the findings:
 
 **If user selects [A] — Revise now:**
 
-Work through all blocking items, asking for design decisions only where you cannot resolve the issue from the GDD and existing docs alone. Group all design-decision questions into a single multi-tab `AskUserQuestion` before making any edits — do not interrupt mid-revision for each blocker individually.
+Work through all blocking items, asking for design decisions only where you cannot resolve the issue from the GDD and existing docs alone. Group all design-decision questions into a single multi-tab `ask_user_question` before making any edits — do not interrupt mid-revision for each blocker individually.
 
-After all revisions are complete, show a summary table (blocker → fix applied) and use `AskUserQuestion` for a **post-revision closing widget**:
+After all revisions are complete, show a summary table (blocker → fix applied) and use `ask_user_question` for a **post-revision closing widget**:
 
 - Prompt: "Revisions complete — [N] blockers resolved. What next?"
 - Note current context usage: if context is above ~50%, add: "(Recommended: /clear before re-review — this session has used X% context. A full re-review runs 5 agents and needs clean context.)"
@@ -397,7 +397,7 @@ record via `log_decision`.
 
 **Second widget — tracking records (combined, for APPROVED path):**
 
-When the verdict is APPROVED, use a single `AskUserQuestion` with `multiSelect: true` to batch the two tracking updates:
+When the verdict is APPROVED, use a single `ask_user_question` with `multiSelect: true` to batch the two tracking updates:
 - Prompt: "Verdict: APPROVED. I can update the tracking records now. Select any you'd like me to complete:"
 - Options:
   - `Update systems-index.md status to 'Approved' for [system]`
@@ -407,11 +407,11 @@ If the review-log option is selected, append the same format as below. Execute b
 
 When the verdict is NEEDS REVISION or MAJOR REVISION NEEDED, use separate widgets as before:
 
-Use a second `AskUserQuestion`:
+Use a second `ask_user_question`:
 - Prompt: "May I update `design/gdd/systems-index.md` to mark [system] as [Needs Revision / In Review]?" — `Needs Revision` (that exact string) while the revisions are outstanding, `In Review` once they are applied and await re-review. This prompt never offers `Approved`: a revision verdict is not an approval.
 - Options: `[A] Yes — update it` / `[B] No — leave it as-is`
 
-Use a third `AskUserQuestion`:
+Use a third `ask_user_question`:
 - Prompt: "May I append this review summary to `design/gdd/reviews/[doc-name]-review-log.md`? This creates a revision history so future re-reviews can track what changed."
 - Options: `[A] Yes — append to review log` / `[B] No — skip`
 
@@ -448,7 +448,7 @@ verbatim).
 
 **Final closing widget — always show after all file writes complete:**
 
-Once the systems-index and review-log widgets are answered, check project state and show one final `AskUserQuestion`:
+Once the systems-index and review-log widgets are answered, check project state and show one final `ask_user_question`:
 
 Before building options, read:
 - `design/gdd/systems-index.md` — find any system with Status: In Review or Needs Revision (other than the one just reviewed). Read it by section: find the headings with the Grep tool (pattern `^#`, content mode) and Read those ranges with offset and limit.

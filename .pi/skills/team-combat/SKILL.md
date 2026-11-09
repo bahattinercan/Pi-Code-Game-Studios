@@ -10,7 +10,7 @@ Then stop immediately without spawning any subagents or reading any files.
 
 When this skill is invoked with a valid argument, orchestrate the combat team through a structured pipeline.
 
-**Decision Points:** At each phase transition, use `AskUserQuestion` to present
+**Decision Points:** At each phase transition, use `ask_user_question` to present
 the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 In `collaborative` mode, the user must approve before moving to the next phase.
@@ -50,7 +50,7 @@ those five sections and tell the user it is optional at this workflow level.
 - **`individual`** (default): `gameplay-programmer` runs the pipeline; escalate `ai-programmer` only if the feature flags AI work. Other Team Composition agents are consulted via the gameplay-programmer, not spawned separately.
 - **`small`**: the full Team Composition pipeline below, as documented.
 - **`studio`**: full pipeline + engine sub-specialists + an adversarial review pass. *Engine sub-specialists*: the primary engine specialist's prompt says it may hand parts of its review to the sub-specialists its `tools:` grant names (for example `ue-gas-specialist` for abilities); below `studio` it answers alone. *Adversarial review pass*: Phase 5's qa-tester is told "your job is not to confirm this works — find how it breaks", and the report says the pass ran.
-A non-core agent needed at `individual` routes through the nearest active core agent with an informational note. **"Phase gate" means any phase that ends in an `AskUserQuestion` decision point this pipeline itself lists** — a transition under Decision Points above, or a **Gate** step written into the pipeline below — **whatever the `automation` mode.** `guided` and `autonomous` change how a gate is passed (it auto-advances, or is recorded with `log_decision`), not whether it is one, so bounded-exception condition (3) below holds at it in every mode. An agent restricted to "phase gates only" is spawned at those points and no others. This active-set scoping applies throughout the pipeline below: any phase that names an agent outside the active set routes through the nearest core agent rather than spawning it.
+A non-core agent needed at `individual` routes through the nearest active core agent with an informational note. **"Phase gate" means any phase that ends in an `ask_user_question` decision point this pipeline itself lists** — a transition under Decision Points above, or a **Gate** step written into the pipeline below — **whatever the `automation` mode.** `guided` and `autonomous` change how a gate is passed (it auto-advances, or is recorded with `log_decision`), not whether it is one, so bounded-exception condition (3) below holds at it in every mode. An agent restricted to "phase gates only" is spawned at those points and no others. This active-set scoping applies throughout the pipeline below: any phase that names an agent outside the active set routes through the nearest core agent rather than spawning it.
 
 **Announce the active set before Phase 1 — never let the collapse be silent.**
 Before spawning anything, state in one line which agents this run will actually
@@ -88,7 +88,7 @@ enforced.**
 
 ## How to Delegate
 
-Use the `Agent` tool to spawn each team member as a subagent:
+Use the `workflow` tool to spawn each team member as a subagent:
 - `subagent_type: game-designer` — Design the mechanic, define formulas and edge cases
 - `subagent_type: gameplay-programmer` — Implement the core gameplay code
 - `subagent_type: ai-programmer` — Implement NPC/enemy AI behavior
@@ -126,7 +126,7 @@ Phase 6 is a spoken status report, not an artifact — no path, and none needed.
 > reporting, so the sketch is understood as a record rather than an input to a
 > later gate.
 
-> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `ask_user_question` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -140,7 +140,7 @@ Delegate to **game-designer**:
 `design/` is outside the bounded write exception above, so the game-designer
 drafts and **you** write the GDD — the pattern `/skill:team-level` and
 `/skill:team-narrative` use. At the Phase 1 decision point, present the draft and ask
-via `AskUserQuestion`: "May I write the design document to
+via `ask_user_question`: "May I write the design document to
 `design/gdd/[feature].md`?" Write it on approval; nothing is written under
 `design/` before that answer.
 
@@ -159,7 +159,7 @@ Then spawn the **primary engine specialist** to validate the proposed architectu
 
 If no engine is configured, skip the specialist spawn. **Record ``Engine validation: NOT ASSESSED — no engine configured (`engine.name` unset in `project.yaml`)`` in this run's output.** A skipped check that says nothing is indistinguishable from a check that passed.
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "Architecture sketch complete. Approve to proceed with parallel implementation."
 - Options:
   - `[A] Proceed — spawn implementation agents (gameplay-programmer, ai-programmer, technical-artist, sound-designer)`
@@ -188,7 +188,7 @@ the whole set, and they write only after a yes (File Write Protocol).
 - Ensure all tuning knobs are exposed and data-driven
 - Verify the feature works with existing combat systems
 
-**Gate**: Use `AskUserQuestion` to present the integration result and confirm before proceeding to Phase 5.
+**Gate**: Use `ask_user_question` to present the integration result and confirm before proceeding to Phase 5.
 
 ### Phase 5: Validation
 Delegate to **qa-tester**:
@@ -225,13 +225,13 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (design drafts, implementation files, test cases) are
-delegated to sub-agents spawned via `Agent`, under two rules:
+delegated to sub-agents spawned via `agent()`, under two rules:
 
 - **Drafts, sketches and QA artifacts** — the path table's destinations under
   `production/`, `docs/` or `tests/` — follow the **bounded exception** documented
   above under "Why this does not violate the Collaboration Protocol": the path is
   one you named, the artifact is new, and the phase is gated by an
-  `AskUserQuestion`. The sub-agent writes them without a per-write prompt.
+  `ask_user_question`. The sub-agent writes them without a per-write prompt.
 - **Implementation files** — Phase 3's code, VFX and shader files, and any
   Phase 4 integration edits, under the code root and `assets/` — are outside
   that exception, as the agents' own files say. Each implementing agent first

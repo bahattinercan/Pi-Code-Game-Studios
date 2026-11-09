@@ -229,13 +229,13 @@ If no engine reference docs exist (engine not yet configured), show a short note
 
 **Step 4 — Ask before proceeding:**
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "Any constraints to add before we begin, or shall we proceed with these noted?"
   - Options: "Proceed with these noted", "Add a constraint first", "I need to check the engine docs — pause here"
 
 ---
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "Ready to start designing [system-name]?"
   - Options: "Yes, let's go", "Show me more context first", "Design a dependency first"
 

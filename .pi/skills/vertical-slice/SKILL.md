@@ -47,7 +47,7 @@ whether the core idea is worth designing, run `/skill:prototype` (concept protot
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -295,7 +295,7 @@ the project — cross-reference it with sprint estimates.
 **Review mode check:**
 - `solo` → skip. Note: "CD-PLAYTEST skipped — Solo mode."
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode."
-- `full` → spawn `creative-director` via `Agent` using gate **CD-PLAYTEST**
+- `full` → spawn `creative-director` via `agent()` using gate **CD-PLAYTEST**
   (`.pi/docs/director-gates/cd-playtest.md`) — unless the slice's verdict is
   NOT ASSESSED: with no playthrough there is nothing to review, so note
   "CD-PLAYTEST skipped — the slice has not been played yet."
@@ -310,10 +310,10 @@ CONCERNS or REJECT. Apply it to the recommendation:
 
 - **APPROVE** → the recommendation stands.
 - **CONCERNS** → show the concerns alongside the recommendation, then use
-  `AskUserQuestion`: `Revise the recommendation` / `Accept with noted concerns` /
+  `ask_user_question`: `Revise the recommendation` / `Accept with noted concerns` /
   `Discuss further`. The user decides; the director does not.
 - **REJECT** (the core fantasy is not present) → a PROCEED recommendation cannot
-  stand. Use `AskUserQuestion` to ask the user to choose `PIVOT` or `KILL`, and run
+  stand. Use `ask_user_question` to ask the user to choose `PIVOT` or `KILL`, and run
   Phase 8 for that choice. A PIVOT or KILL recommendation stands.
 - **NOT ASSESSED** [missing input] → the director made no judgement, so it neither
   backs nor overturns the recommendation (`.pi/docs/director-gates.md`): name

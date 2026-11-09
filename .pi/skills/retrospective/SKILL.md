@@ -13,7 +13,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation,workflow,qa.lev
 
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -60,7 +60,7 @@ Before loading any data, glob for an existing retrospective file:
   (also check `production/sprints/sprint-[N]-retrospective.md` as an alternate location)
 - For milestone retrospectives: `production/retrospectives/retro-[milestone-name]-*.md`
 
-If a matching file is found, use `AskUserQuestion`:
+If a matching file is found, use `ask_user_question`:
 - Prompt: "An existing retrospective was found: [filename]. How do you want to proceed?"
 - Options:
   - `[A] Update existing — load it and add/revise sections with new data`
@@ -91,7 +91,7 @@ At `qa.level: minimal` (resolved above) tests are waived, so a story closed
 without one is not a finding; a Visual/Feel or UI story closed without its
 retained screenshot still is.
 
-Then use `AskUserQuestion` to present these options ([C] only at `workflow: minimal`):
+Then use `ask_user_question` to present these options ([C] only at `workflow: minimal`):
 
 - **[A] Provide data manually** — ask the user to paste or describe the sprint
   tasks, dates, and outcomes; use that as the source of truth for the retrospective.
@@ -267,7 +267,7 @@ At `workflow: minimal` (resolved above), which has no sprints, skip this questio
 point to the retrospective file and say its action items go into the brief's build
 order.
 
-Otherwise, use `AskUserQuestion`:
+Otherwise, use `ask_user_question`:
 - Prompt: "Retrospective complete. The action items and velocity data are ready. Would you like to start sprint planning now with this data pre-loaded?"
 - Options:
   - `[A] Yes — open sprint planning with retro action items and velocity delta pre-populated`

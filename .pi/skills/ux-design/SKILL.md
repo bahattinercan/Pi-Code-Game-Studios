@@ -16,7 +16,7 @@ Resolved above — use as-is. No block → defaults in
 
 When this skill is invoked:
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -66,7 +66,7 @@ Four authoring modes exist based on the argument:
 > under `design/ux/`: every one of those checks would stop matching, and the
 > Technical Setup → Pre-Production gate would become unpassable.
 
-**If no argument is provided**, do not fail — ask instead. Use `AskUserQuestion`:
+**If no argument is provided**, do not fail — ask instead. Use `ask_user_question`:
 - "What are we designing today?"
   - Options: "A specific screen or flow (I'll name it)", "The game HUD", "The interaction pattern library", "The project-wide accessibility requirements", "I'm not sure — help me figure it out"
 
@@ -141,7 +141,7 @@ specific sub-topics, additional context or coordination may be needed:
 | Narrative/lore visible in the UI | `narrative-director` — for flavor text, item names, lore panels |
 | Accessibility tier decisions | Recorded by this session (`/skill:ux-design accessibility`; the user picks the tier) against the criteria `accessibility-specialist` defines and audits — consult it when a requirement's criterion is unclear |
 
-When delegating to another agent via the `Agent` tool:
+When delegating to another agent via the workflow tool (`agent(prompt, { agentType })`):
 - Provide: screen name, game concept summary, the specific question needing expert input
 - The agent returns analysis to this session
 - This session presents the agent's output to the user
@@ -159,7 +159,7 @@ describe what collaborative mode requires, not what applies universally.
 This skill follows the collaborative design principle at every step:
 
 1. **Question -> Options -> Decision -> Draft -> Approval** for every section
-2. **AskUserQuestion** at every decision point (Explain -> Capture pattern):
+2. **ask_user_question** at every decision point (Explain -> Capture pattern):
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): design questions, approach options, draft approval

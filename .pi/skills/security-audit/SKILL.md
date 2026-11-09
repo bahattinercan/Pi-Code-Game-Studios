@@ -10,7 +10,7 @@ for the values it names:
 bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation,workflow
 ```
 **Automation mode**: Resolve `modes.automation` (`project.local.yaml` →
-`project.yaml` → default `collaborative`). Every `AskUserQuestion` call and
+`project.yaml` → default `collaborative`). Every `ask_user_question` call and
 every file write follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
@@ -87,7 +87,7 @@ Read `project.yaml` to determine the following, falling back to `.pi/docs/techni
 
 ## Phase 2: Spawn Security Engineer
 
-Spawn `security-engineer` via `Agent` — the audit is its job, so do not run the
+Delegate to `security-engineer` with the workflow tool: `agent("<the brief below>", { agentType: "security-engineer" })` — the audit is its job, so do not run the
 categories in this session instead. If it cannot be spawned, say why, run the
 scan here, and let the report's **Audited by** line say so.
 

@@ -1,6 +1,6 @@
 ---
 name: setup-engine
-description: "Configure engine and version. Pins it in AGENTS.md; WebSearch fills reference docs when the version is beyond LLM training data."
+description: "Configure engine and version. Pins it in AGENTS.md; `web_search` fills reference docs when the version is beyond LLM training data."
 ---
 
 # Engine Setup
@@ -84,7 +84,7 @@ The section should instruct the agent to:
 1. Read `docs/engine-reference/<engine>/VERSION.md`
 2. Check deprecated APIs before suggesting code
 3. Check breaking changes for relevant version transitions
-4. Use WebSearch to verify uncertain APIs
+4. Use `web_search` to verify uncertain APIs
 
 ---
 
@@ -94,7 +94,7 @@ If invoked as `/skill:setup-engine refresh`:
 
 1. Read the existing `docs/engine-reference/<engine>/VERSION.md` to get
    the current engine and version
-2. Use WebSearch to check for:
+2. Use `web_search` to check for:
    - New engine releases since last verification
    - Updated migration guides
    - Newly deprecated APIs
@@ -114,14 +114,14 @@ If invoked as `/skill:setup-engine refresh`:
 
 ## Guardrails
 
-- NEVER guess an engine version — always verify via WebSearch or user confirmation
+- NEVER guess an engine version — always verify via `web_search` or user confirmation
 - `project.yaml` is the primary config store (v1.1). Always dual-write engine
   config to BOTH `project.yaml` (primary) and `technical-preferences.md` (legacy
   mirror). If the two ever diverge, `project.yaml` is authoritative.
 - NEVER overwrite existing reference docs without asking — append or update
 - If reference docs already exist for a different engine, ask before replacing
 - Always show the user what you're about to change before making AGENTS.md edits
-- If WebSearch returns ambiguous results, show the user and let them decide
+- If `web_search` returns ambiguous results, show the user and let them decide
 - When the user chose **GDScript**: copy the GDScript AGENTS.md template from **A1** in `references/godot-language-config.md` exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
 
 ---

@@ -22,7 +22,7 @@ block → defaults in `.pi/docs/config-resolution.md`.
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -31,7 +31,7 @@ Determine the mode:
 - `new` → generate a blank playtest report template. This mode ends after
   Phase 2A: a blank template has nothing to route, review or save.
 - `analyze [path]` → read raw notes and fill in the template with structured findings
-- No argument → ask via `AskUserQuestion`: `[A] New blank template` /
+- No argument → ask via `ask_user_question`: `[A] New blank template` /
   `[B] Analyze notes — I'll give you the path`
 
 ---
@@ -142,7 +142,7 @@ Present the categorized list, then route:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode." Proceed to Phase 4 (save the report).
 - `full` → spawn as normal.
 
-After categorising findings, spawn `creative-director` via `Agent` using gate **CD-PLAYTEST** (`.pi/docs/director-gates/cd-playtest.md`).
+After categorising findings, spawn `creative-director` via `agent()` using gate **CD-PLAYTEST** (`.pi/docs/director-gates/cd-playtest.md`).
 
 Pass: the structured report content, game pillars and core fantasy (from
 `design/gdd/game-concept.md`), the specific hypothesis being tested. **If

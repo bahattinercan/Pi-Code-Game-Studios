@@ -30,7 +30,7 @@ and Pre-Production.
 
 ---
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -106,7 +106,7 @@ describe what collaborative mode requires, not universal behavior.
 4. **Draft before approval** — always show the content that will be written (the
    report, the updated ADR section, the systems-index row) inline in the conversation
    before requesting approval. Never ask to write something the user has not yet seen.
-5. **Use `AskUserQuestion` for write approvals** — plain text "May I?" is not
+5. **Use `ask_user_question` for write approvals** — plain text "May I?" is not
    sufficient. Use the structured tool with labeled options [A]/[B]/[C] so the
    user can choose between "write now", "show full draft first", and "not yet".
    Multi-file changesets must list every file and what changes, then ask once

@@ -17,7 +17,7 @@ In an update (Phase 0e `[A]`, or a focus-area argument), write only the chosen
 sections instead, replacing each in place with `Edit`, and raise `Version`; the
 ask below then names those sections and the version change.
 
-Display a one-paragraph summary of what the document will contain (layers, modules, data flows, ADR gaps). Then use `AskUserQuestion`:
+Display a one-paragraph summary of what the document will contain (layers, modules, data flows, ADR gaps). Then use `ask_user_question`:
 - "All sections approved. May I write the master architecture document?"
   - [A] Yes — write to `docs/architecture/architecture.md` now
   - [B] Show me the full draft inline first, then ask again
@@ -75,11 +75,11 @@ After writing the master architecture document, perform an explicit sign-off bef
 - `lean` → skip both (neither is a PHASE-GATE). Note: "TD-ARCHITECTURE and LP-FEASIBILITY skipped — Lean mode." Go to Step 4 and record both as skipped, then Phase 8.
 - `full` → spawn both, in parallel.
 
-**Step 1 — Spawn `technical-director` via `Agent` using gate TD-ARCHITECTURE (`.pi/docs/director-gates/td-architecture.md`):**
+**Step 1 — Delegate to `technical-director` with the workflow tool: `agent("<the brief below>", { agentType: "technical-director" })` using gate TD-ARCHITECTURE (`.pi/docs/director-gates/td-architecture.md`):**
 
 Pass: the architecture document path (`docs/architecture/architecture.md`), the Technical Requirements Baseline (TR-IDs and count), the ADR list with statuses, and the Engine Knowledge Gap Inventory from Phase 0d. Issue this call and Step 2's before waiting for either result.
 
-**Step 2 — Spawn `lead-programmer` via `Agent` using gate LP-FEASIBILITY (`.pi/docs/director-gates/lp-feasibility.md`):**
+**Step 2 — Delegate to `lead-programmer` with the workflow tool: `agent("<the brief below>", { agentType: "lead-programmer" })` using gate LP-FEASIBILITY (`.pi/docs/director-gates/lp-feasibility.md`):**
 
 Pass: architecture document path, technical requirements baseline summary, ADR list.
 
@@ -87,7 +87,7 @@ Pass: architecture document path, technical requirements baseline summary, ADR l
 
 Show the TD-ARCHITECTURE verdict (APPROVE / CONCERNS / REJECT) and the LP-FEASIBILITY verdict (FEASIBLE / CONCERNS / INFEASIBLE) side by side.
 
-Use `AskUserQuestion` — "Technical Director and Lead Programmer have reviewed the architecture. How would you like to proceed?"
+Use `ask_user_question` — "Technical Director and Lead Programmer have reviewed the architecture. How would you like to proceed?"
 Options: `Accept — proceed to handoff` / `Revise flagged items first` / `Discuss specific concerns`.
 If either verdict is REJECT or INFEASIBLE, do not offer `Accept` — the blockers are revised (or discussed) first.
 `Revise flagged items first` re-drafts each flagged section and shows it for approval as in Phases 1–4; the revised document is then written once, through Phase 7's ask, and Step 4 records `REVISED after [verdict]`.
@@ -101,7 +101,7 @@ Update the Document Status section:
 - LP-FEASIBILITY: [date] — FEASIBLE / CONCERNS (accepted) / REVISED after CONCERNS / REVISED after INFEASIBLE / NOT ASSESSED — [missing input] / skipped — [mode] mode
 ```
 
-Show the proposed Document Status block inline, then use `AskUserQuestion`:
+Show the proposed Document Status block inline, then use `ask_user_question`:
 - "May I update the Document Status section with the sign-off results?"
   - [A] Yes — apply to `docs/architecture/architecture.md`
   - [B] Not yet — I want to revisit the concerns first

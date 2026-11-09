@@ -9,7 +9,7 @@ for the values it names:
 bash ".pi/hooks/yaml-helper.sh" resolve_config --keys rigor,workflow,project.stage,cert_tier,automation
 ```
 **Automation mode**: Resolve `modes.automation` (`project.local.yaml` →
-`project.yaml` → default `collaborative`). Every `AskUserQuestion` call and
+`project.yaml` → default `collaborative`). Every `ask_user_question` call and
 every file write follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).

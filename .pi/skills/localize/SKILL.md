@@ -33,7 +33,7 @@ If no subcommand is provided, output usage and stop. Verdict: **FAIL** — missi
 
 ---
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -195,7 +195,7 @@ Ask: "May I write this translator brief to `production/localization/translator-b
 
 ## Phase 2F: Cultural Review Mode
 
-Spawn `localization-lead` via `Agent`. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
+Delegate to `localization-lead` with the workflow tool: `agent("<the brief below>", { agentType: "localization-lead" })`. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
 
 ### Content Areas to Review
 
@@ -347,7 +347,7 @@ Pre-Freeze Checklist
 [ ] Marketing strings (store description, achievements) are final
 ```
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "Call string freeze now? This writes `production/localization/freeze-status.md` (Status: ACTIVE) and locks the source table."
 - Options: `[A] Yes — call string freeze now` / `[B] No — I still have strings to add`
 
@@ -382,7 +382,7 @@ Localization QA is a dedicated pass that runs after translations are delivered b
 before any locale ships. This is not the same as `/skill:localize validate` (which checks
 completeness) — this is a structured playthrough-based quality check.
 
-Spawn `localization-lead` via `Agent` with:
+Delegate to `localization-lead` with the workflow tool: `agent("<the brief below>", { agentType: "localization-lead" })` with:
 - The target locale(s) to QA
 - The list of all screens/flows in the game (from `design/gdd/` or `/skill:content-audit` output)
 - The current `/skill:localize validate` report

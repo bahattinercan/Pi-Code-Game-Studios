@@ -34,7 +34,7 @@ Extract the mode argument (`new`, `update`, or `status`).
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -213,7 +213,7 @@ For `update`:
 
 1. Read the most recent sprint plan from `production/sprints/`.
 2. Present the current story list with their current statuses from `production/sprint-status.yaml`.
-3. Ask the user what to change: stories to add, remove, reprioritize, or re-estimate. Use `AskUserQuestion` to gather changes.
+3. Ask the user what to change: stories to add, remove, reprioritize, or re-estimate. Use `ask_user_question` to gather changes.
 4. Apply the changes and re-present the full revised plan for review. If the
    goal or the Must Have stories changed, check the goal's prerequisites again first.
 5. Re-run the producer feasibility gate (Phase 4) on the revised plan.
@@ -315,7 +315,7 @@ stories that haven't changed, add new stories, remove dropped ones.
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SPRINT skipped — Lean mode." Proceed to Phase 5 (QA plan gate).
 - `full` → spawn as normal.
 
-Before finalising the sprint plan, spawn `producer` via `Agent` using gate **PR-SPRINT** (`.pi/docs/director-gates/pr-sprint.md`).
+Before finalising the sprint plan, spawn `producer` via `agent()` using gate **PR-SPRINT** (`.pi/docs/director-gates/pr-sprint.md`).
 
 Pass: proposed story list (titles, estimates, dependencies), total team capacity in hours/days, any carryover from the previous sprint, milestone constraints and deadline, and any missing goal prerequisite.
 
@@ -325,7 +325,7 @@ If UNREALISTIC: revise the story selection (defer stories to Should Have or Nice
 
 If NOT ASSESSED: name the missing input — it is not REALISTIC. Supply it and re-run PR-SPRINT, or record `NOT ASSESSED — [missing input]` for PR-SPRINT in the plan's header (`.pi/docs/director-gates.md`) and continue to Phase 5, repeating it at the write ask.
 
-If CONCERNS, use `AskUserQuestion`:
+If CONCERNS, use `ask_user_question`:
 - Prompt: "Producer flagged concerns with this sprint plan. How do you want to proceed?"
 - Options:
   - `[A] Proceed as planned — I accept the risk`
@@ -355,7 +355,7 @@ Use `Glob` for `production/qa/qa-plan-*.md` — `/skill:qa-plan` writes `qa-plan
 >
 > Run `/skill:qa-plan sprint` now, before starting any implementation. It takes one session and produces the test case requirements each story needs."
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "No QA plan found for this sprint. How do you want to proceed?"
 - Options:
   - `[A] Run /skill:qa-plan sprint now — I'll do that before starting implementation (Recommended)`

@@ -6,7 +6,7 @@
 ## Phase 7: Offer First Action
 
 After writing the plan, don't stop there. Pick the single highest-priority gap
-and offer to handle it immediately using `AskUserQuestion`. Choose the first
+and offer to handle it immediately using `ask_user_question`. Choose the first
 branch that applies:
 
 **If Phase 2g found a v1.0 project needing migration:** offer the converter run
@@ -15,7 +15,7 @@ converter? It writes `project.yaml` and `production/migration-report.md`."
 Every other fix reads config through it, so it comes first.
 
 **If there are parenthetical status values in systems-index.md:**
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "The most urgent fix is `systems-index.md` — [N] rows have parenthetical status
   values (e.g. `Needs Revision (see notes)`) that break /skill:gate-check,
   /skill:create-stories, and /skill:architecture-review right now. I can fix these in-place."
@@ -24,7 +24,7 @@ Use `AskUserQuestion`:
   - "Done — leave me with the plan"
 
 **If ADRs are missing `## Status` (and no parenthetical issue):**
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "The most urgent fix is adding `## Status` to [N] ADR(s): [list filenames].
   Without it, /skill:story-readiness silently passes all ADR checks. Start with
   [first affected filename]?"
@@ -33,7 +33,7 @@ Use `AskUserQuestion`:
   - "I'll handle ADRs myself"
 
 **If GDDs are missing Acceptance Criteria (and no blocking issues above):**
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "The most urgent gap is missing Acceptance Criteria in [N] GDD(s):
   [list filenames]. Without them, /skill:create-stories can't generate stories.
   Start with [highest-priority GDD filename]?"
@@ -43,7 +43,7 @@ Use `AskUserQuestion`:
 
 **Otherwise, if any BLOCKING or HIGH gap remains** (one no branch above names —
 e.g. a missing TR registry):
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "The most urgent remaining gap is [first BLOCKING or HIGH item in the plan] —
   [one line on what it breaks]. Start on it now?"
   - "Yes — start on [item]"
@@ -51,7 +51,7 @@ Use `AskUserQuestion`:
   - "Done — leave me with the plan"
 
 **If no BLOCKING or HIGH gaps exist:**
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "No blocking gaps — this project is template-compatible. What next?"
   - "Walk me through the medium-priority improvements"
   - "Run /skill:project-stage-detect for a broader health check"

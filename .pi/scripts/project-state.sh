@@ -150,7 +150,7 @@ if [ -z "$ENGINE" ] && [ -f "$LEGACY" ]; then
   # The legacy `Engine:` line, bold or bulleted; `[TO BE CONFIGURED]` and any
   # other bracketed placeholder mean unset. The same pipeline as resolve_code_root.
   ENGINE=$(grep -iE '^[[:space:]]*[-*]?[[:space:]]*\*{0,2}Engine\*{0,2}[[:space:]]*:' "$LEGACY" 2>/dev/null \
-           | head -1 | sed 's/.*://' | tr -d '\r' \
+           | head -1 | sed 's/^[^:]*:[[:space:]]*//' | tr -d '\r' \
            | sed 's/^[[:space:]]*//; s/[[:space:]].*$//; s/\*//g')
   case "$ENGINE" in
     *"[TO BE CONFIGURED]"*|"["*) ENGINE="" ;;

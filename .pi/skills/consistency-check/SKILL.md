@@ -30,7 +30,7 @@ catches too late.
 
 ---
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -352,7 +352,7 @@ Silently append to `production/session-state/active.md` (create the file if it d
 > will never find, and nothing errors along the way. Never invent a report
 > filename here.
 
-Then close with an `AskUserQuestion` widget:
+Then close with an `ask_user_question` widget:
 
 - **Prompt**: "Consistency check complete — [N] conflicts found. What next?"
 - **Options**:

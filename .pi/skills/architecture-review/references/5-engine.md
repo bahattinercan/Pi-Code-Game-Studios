@@ -52,7 +52,7 @@ Post-Cutoff API Conflicts:
 
 ### Engine Specialist Consultation
 
-After completing the engine audit above, spawn the **primary engine specialist** via `Agent` for a domain-expert second opinion:
+After completing the engine audit above, spawn the **primary engine specialist** via `agent()` for a domain-expert second opinion:
 - Resolve the primary specialist: `<engine>-specialist` derived from `engine.name` in `project.yaml` (Godot→`godot-specialist`, Unity→`unity-specialist`, Unreal→`unreal-specialist`); if `engine.name` is absent or empty, read the Primary line of the `## Engine Specialists` section in `.pi/docs/technical-preferences.md`
 - If no engine is configured (neither source yields an engine), skip this consultation **Record ``Engine validation: NOT ASSESSED — no engine configured (`engine.name` unset in `project.yaml`)`` in this run's output.** A skipped check that says nothing is indistinguishable from a check that passed; the reader cannot tell engine guidance was never sought.
 - Spawn `subagent_type: [primary specialist]` with: all ADRs that contain engine-specific decisions or `Post-Cutoff APIs Used` fields, the engine reference docs, and the Phase 5 audit findings. Ask them to:
@@ -100,7 +100,7 @@ are consistent with verified engine behaviour."
 
 Before asking, display the proposed change inline — show the current systems-index row for each flagged GDD and the proposed updated row side by side so the user can see exactly what will change.
 
-Then use `AskUserQuestion`:
+Then use `ask_user_question`:
 - "I found [N] GDD revision flag(s). May I update the systems index?"
   - [A] Yes — apply all [N] updates to the systems index now
   - [B] Show me the full diff first, then ask again
@@ -108,6 +108,6 @@ Then use `AskUserQuestion`:
 
 If [A]: apply the updates. Status field must be exactly `Needs Revision` — no parentheticals
 (other skills match that exact string and parentheticals break the match).
-If [B]: display the complete proposed systems-index section, then re-ask with `AskUserQuestion`.
+If [B]: display the complete proposed systems-index section, then re-ask with `ask_user_question`.
 
 ---

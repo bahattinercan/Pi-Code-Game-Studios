@@ -84,7 +84,7 @@ get `individual`).
 - **No argument**: Auto-detect current stage using the same heuristics as
   `/skill:project-stage-detect`, then **confirm with the user before running**:
 
-  Use `AskUserQuestion`:
+  Use `ask_user_question`:
   - Prompt: "Detected stage: **[current stage]**. Running gate for [Current] → [Next] transition. Is this correct?"
   - Options:
     - `[A] Yes — run this gate`

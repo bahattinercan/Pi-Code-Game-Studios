@@ -6,11 +6,11 @@ description: "Orchestrate the level team — level-designer, narrative-director,
 # Team Level
 
 If no argument is provided, output usage guidance and exit without spawning any agents or reading any design files:
-> Usage: `/skill:team-level [level name or area to design] [--review full|lean|solo]` — specify the level or area to design (e.g., `forest temple`, `tutorial village`, `final boss arena`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-level [level name or area to design] [--review full|lean|solo]` — specify the level or area to design (e.g., `forest temple`, `tutorial village`, `final boss arena`). Do not use `ask_user_question` here; output the guidance directly.
 
 When this skill is invoked:
 
-**Decision Points:** At each step transition, use `AskUserQuestion` to present
+**Decision Points:** At each step transition, use `ask_user_question` to present
 the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 In `collaborative` mode, the user must approve before moving to the next step.
@@ -43,7 +43,7 @@ below), and the agents that work at them are team members, not director gates.
 - **`individual`** (default): `level-designer` only. Other agents consulted via the level-designer, not spawned separately.
 - **`small`**: + `systems-designer` + `art-director` + `qa-tester`.
 - **`studio`**: + `narrative-director` + `world-builder` + `accessibility-specialist` (the full pipeline as documented).
-A non-core agent needed at `individual` routes through the nearest active core agent with an informational note. **"Phase gate" means any phase that ends in an `AskUserQuestion` decision point this pipeline itself lists** — a transition under Decision Points above, or a **Gate** step written into the pipeline below — **whatever the `automation` mode.** `guided` and `autonomous` change how a gate is passed (it auto-advances, or is recorded with `log_decision`), not whether it is one, so bounded-exception condition (3) below holds at it in every mode. An agent restricted to "phase gates only" is spawned at those points and no others. This active-set scoping applies throughout the pipeline below: any phase that names an agent outside the active set routes through the nearest core agent rather than spawning it.
+A non-core agent needed at `individual` routes through the nearest active core agent with an informational note. **"Phase gate" means any phase that ends in an `ask_user_question` decision point this pipeline itself lists** — a transition under Decision Points above, or a **Gate** step written into the pipeline below — **whatever the `automation` mode.** `guided` and `autonomous` change how a gate is passed (it auto-advances, or is recorded with `log_decision`), not whether it is one, so bounded-exception condition (3) below holds at it in every mode. An agent restricted to "phase gates only" is spawned at those points and no others. This active-set scoping applies throughout the pipeline below: any phase that names an agent outside the active set routes through the nearest core agent rather than spawning it.
 
 **Announce the active set before Step 1 — never let the collapse be silent.**
 Before spawning anything, state in one line which agents this run will actually
@@ -85,7 +85,7 @@ enforced.**
 
 ## How to Delegate
 
-Use the `Agent` tool to spawn each team member as a subagent:
+Use the `workflow` tool to spawn each team member as a subagent:
 - `subagent_type: narrative-director` — Narrative purpose, characters, emotional arc
 - `subagent_type: world-builder` — Lore context, environmental storytelling, world rules
 - `subagent_type: level-designer` — Spatial layout, pacing, encounters, navigation
@@ -116,13 +116,13 @@ file per agent, so the parallel steps never share one:
 These are working drafts; the durable record is the level design document you
 compile from them (`design/levels/[level-name].md`).
 
-> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `ask_user_question` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 3. **Orchestrate the level design team** in sequence:
 
 ### Step 1: Narrative + Visual Direction (narrative-director + world-builder + art-director, parallel)
 
-Spawn all three agents simultaneously — issue all three `Agent` calls before waiting for any result.
+Spawn all three agents simultaneously — issue all three `agent()` calls before waiting for any result.
 
 Spawn the `narrative-director` agent to:
 - Define the narrative purpose of this area (what story beats happen here?)
@@ -143,7 +143,7 @@ Spawn the `art-director` agent to:
 
 **The art-director's visual targets from Step 1 must be passed to the level-designer in Step 2** as explicit constraints. Layout decisions happen within the visual direction, not before it.
 
-**Gate**: Use `AskUserQuestion` to present all three Step 1 outputs (narrative brief, lore foundation, visual direction targets) and confirm before proceeding to Step 2.
+**Gate**: Use `ask_user_question` to present all three Step 1 outputs (narrative brief, lore foundation, visual direction targets) and confirm before proceeding to Step 2.
 
 ### Step 2: Layout and Encounter Design (level-designer)
 Spawn the `level-designer` agent with the full Step 1 output as context:
@@ -162,13 +162,13 @@ The level-designer should:
 **Adjacent area dependency check**: After the layout is produced, check `design/levels/` for each adjacent area referenced by the level-designer. If any referenced area's `.md` file does not exist, surface the gap:
 > "Level references [area-name] as an adjacent area but `design/levels/[area-name].md` does not exist."
 
-Use `AskUserQuestion` with options:
+Use `ask_user_question` with options:
 - (a) Proceed with a placeholder reference — mark the connection as UNRESOLVED in the level doc and list it in the open cross-level dependencies section of the summary report
 - (b) Pause and run `/skill:team-level [area-name]` first to establish that area
 
 Do NOT invent content for the missing adjacent area.
 
-**Gate**: Use `AskUserQuestion` to present Step 2 layout (including any unresolved adjacent area dependencies) and confirm before proceeding to Step 3.
+**Gate**: Use `ask_user_question` to present Step 2 layout (including any unresolved adjacent area dependencies) and confirm before proceeding to Step 3.
 
 ### Step 3: Systems Integration (systems-designer)
 Spawn the `systems-designer` agent to:
@@ -178,7 +178,7 @@ Spawn the `systems-designer` agent to:
 - Design any area-specific mechanics or environmental hazards
 - Specify resource distribution (health pickups, save points, shops)
 
-**Gate**: Use `AskUserQuestion` to present Step 3 outputs and confirm before proceeding to Step 4.
+**Gate**: Use `ask_user_question` to present Step 3 outputs and confirm before proceeding to Step 4.
 
 ### Step 4: Production Concepts + Accessibility (art-director + accessibility-specialist, parallel)
 
@@ -200,7 +200,7 @@ Spawn the `accessibility-specialist` agent in parallel to:
 
 Wait for both agents to return before proceeding.
 
-**Gate**: Use `AskUserQuestion` to present both Step 4 results. If the accessibility-specialist returned any BLOCKING concerns, highlight them prominently and offer:
+**Gate**: Use `ask_user_question` to present both Step 4 results. If the accessibility-specialist returned any BLOCKING concerns, highlight them prominently and offer:
 - (a) Return to level-designer and art-director to redesign the flagged elements before Step 5
 - (b) Document as a known accessibility gap and proceed to Step 5 with the concern explicitly logged in the final report
 
@@ -221,7 +221,7 @@ itself; do not re-spawn `level-designer` and re-send all outputs verbatim.** Tha
 second spawn pays a fresh agent's overhead plus a full re-transmission of context
 the orchestrator already has, to move text it is already holding. After compiling
 into the level-design template format, ask the user directly via
-`AskUserQuestion`: "May I write the compiled level design to
+`ask_user_question`: "May I write the compiled level design to
 `design/levels/[level-name].md`?" On approval, write it.
 
 5. **Save to** `design/levels/[level-name].md` after that approval.
@@ -240,7 +240,7 @@ Per-agent artifacts (narrative docs, test checklists) are written by the
 sub-agent that produced them, under the **bounded exception** documented above
 under "Why this does not violate the Collaboration Protocol" — the path is one
 you named, the artifact is new under `production/`, `docs/` or `tests/`, and the
-phase is gated by an `AskUserQuestion`. A sub-agent does **not** prompt per write
+phase is gated by an `ask_user_question`. A sub-agent does **not** prompt per write
 inside those bounds; outside them it must ask. The **one exception is the final
 compiled level-design document**: the
 orchestrator already holds every input, so it compiles and writes that file

@@ -8,7 +8,7 @@
 Once the engine is chosen:
 
 - If version was provided, use it
-- If no version provided, use WebSearch to find the latest stable release:
+- If no version provided, use `web_search` to find the latest stable release:
   - Search: `"[engine] latest stable version [current year]"`
   - Confirm with the user: "The latest stable [engine] is [version]. Use this?"
 

@@ -61,7 +61,7 @@ without those lines was written before they existed and covers nothing.
   Never offer to stand on it or to scope a re-run from it.
 - **Everything `UNCHANGED`** — nothing this review reads has changed since
   that report; re-running reproduces it. Surface the prior report's date,
-  mode and verdict and offer via `AskUserQuestion`: `[A] Stand on the prior
+  mode and verdict and offer via `ask_user_question`: `[A] Stand on the prior
   report (Recommended)` / `[B] Re-run the full review anyway` — `guided`
   proceeds with [A] and notes it; `autonomous` logs via `log_decision` and
   stands on the prior report.

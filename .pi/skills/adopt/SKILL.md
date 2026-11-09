@@ -41,7 +41,7 @@ wrong internal format.
 ---
 
 **Automation mode**: Resolve `modes.automation` (`project.local.yaml` →
-`project.yaml` → default `collaborative`). Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+`project.yaml` → default `collaborative`). Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 

@@ -30,7 +30,7 @@ Two modes:
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt). In collaborative mode the
 system list, dependency, priority and write approvals are separate questions:
@@ -92,7 +92,7 @@ limit.
 
 **If the systems index already exists:**
 - Read it and present current status to the user
-- Use `AskUserQuestion` to ask:
+- Use `ask_user_question` to ask:
   "The systems index already exists with [N] systems ([M] designed, [K] not started).
   What would you like to do?"
   - Options: "Update the index with new systems", "Design the next undesigned system",
@@ -144,7 +144,7 @@ Present the enumeration organized by category. For each system, show:
 - Brief description (1 sentence)
 - Whether it was explicit (from concept) or implicit (inferred)
 
-Then use `AskUserQuestion` to capture feedback:
+Then use `ask_user_question` to capture feedback:
 - "Are there systems missing from this list?"
 - "Should any of these be combined or split?"
 - "Are there systems listed that this game does NOT need?"
@@ -192,7 +192,7 @@ Show the dependency map as a layered list. Highlight:
 - Any "bottleneck" systems (many others depend on them — these are high-risk)
 - Any systems with no dependents (leaf nodes — lower risk, can be designed late)
 
-Use `AskUserQuestion` to ask: "Does this dependency ordering look right? Any
+Use `ask_user_question` to ask: "Does this dependency ordering look right? Any
 dependencies I'm missing or that should be removed?"
 
 **Review mode check** — apply before spawning TD-SYSTEM-BOUNDARY:
@@ -200,7 +200,7 @@ dependencies I'm missing or that should be removed?"
 - `lean` → skip (not a PHASE-GATE). Note: "TD-SYSTEM-BOUNDARY skipped — Lean mode." Proceed to priority assignment.
 - `full` → spawn as normal.
 
-**After dependency mapping is approved, spawn `technical-director` via `Agent` using gate TD-SYSTEM-BOUNDARY (`.pi/docs/director-gates/td-system-boundary.md`) before proceeding to priority assignment.**
+**After dependency mapping is approved, spawn `technical-director` via `agent()` using gate TD-SYSTEM-BOUNDARY (`.pi/docs/director-gates/td-system-boundary.md`) before proceeding to priority assignment.**
 
 Pass: the dependency graph (each system → what it depends on), layer assignments, bottleneck systems, and any circular dependencies with their proposed resolutions.
 
@@ -226,7 +226,7 @@ Use these heuristics for initial assignment:
 Present the priority assignments in a table. For each tier, explain why systems
 were placed there.
 
-Use `AskUserQuestion` to ask: "Do these priority assignments match your vision?
+Use `ask_user_question` to ask: "Do these priority assignments match your vision?
 Which systems should be higher or lower priority?"
 
 Explain reasoning in conversation: "I placed [system] in MVP because the core loop
@@ -260,7 +260,7 @@ both, and cites the pillar it serves:
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SCOPE skipped — Lean mode." Proceed to Step 4c.
 - `full` → spawn as normal.
 
-**After priorities are approved, spawn `producer` via `Agent` using gate PR-SCOPE (`.pi/docs/director-gates/pr-scope.md`) before writing the index.**
+**After priorities are approved, spawn `producer` via `agent()` using gate PR-SCOPE (`.pi/docs/director-gates/pr-scope.md`) before writing the index.**
 
 Pass the gate's fields from the index: the full vision scope (every system in the index), the MVP definition (the MVP tier's systems), the scope tiers (system count per milestone tier, with estimated implementation volume — system count × average complexity), the stated project timeline as the timeline estimate, and team size.
 
@@ -320,11 +320,11 @@ waiting for an explicit "yes". Say what you wrote afterwards.
 - `lean` → skip (not a PHASE-GATE). Note: "CD-SYSTEMS skipped — Lean mode." Proceed to Step 5c.
 - `full` → spawn as normal.
 
-**After the systems index is written, spawn `creative-director` via `Agent` using gate CD-SYSTEMS (`.pi/docs/director-gates/cd-systems.md`).**
+**After the systems index is written, spawn `creative-director` via `agent()` using gate CD-SYSTEMS (`.pi/docs/director-gates/cd-systems.md`).**
 
 Pass: systems index path; game pillars and core fantasy — from `design/gdd/game-concept.md`, or at `minimal` the pitch and "what they feel" line of `design/game-brief.md`, which has no pillars; the priority tier assignments for every tier (MVP / Vertical Slice / Alpha / Full Vision); and the high-risk and bottleneck systems from the dependency map.
 
-Present the assessment. If REJECT, revise the system set with the user before GDD authoring begins. If CONCERNS, show them and use `AskUserQuestion`: `Revise the system set` / `Accept — record them in the index` / `Discuss further`. On *Revise*, rework the affected systems with the user and ask again before re-writing the index. On *Accept* — the option names the edit, so choosing it is the ask — record them in the systems index as a `> **Creative Director Note**`
+Present the assessment. If REJECT, revise the system set with the user before GDD authoring begins. If CONCERNS, show them and use `ask_user_question`: `Revise the system set` / `Accept — record them in the index` / `Discuss further`. On *Revise*, rework the affected systems with the user and ask again before re-writing the index. On *Accept* — the option names the edit, so choosing it is the ask — record them in the systems index as a `> **Creative Director Note**`
 placed **directly beneath the `## Priority Tiers` table**, naming the tier each
 concern applies to — e.g. `> **Creative Director Note** (MVP): …`.
 `templates/systems-index.md` has a Priority Tiers *definition table*, not a
@@ -362,7 +362,7 @@ This phase is entered when:
   "Would you like to start designing individual systems now? The first system in
   the design order is [name]. Or would you prefer to stop here and come back later?"
 
-Use `AskUserQuestion` for: "Start designing [system-name] now, pick a different
+Use `ask_user_question` for: "Start designing [system-name] now, pick a different
 system, or stop here?"
 
 ### Step 6b: Hand Off to /skill:design-system
@@ -384,7 +384,7 @@ The `/skill:design-system` skill handles the full GDD authoring process:
 
 ### Step 6c: Loop or Stop
 
-After `/skill:design-system` completes, use `AskUserQuestion`:
+After `/skill:design-system` completes, use `ask_user_question`:
 - "Continue to the next system ([next system name])?"
 - "Pick a different system?"
 - "Stop here for this session?"
@@ -395,7 +395,7 @@ If continuing, return to Step 6a.
 
 ## Phase 7: Suggest Next Steps
 
-After the systems index is created (or after designing some systems), present next actions using `AskUserQuestion`:
+After the systems index is created (or after designing some systems), present next actions using `ask_user_question`:
 
 - "Systems index is written. What would you like to do next?"
   - [A] Start designing GDDs — run `/skill:design-system [first-system-in-order]`
@@ -420,7 +420,7 @@ describe what collaborative mode requires, not universal behavior.
 This skill follows the collaborative design principle at every phase:
 
 1. **Question -> Options -> Decision -> Draft -> Approval** at every step
-2. **AskUserQuestion** at every decision point (Explain -> Capture pattern):
+2. **ask_user_question** at every decision point (Explain -> Capture pattern):
    - Phase 2: "Missing systems? Combine or split?"
    - Phase 3: "Dependency ordering correct?"
    - Phase 4: "Priority assignments match your vision?"

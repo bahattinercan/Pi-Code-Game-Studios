@@ -25,7 +25,7 @@ file.
 
 ### Step 2 — Fetch Migration Guide
 
-Use WebSearch and WebFetch to locate the official migration guide between
+Use `web_search` and `fetch_content` to locate the official migration guide between
 `old-version` and `new-version`:
 
 - Search: `"[engine] [old-version] to [new-version] migration guide"`

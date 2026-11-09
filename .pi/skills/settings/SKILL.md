@@ -312,7 +312,7 @@ When the effective value is empty (key not set anywhere), print just:
    `bash .pi/scripts/config-set.sh <key> <value> --dry-run` and read its
    `known` row. If it says `yes`, proceed. If it says `no`, nothing in CCGS reads
    that key, so writing it changes nothing; it is most often a typo. Do not
-   write yet: say so, and ask via `AskUserQuestion` with the options
+   write yet: say so, and ask via `ask_user_question` with the options
    `Use <nearest> instead` (only when the row ends `nearest: <key>`),
    `Write <key> anyway`, `Cancel`. Continue only on an explicit choice; with
    `Use <nearest> instead`, start this phase again with that key. A skipped or
@@ -331,7 +331,7 @@ When the effective value is empty (key not set anywhere), print just:
    it returns a non-empty value, print BEFORE the approval prompt:
    > "Note: this setting is currently locally overridden in `project.local.yaml` (value: `<localvalue>`). Writing to `project.yaml` will not change your effective value."
 
-4. **Approval gate**: use `AskUserQuestion`:
+4. **Approval gate**: use `ask_user_question`:
    - Prompt: ``Set `<key>=<value>` in `project.yaml`?``
    - Options: `[A] Yes, write` / `[B] No, cancel`
 
@@ -366,7 +366,7 @@ When the effective value is empty (key not set anywhere), print just:
 
    **Case D — file structure is unusual** (commented-out keys with the
    same name, ambiguous nesting, malformed YAML): STOP and ask via
-   `AskUserQuestion`:
+   `ask_user_question`:
    > "Couldn't find a clean insertion point for `<key>` in `project.yaml`. Show me what to do."
 
 6. Confirm: ``Set `<key>=<value>` in `project.yaml`.``
@@ -416,7 +416,7 @@ When the effective value is empty (key not set anywhere), print just:
    > "Cannot create `project.local.yaml` — `project.yaml` is missing. Run `/skill:start` to create one first."
    Exit. (Local overrides require a base, per spec.)
 
-4. **Approval gate**: use `AskUserQuestion`:
+4. **Approval gate**: use `ask_user_question`:
    - Prompt: ``Set `<key>=<value>` in `project.local.yaml` (your personal override, gitignored)?``
    - Options: `[A] Yes, write` / `[B] No, cancel`
 

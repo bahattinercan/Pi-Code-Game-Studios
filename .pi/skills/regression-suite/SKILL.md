@@ -33,7 +33,7 @@ and known failure points. This skill maintains that list.
 
 ---
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -66,7 +66,7 @@ was scanned.
   existing test coverage; flag paths with no regression test
 - `/skill:regression-suite report` — read-only status report (no writes); suitable
   for sprint reviews
-- No argument — if a sprint is clearly active (sprint plan exists with in-progress stories), run `update`. If ambiguous or no active sprint is detected, use `AskUserQuestion`:
+- No argument — if a sprint is clearly active (sprint plan exists with in-progress stories), run `update`. If ambiguous or no active sprint is detected, use `ask_user_question`:
   - Prompt: "No subcommand specified. Which mode do you want to run?"
   - Options:
     - `[A] update — scan new bug fixes this sprint and add missing regression tests`

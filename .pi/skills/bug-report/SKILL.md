@@ -10,7 +10,7 @@ for the values it names:
 bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation
 ```
 **Automation mode**: Resolve `modes.automation` (`project.local.yaml` →
-`project.yaml` → default `collaborative`). Every `AskUserQuestion` call and
+`project.yaml` → default `collaborative`). Every `ask_user_question` call and
 every file write follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
@@ -124,11 +124,11 @@ Read that file. Extract the reproduction steps and expected result.
 1. **Re-run reproduction steps** — use Grep/Glob to check whether the root cause code path still exists as described. If the fix removed or changed it, note the change.
 2. **Run the related test** — if the bug's system has a test file in the engine's test root (`tests/` Godot, `Assets/Tests/` Unity, `Source/<Module>/Private/Tests/` Unreal — `.pi/docs/directory-structure.md`), run it via Bash with `commands.test` from `project.yaml`, narrowed to the affected suite where the runner allows — never a runner line written from memory, which drops the flags the engine needs (gdUnit4 hangs without `--remote-debug tcp://127.0.0.1:0`) — and report pass/fail. `commands.test` unset → no test ran: name the unset key and go on to step 3.
 3. **Check for regression** — grep the codebase for any new occurrence of the pattern that caused the bug.
-4. **Manual verification** — when no related test ran (none covers the bug — the usual case where `qa.level` waives tests — `commands.test` is unset, or the run did not complete), or the bug's Category is Visual or UI, whose look no automated test checks, ask via `AskUserQuestion`: "Did you play the reproduction steps in [bug file] on a build with the fix? Which build?" —
+4. **Manual verification** — when no related test ran (none covers the bug — the usual case where `qa.level` waives tests — `commands.test` is unset, or the run did not complete), or the bug's Category is Visual or UI, whose look no automated test checks, ask via `ask_user_question`: "Did you play the reproduction steps in [bug file] on a build with the fix? Which build?" —
    `[No longer occurs]` / `[Still occurs]` / `[Not played yet]`.
    Record the answer and the build as the user gives them; a changed code path is never taken as their answer.
    **Run as a subagent?** `qa-lead` preloads this skill, and a subagent has no
-   `AskUserQuestion`. End your reply with the question and its three options as
+   `ask_user_question`. End your reply with the question and its three options as
    a short list, and give no verdict yet: whoever called you asks the user, and
    the verdict waits for the answer.
 

@@ -10,7 +10,7 @@
 - 7. Closing Next-Step Widget: per gate, and the `workflow: minimal` route
 - 8. Follow-Up Actions
 
-After the verdict is presented and any stage update is complete (project.yaml + stage.txt), close with a structured next-step prompt using `AskUserQuestion`.
+After the verdict is presented and any stage update is complete (project.yaml + stage.txt), close with a structured next-step prompt using `ask_user_question`.
 
 **Tailor the options to the gate that just ran.** The argument names the phase
 being entered, so `/skill:gate-check systems-design` is the Concept → Systems Design gate.

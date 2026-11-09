@@ -21,7 +21,7 @@ Record the choice. It determines the AGENTS.md template, naming conventions, spe
 
 ### Primary Language (Unreal)
 
-If Unreal was chosen, ask via `AskUserQuestion`: "Will most gameplay logic live in
+If Unreal was chosen, ask via `ask_user_question`: "Will most gameplay logic live in
 C++ or in Blueprints?" — `[A] C++ (Blueprints for tuning and prototyping)` /
 `[B] Blueprint-primary (C++ only where needed)`. Default to C++ if the user has no
 preference. The answer sets `engine.language` (`"C++"` or `"Blueprint"`).

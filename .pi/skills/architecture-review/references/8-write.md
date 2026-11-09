@@ -13,7 +13,7 @@
 - Reflexion Log Update
 - Session State Update
 
-Use `AskUserQuestion` for the write approval:
+Use `ask_user_question` for the write approval:
 - "Review complete. What would you like to write?"
   - [A] Write all three files — review report (`docs/architecture/architecture-review-[date].md`), traceability index (`docs/architecture/requirements-traceability.md`), TR registry (`docs/architecture/tr-registry.yaml`)
   - [B] Write review report only — `docs/architecture/architecture-review-[date].md`
@@ -53,7 +53,7 @@ header, where the Phase 7 template shows them.
 
 ### RTM Output (rtm mode only)
 
-For `rtm` mode, use `AskUserQuestion`:
+For `rtm` mode, use `ask_user_question`:
 - "May I write the full Requirements Traceability Matrix?"
   - [A] Yes — write to `docs/architecture/requirements-traceability.md`
   - [B] Not yet — show me the full RTM data first, then ask again

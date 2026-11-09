@@ -231,6 +231,33 @@ plus the false positives that motivated the rewrite) and 11 path cases.
   `ccgs-guard.ts`, and the allow list (`pytest`, `dir`) is unnecessary here —
   Pi asks for permissions itself rather than through a static allow list.
 
+### 12. Delegation and tool names
+
+Claude Code delegated by spawning subagents through its `Agent` tool. Pi has no
+such tool — delegation is the `workflow` tool calling `agent(prompt, {
+agentType })`, which now resolves against the 49 definitions. 69 mentions across
+the skills said "Spawn `x` via `Agent`", which would have had the model reaching
+for a tool that does not exist:
+
+- `Spawn \`x\` via \`Agent\`` → `Delegate to \`x\` with the workflow tool:
+  \`agent("<the brief below>", { agentType: "x" })\``
+- "Issue all `Agent` calls simultaneously" → "Put every `agent()` call in one
+  `parallel()` batch"
+- Remaining `` `Agent` `` mentions → `` `agent()` ``
+
+Tool names the skills also assumed: `AskUserQuestion` → `ask_user_question`,
+`TodoWrite` → `todo`, `WebSearch` → `web_search`, `WebFetch` → `fetch_content`.
+
+### 13. A greedy parse the rename broke
+
+`project-state.sh` and `yaml-helper.sh` read the legacy `Engine:` line with
+`sed 's/.*://'`. That is greedy, and the placeholder now reads "run
+/skill:setup-engine" — so the last colon in the line won, and the resolved engine
+became `setup-engine]` instead of "unset". Both readers now strip up to the first
+colon (`s/^[^:]*:[[:space:]]*//`), and the placeholder is colon-free. This is the
+class of bug a port introduces and no unit test sees: the *data* the code parses
+changed shape.
+
 ## Proven in a live session
 
 The extension was loaded by a real Pi process (`pi -a --print`, project trusted
@@ -241,6 +268,7 @@ for the run) and did what the unit tests said it would:
 | `chmod 777 /tmp/…` | refused: *"chmod 777 is denied: world-writable files in a repository are a supply-chain hole."* |
 | `read .env` | refused: *"`.env` is a secrets file, denied by the original Read and Edit rules for .env paths."* |
 | `write src/gameplay/probe.gd` | allowed, and the `gameplay-code` rule was injected with it — the model cited it unprompted |
+| `/skill:help`, unmodified | ran its Step 0 (`resolve_config`), then `artifact-check.sh` and `story-status.sh`, and reported the project as a fresh minimal scaffold with `/skill:setup-engine` as the next step |
 
 That first run also found a defect the unit tests could not: **Pi loads every
 `.ts` file under `.pi/extensions/` as an extension**, so the two helper modules
@@ -252,7 +280,13 @@ That first run also found a defect the unit tests could not: **Pi loads every
 Still unproven:
 
 - No workflow run has dispatched an `agentType` from the 49-definition registry
-  yet — that path is validated by parsing, not by a dispatch.
+  yet — that path is validated by parsing and by the rewritten delegation
+  instructions, not by an actual dispatch. Anything that spawns a director,
+  `team-*`, `/skill:code-review` and the `/skill:dev-story` hand-off all depend
+  on it.
+- The interactive skills have only been read, not driven. `/skill:help` was run
+  end to end; `/skill:start`, `/skill:setup-engine` and `/skill:brainstorm` ask
+  questions and need a real session with a human answering.
 - The hook adapter has been seen to block, but not yet to warn: the warning path
   (`systemMessage` → notify, `additionalContext` → message) is exercised only by
   the contract tests in the gate.

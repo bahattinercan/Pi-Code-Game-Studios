@@ -40,12 +40,12 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    decisions from dependency GDDs that constrain it.
 
 2. **Questions**: Ask clarifying questions specific to this section. Use
-   `AskUserQuestion` for constrained questions, conversational text for open-ended
+   `ask_user_question` for constrained questions, conversational text for open-ended
    exploration.
 
 3. **Options**: Where the section involves design choices (not just documentation),
    present 2-4 approaches with pros/cons. Explain reasoning in conversation text,
-   then use `AskUserQuestion` to capture the decision.
+   then use `ask_user_question` to capture the decision.
 
 4. **Decision**: User picks an approach or provides custom direction.
 
@@ -56,7 +56,7 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    (`.pi/docs/automation-modes.md`):
 
    **In `collaborative` mode**: Immediately after the draft — in the SAME
-   response — use `AskUserQuestion`. **NEVER use plain text. NEVER skip
+   response — use `ask_user_question`. **NEVER use plain text. NEVER skip
    this step.**
    - Prompt: "Approve the [Section Name] section?"
    - Options: `[A] Approve — write it to file` / `[B] Make changes — describe what to fix` / `[C] Start over`
@@ -121,7 +121,7 @@ must say so in the output, whichever mode skipped it.
 
 Append `(Recommended)` to the appropriate option text in each tab.
 
-**Framing questions (ask BEFORE drafting)**: Use `AskUserQuestion` with a multi-tab widget:
+**Framing questions (ask BEFORE drafting)**: Use `ask_user_question` with a multi-tab widget:
 - Tab "Framing" — "How should the overview frame this system?" Options: `[A] As a data/infrastructure layer (technical framing)` / `[B] Through its player-facing effect (design framing)` / `[C] Both — describe the data layer and its player impact`
 - Tab "ADR ref" — "Should the overview reference the existing ADR for this system?" Options: `[A] Yes — cite the ADR for implementation details` / `[B] No — keep the GDD at pure design level`
 - Tab "Fantasy" — "Does this system have a player fantasy worth stating?" Options: `[A] Yes — players feel it directly` / `[B] No — pure infrastructure, players feel what it enables`
@@ -165,7 +165,7 @@ Framing tab above.
 
 Append `(Recommended)` to the appropriate option text.
 
-**Framing question (ask BEFORE drafting)**: Use `AskUserQuestion`:
+**Framing question (ask BEFORE drafting)**: Use `ask_user_question`:
 - Prompt: "Is this system something the player engages with directly, or infrastructure they experience indirectly?"
 - Options: `[A] Direct — player actively uses or feels this system` / `[B] Indirect — player experiences the effects, not the system` / `[C] Both — has a direct interaction layer and infrastructure beneath it`
 
@@ -185,7 +185,7 @@ quote the relevant pillar text.
 - `full` → spawn as described below.
 
 **Agent delegation (MANDATORY)**: After the framing answer is given but before drafting,
-spawn `creative-director` via `Agent`:
+spawn `creative-director` via `agent()`:
 - Provide: system name, framing answer (direct/indirect/both), game pillars, any reference games the user mentioned, the game concept summary
 - Ask: "Shape the Player Fantasy for this system. What emotion or power fantasy should it serve? What player moment should we anchor to? What tone and language fits the game's established feeling? Be specific — give me 2-3 candidate framings."
 - Collect the creative-director's framings and present them to the user alongside the draft.
@@ -219,12 +219,12 @@ This is usually the largest section. Break it into sub-sections:
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Before drafting Section C, spawn specialist agents via `Agent` in parallel:
+**Agent delegation (MANDATORY)**: Before drafting Section C, spawn specialist agents via `agent()` in parallel:
 - Look up the system category in the routing table (Section 6 of this skill)
 - Spawn the Primary Agent AND Supporting Agent(s) listed for this category
 - Provide each agent: system name, game concept summary, pillar set, dependency GDD excerpts, the specific section being worked on
 - Collect their findings before drafting
-- Surface any disagreements between agents to the user via `AskUserQuestion`
+- Surface any disagreements between agents to the user via `ask_user_question`
 - Draft only after receiving specialist input
 
 **Do NOT draft Section C without first consulting the appropriate specialists.** A `systems-designer` reviewing rules and mechanics will catch design gaps the main session cannot.
@@ -277,10 +277,10 @@ table. A formula without defined variables cannot be implemented without guesswo
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Before proposing any formulas or balance values, spawn specialist agents via `Agent` in parallel:
+**Agent delegation (MANDATORY)**: Before proposing any formulas or balance values, spawn specialist agents via `agent()` in parallel:
 - **Always spawn `systems-designer`**: provide Core Rules from Section C, tuning goals from user, balance context from dependency GDDs. Ask them to propose formulas with variable tables and output ranges.
 - **For economy/cost systems, also spawn `economy-designer`**: provide placement costs, upgrade cost intent, and progression goals. Ask them to validate cost curves and ratios.
-- Present the specialists' proposals to the user for review via `AskUserQuestion`
+- Present the specialists' proposals to the user for review via `ask_user_question`
 - The user decides; the main session writes to file
 - **Do NOT invent formula values or balance numbers without specialist input.** A user without balance design expertise cannot evaluate raw numbers — they need the specialists' reasoning.
 
@@ -314,7 +314,7 @@ design question, not a specification.
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Spawn `systems-designer` via `Agent` before finalising edge cases. Provide: the completed Sections C and D, and ask them to identify edge cases from the formula and rule space that the main session may have missed. For narrative systems, also spawn `narrative-director`. Present their findings and ask the user which to include.
+**Agent delegation (MANDATORY)**: Delegate to `systems-designer` with the workflow tool: `agent("<the brief below>", { agentType: "systems-designer" })` before finalising edge cases. Provide: the completed Sections C and D, and ask them to identify edge cases from the formula and rule space that the main session may have missed. For narrative systems, also spawn `narrative-director`. Present their findings and ask the user which to include.
 
 **Cross-reference**: Check edge cases against dependency GDDs. If a dependency
 defines a floor, cap, or resolution rule that this system could violate, flag it.
@@ -403,7 +403,7 @@ be independently verifiable by a QA tester without reading the GDD.
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Spawn `qa-lead` via `Agent` before finalising acceptance criteria. Provide: the completed GDD sections C, D, E, and ask them to validate that the criteria are independently testable and cover all core rules and formulas. Surface any gaps or untestable criteria to the user.
+**Agent delegation (MANDATORY)**: Delegate to `qa-lead` with the workflow tool: `agent("<the brief below>", { agentType: "qa-lead" })` before finalising acceptance criteria. Provide: the completed GDD sections C, D, E, and ask them to validate that the criteria are independently testable and cover all core rules and formulas. Surface any gaps or untestable criteria to the user.
 
 **Questions to ask**:
 - What's the minimum set of tests that prove this works?
@@ -439,7 +439,7 @@ exactly once, so nothing falls through:
 > **`Gameplay` belongs in this list.** It is the category `/skill:map-systems` assigns
 > to combat, AI and movement — the largest bucket in most action games.
 
-For required systems: **spawn `art-director` via `Agent`** before drafting this section. Provide: system name, game concept, game pillars, art bible sections 1–4 if they exist. Ask them to specify: (1) VFX and visual feedback requirements for this system's events, (2) any animation or visual style constraints, (3) which art bible principles most directly apply to this system. Present their output; do NOT leave this section as `[To be designed]` for visual systems.
+For required systems: **spawn `art-director` via `agent()`** before drafting this section. Provide: system name, game concept, game pillars, art bible sections 1–4 if they exist. Ask them to specify: (1) VFX and visual feedback requirements for this system's events, (2) any animation or visual style constraints, (3) which art bible principles most directly apply to this system. Present their output; do NOT leave this section as `[To be designed]` for visual systems.
 
 **Review mode check** (apply before spawning):
 - `solo` → skip this agent spawn. Draft the section without the specialist. Add a note: "`art-director` not consulted — Solo mode. Review manually before production."
@@ -474,7 +474,7 @@ after the required sections.
 > Visual/Audio or Game Feel mandatory. §1 wins: at `minimal` both drop to
 > optional and the whole set goes through the widget below.
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - "The required sections for this workflow tier are complete. Which of the
   remaining template sections do you want to define?"
   - Options: "All of them", "Just Cross-References and open questions", "Skip — I'll add these later"

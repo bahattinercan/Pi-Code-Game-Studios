@@ -13,7 +13,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation
 
 
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -181,7 +181,7 @@ Choose the Health Summary by the worst finding, first match wins:
 
 ## Phase 6: Fix & Verify Cycle
 
-After presenting the report, use `AskUserQuestion`:
+After presenting the report, use `ask_user_question`:
 - Prompt: "Balance check complete. What would you like to do next?"
 - Options:
   - `[A] Fix highest-priority issue now — walk me through it`
@@ -189,7 +189,7 @@ After presenting the report, use `AskUserQuestion`:
   - `[C] Stop here — I'll review the findings manually`
 
 **Run as a subagent?** `game-designer` preloads this skill, and a subagent has
-no `AskUserQuestion`. End your reply with the question and these three options
+no `ask_user_question`. End your reply with the question and these three options
 as a short list, and stop: whoever called you asks the user and passes the
 answer back.
 

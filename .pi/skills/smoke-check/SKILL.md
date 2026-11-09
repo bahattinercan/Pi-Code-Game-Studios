@@ -23,7 +23,7 @@ Handing a broken build to QA wastes their time and demoralises the team.
 
 ---
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -94,6 +94,6 @@ describe what collaborative mode requires, not universal behavior.
   gaps for `/skill:story-done` to follow up on.
 - **`quick` argument** skips Phase 3 (coverage scan) and Phase 4 Batch 3.
   Use it for rapid re-checks after fixing a specific failure.
-- Use `AskUserQuestion` for all manual smoke check verification.
+- Use `ask_user_question` for all manual smoke check verification.
 - **Never write the report without asking** — Phase 6 requires explicit
   approval before any file is created.

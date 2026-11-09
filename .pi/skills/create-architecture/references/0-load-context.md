@@ -183,7 +183,7 @@ Post-Cutoff Versions: [list]
 - [GDD system name] → [domain] → [risk level]
 ```
 
-Use `AskUserQuestion`:
+Use `ask_user_question`:
 - Prompt: "One or more engine domains are HIGH RISK — the LLM's knowledge may be unreliable for these areas. Architectural recommendations in these domains should be cross-referenced with the engine docs before being acted on. How would you like to proceed?"
 - Options:
   - `[A] Proceed — flag HIGH RISK domains throughout the output`
@@ -194,7 +194,7 @@ Use `AskUserQuestion`:
 
 Glob `docs/architecture/architecture.md`. If it exists, this run updates it —
 it never replaces it unasked. Read its `## Document Status` block and its `##`
-headings, then use `AskUserQuestion`:
+headings, then use `ask_user_question`:
 - Prompt: "An architecture document already exists (v[N], [last updated]). What should this run do?"
 - Options: `[A] Update chosen sections in place` / `[B] Rewrite the whole document — replaces the existing file` / `[C] Stop`
 

@@ -29,7 +29,7 @@ completeness. This skill reviews the *relationships* between all GDDs.
 - Before `/skill:create-architecture` begins (architecture built on inconsistent GDDs
   inherits those inconsistencies)
 
-Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`
+Every `ask_user_question` call follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
 
@@ -58,7 +58,7 @@ surfaced as advisory only. At `minimal`, this skill is not applicable (no GDDs).
 ### Parallel Execution
 
 Phase 2 (Consistency) and Phase 3 (Design Theory) are independent — they read
-the same GDD inputs but produce separate reports. Spawn both as parallel `Agent`
+the same GDD inputs but produce separate reports. Spawn both as parallel `agent()`
 agents simultaneously rather than waiting for Phase 2 to complete before
 starting Phase 3. Collect both results before writing the combined report.
 
@@ -77,7 +77,7 @@ consistency and design-theory review is its domain.
 - The specific checklist items assigned to that agent's phase (Phase 2 gets 2a–2f; Phase 3 gets 3a–3g)
 - The engine name and version — `engine.name` and `engine.version` from `project.yaml`, resolving each field independently (if its key is absent or empty, use `.pi/docs/technical-preferences.md`) — plus `docs/engine-reference/[engine]/VERSION.md`
 
-Do not rely on the subagent to re-read these files — it has its own context window and cannot access Phase 1 results unless they are explicitly passed in the `Agent` prompt.
+Do not rely on the subagent to re-read these files — it has its own context window and cannot access Phase 1 results unless they are explicitly passed in the `agent()` prompt.
 
 ---
 

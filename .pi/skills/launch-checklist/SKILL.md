@@ -10,7 +10,7 @@ for the values it names:
 bash ".pi/hooks/yaml-helper.sh" resolve_config --keys rigor,workflow,project.stage,cert_tier,automation
 ```
 **Automation mode**: Resolve `modes.automation` (`project.local.yaml` →
-`project.yaml` → default `collaborative`). Every `AskUserQuestion` call and
+`project.yaml` → default `collaborative`). Every `ask_user_question` call and
 every file write follows `.pi/docs/automation-modes.md`
 (collaborative asks always · guided major-only · autonomous logs and proceeds;
 `automation_always_ask` categories always prompt).
@@ -351,7 +351,7 @@ of them stays unconfirmed and the Overall Status can only be NOT ASSESSED, so as
 
 For each of the seven sections, collect the items no scan or file settled (the
 Phase 3 counts and anything read in Phase 2 are not asked again) and ask **one
-`AskUserQuestion` per section**, listing those items numbered. Each item's
+`ask_user_question` per section**, listing those items numbered. Each item's
 answer is **yes / no / not yet / N/A**. Options: `Yes — all of them` /
 `Not yet — none of them` / `N/A — this section does not apply` /
 `Some differ — I'll answer per item` (the user then gives each numbered item its
