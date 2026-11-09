@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/asset-spec` turns one target's visual needs into asset specs with AI generation
+`/skill:asset-spec` turns one target's visual needs into asset specs with AI generation
 prompts. The argument names a target — `system:<name>`, `level:<name>` or
 `character:<name>` (an `entity:` entry from the inventory is read like a
 character) — plus an optional `--review full|lean|solo`. It reads the art bible
@@ -21,25 +21,25 @@ default, via `modes.rigor: minimal`) spawns no agents; `full` is also what
 `modes.rigor: full` resolves to. Every skipped agent is announced by name in
 the output. These are drafting consultations, not gates. The skill produces an
 artifact, not a judgement, so it has no run verdict; it closes with an
-`AskUserQuestion` offering the next target or `/asset-audit`.
+`AskUserQuestion` offering the next target or `/skill:asset-audit`.
 
 ---
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Check 3 passes on the `BLOCKED` keyword of its Error Recovery Protocol; the skill has no run verdict by design (artifact producer), and the run closes with "Asset specs complete for **[target]**. What's next?"
 - [ ] Contains "May I write" language for the spec file and "May I update" for the manifest
-- [ ] Has a next-step handoff (`/asset-spec [next-context]`, `/asset-audit`)
+- [ ] Has a next-step handoff (`/skill:asset-spec [next-context]`, `/skill:asset-audit`)
 
 ---
 
 ## Director Gate Checks
 
-No gate IDs and no `/gate-check`. The review mode controls drafting agents only:
+No gate IDs and no `/skill:gate-check`. The review mode controls drafting agents only:
 
 - **Full mode** (what `modes.rigor: full` resolves to): `art-director` and
   `technical-artist` spawned in parallel
@@ -55,7 +55,7 @@ No gate IDs and no `/gate-check`. The review mode controls drafting agents only:
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -71,7 +71,7 @@ Fixture defaults.
 - `design/narrative/characters/goblin-enemy.md` exists with a visual description
 - No `design/assets/asset-manifest.md`
 
-**Input:** `/asset-spec character:goblin-enemy`
+**Input:** `/skill:asset-spec character:goblin-enemy`
 
 **Expected behavior:**
 1. Skill reads the art bible, project config and the character doc before asking anything
@@ -87,7 +87,7 @@ Fixture defaults.
 6. After approval asks "May I write the spec to `design/assets/specs/goblin-enemy-assets.md`?"
 7. Creates the manifest after asking "May I update `design/assets/asset-manifest.md`?";
    IDs start at `ASSET-001`
-8. Phase 6 `AskUserQuestion` offers another target or `/asset-audit`
+8. Phase 6 `AskUserQuestion` offers another target or `/skill:asset-audit`
 
 **Assertions:**
 - [ ] Asset list is confirmed with `AskUserQuestion` before any spec is generated
@@ -96,7 +96,7 @@ Fixture defaults.
 - [ ] Each asset block has the field table, Art Bible Anchors (by section), a Generation Prompt and `Status: Needed`
 - [ ] "May I write" names `design/assets/specs/goblin-enemy-assets.md`
 - [ ] Manifest is created with a Progress Summary and IDs starting at `ASSET-001`
-- [ ] Phase 6 offers `/asset-audit` among the next steps
+- [ ] Phase 6 offers `/skill:asset-audit` among the next steps
 
 ---
 
@@ -108,17 +108,17 @@ Fixture defaults.
 - `design/art/art-bible.md` does NOT exist
 - `design/game-brief.md` does NOT exist
 
-**Input:** `/asset-spec system:combat`
+**Input:** `/skill:asset-spec system:combat`
 
 **Expected behavior:**
 1. Phase 1 reads for `design/art/art-bible.md` and finds nothing
 2. The minimal-path exception does not apply (no game brief)
-3. Skill stops with: "No art bible found. Run `/art-bible` first — asset specs are
+3. Skill stops with: "No art bible found. Run `/skill:art-bible` first — asset specs are
    anchored to the art bible's visual rules and asset standards."
 4. No asset identification, no agents, no files
 
 **Assertions:**
-- [ ] The "No art bible found. Run `/art-bible` first" message is shown
+- [ ] The "No art bible found. Run `/skill:art-bible` first" message is shown
 - [ ] No asset list is presented and no `Agent` call is made
 - [ ] No spec file or manifest is written
 - [ ] Specs are not generated with invented style rules
@@ -134,7 +134,7 @@ Fixture defaults.
   `design/assets/specs/combat-assets.md`
 - `design/gdd/tower-defense.md` Visual/Audio section lists a hit spark and a tower-build VFX
 
-**Input:** `/asset-spec system:tower-defense`
+**Input:** `/skill:asset-spec system:tower-defense`
 
 **Expected behavior:**
 1. Skill reads the manifest and globs `design/assets/specs/*.md` for shareable assets
@@ -161,7 +161,7 @@ Fixture defaults.
 - `design/gdd/combat.md` Visual/Audio section names a hit-spark VFX, a floating
   damage number (UI) and a hit sound (audio)
 
-**Input:** `/asset-spec system:combat`
+**Input:** `/skill:asset-spec system:combat`
 
 **Expected behavior:**
 1. Phase 2 lists all three assets grouped under VFX, UI and Audio and asks the user to confirm
@@ -188,19 +188,19 @@ Fixture defaults.
 - No `design/art/art-bible.md`
 - No character profile for `hero` in `design/narrative/` or `design/assets/entity-inventory.md`
 
-**Input:** `/asset-spec character:hero`
+**Input:** `/skill:asset-spec character:hero`
 
 **Expected behavior:**
 1. The minimal-path exception applies: the skill does not stop, and states at the top
    "Anchored to the brief's one-line art direction; there is no art bible, so colour,
    shape and asset-standard rules below are proposals, not constraints."
-2. `/art-bible` is offered once, as optional
+2. `/skill:art-bible` is offered once, as optional
 3. No profile found → `AskUserQuestion`: "No profile found for **hero**. Describe it
    briefly" with Describe / Skip / Stop options
 4. Solo mode: no `Agent` calls; the output announces "art-director and
    technical-artist skipped — Solo mode: specs derived in this session; technical
    constraints not validated."
-5. No gate IDs appear and `/gate-check` is not invoked
+5. No gate IDs appear and `/skill:gate-check` is not invoked
 
 **Assertions:**
 - [ ] Skill continues without an art bible and says the specs are anchored to the brief
@@ -222,7 +222,7 @@ Fixture defaults.
 - `design/narrative/characters/goblin-enemy.md` has since gained a charge-attack
   ability
 
-**Input:** `/asset-spec character:goblin-enemy`
+**Input:** `/skill:asset-spec character:goblin-enemy`
 
 **Expected behavior:**
 1. Phase 1 reads the existing spec file for this target as well as the character doc

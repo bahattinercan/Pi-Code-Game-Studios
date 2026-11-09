@@ -15,7 +15,7 @@
 #
 # EXPLICIT INVOCATION ONLY. No hook calls this. session-start.sh observes that
 # the file is large and names this script; the user decides whether to run it.
-# Helpers here emit observations, never verdicts (CLAUDE.md) -- and silently
+# Helpers here emit observations, never verdicts (AGENTS.md) -- and silently
 # moving a user's working notes would be a verdict.
 #
 # Usage:

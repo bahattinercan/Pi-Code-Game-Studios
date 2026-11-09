@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/project-stage-detect [role]` determines the project's development stage and
+`/skill:project-stage-detect [role]` determines the project's development stage and
 its gaps. It starts with a deterministic pass (`bash
 .pi/scripts/artifact-check.sh`, which reports PRESENT / ABSENT / SHORT /
 PATTERN_MISS / NO_CHECK per artifact), then scans `design/`, the code root,
@@ -24,7 +24,7 @@ The report carries **Stage Confidence**, first match wins: FAIL (critical gaps
 block progress) → CONCERNS (ambiguous signals — always when the configured and
 observed stages disagree) → NOT ASSESSED (a check the stage depends on did not
 run, named) → PASS (clearly detected). At `workflow: minimal` the configured
-stage is never advanced (no `/gate-check` on that path), so its lag behind the
+stage is never advanced (no `/skill:gate-check` on that path), so its lag behind the
 observed stage is reported but is not a disagreement. The skill shows the
 summary, gaps and next steps, then asks "May I write the full stage analysis to
 production/project-stage-report.md?". It never writes the stage itself. No
@@ -34,20 +34,20 @@ director gates apply.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains all seven stage names: Concept, Systems Design, Technical Setup, Pre-Production, Production, Polish, Release
 - [ ] Contains the Stage Confidence values PASS, CONCERNS, NOT ASSESSED and FAIL, with a first-match order
 - [ ] Contains "May I write" language before writing `production/project-stage-report.md`
-- [ ] Has a next-step handoff (Follow-Up Actions naming `/map-systems`, `/reverse-document`, `/architecture-decision`, `/sprint-plan`, `/milestone-review`)
+- [ ] Has a next-step handoff (Follow-Up Actions naming `/skill:map-systems`, `/skill:reverse-document`, `/skill:architecture-decision`, `/skill:sprint-plan`, `/skill:milestone-review`)
 
 ---
 
 ## Director Gate Checks
 
-None. `/project-stage-detect` is a diagnostic utility. It spawns no agents
+None. `/skill:project-stage-detect` is a diagnostic utility. It spawns no agents
 (`Agent` is not in its allowed tools) and no director gates apply.
 
 ---
@@ -56,7 +56,7 @@ None. `/project-stage-detect` is a diagnostic utility. It spawns no agents
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -75,7 +75,7 @@ Fixture defaults.
 - `production/sprints/sprint-002.md` exists
 - Resolved workflow tier: `full`
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. Skill runs `bash .pi/scripts/artifact-check.sh` before hand-scanning
@@ -102,7 +102,7 @@ Fixture defaults.
 - `design/gdd/` has 3 GDDs; `docs/architecture/` has no ADRs
 - Resolved workflow tier: `full`
 
-**Input:** `/project-stage-detect programmer`
+**Input:** `/skill:project-stage-detect programmer`
 
 **Expected behavior:**
 1. Skill finds no configured stage and auto-detects from the heuristics
@@ -110,7 +110,7 @@ Fixture defaults.
 3. The programmer role focuses recommendations on architecture docs, test
    coverage and missing ADRs
 4. The missing ADRs are surfaced as a gap with a clarifying question, and
-   `/architecture-decision` or `/reverse-document architecture` is suggested
+   `/skill:architecture-decision` or `/skill:reverse-document architecture` is suggested
 5. Skill asks before writing the report; no stage value is written anywhere
 
 **Assertions:**
@@ -129,7 +129,7 @@ Fixture defaults.
   doc, no epics
 - Resolved workflow tier: `full`
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. Skill reads the configured stage `Release`
@@ -152,19 +152,19 @@ Fixture defaults.
 
 **Fixture:**
 - Resolved workflow tier: `minimal`
-- `project.yaml` has `project.stage: Concept`, as `/start` wrote it — nothing on
-  the minimal path runs `/gate-check`, so it has never advanced
+- `project.yaml` has `project.stage: Concept`, as `/skill:start` wrote it — nothing on
+  the minimal path runs `/skill:gate-check`, so it has never advanced
 - `design/game-brief.md` exists; `engine.name: Godot`; `src/` has 5 source files
 - No GDDs, no art bible, no ADRs, no epics, no sprint plans
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. Skill uses the resolved tier `minimal` rather than assuming one
 2. It treats a brief plus an engine as the normal state
 3. It does NOT flag absent GDDs, art bible, UX specs, ADRs, epics or sprint
    plans as gaps
-4. It does not suggest `/reverse-document` for an absent GDD or `/sprint-plan`
+4. It does not suggest `/skill:reverse-document` for an absent GDD or `/skill:sprint-plan`
 5. The Production line reports stories through the brief's build order, never
    "no sprint plan"
 6. The heuristics observe Pre-Production (engine configured, fewer than 10 source
@@ -174,7 +174,7 @@ Fixture defaults.
 
 **Assertions:**
 - [ ] No absent GDD, art bible, ADR, epic or sprint plan is listed as a gap
-- [ ] `/reverse-document` is not suggested for an absent GDD (this fixture has a brief; Case 7 covers the missing brief), and `/sprint-plan` is not suggested
+- [ ] `/skill:reverse-document` is not suggested for an absent GDD (this fixture has a brief; Case 7 covers the missing brief), and `/skill:sprint-plan` is not suggested
 - [ ] The Production completeness line refers to the brief's build order
 - [ ] The configured Concept stage is not reported as a disagreement with the observed stage
 - [ ] Report is still offered behind the "May I write" ask
@@ -188,7 +188,7 @@ Fixture defaults.
 - Any review mode
 - User declines the "May I write" ask
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. Skill completes detection and shows the summary
@@ -217,7 +217,7 @@ Fixture defaults.
   ADRs — nothing the `standard` tier flags is missing
 - Resolved workflow tier: `standard`
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. The code root cannot be resolved (no engine, two candidate roots), so the
@@ -250,21 +250,21 @@ Fixture defaults.
 - Scenario (a): `src/` has 14 source files
 - Scenario (b): `src/` has 3 source files
 
-**Input:** `/project-stage-detect`
+**Input:** `/skill:project-stage-detect`
 
 **Expected behavior:**
 1. Skill uses the resolved tier `minimal`; the absent GDDs, ADRs, epics and sprint plans are still not gaps
 2. The absent `design/game-brief.md` is reported, and the Follow-Up Actions address it
-3. (a) The code root already holds the game (10 or more source files), so the follow-up is `/reverse-document design src/` — the brief is written from what is built — and not `/brainstorm`
-4. (b) With little code the follow-up is `/brainstorm`, not `/reverse-document`
-5. In both, `/sprint-plan` is not suggested; the report is offered behind the "May I write" ask
+3. (a) The code root already holds the game (10 or more source files), so the follow-up is `/skill:reverse-document design src/` — the brief is written from what is built — and not `/skill:brainstorm`
+4. (b) With little code the follow-up is `/skill:brainstorm`, not `/skill:reverse-document`
+5. In both, `/skill:sprint-plan` is not suggested; the report is offered behind the "May I write" ask
 
 **Assertions:**
 - [ ] The missing game brief is reported at `minimal`
-- [ ] (a) `/reverse-document design <code root>` is suggested, naming the resolved code root (`src/`), and `/brainstorm` is not
-- [ ] (b) `/brainstorm` is suggested and `/reverse-document` is not
+- [ ] (a) `/skill:reverse-document design <code root>` is suggested, naming the resolved code root (`src/`), and `/skill:brainstorm` is not
+- [ ] (b) `/skill:brainstorm` is suggested and `/skill:reverse-document` is not
 - [ ] The suggestion in both scenarios is conditioned on the source-file count (10 or more), as counted in the resolved code root
-- [ ] No GDD, ADR, epic or sprint-plan gap is reported, and `/sprint-plan` is not suggested
+- [ ] No GDD, ADR, epic or sprint-plan gap is reported, and `/skill:sprint-plan` is not suggested
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/design-review` reviews one game design document (GDD) against the project's
+`/skill:design-review` reviews one game design document (GDD) against the project's
 design standard (Overview, Player Fantasy, Detailed Rules, Formulas, Edge
 Cases, Dependencies, Tuning Knobs, Acceptance Criteria). Which sections are
 REQUIRED depends on the workflow tier resolved for that system: all 8 at
@@ -23,7 +23,7 @@ user approves via `AskUserQuestion`.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings or numbered steps
@@ -37,7 +37,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -55,11 +55,11 @@ Fixture defaults.
 - Every system named in its Dependencies section has a GDD in `design/gdd/`
 - No prior review log exists for this document
 
-**Input:** `/design-review design/gdd/light-manipulation.md --review lean`
+**Input:** `/skill:design-review design/gdd/light-manipulation.md --review lean`
 
 **Expected behavior:**
 1. Freshness check (`review-receipts.sh check …`) finds no receipt → full review
-2. Skill reads the target document in full and reads CLAUDE.md
+2. Skill reads the target document in full and reads AGENTS.md
 3. Skill runs `bash .pi/scripts/gdd-structure-check.sh design/gdd/light-manipulation.md`
 4. Skill Globs `design/gdd/` for each declared dependency
 5. Skill checks internal consistency, implementability and cross-system fit
@@ -88,7 +88,7 @@ Fixture defaults.
   Rules and Dependencies only; Formulas, Edge Cases, Tuning Knobs and
   Acceptance Criteria are absent
 
-**Input:** `/design-review design/gdd/light-manipulation.md --review lean`
+**Input:** `/skill:design-review design/gdd/light-manipulation.md --review lean`
 
 **Expected behavior:**
 1. `gdd-structure-check.sh` reports the 4 sections in its `ABSENT:` list
@@ -119,7 +119,7 @@ Fixture defaults.
   costs 50 credits") but no formula defines them
 - Acceptance Criteria are vague ("feels good" rather than measurable)
 
-**Input:** `/design-review design/gdd/oxygen.md --review lean`
+**Input:** `/skill:design-review design/gdd/oxygen.md --review lean`
 
 **Expected behavior:**
 1. Skill marks Formulas REQUIRED at `standard` because the system defines
@@ -141,7 +141,7 @@ Fixture defaults.
 **Fixture:**
 - The path provided does not exist in the project
 
-**Input:** `/design-review design/gdd/nonexistent.md --review lean`
+**Input:** `/skill:design-review design/gdd/nonexistent.md --review lean`
 
 (`lean`, so Phase 5 runs. In `solo` — what the review mode resolves to when
 `project.yaml` sets neither `modes.review_mode` nor `modes.rigor` — Phase 5 never
@@ -151,10 +151,10 @@ runs and the last assertion below would test nothing.)
 1. Freshness check reports no receipt; skill attempts to read the file
 2. File not found
 3. Skill outputs `### Verdict: NOT ASSESSED`, naming the missing document and
-   the skill that produces it (`/design-system`)
+   the skill that produces it (`/skill:design-system`)
 4. Skill does NOT produce a quality verdict or any tracking write
 5. Phase 5 skips the tracking widgets and goes to the final closing widget,
-   leading with `/design-system`
+   leading with `/skill:design-system`
 
 **Assertions:**
 - [ ] Verdict is NOT ASSESSED — not APPROVED, NEEDS REVISION or MAJOR REVISION NEEDED
@@ -170,7 +170,7 @@ runs and the last assertion below would test nothing.)
 - `design/gdd/light-manipulation.md` exists with all 8 sections, including
   formulas and combat stats
 
-**Case 5a — full:** `/design-review design/gdd/light-manipulation.md --review full`
+**Case 5a — full:** `/skill:design-review design/gdd/light-manipulation.md --review full`
 
 **Expected behavior:**
 1. Before spawning, skill prints "Full review: spawning specialist agents in parallel…"
@@ -189,14 +189,14 @@ runs and the last assertion below would test nothing.)
 - [ ] The `### Verdict:` line carries exactly one of this skill's words — APPROVED, NEEDS REVISION or MAJOR REVISION NEEDED — taken from the creative-director's synthesis; never a director-gate word such as READY, CONCERNS, NOT READY, APPROVE or REJECT
 - [ ] No director-gate IDs appear ("Gate: CD-…" etc.) — the senior review is a direct spawn, not a gate from `director-gates.md`
 
-**Case 5b — lean via the legacy flag:** `/design-review design/gdd/light-manipulation.md --depth lean`
+**Case 5b — lean via the legacy flag:** `/skill:design-review design/gdd/light-manipulation.md --depth lean`
 
 **Assertions (5b):**
 - [ ] `--depth lean` is treated as `--review lean`, and the skill says once that the flag was renamed
 - [ ] No `Agent` call is made; the review runs in-session
 - [ ] Phase 5's next-step widgets still run
 
-**Case 5c — solo:** `/design-review design/gdd/light-manipulation.md --review solo`
+**Case 5c — solo:** `/skill:design-review design/gdd/light-manipulation.md --review solo`
 
 **Assertions (5c):**
 - [ ] No `Agent` call is made
@@ -210,7 +210,7 @@ runs and the last assertion below would test nothing.)
 - `project.yaml` sets `modes.workflow: full` and `modes.review_mode: lean`
 - `design/gdd/light-manipulation.md` exists with all 8 sections
 
-**Input:** `/design-review design/gdd/light-manipulation.md`
+**Input:** `/skill:design-review design/gdd/light-manipulation.md`
 
 **Expected behavior:**
 1. No `--review` flag, so the skill takes `review_mode: lean` from the resolved
@@ -236,7 +236,7 @@ runs and the last assertion below would test nothing.)
 
 ## Coverage Notes
 
-- Cross-system consistency across many GDDs is covered by the `/review-all-gdds`
+- Cross-system consistency across many GDDs is covered by the `/skill:review-all-gdds`
   spec; this spec checks only one document's dependency references.
 - The freshness receipt paths (byte-identical re-review offering the prior
   verdict; a shallower logged review when a deeper one is asked for;

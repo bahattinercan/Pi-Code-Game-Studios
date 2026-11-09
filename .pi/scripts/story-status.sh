@@ -13,7 +13,7 @@
 # first: its work is already written, /story-done is quick, and closing it
 # keeps finished work from piling up behind started work.)
 #
-# OBSERVATIONS ONLY (CLAUDE.md): each line is a story and the status as written.
+# OBSERVATIONS ONLY (AGENTS.md): each line is a story and the status as written.
 # The skill decides what the first line means; nothing here says "next".
 #
 # Output, one line per unfinished story, file-name (build) order within a group:

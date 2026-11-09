@@ -2,11 +2,11 @@
 
 ## Skill Summary
 
-`/create-architecture` produces the master architecture document,
+`/skill:create-architecture` produces the master architecture document,
 `docs/architecture/architecture.md`. Phase 0 loads context and stops early when
-a prerequisite is missing: the engine reference docs (no engine → `/setup-engine`),
-`design/gdd/systems-index.md` (absent at `standard`/`full` → `/map-systems`),
-and `design/gdd/game-concept.md` (absent → `/brainstorm`; at `minimal` the
+a prerequisite is missing: the engine reference docs (no engine → `/skill:setup-engine`),
+`design/gdd/systems-index.md` (absent at `standard`/`full` → `/skill:map-systems`),
+and `design/gdd/game-concept.md` (absent → `/skill:brainstorm`; at `minimal` the
 one-page `design/game-brief.md` stands in). It extracts a Technical Requirements
 Baseline (`TR-[system]-[NNN]`) from the requirement-bearing sections of every
 GDD, inventories existing ADRs from their headers, and shows an Engine Knowledge
@@ -31,13 +31,13 @@ chosen; with no document yet, they offer the full walkthrough instead.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains sign-off verdict keywords in the gates' own words: `APPROVE`, `CONCERNS`, `FEASIBLE`, and the `REVISED after …` records
 - [ ] Contains ask-before-write language: write approvals via `AskUserQuestion` ("May I write the master architecture document?", "May I update the Document Status section…")
-- [ ] Has a next-step handoff at the end (`/architecture-decision`, `/architecture-review`, `/create-control-manifest`)
+- [ ] Has a next-step handoff at the end (`/skill:architecture-decision`, `/skill:architecture-review`, `/skill:create-control-manifest`)
 - [ ] Documents one consistent write model for `docs/architecture/architecture.md` — when the file is first created and when each approved section is written
 - [ ] Documents gate behavior: TD-ARCHITECTURE + LP-FEASIBILITY in full mode; each skipped in lean/solo with a named note
 - [ ] Documents the stop branches for a missing engine, systems index and game concept
@@ -71,7 +71,7 @@ skipped — Solo mode."
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -89,7 +89,7 @@ Fixture defaults.
 - No `docs/architecture/architecture.md`
 - TD-ARCHITECTURE returns APPROVE; LP-FEASIBILITY returns FEASIBLE
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. Phase 0a reads the four engine docs and only the `modules/` docs matching domains in the systems index
@@ -100,7 +100,7 @@ Fixture defaults.
 6. Phase 7: a one-paragraph summary, then "All sections approved. May I write the master architecture document?" with `[A] Yes — write…` / `[B] Show me the full draft inline first…` / `[C] Not yet…`
 7. Phase 7b: TD-ARCHITECTURE (passed the document path, the TR baseline, the ADR list with statuses and the knowledge gap inventory) and LP-FEASIBILITY review the written document; both assessments are shown side by side; the user chooses `Accept — proceed to handoff`
 8. The proposed Document Status block is shown, then "May I update the Document Status section with the sign-off results?"
-9. Phase 8 writes a summary to `production/session-state/active.md` and prints the handoff with the headings "Architecture Complete", "Run These ADRs Next", "Gate-Check Readiness"; its **Then:** line names `/architecture-review`, then `/create-control-manifest` once the review passes, and the readiness block names `/gate-check pre-production`
+9. Phase 8 writes a summary to `production/session-state/active.md` and prints the handoff with the headings "Architecture Complete", "Run These ADRs Next", "Gate-Check Readiness"; its **Then:** line names `/skill:architecture-review`, then `/skill:create-control-manifest` once the review passes, and the readiness block names `/skill:gate-check pre-production`
 
 **Assertions:**
 - [ ] The baseline uses `TR-[system]-[NNN]` IDs and is built from the scanned GDD sections, not whole-file reads
@@ -111,7 +111,7 @@ Fixture defaults.
 - [ ] TD-ARCHITECTURE is passed its four context items by name; the parent session does not read the gate file
 - [ ] The Document Status sign-off is written only after the "May I update" approval
 - [ ] The handoff uses the fixed template headings, with no trailing commentary
-- [ ] The handoff names `/gate-check pre-production` — never a `[stage]` placeholder, which while this skill runs would resolve to the gate already passed
+- [ ] The handoff names `/skill:gate-check pre-production` — never a `[stage]` placeholder, which while this skill runs would resolve to the gate already passed
 - [ ] `docs/architecture/architecture.md` is not written, even in part, before the Phase 7 ask; Phases 2–4 approvals go to the session state
 
 ---
@@ -124,7 +124,7 @@ Fixture defaults.
 - Scenario (a): TD-ARCHITECTURE returns APPROVE
 - Scenario (b): TD-ARCHITECTURE returns NOT ASSESSED, naming a context item it could not read
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. Step 3 shows the Technical Director assessment and the Lead Programmer verdict side by side, including the specific concern
@@ -150,7 +150,7 @@ Fixture defaults.
 - Same project as Case 1, but scenario (a): `project.yaml` has `modes.review_mode: lean`
 - Scenario (b): same project, invoked with `--review solo`
 
-**Input:** (a) `/create-architecture` (b) `/create-architecture --review solo`
+**Input:** (a) `/skill:create-architecture` (b) `/skill:create-architecture --review solo`
 
 **Expected behavior:**
 1. Phases 0–7 run as in Case 1; the document is written after the Phase 7 approval
@@ -176,7 +176,7 @@ Fixture defaults.
   `TD-ARCHITECTURE: REJECT` (a Core system depends on a Presentation-layer module);
   `lead-programmer` returns `LP-FEASIBILITY: FEASIBLE`
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. Both reviews are spawned in parallel at Phase 7b
@@ -201,16 +201,16 @@ Fixture defaults.
 - Scenario (b): `modes.workflow: standard`, `design/gdd/systems-index.md` exists but contains only template placeholders
 - Scenario (c): `modes.workflow: minimal`, no systems index, no game concept, `design/game-brief.md` exists
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. The skill checks both design files exist before reading either
-2. (a) Stops with: "No systems index found. Run `/map-systems` first…" — no baseline is built, no file is written
+2. (a) Stops with: "No systems index found. Run `/skill:map-systems` first…" — no baseline is built, no file is written
 3. (b) Treats the placeholder-only index as absent and stops the same way
 4. (c) Says the systems index is not required at `minimal`, reads `design/game-brief.md` in place of the concept, and proceeds
 
 **Assertions:**
-- [ ] (a) The skill stops with the `/map-systems` message and writes nothing
+- [ ] (a) The skill stops with the `/skill:map-systems` message and writes nothing
 - [ ] (b) A present-but-placeholder systems index is treated as absent
 - [ ] (c) At `minimal` the skill says the index is not required and proceeds from the game brief
 - [ ] At `standard` (a, b), no run continues past Phase 0b with a missing design file; at `minimal` (c) the brief stands in for both, and the run stops only if it is absent too
@@ -224,13 +224,13 @@ Fixture defaults.
 - Also `design/gdd/crafting.md`, written before the GDD template, with none of the scanned section headings
 - Baseline requirement `TR-combat-002` (combo state machine) is not covered by any ADR's GDD Requirements Addressed section or decision text
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. Phase 0b's section Grep matches nothing in `crafting.md`, so the skill full-reads it, says so, and its requirements enter the baseline as `TR-crafting-NNN` — a zero-match GDD is never treated as having no requirements
 2. Phase 0c lists ADR-0001 (Accepted) and ADR-0002 (Proposed) with their domains
 3. Phase 5 shows the ADR quality table and the traceability table, marking `TR-combat-002` as `❌ GAP`, with a covered/gap count
-4. The gap is listed under Required New ADRs, grouped by layer with Foundation first, as `/architecture-decision [title] → covers: TR-combat-002`
+4. The gap is listed under Required New ADRs, grouped by layer with Foundation first, as `/skill:architecture-decision [title] → covers: TR-combat-002`
 5. Phase 8's "Gate-Check Readiness" lists ADR-0002 under "Accept ADRs" and the unwritten ADRs under "Write ADRs"
 6. "Run These ADRs Next" lists at most three ADRs from Phase 6, in priority order
 
@@ -249,9 +249,9 @@ Fixture defaults.
 **Fixture:**
 - Same project as Case 1, but `project.yaml` has `modes.review_mode: lean`
 - Scenario (a): `docs/architecture/architecture.md` exists at `Version: 2` with every section written; the user picks `[A] Update chosen sections in place` and chooses Data Flow
-- Scenario (b): no `docs/architecture/architecture.md`; the input is `/create-architecture layers`
+- Scenario (b): no `docs/architecture/architecture.md`; the input is `/skill:create-architecture layers`
 
-**Input:** (a) `/create-architecture` (b) `/create-architecture layers`
+**Input:** (a) `/skill:create-architecture` (b) `/skill:create-architecture layers`
 
 **Expected behavior:**
 1. (a) Phase 0e finds the document, reads its Document Status and headings, and asks "An architecture document already exists (v2, [last updated]). What should this run do?" with `[A] Update chosen sections in place` / `[B] Rewrite the whole document — replaces the existing file` / `[C] Stop`
@@ -271,10 +271,10 @@ Fixture defaults.
 ### Case 7: Re-run with a TR registry — registered IDs are reused, new ones are provisional
 
 **Fixture:**
-- Same project as Case 1, but `/architecture-review` has run: `docs/architecture/tr-registry.yaml` holds `TR-combat-001` (`requirement: "Hitbox detection per-frame"`, `status: active`) and `TR-combat-002` (`requirement: "Old combo timing"`, `status: deprecated`)
+- Same project as Case 1, but `/skill:architecture-review` has run: `docs/architecture/tr-registry.yaml` holds `TR-combat-001` (`requirement: "Hitbox detection per-frame"`, `status: active`) and `TR-combat-002` (`requirement: "Old combo timing"`, `status: deprecated`)
 - `design/gdd/combat.md` still describes per-frame hitbox detection and adds a combo state machine; `design/gdd/inventory.md` has no registry entries
 
-**Input:** `/create-architecture`
+**Input:** `/skill:create-architecture`
 
 **Expected behavior:**
 1. Phase 0b reads `docs/architecture/tr-registry.yaml` before numbering the baseline
@@ -298,7 +298,7 @@ Fixture defaults.
 - [ ] Follows one consistent write model for `docs/architecture/architecture.md`, and never replaces an existing one without the user choosing to
 - [ ] TD-ARCHITECTURE and LP-FEASIBILITY run only in full mode; lean/solo print a skip note naming each gate and the mode
 - [ ] The Document Status sign-off is recorded only after the "May I update" approval
-- [ ] Ends with the fixed handoff template and next steps (`/architecture-decision`, `/architecture-review`, `/create-control-manifest`)
+- [ ] Ends with the fixed handoff template and next steps (`/skill:architecture-decision`, `/skill:architecture-review`, `/skill:create-control-manifest`)
 
 ---
 

@@ -7,7 +7,7 @@
 # Replaces the hand-run test command, `timeout`, exit-code reading and "looks
 # like success and is not" cases.
 #
-# OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/"). The
+# OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/"). The
 # `rule` row says which row of the ladder the exit code and output fall on, in
 # plain words; PASS, FAIL, NOT ASSESSED and "PASS WITH WARNINGS" stay with
 # /smoke-check, which also decides what an unmatched exit code means.

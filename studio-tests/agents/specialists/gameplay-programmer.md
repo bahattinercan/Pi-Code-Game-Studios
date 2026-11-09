@@ -49,7 +49,7 @@ No gate IDs assigned.
 - Identifies that the proposed change violates ADR-003 (Accepted status)
 - Does NOT silently implement the violation
 - Flags the conflict to `lead-programmer` with the ADR reference and the trade-off described
-- Implements the change only after ADR-003 is superseded by a new ADR through `/architecture-decision` — which only the user, or technical-director on the user's confirmation, moves to Accepted — never on the original request alone, and not on lead-programmer's approval alone
+- Implements the change only after ADR-003 is superseded by a new ADR through `/skill:architecture-decision` — which only the user, or technical-director on the user's confirmation, moves to Accepted — never on the original request alone, and not on lead-programmer's approval alone
 
 ### Case 5: Context pass — implements to GDD spec
 **Input:** GDD for "PlayerCombat" provided in context. Request: "Implement the stamina drain formula from the combat GDD."

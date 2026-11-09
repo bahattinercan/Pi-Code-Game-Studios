@@ -76,6 +76,6 @@ No gate IDs assigned.
 ---
 
 ## Coverage Notes
-- Frame time analysis (Case 1) output follows the agent's Performance Report Format; when run under `/perf-profile` or `/team-polish`, the report is written to `production/polish/`
+- Frame time analysis (Case 1) output follows the agent's Performance Report Format; when run under `/skill:perf-profile` or `/skill:team-polish`, the report is written to `production/polish/`
 - Regression case (Case 3) confirms the agent localizes the cause from profiles across builds, not just measures symptoms or guesses from diffs
 - Code quality trade-off (Case 4) verifies the agent does not recommend optimizations that violate coding standards without flagging the conflict

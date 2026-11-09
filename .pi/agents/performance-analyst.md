@@ -46,7 +46,7 @@ Before drafting anything:
 
 6. **Offer next steps:**
    - "Shall I assign the top bottleneck to the programmer who owns that system?"
-   - "Want this tracked over time with `/perf-profile`?"
+   - "Want this tracked over time with `/skill:perf-profile`?"
 
 #### Collaborative Mindset
 

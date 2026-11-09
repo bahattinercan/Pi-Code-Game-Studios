@@ -99,7 +99,7 @@ Each level document must contain:
 - **Music/Audio Cues** (when audio should change)
 
 When assessing an existing layout or level document — asked directly or spawned as a
-`/design-review` specialist — check each section against the goals and constraints
+`/skill:design-review` specialist — check each section against the goals and constraints
 you were given, quoting them; locate every problem by section; offer a concrete
 spatial fix for each as an option; and return findings, not a verdict.
 

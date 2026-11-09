@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/retrospective` generates a sprint or milestone retrospective. Before loading
+`/skill:retrospective` generates a sprint or milestone retrospective. Before loading
 any data it checks `production/retrospectives/` for an existing retrospective and
 offers to update it or start fresh (archiving the old file). It reads the sprint
 plan from `production/sprints/` (or the milestone definition), uses
@@ -19,7 +19,7 @@ a look back over the closed stories. No director gates are used —
 retrospectives are team self-reflection artifacts. The skill asks "May I write
 this to `production/retrospectives/retro-sprint-[N]-[date].md`?" (naming the
 archive rename too after Start fresh) and afterwards offers to start
-`/sprint-plan new`. Verdicts: COMPLETE
+`/skill:sprint-plan new`. Verdicts: COMPLETE
 (retrospective saved) or BLOCKED (user stopped at the no-data prompt or declined
 the write).
 
@@ -27,13 +27,13 @@ the write).
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "May I write" language (skill writes retrospective document)
-- [ ] Has a next-step handoff (offer to start `/sprint-plan new`; `/gate-check` after a milestone retrospective)
+- [ ] Has a next-step handoff (offer to start `/skill:sprint-plan new`; `/skill:gate-check` after a milestone retrospective)
 
 ---
 
@@ -47,7 +47,7 @@ None. Retrospectives are team self-reflection documents; no gates are invoked.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -64,7 +64,7 @@ Fixture defaults.
 - `project.yaml` sets `modes.workflow: standard`
 - `production/retrospectives/` holds no retrospective at all
 
-**Input:** `/retrospective sprint-005`
+**Input:** `/skill:retrospective sprint-005`
 
 **Expected behavior:**
 1. Skill globs `production/retrospectives/retro-sprint-005-*.md` — no match
@@ -79,7 +79,7 @@ Fixture defaults.
 6. Skill asks "May I write this to
    `production/retrospectives/retro-sprint-005-[today's date].md`?"
 7. User approves; file is written; verdict COMPLETE
-8. Skill asks whether to start sprint planning now (`/sprint-plan new`)
+8. Skill asks whether to start sprint planning now (`/skill:sprint-plan new`)
 
 **Assertions:**
 - [ ] Retrospective contains What Went Well, What Went Poorly and Action Items for Next Iteration sections
@@ -88,20 +88,20 @@ Fixture defaults.
 - [ ] Velocity Trend reads `NOT ASSESSED — NO DATA` — no Increasing / Stable / Decreasing trend and no earlier-sprint rows are invented from a single sprint
 - [ ] Previous Action Items Follow-Up reads `NOT ASSESSED — NO DATA` (no earlier retrospective), not an empty table
 - [ ] "May I write" prompt names `production/retrospectives/retro-sprint-005-[today's date].md` and appears before the write
-- [ ] Verdict is COMPLETE after the write, followed by the offer to start `/sprint-plan new`
+- [ ] Verdict is COMPLETE after the write, followed by the offer to start `/skill:sprint-plan new`
 
 ---
 
 ### Case 2: No Sprint Data — Manual input fallback
 
 **Fixture:**
-- User calls `/retrospective sprint-009`
+- User calls `/skill:retrospective sprint-009`
 - `production/sprints/sprint-009.md` does NOT exist and
   `production/sprint-status.yaml` has no sprint 9
 - `project.yaml` sets `modes.workflow: standard`
 - No retrospective for sprint-009 exists
 
-**Input:** `/retrospective sprint-009`
+**Input:** `/skill:retrospective sprint-009`
 
 **Expected behavior:**
 1. Skill finds no sprint plan for sprint-009
@@ -126,9 +126,9 @@ Fixture defaults.
 - `production/retrospectives/retro-sprint-005-[earlier date].md` already exists
   with content
 - `production/sprints/sprint-005.md` exists
-- User re-runs `/retrospective sprint-005` and, when asked, selects [B] Start fresh
+- User re-runs `/skill:retrospective sprint-005` and, when asked, selects [B] Start fresh
 
-**Input:** `/retrospective sprint-005`
+**Input:** `/skill:retrospective sprint-005`
 
 **Expected behavior:**
 1. Before loading any sprint data, skill globs
@@ -159,9 +159,9 @@ Fixture defaults.
 - `production/retrospectives/retro-sprint-004-[date].md` exists with 2 action
   items marked `[ ]` (not done)
 - `production/sprints/sprint-005.md` exists; no retrospective for sprint-005 exists
-- User runs `/retrospective sprint-005`
+- User runs `/skill:retrospective sprint-005`
 
-**Input:** `/retrospective sprint-005`
+**Input:** `/skill:retrospective sprint-005`
 
 **Expected behavior:**
 1. Skill reads previous retrospectives in `production/retrospectives/`
@@ -184,7 +184,7 @@ Fixture defaults.
 - `production/sprints/sprint-005.md` exists with complete stories
 - `project.yaml` sets `modes.review_mode: full`
 
-**Input:** `/retrospective sprint-005`
+**Input:** `/skill:retrospective sprint-005`
 
 **Expected behavior:**
 1. Skill compiles the retrospective
@@ -210,7 +210,7 @@ Fixture defaults.
 - 3 stories under `production/epics/core/` have `Status: Complete`; 1 has
   `Status: In Progress`
 
-**Input:** `/retrospective sprint-001`
+**Input:** `/skill:retrospective sprint-001`
 
 **Expected behavior:**
 1. Skill finds no retrospective and no sprint data for sprint-001
@@ -233,7 +233,7 @@ Fixture defaults.
 - [ ] The `In Progress` story is not reported as completed work
 - [ ] The sections that need sprint data read `NOT ASSESSED — NO DATA` rather than invented figures
 - [ ] "May I write" appears before the write, and the verdict is COMPLETE after it
-- [ ] After the write there is no offer to start `/sprint-plan new` — the skill names the retrospective file and says the action items go into the brief's build order
+- [ ] After the write there is no offer to start `/skill:sprint-plan new` — the skill names the retrospective file and says the action items go into the brief's build order
 
 ---
 
@@ -246,13 +246,13 @@ Fixture defaults.
 - [ ] No director gates are invoked
 - [ ] Verdict is COMPLETE after a write, BLOCKED when the user stops at the no-data prompt or declines the write
 - [ ] Checks prior retrospectives for unresolved action items
-- [ ] Offers `/sprint-plan new` at the end only when the workflow has sprints; at `minimal` it points the action items at the brief's build order instead
+- [ ] Offers `/skill:sprint-plan new` at the end only when the workflow has sprints; at `minimal` it points the action items at the brief's build order instead
 
 ---
 
 ## Coverage Notes
 
 - Milestone retrospectives (`retro-[milestone-name]-[date].md`, followed by
-  `/gate-check`) are not separately tested here.
+  `/skill:gate-check`) are not separately tested here.
 - The [B] Stop choice at the no-data prompt and a declined write (both verdict
   BLOCKED) are not tested.

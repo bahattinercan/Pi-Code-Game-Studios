@@ -7,7 +7,7 @@
 # /sprint-status inject; the status column here applies its rule word for
 # word, so the two never disagree.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # A LINT row is a rule that matched, with the numbers that made it match;
 # READY, NEEDS WORK or BLOCKED is still the skill's to say.
 #

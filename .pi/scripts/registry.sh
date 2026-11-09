@@ -6,7 +6,7 @@
 # of writing its own grep per entity or per TR-ID, so every skill reads the
 # same entries the same way.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # validate lists what it found. Whether a missing path matters, or a story may
 # cite a deprecated TR-ID, is the calling skill's rule.
 #

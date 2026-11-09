@@ -9,7 +9,7 @@ guide covers your *project's own data*: the values you configured in
 `.pi/docs/technical-preferences.md`.
 
 If you're setting up a **brand-new** project on v1.1, you don't need this —
-`/start` writes `project.yaml` directly and none of the legacy files apply.
+`/skill:start` writes `project.yaml` directly and none of the legacy files apply.
 
 ---
 
@@ -24,7 +24,7 @@ exist at your repo root, and at least one of these does:
   full of `[TO BE CONFIGURED]` placeholders is the untouched template
   default, not migratable data, and doesn't count)
 
-Run `/adopt` and it will detect this automatically (Phase 2g) and walk you
+Run `/skill:adopt` and it will detect this automatically (Phase 2g) and walk you
 through the steps below. You can also run the converter directly.
 
 ---
@@ -62,7 +62,7 @@ converter never deletes this file for that reason — see "Finalizing," below.
 
 The conversion is a tested script, not something the AI hand-edits — the
 v1.1 plan rated data loss during migration as its highest-severity risk, and
-prose migration can't be unit-tested the way a script can. `/adopt` drives
+prose migration can't be unit-tested the way a script can. `/skill:adopt` drives
 it for you, or you can run it yourself:
 
 ```bash
@@ -116,7 +116,7 @@ The report has five sections:
 | Custom sections in a forked `technical-preferences.md` | Logged to the migration report as "not migrated — integrate manually." Nothing is silently dropped. |
 
 If you hit the split-brain case (both present), that usually means you
-either ran `/start` on a project that also had old legacy files lying
+either ran `/skill:start` on a project that also had old legacy files lying
 around, or partially migrated by hand. Pick the one with your real values,
 remove or back up the other, then re-run `--dry-run`.
 
@@ -126,7 +126,7 @@ remove or back up the other, then re-run `--dry-run`.
 
 1. Spot-check `project.yaml` against your old `technical-preferences.md` —
    engine, naming, and performance values in particular.
-2. Run `/settings` to see the effective config the way skills will read it.
+2. Run `/skill:settings` to see the effective config the way skills will read it.
 3. Everything else in the framework works identically whether or not you've
    run `--finalize` — there's no rush.
 

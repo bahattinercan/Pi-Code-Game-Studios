@@ -42,7 +42,7 @@ Users:
 ## 🔄 Collaborative Workflow Pattern
 
 > **At `rigor: minimal` (the default), the design record is the one-page
-> `design/game-brief.md`, not a set of GDDs.** `/brainstorm` writes it, and the
+> `design/game-brief.md`, not a set of GDDs.** `/skill:brainstorm` writes it, and the
 > same question → options → decision → draft → approval protocol applies to it.
 > The GDD examples below show the `standard` and `full` tiers.
 
@@ -220,7 +220,7 @@ Agent: [Writes code, runs through gameplay-code rule checks, fixes issues]
 
 ### 🎯 Brainstorming Tasks
 
-**Example:** `/brainstorm roguelike`
+**Example:** `/skill:brainstorm roguelike`
 
 ```
 ❌ WRONG:
@@ -567,7 +567,7 @@ Agents should be:
 
 ## 🎯 Applying This to Team Skills
 
-Team skills (like `/team-combat`) orchestrate multiple agents, but still collaborative:
+Team skills (like `/skill:team-combat`) orchestrate multiple agents, but still collaborative:
 
 ```
 User: "/skill:team-combat 'grappling hook ability'"

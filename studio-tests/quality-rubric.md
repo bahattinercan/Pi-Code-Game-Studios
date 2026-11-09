@@ -1,6 +1,6 @@
 # Skill Quality Rubric
 
-Used by `/skill-test category [name|all]` to evaluate skills beyond structural compliance.
+Used by `/skill:skill-test category [name|all]` to evaluate skills beyond structural compliance.
 Each category defines 4–5 binary PASS/FAIL metrics specific to the skill's job.
 
 A metric is PASS when the skill's written instructions clearly satisfy the criterion.
@@ -85,7 +85,7 @@ multi-dimensional verdicts and integrate correctly with director gate mode.
 | **RD2 — Four verdict levels** | Verdict hierarchy is clearly defined, with NOT ASSESSED between the pass values and the failure values: READY > NOT ASSESSED > NEEDS WORK > BLOCKED (story-readiness); COMPLETE > COMPLETE WITH NOTES > NOT ASSESSED > BLOCKED (story-done) |
 | **RD3 — BLOCKED requires external action** | BLOCKED verdict is reserved for issues that cannot be fixed by the story author alone (e.g., Proposed ADR, unresolvable dependency) |
 | **RD4 — Director gate at correct mode** | QL-STORY-READY or LP-CODE-REVIEW gate spawns in `full` mode, skips in `lean`/`solo` with a noted skip message |
-| **RD5 — Next-story handoff** | After completion, skill surfaces the next READY story from the active sprint. With no sprint plan, `/story-done` names the next story in the build order, and `/story-readiness` says no sprint file was found |
+| **RD5 — Next-story handoff** | After completion, skill surfaces the next READY story from the active sprint. With no sprint plan, `/skill:story-done` names the next story in the build order, and `/skill:story-readiness` says no sprint file was found |
 
 ---
 
@@ -170,14 +170,14 @@ gates, the gate mode logic must also be correct.
 
 | Metric | PASS criteria |
 |---|---|
-| **U1 — Passes all 7 static checks** | `/skill-test static [name]` returns COMPLIANT with 0 FAILs |
+| **U1 — Passes all 7 static checks** | `/skill:skill-test static [name]` returns COMPLIANT with 0 FAILs |
 | **U2 — Gate mode correct (if applicable)** | If the skill spawns any director gate, it reads review-mode and applies full/lean/solo logic correctly |
 
 ---
 
 ## Agent Categories
 
-Used by `/skill-test category [agent-name]` to evaluate an agent definition in
+Used by `/skill:skill-test category [agent-name]` to evaluate an agent definition in
 `.pi/agents/` against its category's metrics.
 
 No category fixes a model. Each agent's tier is its own frontmatter `model:`,

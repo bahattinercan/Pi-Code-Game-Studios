@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/patch-notes` is a Sonnet-tier skill that turns a release's changes into
+`/skill:patch-notes` is a Sonnet-tier skill that turns a release's changes into
 player-facing patch notes. Before reading any history it classifies recent
 commits as Game or Framework / maintenance (Unclear counts as Framework), uses
 only the Game commits, and says how many of how many it used. It gathers change
@@ -25,13 +25,13 @@ history, or no Game commit in the history).
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "May I write" language (skill writes patch notes file)
-- [ ] Has a next-step handoff (`/release-checklist`, community-manager tone review)
+- [ ] Has a next-step handoff (`/skill:release-checklist`, community-manager tone review)
 
 ---
 
@@ -45,7 +45,7 @@ None. Patch notes generation is a fast compilation task; no gates are invoked.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -64,7 +64,7 @@ Fixture defaults.
 - Git history since the previous tag holds the Game commits behind those items
 - No tone guide and no patch-notes template exist
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. Skill classifies the recent commits and says how many of how many it used
@@ -95,7 +95,7 @@ Fixture defaults.
 - Tag `v0.3.0` exists; the range `v0.3.0..HEAD` holds 6 Game commits and 2
   Framework / maintenance commits (one touching a hook, one touching CI)
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. Skill classifies the commits, keeps the Game commits, excludes the 2
@@ -103,7 +103,7 @@ Fixture defaults.
 2. Skill finds no changelog source and uses `git log` from `v0.3.0` to HEAD as
    the fallback
 3. Skill does NOT stop with BLOCKED — the "No changelog data found … Run
-   `/changelog [version]` first" path requires the git history to be empty or
+   `/skill:changelog [version]` first" path requires the git history to be empty or
    unavailable as well
 4. Skill generates notes from the Game commits only
 5. Skill asks "May I write" before writing
@@ -127,7 +127,7 @@ Fixture defaults.
   `.pi/docs/technical-preferences.md` has no tone, voice or style fields
 - No patch-notes template exists
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. Skill reads the changelog entry
@@ -153,7 +153,7 @@ Fixture defaults.
 - `docs/CHANGELOG.md` has a `v0.4.0` entry with one new feature and one bug fix,
   both player-facing; git history holds the matching Game commits
 
-**Input:** `/patch-notes v0.4.0 --style full`
+**Input:** `/skill:patch-notes v0.4.0 --style full`
 
 **Expected behavior:**
 1. Skill globs `docs/patch-notes-template.md` and
@@ -181,13 +181,13 @@ Fixture defaults.
   holds the matching Game commits
 - `project.yaml` sets `modes.review_mode: full`
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. Skill compiles patch notes; no director gate is spawned (the skill resolves
    only `automation`, never `review_mode`)
 2. Skill self-reviews the notes (Phase 5), then presents them and asks to write
-3. Next steps suggest `/release-checklist` and sharing the draft with the
+3. Next steps suggest `/skill:release-checklist` and sharing the draft with the
    community-manager for tone review before posting publicly
 4. User approves; notes are written; verdict COMPLETE
 
@@ -208,7 +208,7 @@ Fixture defaults.
   `design/` or the code root
 - Neither `production/releases/v0.4.0/changelog.md` nor `docs/CHANGELOG.md` exists
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. Before Phase 2, skill classifies the sampled commits: 0 Game, 20 Framework /
@@ -231,19 +231,19 @@ Fixture defaults.
 - Neither `production/releases/v0.4.0/changelog.md` nor `docs/CHANGELOG.md` exists
 - The project directory is not a git repository, so `git log` returns nothing
 
-**Input:** `/patch-notes v0.4.0`
+**Input:** `/skill:patch-notes v0.4.0`
 
 **Expected behavior:**
 1. The sampled log is empty, so the provenance check is skipped — there is
    nothing to classify
 2. Phase 2 finds no changelog source and no git history; skill outputs "No
-   changelog data found for v0.4.0. Run `/changelog v0.4.0` first to generate
-   the internal changelog, then re-run `/patch-notes v0.4.0`."
+   changelog data found for v0.4.0. Run `/skill:changelog v0.4.0` first to generate
+   the internal changelog, then re-run `/skill:patch-notes v0.4.0`."
 3. Nothing is generated or written; verdict BLOCKED
 
 **Assertions:**
 - [ ] The "does not appear to belong to" provenance stop is NOT shown — an empty history is not a wrong history
-- [ ] Output contains "No changelog data found for v0.4.0" and recommends `/changelog v0.4.0`
+- [ ] Output contains "No changelog data found for v0.4.0" and recommends `/skill:changelog v0.4.0`
 - [ ] No notes are generated, no "May I write" prompt appears, and no file is written
 - [ ] Verdict is BLOCKED
 

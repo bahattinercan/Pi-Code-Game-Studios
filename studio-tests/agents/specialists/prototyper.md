@@ -66,7 +66,7 @@
 - Does NOT apply production coding standards (no required test coverage, no doc comments, global state acceptable)
 - Writes the output to `prototypes/grid-movement-concept/` not to `src/`
 - After writing, hands control back: asks the user to run the project and paste any errors or describe what they observe, rather than assuming it worked
-- If a Godot 4.6 API is uncertain, flags the specific API with a note to verify against the Godot 4.6 docs — `docs/engine-reference/godot/VERSION.md` reaches the agent through `CLAUDE.md`'s import, and its Knowledge Gap Warning says to cross-reference that directory before suggesting Godot API calls
+- If a Godot 4.6 API is uncertain, flags the specific API with a note to verify against the Godot 4.6 docs — `docs/engine-reference/godot/VERSION.md` reaches the agent through `AGENTS.md`'s import, and its Knowledge Gap Warning says to cross-reference that directory before suggesting Godot API calls
 
 ---
 
@@ -76,7 +76,7 @@
 - [ ] Declines production implementation requests, stating production is written from scratch and pointing to the prototype's REPORT.md as the hand-off
 - [ ] Produces a structured REPORT.md with a PROCEED / PIVOT / KILL recommendation, backed by evidence, after prototype evaluation
 - [ ] Does not recommend preserving prototype code in production form without explicit warnings
-- [ ] Uses the project's configured engine and scripting language; flags version uncertainty, per the Knowledge Gap Warning in the `VERSION.md` that `CLAUDE.md` imports
+- [ ] Uses the project's configured engine and scripting language; flags version uncertainty, per the Knowledge Gap Warning in the `VERSION.md` that `AGENTS.md` imports
 
 ---
 
@@ -85,4 +85,4 @@
 - Case 4 (abandonment honesty) tests whether the agent avoids sunk-cost bias — prototypes that fail should be cleanly abandoned
 - Case 5 requires that `project.yaml` has `engine.name` and `engine.language` configured; test is incomplete if not configured. With neither `project.yaml` nor `.pi/docs/technical-preferences.md` naming them, the expected output is a question about the engine and language, not a guess
 - The intentional relaxation of coding standards is a feature, not a gap — do not flag missing tests or doc comments as failures in prototype output
-- No automated runner; review manually or via `/skill-test`
+- No automated runner; review manually or via `/skill:skill-test`

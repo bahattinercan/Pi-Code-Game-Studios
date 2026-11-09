@@ -11,7 +11,7 @@
 # release actions). The hooks only call it. A skill that writes a guarded file
 # runs it itself as its last step, because hooks do not run in every tool.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # Whether a row stops the work is the calling skill's call, or the user's.
 #
 # Usage: bash .pi/scripts/write-guard.sh [--root DIR] COMMAND [ARGS]

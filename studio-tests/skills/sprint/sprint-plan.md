@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/sprint-plan` (`new`, `update` or `status`) plans a sprint from the story
+`/skill:sprint-plan` (`new`, `update` or `status`) plans a sprint from the story
 backlog. It globs `production/epics/**/story-*.md`, greps their status lines and
 plans from the stories marked `Ready`, as many as `story_granularity` allows; it
 reads the previous sprint (identified from the injected Existing Sprints listing)
@@ -25,13 +25,13 @@ files written) or BLOCKED (no stories found, or write declined).
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "May I write" language (skill writes sprint file)
-- [ ] Has a next-step handoff (`/qa-plan sprint`, `/story-readiness`, `/dev-story`)
+- [ ] Has a next-step handoff (`/skill:qa-plan sprint`, `/skill:story-readiness`, `/skill:dev-story`)
 
 ---
 
@@ -51,7 +51,7 @@ REALISTIC.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -69,7 +69,7 @@ Fixture defaults.
 - `production/qa/qa-plan-sprint-003.md` exists
 - The producer returns REALISTIC
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill reads the milestone and the previous sprint (sprint-002)
@@ -101,20 +101,20 @@ Fixture defaults.
 - `production/epics/` contains no story files (`production/epics/**/story-*.md` matches nothing)
 - No `--review` flag, no `modes.review_mode` in `project.yaml`, no `production/review-mode.txt`
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Phase 0 takes the review mode from the injected config block — with nothing
    configured, the `modes.rigor` value — and asks no review-depth question
 2. Phase 1's glob returns nothing; skill outputs "No stories found under
-   `production/epics/`. Run `/create-stories` first (at `standard`/`full`,
-   `/create-epics` before it)."
+   `production/epics/`. Run `/skill:create-stories` first (at `standard`/`full`,
+   `/skill:create-epics` before it)."
 3. Skill stops without inventing work items; verdict BLOCKED
 4. No gate is invoked and nothing is written
 
 **Assertions:**
 - [ ] Verdict is BLOCKED
-- [ ] Output contains "No stories found under `production/epics/`" and recommends `/create-stories`
+- [ ] Output contains "No stories found under `production/epics/`" and recommends `/skill:create-stories`
 - [ ] No sprint draft is produced from invented work items
 - [ ] PR-SPRINT gate is NOT invoked
 - [ ] No review-depth question is asked, and no write happens — `project.yaml` gains no `modes.review_mode` and no `production/review-mode.txt` is created
@@ -129,7 +129,7 @@ Fixture defaults.
 - A QA plan for the sprint exists in `production/qa/`
 - The producer returns CONCERNS: the sprint is overloaded
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill drafts the sprint with all 8 stories and presents it
@@ -157,7 +157,7 @@ Fixture defaults.
   injected block reads `review_mode: lean (rigor:standard)`
 - No QA plan for this sprint exists in `production/qa/`
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill reads `review_mode` from the injected config block — `lean` — and asks
@@ -191,7 +191,7 @@ Fixture defaults.
 - `project.yaml` sets `modes.review_mode: full` and `modes.story_granularity: balanced`
 - A QA plan for the sprint exists in `production/qa/`
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill reads sprint-002 for velocity and carryover, and numbers the new
@@ -224,7 +224,7 @@ Fixture defaults.
 - A QA plan for the sprint exists in `production/qa/`
 - The producer returns UNREALISTIC and names 4 stories to defer
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill drafts sprint 003 with the 9 stories and presents it
@@ -252,7 +252,7 @@ Fixture defaults.
 - The producer returns NOT ASSESSED — the stories carry no estimates
 - Asked for estimates, the user has none yet and goes ahead
 
-**Input:** `/sprint-plan new`
+**Input:** `/skill:sprint-plan new`
 
 **Expected behavior:**
 1. Skill drafts the sprint and presents it; PR-SPRINT returns NOT ASSESSED

@@ -50,7 +50,7 @@ Before drafting anything:
 
 6. **Offer next steps:**
    - "Shall I hand the test cases to qa-tester?"
-   - "Ready for `/qa-plan` or `/smoke-check` next?"
+   - "Ready for `/skill:qa-plan` or `/skill:smoke-check` next?"
 
 #### Collaborative Mindset
 
@@ -76,24 +76,24 @@ Every story has a type that determines what evidence is required before it can b
 - Classify story types when creating QA plans (if not already classified in the story file)
 - Flag Logic/Integration stories missing test evidence as blockers before sprint review (at `qa.level` `standard` and `full`; tests are waived at `minimal`)
 - Accept Visual/Feel/UI stories with documented manual evidence as "Done"
-- Run or verify `/smoke-check` passes before any build goes to manual QA
+- Run or verify `/skill:smoke-check` passes before any build goes to manual QA
 
 ### QA Workflow Integration
 
 **Your skills to use:**
-- `/qa-plan [sprint]` — generate test plan from story types at sprint start
-- `/smoke-check` — run before every QA hand-off
-- `/team-qa [sprint]` — orchestrate full QA cycle
+- `/skill:qa-plan [sprint]` — generate test plan from story types at sprint start
+- `/skill:smoke-check` — run before every QA hand-off
+- `/skill:team-qa [sprint]` — orchestrate full QA cycle
 
 **When you get involved:**
 - Sprint planning: Review story types and flag missing test strategies
 - Mid-sprint: Check that Logic stories have test files as they are implemented
-- Pre-QA gate: Run `/smoke-check`; block hand-off if it fails
+- Pre-QA gate: Run `/skill:smoke-check`; block hand-off if it fails
 - QA execution: Direct qa-tester through manual test cases
 - Sprint review: Produce sign-off report with open bug list
 
 **What shift-left means for you:**
-- Review story acceptance criteria before implementation starts (`/story-readiness`)
+- Review story acceptance criteria before implementation starts (`/skill:story-readiness`)
 - Flag untestable criteria (e.g., "feels good" without a benchmark) before the sprint begins
 - Don't wait until the end to find that a Logic story has no tests
 
@@ -104,7 +104,7 @@ Every story has a type that determines what evidence is required before it can b
 2. **Test Evidence Gate**: Ensure Logic/Integration stories have test files before
    marking Complete. This is a hard gate at `qa.level` `standard` and `full`, not
    a recommendation; at `minimal` tests are waived.
-3. **Smoke Check Ownership**: Run `/smoke-check` before every build goes to manual QA.
+3. **Smoke Check Ownership**: Run `/skill:smoke-check` before every build goes to manual QA.
    A failed smoke check means the build is not ready — period.
 4. **Test Plan Creation**: For each feature and milestone, create test plans
    covering functional testing, edge cases, regression, performance, and
@@ -129,7 +129,7 @@ place of "feels good").
 
 ### Bug Severity Definitions
 
-The same scale `/bug-triage` and `/bug-report` use:
+The same scale `/skill:bug-triage` and `/skill:bug-report` use:
 
 - **S1 - Critical**: Crash, data loss, progression blocker or complete feature
   failure. Must fix before any build goes out.

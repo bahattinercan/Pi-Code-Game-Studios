@@ -10,11 +10,11 @@ These show what runs before and after each skill, and what artifacts flow betwee
 `modes.rigor: minimal` is the default. The one-page brief is the design record and
 its build order is the plan, so there is no epic planning, sprint or phase gate to run.
 Every skill below still runs at any tier; rigor changes what is required, not what
-is allowed. `/help` follows this route at `minimal`.
+is allowed. `/skill:help` follows this route at `minimal`.
 
 ```
 MINIMAL PATH (modes.rigor: minimal — the default; no /skill:gate-check, stage stays Concept)
-  /skill:setup-engine ───────────────────────────────────────────────► project.yaml + CLAUDE.md
+  /skill:setup-engine ───────────────────────────────────────────────► project.yaml + AGENTS.md
   /skill:brainstorm ─────────────────────────────────────────────────► design/game-brief.md (one page)
         │                                                          (replaces concept doc, systems index, GDDs)
         ▼
@@ -39,7 +39,7 @@ The overview below is the `standard`/`full` pipeline.
 PHASE 1: CONCEPT
   /skill:start ──────────────────────────────────────────────────────► routes to A/B/C/D
   /skill:brainstorm ──────────────────────────────────────────────────► design/gdd/game-concept.md
-  /skill:setup-engine ────────────────────────────────────────────────► project.yaml + CLAUDE.md
+  /skill:setup-engine ────────────────────────────────────────────────► project.yaml + AGENTS.md
   /skill:prototype [core-mechanic] ───────────────────────────────────► prototypes/[name]-concept/REPORT.md
         │ PROCEED                                                  (validate idea BEFORE writing GDDs)
         ▼
@@ -341,7 +341,7 @@ How a story gets from backlog to closed (summary view):
 
 ## Brownfield Onboarding Flow
 
-For projects with existing work (use `/start` option D or run directly):
+For projects with existing work (use `/skill:start` option D or run directly):
 
 ```
 /skill:project-stage-detect    → stage detection report
@@ -382,18 +382,18 @@ For projects with existing work (use `/start` option D or run directly):
 
 | Where you are | Run this |
 |---------------|---------|
-| Brand new, no idea | `/start` → `/brainstorm` |
-| Have a concept, no engine | `/setup-engine` |
-| Have concept + engine | `/map-systems` |
-| Mid-systems design | `/design-system [next system]` or `/map-systems next` |
-| All GDDs done | `/review-all-gdds` → `/gate-check` |
-| In technical setup | `/create-architecture` → `/architecture-decision` |
-| Starting UX design | `/ux-design screen [name]` or `/ux-design hud` |
-| Scaffolding tests | `/test-setup` → `/test-helpers` |
-| Have stories, ready to code | `/story-readiness [story]` → `/dev-story [story]` |
-| Story done | `/story-done [story]` |
-| Running QA for a sprint | `/qa-plan` → `/smoke-check` → `/regression-suite` |
-| Bug backlog needs sorting | `/bug-triage` |
-| Extended stability testing | `/soak-test` |
-| Not sure | `/help` |
-| Existing project | `/adopt` |
+| Brand new, no idea | `/skill:start` → `/skill:brainstorm` |
+| Have a concept, no engine | `/skill:setup-engine` |
+| Have concept + engine | `/skill:map-systems` |
+| Mid-systems design | `/skill:design-system [next system]` or `/skill:map-systems next` |
+| All GDDs done | `/skill:review-all-gdds` → `/skill:gate-check` |
+| In technical setup | `/skill:create-architecture` → `/skill:architecture-decision` |
+| Starting UX design | `/skill:ux-design screen [name]` or `/skill:ux-design hud` |
+| Scaffolding tests | `/skill:test-setup` → `/skill:test-helpers` |
+| Have stories, ready to code | `/skill:story-readiness [story]` → `/skill:dev-story [story]` |
+| Story done | `/skill:story-done [story]` |
+| Running QA for a sprint | `/skill:qa-plan` → `/skill:smoke-check` → `/skill:regression-suite` |
+| Bug backlog needs sorting | `/skill:bug-triage` |
+| Extended stability testing | `/skill:soak-test` |
+| Not sure | `/skill:help` |
+| Existing project | `/skill:adopt` |

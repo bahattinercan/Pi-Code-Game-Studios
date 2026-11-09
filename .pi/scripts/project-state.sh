@@ -8,7 +8,7 @@
 # /start (engine, concept, code root, counts, origin), /adopt, /onboard,
 # /day-one-patch, /project-stage-detect and /gate-check's read-back of the stage.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # `phase_inferred` is help's artifact ladder applied to the counts, printed with
 # the rule that matched; whether it outranks `stage` is the calling skill's call.
 #

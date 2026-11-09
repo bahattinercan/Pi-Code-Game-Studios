@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/smoke-check` is the gate between implementation and QA hand-off. Phase 1 runs
+`/skill:smoke-check` is the gate between implementation and QA hand-off. Phase 1 runs
 `project-coherence.sh`, verifies that **game test files** exist under the
 engine's test root or `tests/smoke/` (not merely that `tests/` exists), and
 reads the engine from `project.yaml` (falling back to `technical-preferences.md`),
@@ -38,19 +38,19 @@ No director gates apply. The skill does NOT invoke any director agents.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: PASS, PASS WITH WARNINGS, NOT ASSESSED, FAIL
 - [ ] Contains "May I write" collaborative protocol language before writing the report
-- [ ] Has a next-step handoff (re-run `/smoke-check` after a FAIL; QA hand-off to qa-tester on PASS)
+- [ ] Has a next-step handoff (re-run `/skill:smoke-check` after a FAIL; QA hand-off to qa-tester on PASS)
 
 ---
 
 ## Director Gate Checks
 
-None. `/smoke-check` is a pre-QA utility skill. No director gates apply.
+None. `/skill:smoke-check` is a pre-QA utility skill. No director gates apply.
 
 ---
 
@@ -58,7 +58,7 @@ None. `/smoke-check` is a pre-QA utility skill. No director gates apply.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -76,7 +76,7 @@ Fixture defaults.
 - The developer says the build was launched this session and selects no FAILED item in Batch 1, Batch 2 or Batch 3
 - Every sprint story is COVERED or EXPECTED (no MISSING, no UNKNOWN)
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Phase 1 reports environment: Godot, tests found, QA plan path
@@ -107,7 +107,7 @@ Fixture defaults.
 - The runner exits 100: 10 tests run, 8 passing, 2 failing —
   `test_health_clamp_at_zero`, `test_damage_calculation_negative`
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Skill runs automated tests via Bash; exit 100 → FAIL
@@ -118,13 +118,13 @@ Fixture defaults.
 6. Gate is blocking (`qa.level: standard`, `testing.strict.config` unset → blocking)
 7. Delivers: "The smoke check failed. Do not hand off to QA until these failures
    are resolved: …" listing each failure, then "Fix the failures and run
-   `/smoke-check` again to re-gate before QA hand-off."
+   `/skill:smoke-check` again to re-gate before QA hand-off."
 
 **Assertions:**
 - [ ] Failing test names are listed in the report
 - [ ] Verdict is FAIL
 - [ ] The blocking message directs the developer to fix failures before QA hand-off
-- [ ] `/smoke-check` re-run is suggested after fixing
+- [ ] `/skill:smoke-check` re-run is suggested after fixing
 
 ---
 
@@ -135,7 +135,7 @@ Fixture defaults.
 - One Logic story has no matching test file (MISSING coverage); no UNKNOWN rows
 - The developer selects no FAILED item in Batch 1, Batch 2 or Batch 3
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Automated tests PASS
@@ -145,14 +145,14 @@ Fixture defaults.
    under "Missing Test Evidence" with its expected test path
 5. Verdict is PASS WITH WARNINGS; the message says the build is ready for manual
    QA and lists the MISSING entry as an advisory item to resolve before
-   `/story-done` on the affected story
+   `/skill:story-done` on the affected story
 6. Asks to write the report; writes after approval
 
 **Assertions:**
 - [ ] `AskUserQuestion` is used for manual smoke check batches (not inline text prompts)
 - [ ] MISSING test coverage entry appears in the report
 - [ ] Verdict is PASS WITH WARNINGS (not PASS, not FAIL)
-- [ ] Advisory note says the MISSING entry must be resolved before `/story-done`
+- [ ] Advisory note says the MISSING entry must be resolved before `/skill:story-done`
 - [ ] Report file is written to `production/qa/smoke-[date].md`
 
 ---
@@ -162,22 +162,22 @@ Fixture defaults.
 **Fixture:**
 - `project.yaml` sets `modes.rigor: standard` (so `qa.level` resolves to `standard`)
 - Engine is Godot; `tests/unit/` and `tests/integration/` exist but hold only
-  the `.gdignore_placeholder` files `/test-setup` creates
+  the `.gdignore_placeholder` files `/skill:test-setup` creates
 - No `tests/smoke/` directory
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Phase 1 counts game test files, not directories — none are found
 2. Skill delivers: "Smoke check: **NOT ASSESSED — no game tests found** under
-   [the test root] or `tests/smoke/`. Run `/test-setup` to scaffold the testing
+   [the test root] or `tests/smoke/`. Run `/skill:test-setup` to scaffold the testing
    infrastructure, or point me at where tests live."
 3. Skill stops — no automated run, no manual batches, no report written
 
 **Assertions:**
 - [ ] The presence of `tests/` and its subdirectories is not treated as tests existing
 - [ ] Verdict is NOT ASSESSED — the skill does not stop without a verdict
-- [ ] `/test-setup` is suggested as the remediation step
+- [ ] `/skill:test-setup` is suggested as the remediation step
 - [ ] No further phases run and no report file is written
 
 ---
@@ -190,7 +190,7 @@ Fixture defaults.
 - `commands.smoke` is `godot --headless --quit-after 5`; it exits 0 with no `SCRIPT ERROR` line
 - The user says the build was launched this session and confirms every Batch 1, Batch 2 and Batch 3 check
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Phase 1 finds no game test files and, at `qa.level: minimal`, records the automated row as `WAIVED — qa.level: minimal, no game tests`
@@ -216,13 +216,13 @@ Fixture defaults.
 **Fixture:**
 - Valid test setup, automated tests pass, manual smoke checks confirmed
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Skill runs all phases and produces a verdict
 2. No director agents are spawned at any point
 3. No gate IDs (CD-*, TD-*, AD-*, PR-*) appear in output
-4. No `/gate-check` is invoked
+4. No `/skill:gate-check` is invoked
 
 **Assertions:**
 - [ ] No director gate is invoked
@@ -240,7 +240,7 @@ Fixture defaults.
   prints `No test cases found` and exits 0
 - Run B: the runner exits 101 — 12 tests, 12 passing, 2 orphan nodes leaked
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Run A: exit 0 is not read as a pass — the automated tests are
@@ -263,7 +263,7 @@ Fixture defaults.
 - As Case 2 (`qa.level: standard`, `testing.strict` unset)
 - The runner hangs; `timeout 900` ends it with exit 124 and no summary printed
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Exit 124 is a gate FAILURE, never a pass — the run did not complete and
@@ -284,7 +284,7 @@ Fixture defaults.
 - As Case 1: runner exits 0 with 12/12 passing, no MISSING or UNKNOWN rows
 - In Batch 3 the developer selects only "Performance not checked this session"
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. Batches 1 and 2 pass
@@ -302,11 +302,11 @@ Fixture defaults.
 
 **Fixture:**
 - `engine.name: Unity`; `com.unity.test-framework` is in `Packages/manifest.json`
-- `commands.test` is the Edit Mode command `/setup-engine` writes
+- `commands.test` is the Edit Mode command `/skill:setup-engine` writes
 - `Assets/Tests/EditMode/` and `Assets/Tests/PlayMode/` both hold test files
 - Edit Mode exits 0 with 8/8 passing; Play Mode exits 2 with 1 of 3 failing
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. The Edit Mode run deletes `test-results/editmode.xml` first, then runs
@@ -333,15 +333,15 @@ Fixture defaults.
   if scanned)
 - The sprint plan and QA plan exist
 
-**Input:** `/smoke-check quick`
+**Input:** `/skill:smoke-check quick`
 
 **Expected behavior:**
 1. Phases 1 and 2 run as normal; the automated tests PASS (12/12)
 2. Phase 3 is skipped and says so: "Coverage scan skipped — run
-   `/smoke-check sprint` for full coverage analysis."
+   `/skill:smoke-check sprint` for full coverage analysis."
 3. `AskUserQuestion` is used for Batch 1 and Batch 2 only; Batch 3 is not asked
 4. The report's Argument line reads `quick`, and its Test Coverage section reads
-   "Coverage: not checked (quick run) — run `/smoke-check sprint` before
+   "Coverage: not checked (quick run) — run `/skill:smoke-check sprint` before
    hand-off." in place of story rows — the scan was skipped, not passed
 5. The unscanned Logic story is not reported as MISSING, no coverage row is
    invented for it, and Missing Test Evidence reads "Not checked (quick run).",
@@ -372,7 +372,7 @@ Fixture defaults.
   FAILED" and describes the clipped text on the pause menu
 - PC and mobile batches (variants below): nothing selected
 
-**Input:** `/smoke-check sprint --platform console`
+**Input:** `/skill:smoke-check sprint --platform console`
 
 **Expected behavior:**
 1. Phases 1–3 run as in Case 1
@@ -404,7 +404,7 @@ Fixture defaults.
 - The conversation is compacted during Phase 3, after the test run finished and
   before the coverage scan's results are used
 
-**Input:** `/smoke-check`
+**Input:** `/skill:smoke-check`
 
 **Expected behavior:**
 1. `references/1-detect-setup.md` is read before the Phase 1 work, and likewise

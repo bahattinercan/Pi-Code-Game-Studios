@@ -87,6 +87,6 @@ Verified by reading the agent's `.pi/agents/creative-director.md` frontmatter:
 
 ## Coverage Notes
 - Multi-gate scenario (e.g., single submission triggering both CD-PILLARS and CD-GDD-ALIGN) is not covered here — deferred to integration tests.
-- CD-PHASE-GATE (the creative director's own readiness review, which `/gate-check` runs at `workflow: full`) has no case yet.
-- CD-PLAYTEST (review of a `/playtest-report` report) has no case yet.
+- CD-PHASE-GATE (the creative director's own readiness review, which `/skill:gate-check` runs at `workflow: full`) has no case yet.
+- CD-PLAYTEST (review of a `/skill:playtest-report` report) has no case yet.
 - Interaction with art-director on visual-pillar alignment is not covered.

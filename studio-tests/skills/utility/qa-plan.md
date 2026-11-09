@@ -2,14 +2,14 @@
 
 ## Skill Summary
 
-`/qa-plan [sprint | feature: system-name | story: path]` generates a QA plan
+`/skill:qa-plan [sprint | feature: system-name | story: path]` generates a QA plan
 before implementation. `sprint` reads the most recent file in
 `production/sprints/` (or `production/sprint-status.yaml` when present) for its
 story list; `feature:` globs `production/epics/*/story-*.md` by system name;
 `story:` loads one file; no argument asks for the scope with `AskUserQuestion`.
 A referenced story file that does not exist is noted as MISSING and the plan
 continues; a scope with zero stories stops with `NOT ASSESSED — no stories in
-scope` and a route (e.g. "No sprint plan found. Run `/sprint-plan new`.").
+scope` and a route (e.g. "No sprint plan found. Run `/skill:sprint-plan new`.").
 
 Story fields are collected with targeted greps. A declared `Type:` is accepted
 as-is; a missing one is inferred from the acceptance criteria and flagged as a
@@ -26,19 +26,19 @@ rows. No director gates apply.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains the verdict keyword `NOT ASSESSED` for an empty scope
 - [ ] Asks for approval before writing: an `AskUserQuestion` option naming `production/qa/qa-plan-[sprint-slug]-[date].md`, and the rule "Never write the plan without asking"
-- [ ] Has a next-step handoff (`/smoke-check sprint` after implementation, `/story-done` checks for the test files)
+- [ ] Has a next-step handoff (`/skill:smoke-check sprint` after implementation, `/skill:story-done` checks for the test files)
 
 ---
 
 ## Director Gate Checks
 
-None. `/qa-plan` is a planning utility. It spawns no agents (`Agent` is not in
+None. `/skill:qa-plan` is a planning utility. It spawns no agents (`Agent` is not in
 its allowed tools) and no director gates apply.
 
 ---
@@ -47,7 +47,7 @@ its allowed tools) and no director gates apply.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -63,7 +63,7 @@ Fixture defaults.
 - The stories reference GDDs in `design/gdd/`; `engine.name: Godot`
 - `qa.level: standard`; `modes.automation: collaborative`
 
-**Input:** `/qa-plan sprint`
+**Input:** `/skill:qa-plan sprint`
 
 **Expected behavior:**
 1. Skill reads the most recent sprint file and reports "Building QA plan for 4
@@ -78,8 +78,8 @@ Fixture defaults.
 5. The plan is shown, then one multiSelect `AskUserQuestion` offers "Write QA
    plan to production/qa/qa-plan-[sprint-slug]-[date].md" and the story
    back-fill option
-6. After writing, next steps name `/smoke-check sprint` (after implementation)
-   and `/story-done`
+6. After writing, next steps name `/skill:smoke-check sprint` (after implementation)
+   and `/skill:story-done`
 
 **Assertions:**
 - [ ] All 4 stories appear in the plan, each with its declared Type unchanged
@@ -87,7 +87,7 @@ Fixture defaults.
 - [ ] Logic and Integration rows name test paths under `tests/unit/` and `tests/integration/`
 - [ ] The UI row's manual verification is the retained screenshot of each screen touched, not a step-through
 - [ ] Nothing is written before the multiSelect approval, and the written path is `production/qa/qa-plan-[sprint-slug]-[date].md`
-- [ ] Next steps name `/smoke-check sprint` and `/story-done`
+- [ ] Next steps name `/skill:smoke-check sprint` and `/skill:story-done`
 
 ---
 
@@ -99,7 +99,7 @@ Fixture defaults.
 - One referenced story path does not exist on disk
 - The other 2 stories are complete
 
-**Input:** `/qa-plan sprint`
+**Input:** `/skill:qa-plan sprint`
 
 **Expected behavior:**
 1. The missing path is noted as MISSING and the plan continues
@@ -122,7 +122,7 @@ Fixture defaults.
 - Same 4-story sprint as Case 1
 - `qa.level: minimal`
 
-**Input:** `/qa-plan sprint`
+**Input:** `/skill:qa-plan sprint`
 
 **Expected behavior:**
 1. Skill produces only a minimal smoke plan
@@ -150,19 +150,19 @@ Fixture defaults.
 - No `production/sprint-status.yaml`
 - `modes.rigor: standard` (so sprints are expected)
 
-**Input:** `/qa-plan sprint`
+**Input:** `/skill:qa-plan sprint`
 
 **Expected behavior:**
 1. The resolved scope contains zero stories
 2. Skill stops before Phase 2 and reports `NOT ASSESSED — no stories in scope`,
    naming the scope searched and the empty path
-3. Skill routes: "No sprint plan found. Run `/sprint-plan new`."
+3. Skill routes: "No sprint plan found. Run `/skill:sprint-plan new`."
 4. No plan is generated and no write approval is asked
 
 **Assertions:**
 - [ ] Verdict is `NOT ASSESSED — no stories in scope`
 - [ ] The empty path `production/sprints/` is named
-- [ ] `/sprint-plan new` is suggested
+- [ ] `/skill:sprint-plan new` is suggested
 - [ ] No plan document with empty tables is produced, and nothing is written
 
 ---
@@ -173,7 +173,7 @@ Fixture defaults.
 - A sprint with typed stories and acceptance criteria
 - Any review mode
 
-**Input:** `/qa-plan sprint`
+**Input:** `/skill:qa-plan sprint`
 
 **Expected behavior:**
 1. Skill classifies stories and generates the plan
@@ -207,5 +207,5 @@ Fixture defaults.
   as a gap) is covered only by protocol compliance.
 - The back-fill option (editing `## QA Test Cases` in each story file) is not
   tested in detail.
-- At `rigor: minimal`, the empty-sprint route points to `/qa-plan feature:` or
-  `/qa-plan story:` instead of `/sprint-plan new`; not separately tested.
+- At `rigor: minimal`, the empty-sprint route points to `/skill:qa-plan feature:` or
+  `/skill:qa-plan story:` instead of `/skill:sprint-plan new`; not separately tested.

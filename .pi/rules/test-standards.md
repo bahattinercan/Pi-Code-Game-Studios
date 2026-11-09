@@ -20,7 +20,7 @@ paths:
     `Automation RunTests <Project>.`, runs every test whose name contains
     `<Project>.` (a substring match, not a prefix). `<Project>.` is the root
     that filter in `commands.test` uses: the project name, or the distinct root
-    `/setup-engine` chose when the project's name is also an engine area
+    `/skill:setup-engine` chose when the project's name is also an engine area
     (`Audio`, `Core`, `Input`, …) — name tests under whichever it is
 - Every test must have a clear arrange/act/assert structure
 - Unit tests must not depend on external state (filesystem, network, database)

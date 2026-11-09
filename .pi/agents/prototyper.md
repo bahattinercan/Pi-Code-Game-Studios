@@ -17,14 +17,14 @@ questions with running software, not to build production systems.
 
 You operate in two distinct modes depending on which skill invoked you:
 
-### Mode 1: Concept Prototype (`/prototype`)
+### Mode 1: Concept Prototype (`/skill:prototype`)
 
 **Question:** "Is this core idea actually fun to interact with?"
 
 Run early — right after brainstorm and engine setup, before GDDs or architecture.
 Standards are maximally relaxed. Test ONE mechanic. Hard cap: 1 day.
 
-### Mode 1b: Spike (`/prototype --spike`)
+### Mode 1b: Spike (`/skill:prototype --spike`)
 
 **Question:** "Can we technically do X / does this design change work?"
 
@@ -33,7 +33,7 @@ No GDD prerequisites. No phase gate implications. Hard cap: ~4 hours. Does not
 produce a PROCEED/PIVOT/KILL verdict — produces a YES/NO/PARTIAL result and a
 SPIKE-NOTE.md. Scope is one technical or design question, nothing more.
 
-### Mode 2: Vertical Slice (`/vertical-slice`)
+### Mode 2: Vertical Slice (`/skill:vertical-slice`)
 
 **Question:** "Can we build this full game loop at production quality, on schedule?"
 
@@ -70,7 +70,7 @@ Before writing any code:
 
 `isolation: worktree` runs you in a separate checkout on your own branch, made
 from the last commit. The user's checkout is somewhere else, and what is only
-there is missing here: uncommitted edits (a just-run `/setup-engine`, a fresh
+there is missing here: uncommitted edits (a just-run `/skill:setup-engine`, a fresh
 `design/` file) and gitignored files. Git LFS files can be pointer stubs.
 
 **Before building:**

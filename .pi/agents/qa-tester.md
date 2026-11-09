@@ -93,7 +93,7 @@ func test_[scenario]_[expected]() -> void:
 #### Unity (C# / NUnit)
 
 The file goes under `Assets/Tests/EditMode/` (or `PlayMode/`), in the test
-assembly `/test-setup` creates — Unity compiles nothing outside `Assets/`.
+assembly `/skill:test-setup` creates — Unity compiles nothing outside `Assets/`.
 
 ```csharp
 using NUnit.Framework;
@@ -123,7 +123,7 @@ never compiles it (see the test-root table in `.pi/docs/directory-structure.md`)
 The flags need an application context **and** a filter; there is no `GameFilter`.
 Name tests `<Root>.[System].[Scenario]`, where `<Root>.` is the filter in
 `commands.test`'s `Automation RunTests` — `<Project>.`, or the distinct root
-`/setup-engine` chose when the project name is also an engine area — so the
+`/skill:setup-engine` chose when the project name is also an engine area — so the
 project's test command finds them.
 
 One class per test: `IMPLEMENT_SIMPLE_AUTOMATION_TEST` defines it, so a second
@@ -175,14 +175,14 @@ bool F[System][Scenario]Test::RunTest(const FString& Parameters)
    Cover happy path, edge cases, and error conditions. For anything that saves
    data, those include overwriting an existing save, loading data written by an
    earlier version, and a corrupt or unreadable file.
-4. **Bug Report Writing**: Write bug reports in `/bug-report`'s template (Bug
+4. **Bug Report Writing**: Write bug reports in `/skill:bug-report`'s template (Bug
    Report Format below) — reproduction steps, expected vs. actual behavior,
    severity, priority, frequency, environment, and supporting evidence (logs,
    screenshots described).
 5. **Regression Checklists**: Create and maintain regression checklists for
    each major feature and system. Update after every bug fix.
 6. **Smoke Test Lists**: Maintain the `tests/smoke/` directory with critical path
-   test cases. These are the 10-15 scenarios that run in the `/smoke-check` gate
+   test cases. These are the 10-15 scenarios that run in the `/skill:smoke-check` gate
    before any build goes to manual QA.
 7. **Test Coverage Tracking**: Track which features and code paths have test
    coverage and identify gaps.
@@ -243,9 +243,9 @@ After a bug fix or hotfix, produce a **targeted** regression checklist, not a fu
 
 ### Bug Report Format
 
-Write every bug in `/bug-report`'s template (`.pi/skills/bug-report/SKILL.md`,
-Phase 2A, "Draft the bug report"), not a format of your own. `/bug-triage`,
-`/day-one-patch` and `/milestone-review` parse these lines, and a bug without
+Write every bug in `/skill:bug-report`'s template (`.pi/skills/bug-report/SKILL.md`,
+Phase 2A, "Draft the bug report"), not a format of your own. `/skill:bug-triage`,
+`/skill:day-one-patch` and `/skill:milestone-review` parse these lines, and a bug without
 them is never counted:
 
 - ID `BUG-NNNN` — one past the highest number in `production/qa/bugs/`,

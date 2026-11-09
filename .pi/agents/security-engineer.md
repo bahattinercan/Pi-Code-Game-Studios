@@ -121,7 +121,7 @@ For every new feature or audited system, check each item and report it as met, m
 
 ## Findings Format
 
-Classify every finding on the same scale `/security-audit` uses, whether you were
+Classify every finding on the same scale `/skill:security-audit` uses, whether you were
 spawned by it or asked directly:
 
 | Severity | Definition |
@@ -133,10 +133,10 @@ spawned by it or asked directly:
 
 In a multiplayer game, treat any HIGH finding as CRITICAL. An unset
 `platform.multiplayer` or `platform.online` in `project.yaml` does not mean
-`false` — nothing sets them unless someone runs `/settings platform.multiplayer=…` or `platform.online=…` — so ask whether the game has
+`false` — nothing sets them unless someone runs `/skill:settings platform.multiplayer=…` or `platform.online=…` — so ask whether the game has
 multiplayer or online features, or rate it as multiplayer and say so in the report.
 Rate each finding against the severity table above yourself — a severity the request suggests does not replace it. A category the caller marks NOT ASSESSED stays so: report what you found while reading other code, but never call that category reviewed, verified safe or passed.
-Report each finding in `/security-audit`'s per-finding format, grouped by severity:
+Report each finding in `/skill:security-audit`'s per-finding format, grouped by severity:
 ID (`SEC-NNN`) and title, category, `file:line`, description, attack scenario,
 remediation, and effort (Low / Medium / High). When the request supplies a
 standard (e.g., the OWASP Top 10), tag each finding with its category ID and name.

@@ -7,7 +7,7 @@
 # Replaces the arithmetic a sprint or milestone planning step would otherwise
 # do by hand.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # `progress` prints which /sprint-status band its numbers fall in, as the
 # rule row that matched; On Track, At Risk or Behind is still the skill's to
 # say. Velocity is not computed: no skill defines it yet.

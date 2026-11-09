@@ -57,7 +57,7 @@ Git will flag conflicts only in files that both the template *and* you have
 changed. Resolve each one — your game content goes in, structural improvements
 come along for the ride. Then commit the merge.
 
-**Tip:** The files most likely to conflict are `CLAUDE.md`, `project.yaml`, and
+**Tip:** The files most likely to conflict are `AGENTS.md`, `project.yaml`, and
 `.pi/docs/technical-preferences.md`, because you've filled them in with
 your engine and project settings. Keep your content; accept the structural changes.
 
@@ -110,11 +110,11 @@ git status   # review what changed before committing
 > the old one wholesale. `git diff HEAD template/main -- <file>` shows what you
 > would be giving up.
 
-For `CLAUDE.md`, don't checkout — diff and merge by hand, keeping your
+For `AGENTS.md`, don't checkout — diff and merge by hand, keeping your
 engine/project content:
 
 ```bash
-git diff HEAD template/main -- CLAUDE.md
+git diff HEAD template/main -- AGENTS.md
 ```
 
 `project.yaml` depends on where you are coming from, and the two cases need
@@ -134,7 +134,7 @@ opposite actions:
   but do it here rather than discovering it later.
 
 - **Upgrading from v1.1 or later:** you already have a `project.yaml` holding
-  your settings. Treat it like `CLAUDE.md` — diff and merge by hand, never
+  your settings. Treat it like `AGENTS.md` — diff and merge by hand, never
   checkout, or you will overwrite your own configuration:
 
   ```bash
@@ -303,7 +303,7 @@ for this release: the update alert compares against the version stamp in
 `.pi/hooks/update-check.sh`, which arrives with the hooks folder. Leave
 `updates.check` and `features.read_guard` unset to keep their defaults (on).
 
-**`CLAUDE.md`** — one wording change in the Technical Preferences paragraph;
+**`AGENTS.md`** — one wording change in the Technical Preferences paragraph;
 nothing to do if you edited the file.
 
 **`.pi/settings.local.json`** — if you copied `Bash(git *)` from the old
@@ -402,7 +402,7 @@ less; settings read the same from a subfolder
 | Category | Changes |
 |----------|---------|
 | **Long skills (14)** | `/adopt`, `/architecture-decision`, `/architecture-review`, `/create-architecture`, `/design-system`, `/dev-story`, `/gate-check`, `/prototype`, `/review-all-gdds`, `/setup-engine`, `/smoke-check`, `/story-done`, `/test-setup` and `/ux-design` keep each phase in `references/<phase>.md`; their steps are unchanged. `/skill-test` and `/skill-improve` read a skill's `references/` files too |
-| **Questions** | `automation-modes.md` and `effects-map.md`: a skipped, dismissed or empty answer is never an answer; 14 agents return options as a list for the skill to ask; `CLAUDE.md` and `agent-memory.md` name the three writes that need no "May I write?" |
+| **Questions** | `automation-modes.md` and `effects-map.md`: a skipped, dismissed or empty answer is never an answer; 14 agents return options as a list for the skill to ask; `AGENTS.md` and `agent-memory.md` name the three writes that need no "May I write?" |
 | **Settings** | `yaml-helper.sh` reads every setting under the project root when started from a subfolder; the local `platform.cert_tier` cannot override the lock; invalid `cert_tier` and `testing.strict` values count as unset |
 | **Hooks and scripts** | `validate-commit.sh` checks files a `git add` in the same command stages, skips non-system files in `design/gdd/`, checks a project in a subfolder of a larger repository, and reads Git LFS-stored JSON through its working copy; `project-coherence.sh` reads Unreal's `Build.version` |
 | **Permissions** | `settings.json`: seven allow rules removed, the two pytest rules narrowed, `Edit(**/.env*)` denied |
@@ -428,7 +428,7 @@ pre-compact.sh, session-stop.sh
 .pi/docs/**                              ← EXCEPT technical-preferences.md,
                                                which is yours and unchanged in
                                                1.1.3
-docs/WORKFLOW-GUIDE.md, docs/CLAUDE.md, docs/COLLABORATIVE-DESIGN-PRINCIPLE.md,
+docs/WORKFLOW-GUIDE.md, docs/AGENTS.md, docs/COLLABORATIVE-DESIGN-PRINCIPLE.md,
 docs/engine-reference/unreal/plugins/gameplay-ability-system.md
 README.md, CHANGELOG.md, UPGRADING.md        ← keep your README if it is your
                                                game's
@@ -450,7 +450,7 @@ the removed rules into `.pi/settings.local.json`, remove them there too:** a
 copy keeps approving `git branch -D`, `--output` files and `json.tool` writes
 without asking.
 
-**`CLAUDE.md`** — if you have not edited it outside the Technology Stack, take
+**`AGENTS.md`** — if you have not edited it outside the Technology Stack, take
 the shipped Collaboration Protocol section. If you have, copy its three new
 lines: the exemptions under "May I write", "A skipped or dismissed question is
 not an answer", and "Started outside this file's folder? Warn first".
@@ -580,9 +580,9 @@ on every file. The code-rule globs now name their file types (`*.cs`,
 `gameplay-code.md` and `engine-code.md` give Unity and Unreal examples, and
 `agent-memory.md` names every engine's code root.
 
-**`src/CLAUDE.md`** — if you have not edited it, overwrite it with the shipped
+**`src/AGENTS.md`** — if you have not edited it, overwrite it with the shipped
 file. If you have, merge: its File Routing section now
-points to the `specialists` block of `project.yaml` instead of `CLAUDE.md`.
+points to the `specialists` block of `project.yaml` instead of `AGENTS.md`.
 
 **`.gitignore`** — add `/reports/` and `/test-results/` (gdUnit4 and Unity test
 output), and `!addons/gdUnit4/bin/` on the line after `bin/`: without it the
@@ -1160,7 +1160,7 @@ No files require manual merging in this release. All changes are to infrastructu
 | **Agent updates** | 14 specialist agents — `memory: project` added |
 | **Agent updates** | `prototyper` — `isolation: worktree` (throwaway work in isolated git branch) |
 | **Model routing** | Haiku/Sonnet/Opus tier assignments documented in coordination rules; skills declare their tier in frontmatter |
-| **Directory CLAUDE.md** | Scaffolded `design/CLAUDE.md`, `src/CLAUDE.md`, `docs/CLAUDE.md` — path-scoped instructions for each directory |
+| **Directory AGENTS.md** | Scaffolded `design/AGENTS.md`, `src/AGENTS.md`, `docs/AGENTS.md` — path-scoped instructions for each directory |
 | **Pipeline integrity** | TR-ID stability, manifest versioning, ADR status gates, TR-ID reference not quote |
 | **GDD template** | `## Game Feel` section added (input responsiveness, animation targets, impact moments) |
 
@@ -1210,9 +1210,9 @@ No files require manual merging in this release. All changes are to infrastructu
 .pi/docs/templates/interaction-pattern-library.md
 .pi/docs/templates/player-journey.md
 .pi/docs/templates/difficulty-curve.md
-design/CLAUDE.md
-src/CLAUDE.md
-docs/CLAUDE.md
+design/AGENTS.md
+src/AGENTS.md
+docs/AGENTS.md
 ```
 
 **Existing files to overwrite (no user content):**
@@ -1338,9 +1338,9 @@ The new `validate-skill-change.sh` hook reminds you to run `/skill-test` automat
 
 Skills are now explicitly assigned to Haiku, Sonnet, or Opus tiers based on task complexity. Read-only status checks use Haiku; complex multi-document synthesis uses Opus; everything else defaults to Sonnet. Tier assignments are documented in `.pi/docs/coordination-rules.md`.
 
-#### Directory CLAUDE.md Files
+#### Directory AGENTS.md Files
 
-Three new directory-scoped CLAUDE.md files (`design/`, `src/`, `docs/`) provide path-specific instructions to agents working in those directories. These load automatically when Claude Code reads files in that directory.
+Three new directory-scoped AGENTS.md files (`design/`, `src/`, `docs/`) provide path-specific instructions to agents working in those directories. These load automatically when Claude Code reads files in that directory.
 
 ---
 
@@ -1501,7 +1501,7 @@ future sessions without requiring manual file edits.
 | **Context management** | Major rewrite — file-backed state strategy added |
 | **Agent updates** | 14 design/creative agents — AskUserQuestion integration |
 | **Skill updates** | All 7 `team-*` skills + `brainstorm` — AskUserQuestion at phase transitions |
-| **CLAUDE.md** | Slimmed from ~159 to ~60 lines; 5 doc imports instead of 10 |
+| **AGENTS.md** | Slimmed from ~159 to ~60 lines; 5 doc imports instead of 10 |
 | **Hook updates** | All 8 hooks — Windows compatibility fixes, new features |
 | **Docs removed** | `docs/IMPROVEMENTS-PROPOSAL.md`, `docs/MULTI-STAGE-DOCUMENT-WORKFLOW.md` |
 
@@ -1585,7 +1585,7 @@ If you *have* customized agent prompts, see "Merge carefully" below.
 These files contain both template structure and your project-specific content.
 Do **not** overwrite them — merge the changes manually.
 
-#### `CLAUDE.md`
+#### `AGENTS.md`
 
 The template version was slimmed from ~159 lines to ~60 lines. The key
 structural change: 5 doc imports were removed because they're auto-loaded

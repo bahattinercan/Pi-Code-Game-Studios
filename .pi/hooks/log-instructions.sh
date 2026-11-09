@@ -46,7 +46,7 @@ fi
 # the load events replaces the inference with a record.
 #
 # WHAT IT RECORDS
-#   session_start     CLAUDE.md
+#   session_start     AGENTS.md
 #   include           its @-imports, each carrying parent_file_path
 #   path_glob_match   a path-scoped rule, after READING a file that matches one
 #                     of its declared paths

@@ -6,7 +6,7 @@
 # Replaces the hand-run FOUND/ABSENT lists a skill builds from a Glob and a
 # Read per input.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # Which inputs are required, and whether an ABSENT one makes a section
 # NOT ASSESSED, is the calling skill's call. The exit code never says.
 #

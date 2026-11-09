@@ -5,7 +5,7 @@
 # row; a skill or another tool's hook can call it the same way, because hooks
 # do not run in every tool.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 #
 # Usage: bash .pi/scripts/read-guard.sh [--root DIR] <command> <path> [options]
 #   check <path> [--bounded yes|no]

@@ -9,7 +9,7 @@
 # read with `od`, the sample rate read with `file`, and the orphan and
 # missing-asset searches.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # A row is a rule that matched a file; the counts under "hits" are rows, not
 # violations, and the words the skill ranks its report by (COMPLIANT,
 # WARNINGS, NON-COMPLIANT, NOT ASSESSED) stay in the skill. A check that did

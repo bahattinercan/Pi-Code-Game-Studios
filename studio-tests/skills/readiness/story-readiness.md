@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/story-readiness` validates that a story file is ready for a developer to
+`/skill:story-readiness` validates that a story file is ready for a developer to
 pick up and implement. It loads its reference context once (systems index,
 the control manifest's `Manifest Version:` header, the TR registry, and every
 ADR's status via a single Grep), then evaluates each story against six
@@ -11,7 +11,7 @@ Clarity, Open Questions, Asset References, and Definition of Done. The workflow
 tier resolved for the story's system decides which groups block (`full`: all;
 `standard`: architecture items advisory except a critical ADR; `minimal`:
 architecture N/A) — except one rule at every tier: an ADR the story references that
-is missing, `Proposed`, `Deprecated` or `Superseded` BLOCKS, because `/dev-story`
+is missing, `Proposed`, `Deprecated` or `Superseded` BLOCKS, because `/skill:dev-story`
 stops on it. At `minimal`, `design/game-brief.md` stands in for the GDD. It produces a READY / NEEDS WORK / BLOCKED / NOT ASSESSED
 verdict. It is read-only — it never writes or edits a file. In `full` review
 mode it then runs the QL-STORY-READY gate (`qa-lead`).
@@ -25,7 +25,7 @@ retained screenshot is required at every `qa.level` (Case 6).
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings or numbered check sections
@@ -39,7 +39,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -61,7 +61,7 @@ Fixture defaults.
   - No TBD / UNRESOLVED markers and no asset paths
 - A sprint plan in `production/sprints/` lists other stories
 
-**Input:** `/story-readiness production/epics/core/story-light-pickup.md`
+**Input:** `/skill:story-readiness production/epics/core/story-light-pickup.md`
 
 **Expected behavior:**
 1. Skill reports "Validating 1 story files."
@@ -92,7 +92,7 @@ Fixture defaults.
 - `docs/architecture/adr-0005-light-system.md` exists with `## Status` Proposed
 - All other story content is complete
 
-**Input:** `/story-readiness production/epics/core/story-light-system.md`
+**Input:** `/skill:story-readiness production/epics/core/story-light-system.md`
 
 **Expected behavior:**
 1. The status scan finds ADR-0005 `Proposed`
@@ -104,7 +104,7 @@ Fixture defaults.
 - [ ] Output explicitly names ADR-0005 as the blocker
 - [ ] Output says to wait for the ADR's acceptance before implementing
 - [ ] Skill does not output READY regardless of other checks passing
-- [ ] Variant — same story at `modes.workflow: standard`, with `| **Layer** | Feature |` in ADR-0005's `## Engine Compatibility` table (non-critical): the story references the Proposed ADR, so the verdict is still BLOCKED — a referenced Proposed ADR blocks at every tier, because `/dev-story` stops on it
+- [ ] Variant — same story at `modes.workflow: standard`, with `| **Layer** | Feature |` in ADR-0005's `## Engine Compatibility` table (non-critical): the story references the Proposed ADR, so the verdict is still BLOCKED — a referenced Proposed ADR blocks at every tier, because `/skill:dev-story` stops on it
 - [ ] Variant — the same non-critical ADR at `standard`, now `Accepted`, with the story's `Manifest Version:` older than the control manifest's: the stale version is listed under Gaps as advisory, with its `Fix:` line, and the verdict is READY — an advisory gap does not downgrade it
 
 ---
@@ -116,7 +116,7 @@ Fixture defaults.
 - Story `production/epics/core/story-oxygen-drain.md` has `Type: Logic` but no `## Acceptance Criteria` section
 - The story references no ADR, no TR-ID and no manifest version
 
-**Input:** `/story-readiness production/epics/core/story-oxygen-drain.md`
+**Input:** `/skill:story-readiness production/epics/core/story-oxygen-drain.md`
 
 **Expected behavior:**
 1. At `minimal`, skill evaluates Design Completeness and Scope Clarity and treats Architecture Completeness as N/A
@@ -141,7 +141,7 @@ Fixture defaults.
 - `docs/architecture/control-manifest.md` has `Manifest Version: 2026-03-10`
 - Everything else in the story passes
 
-**Input:** `/story-readiness production/epics/core/story-mirror-rotation.md`
+**Input:** `/skill:story-readiness production/epics/core/story-mirror-rotation.md`
 
 **Expected behavior:**
 1. Skill extracts `2026-01-15` from the story
@@ -164,7 +164,7 @@ Fixture defaults.
 - Story file exists and passes every checklist item
 - Review mode comes from `modes.review_mode` (legacy mirror `production/review-mode.txt`) or `--review`
 
-**Case 5a — full mode:** `/story-readiness production/epics/core/story-light-pickup.md --review full`
+**Case 5a — full mode:** `/skill:story-readiness production/epics/core/story-light-pickup.md --review full`
 
 **Expected behavior:**
 1. Skill completes its own checklist and verdict first
@@ -217,7 +217,7 @@ Fixture defaults.
   nor any other mention of where a screenshot will go
 - No TBD / UNRESOLVED markers and no asset paths
 
-**Input:** `/story-readiness production/epics/ui/story-003-shop-panel.md`
+**Input:** `/skill:story-readiness production/epics/ui/story-003-shop-panel.md`
 
 **Expected behavior:**
 1. The architecture items pass or auto-pass (explicit "No ADR applies"; no
@@ -241,11 +241,11 @@ Fixture defaults.
 
 **Case 7a — zero stories in scope:**
 - `production/epics/` holds only `EPIC.md` index files, no story files
-- **Input:** `/story-readiness all`
+- **Input:** `/skill:story-readiness all`
 
 **Assertions (7a):**
 - [ ] Output is `NOT ASSESSED — no stories in scope`, naming `production/epics/**/*.md` as the path searched
-- [ ] It routes to `/create-epics [layer]` then `/create-stories [epic-slug]`
+- [ ] It routes to `/skill:create-epics [layer]` then `/skill:create-stories [epic-slug]`
 - [ ] No `Ready: 0 / Needs Work: 0 / Blocked: 0` summary is printed over an empty list
 
 **Case 7b — a referenced ADR with no readable status:**
@@ -253,11 +253,11 @@ Fixture defaults.
 - Story `production/epics/core/story-save-slots.md` passes every other item and
   references `ADR-0007`; `docs/architecture/adr-0007-save-format.md` exists but has
   no `## Status` section
-- **Input:** `/story-readiness production/epics/core/story-save-slots.md`
+- **Input:** `/skill:story-readiness production/epics/core/story-save-slots.md`
 
 **Assertions (7b):**
 - [ ] The ADR check is NOT ASSESSED — the status is unknown, not failed — and the verdict is NOT ASSESSED: not BLOCKED, not READY
-- [ ] Output names `docs/architecture/adr-0007-save-format.md` and routes to `/architecture-decision retrofit docs/architecture/adr-0007-save-format.md`
+- [ ] Output names `docs/architecture/adr-0007-save-format.md` and routes to `/skill:architecture-decision retrofit docs/architecture/adr-0007-save-format.md`
 - [ ] Variant — the story names `ADR-0007` but no such file exists: that is a finding about the story, so the verdict is BLOCKED ("referenced ADR is missing"), not NOT ASSESSED
 
 ---
@@ -273,8 +273,8 @@ Fixture defaults.
   `docs/architecture/adr-0008-input-map.md` has `## Status` Deprecated
 - Both stories are otherwise complete
 
-**Input:** `/story-readiness production/epics/core/story-save-format.md`, then
-`/story-readiness production/epics/core/story-input-map.md`
+**Input:** `/skill:story-readiness production/epics/core/story-save-format.md`, then
+`/skill:story-readiness production/epics/core/story-input-map.md`
 
 **Expected behavior:**
 1. The status scan reads `Superseded by ADR-0009` for A and `Deprecated` for B
@@ -288,7 +288,7 @@ Fixture defaults.
 **Assertions:**
 - [ ] Both verdicts are BLOCKED, not NEEDS WORK or READY, at `standard`
 - [ ] A's `Fix:` names the successor ADR-0009 and says to edit the story's ADR field
-- [ ] The `Fix:` states that `/create-stories` never rewrites an existing story, and does not suggest re-running it to refresh this story
+- [ ] The `Fix:` states that `/skill:create-stories` never rewrites an existing story, and does not suggest re-running it to refresh this story
 - [ ] B's blocker names ADR-0008 and its `Deprecated` status
 - [ ] No file is written or edited
 
@@ -306,7 +306,7 @@ Fixture defaults.
   `TR-light-005` and `TR-light-006`; every other checklist item passes (ADR
   Accepted, current manifest version, criteria, estimate)
 
-**Input:** `/story-readiness production/epics/core/story-S4.md`, then S5, then S6, then S1
+**Input:** `/skill:story-readiness production/epics/core/story-S4.md`, then S5, then S6, then S1
 
 **Expected behavior:**
 1. The registry lookup finds each id and reads its status
@@ -330,7 +330,7 @@ Fixture defaults.
 - [ ] Does NOT use Write or Edit tools; any help filling gaps is drafted in conversation only
 - [ ] Single-story output follows the Section 5 template: Verdict line, "Passing Checks (N/[total])", Gaps each with a `Fix:` line, and Blockers when BLOCKED
 - [ ] Does not ask for write approval (no file writes)
-- [ ] Ends with a recommended next step (fix the gaps, or `/dev-story [story-path]` once READY)
+- [ ] Ends with a recommended next step (fix the gaps, or `/skill:dev-story [story-path]` once READY)
 - [ ] Keeps the verdict levels distinct — NOT ASSESSED (could not evaluate) is never reported as BLOCKED
 
 ---

@@ -21,7 +21,7 @@ Do not guess at post-cutoff API signatures — look them up first.
 ## File Routing
 
 Match the engine-specialist agent to the file type being written.
-`/setup-engine` records which specialist handles code, shaders and UI in the
+`/skill:setup-engine` records which specialist handles code, shaders and UI in the
 `specialists` block of `project.yaml`.
 
 When in doubt, use `specialists.code` from `project.yaml`.
@@ -29,7 +29,7 @@ When in doubt, use `specialists.code` from `project.yaml`.
 ## Tests
 
 Tests live in `tests/` — not in `src/`.
-Run `/test-setup` to scaffold the test framework if it doesn't exist yet.
+Run `/skill:test-setup` to scaffold the test framework if it doesn't exist yet.
 Every gameplay system should have unit tests covering its formulas and edge cases.
 
 ## Verification-Driven Development

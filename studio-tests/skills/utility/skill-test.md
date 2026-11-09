@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/skill-test` validates skills (`.pi/skills/*/SKILL.md`) and agents
+`/skill:skill-test` validates skills (`.pi/skills/*/SKILL.md`) and agents
 (`.pi/agents/*.md`). It has four modes:
 
 - **static** `[name | all]`: runs 7 structural checks on a skill (frontmatter,
@@ -18,7 +18,7 @@
   name, it reports only those observations, with no verdict. Writes nothing.
 - **spec** `[skill-or-agent-name]`: resolves the name through
   `studio-tests/catalog.yaml`, reads the file and the spec at the
-  entry's `spec:` path, plus `CLAUDE.md` and every file it imports with `@path`,
+  entry's `spec:` path, plus `AGENTS.md` and every file it imports with `@path`,
   and marks each assertion — the spec's Static Assertions included, for a skill
   as for an agent — PASS / PARTIAL / FAIL / NOT ASSESSED. Case and Overall
   Verdicts are the worst result beneath them (FAIL, PARTIAL, NOT ASSESSED,
@@ -36,7 +36,7 @@ No director gates apply.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
@@ -48,7 +48,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 
 ## Director Gate Checks
 
-None. `/skill-test` is a meta-utility skill. No director gates apply.
+None. `/skill:skill-test` is a meta-utility skill. No director gates apply.
 
 ---
 
@@ -56,7 +56,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -75,7 +75,7 @@ Fixture defaults.
   - Does not set `context: fork`
   - `argument-hint` matches the modes its Parse Arguments phase documents
 
-**Input:** `/skill-test static brainstorm`
+**Input:** `/skill:skill-test static brainstorm`
 
 **Expected behavior:**
 1. Skill reads `.pi/skills/brainstorm/SKILL.md` fully
@@ -83,7 +83,7 @@ Fixture defaults.
 3. Output is the single-skill block `=== Skill Static Check: /skill:brainstorm ===`
    listing Check 1 – Check 7, each PASS
 4. Verdict is COMPLIANT
-5. Phase 3 follow-up suggests `/skill-test spec brainstorm`
+5. Phase 3 follow-up suggests `/skill:skill-test spec brainstorm`
 
 **Assertions:**
 - [ ] Exactly 7 structural checks are reported
@@ -101,7 +101,7 @@ Fixture defaults.
   no "May I write", no "before writing"/"approval" near a write instruction,
   no "ask" and "write" in the same section
 
-**Input:** `/skill-test static some-skill`
+**Input:** `/skill:skill-test static some-skill`
 
 **Expected behavior:**
 1. Skill reads `some-skill/SKILL.md`
@@ -126,20 +126,20 @@ Fixture defaults.
 - The sandbox's copy of that spec is the live one (9 test cases and a Static
   Assertions list) with one Static Assertion added: "Balance values link to
   their source formula or rationale" — met only by
-  `.pi/docs/coding-standards.md` (imported by `CLAUDE.md`), not by the skill
+  `.pi/docs/coding-standards.md` (imported by `AGENTS.md`), not by the skill
   or its gate files themselves. The live spec has no such line, so the copy is
   edited for the case
 - `.pi/skills/gate-check/` holds `SKILL.md` and 12 `references/` files
   (6 phase files, 6 gate files)
 - The user declines the results write
 
-**Input:** `/skill-test spec gate-check`
+**Input:** `/skill:skill-test spec gate-check`
 
 **Expected behavior:**
 1. Skill resolves `gate-check` as a skill via the catalog and takes the spec
    path from its `spec:` field
 2. Skill reads the skill — `SKILL.md` and all 12 `references/` files — the
-   spec, `CLAUDE.md` and its `@`-imported files
+   spec, `AGENTS.md` and its `@`-imported files
 3. The spec's Static Assertions are checked against `SKILL.md` and its
    `references/` files in a
    `Static Assertions:` block before Case 1
@@ -171,7 +171,7 @@ Fixture defaults.
   emptied and its spec file removed — every live skill has a spec)
 - `catalog.yaml` has an `agents:` section with 49 entries, all with specs
 
-**Input:** `/skill-test audit` (and, separately, `/skill-test` with no argument)
+**Input:** `/skill:skill-test audit` (and, separately, `/skill:skill-test` with no argument)
 
 **Expected behavior:**
 1. Both inputs run audit mode — no argument is the audit default, not a usage
@@ -187,7 +187,7 @@ Fixture defaults.
    `category all` or `spec [name]`
 
 **Assertions:**
-- [ ] `/skill-test` with no argument produces this audit, not usage text
+- [ ] `/skill:skill-test` with no argument produces this audit, not usage text
 - [ ] All skill directories are enumerated (not just a sample)
 - [ ] "Has Spec" column is accurate for each entry
 - [ ] Summary coverage counts are correct for skills and for agents
@@ -205,11 +205,11 @@ Fixture defaults.
   panel width (only CD-PHASE-GATE is spawned at `workflow: full`)
 - The user approves the catalog update
 
-**Input:** `/skill-test category gate-check`
+**Input:** `/skill:skill-test category gate-check`
 
 **Expected behavior:**
 1. Skill reads the `category:` from the catalog, then the `### gate` section of the rubric
-2. Skill reads the skill and the `CLAUDE.md` context, and evaluates G1–G5
+2. Skill reads the skill and the `AGENTS.md` context, and evaluates G1–G5
 3. Each metric is marked PASS, FAIL or WARN; G2 is FAIL with a quoted Gap line
 4. Report ends `Verdict: FAIL (1 failure, 0 warnings)` and a Fix line
 5. Skill asks "May I update `studio-tests/catalog.yaml` to record
@@ -236,7 +236,7 @@ Fixture defaults.
   architecture choices (delegate to technical-director)"; it never restates the
   redirect in its own words
 
-**Input:** `/skill-test spec creative-director`
+**Input:** `/skill:skill-test spec creative-director`
 
 **Expected behavior:**
 1. Skill resolves the name through the catalog's `agents:` section — it does not
@@ -269,7 +269,7 @@ Fixture defaults.
   start. (A file that is read but whose frontmatter does not parse is a
   different case: Check 1 fails and it is NON-COMPLIANT.)
 
-**Input:** `/skill-test static all`
+**Input:** `/skill:skill-test static all`
 
 **Expected behavior:**
 1. The 73 readable skills are checked and listed with their Result
@@ -293,7 +293,7 @@ Fixture defaults.
   the spec never defines
 - The user approves the results write
 
-**Input:** `/skill-test spec brainstorm`
+**Input:** `/skill:skill-test spec brainstorm`
 
 **Expected behavior:**
 1. That assertion is NOT ASSESSED, with a Reason — never resolved to PASS
@@ -316,7 +316,7 @@ Fixture defaults.
   the catalog before its rubric section was written
 - `studio-tests/quality-rubric.md` has no `tooling` section
 
-**Input:** `/skill-test category some-skill`
+**Input:** `/skill:skill-test category some-skill`
 
 **Expected behavior:**
 1. Skill reads the category, then looks for its rubric section and finds none
@@ -339,12 +339,12 @@ Fixture defaults.
   keyword, no ask-before-write language and no next-step handoff itself
 - `.pi/skills/split-skill/references/2-report.md` holds `Verdict: **COMPLETE**`,
   the line "May I write this report to `production/qa/report.md`?" and a closing
-  "Next step: `/gate-check`"; `references/1-gather.md` holds only instructions
+  "Next step: `/skill:gate-check`"; `references/1-gather.md` holds only instructions
 - Run A: as above. Run B: the same skill, except `argument-hint:` is missing from
   `SKILL.md` and appears only in a frontmatter-style block at the top of
   `references/1-gather.md`
 
-**Input:** `/skill-test static split-skill`
+**Input:** `/skill:skill-test static split-skill`
 
 **Expected behavior:**
 1. Skill reads `SKILL.md` and every file in `references/` and runs the 7 checks on

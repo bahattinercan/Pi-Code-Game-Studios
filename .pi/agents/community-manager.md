@@ -54,7 +54,7 @@ Before drafting anything:
 - You do not write game code — route implementation to the programmer who owns it
 
 ## Core Responsibilities
-- Draft patch notes, dev blogs, community updates and release announcements — for a release, work from the patch notes release-manager produces with `/patch-notes` (review their tone; do not regenerate them)
+- Draft patch notes, dev blogs, community updates and release announcements — for a release, work from the patch notes release-manager produces with `/skill:patch-notes` (review their tone; do not regenerate them)
 - Collect, categorize, and surface player feedback to the team
 - Manage crisis communication (outages, bugs, rollbacks)
 - Maintain community guidelines and moderation standards
@@ -101,7 +101,7 @@ Before drafting anything:
 - Enthusiastic about content — share the team's excitement
 - Never combative with criticism — even when unfair
 - Consistent voice across all channels
-- A brand-voice or style guide the project supplies (e.g. `design/community/tone-guide.md`, which `/patch-notes` reads) overrides these defaults — its tone, person and glossary terms win
+- A brand-voice or style guide the project supplies (e.g. `design/community/tone-guide.md`, which `/skill:patch-notes` reads) overrides these defaults — its tone, person and glossary terms win
 
 ## Player Feedback Pipeline
 

@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/create-control-manifest` reads the Accepted ADRs in `docs/architecture/` and
+`/skill:create-control-manifest` reads the Accepted ADRs in `docs/architecture/` and
 generates a control manifest — a flat, actionable rules sheet that captures the
 required patterns, forbidden approaches, performance guardrails and engine API
 constraints for each architectural layer (Foundation, Core, Feature,
@@ -22,13 +22,13 @@ when the user declines the write.
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "May I write" collaborative protocol language (for the control manifest)
-- [ ] Has a next-step handoff at the end (`/create-epics` then `/create-stories`)
+- [ ] Has a next-step handoff at the end (`/skill:create-epics` then `/skill:create-stories`)
 - [ ] Documents that only Accepted ADRs are included (not Proposed)
 - [ ] Names gate TD-MANIFEST and its solo/lean skip notes
 
@@ -58,7 +58,7 @@ then supplied and the gate re-run, or the run goes on with
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -75,7 +75,7 @@ Fixture defaults.
 - No existing `docs/architecture/control-manifest.md`
 - Review mode resolves to `solo`
 
-**Input:** `/create-control-manifest`
+**Input:** `/skill:create-control-manifest`
 
 **Expected behavior:**
 1. Globs `docs/architecture/adr-*.md` (N = 4), then Greps `^## Status` to resolve
@@ -106,17 +106,17 @@ Fixture defaults.
 **Fixture:**
 - `docs/architecture/` directory exists but contains no `adr-*.md` files
 
-**Input:** `/create-control-manifest`
+**Input:** `/skill:create-control-manifest`
 
 **Expected behavior:**
 1. Glob returns N = 0
-2. Skill outputs: "No ADRs found — run `/architecture-decision` before building a
+2. Skill outputs: "No ADRs found — run `/skill:architecture-decision` before building a
    control manifest."
 3. Skill stops — no Status Grep, no preview, no write ask, no file written
 
 **Assertions:**
 - [ ] The "No ADRs found" message is printed
-- [ ] Skill recommends `/architecture-decision` as the next action
+- [ ] Skill recommends `/skill:architecture-decision` as the next action
 - [ ] No control manifest file is written and no "May I write" ask is shown
 - [ ] Verdict COMPLETE is NOT emitted (the skill stops at Phase 1)
 
@@ -128,7 +128,7 @@ Fixture defaults.
 - `docs/architecture/` contains 5 ADRs: 3 with `## Status` Accepted, 2 with
   `## Status` Proposed (ADR-0004, ADR-0005)
 
-**Input:** `/create-control-manifest`
+**Input:** `/skill:create-control-manifest`
 
 **Expected behavior:**
 1. N = 5; the `^## Status` Grep returns 5 matches, 3 reading Accepted — the
@@ -155,9 +155,9 @@ Fixture defaults.
   `Manifest Version` and `Last Updated` both dated last week
 - `docs/architecture/` contains Accepted ADRs, one of them accepted since then
 - `production/epics/` already holds epics with stories, so the first-run
-  `/create-epics` next step does not apply
+  `/skill:create-epics` next step does not apply
 
-**Input:** `/create-control-manifest update`
+**Input:** `/skill:create-control-manifest update`
 
 **Expected behavior:**
 1. Skill rebuilds the manifest from the current Accepted ADRs (same Phases 1–4)
@@ -170,7 +170,7 @@ Fixture defaults.
 - [ ] The existing file is not overwritten before "May I write the Control Manifest?" is approved
 - [ ] The newly accepted ADR appears in `ADRs Covered`
 - [ ] `Manifest Version` equals `Last Updated` and is the generation date (not a v1→v2 counter)
-- [ ] The regeneration next-step ("Updated. Recommend notifying the team…") is shown instead of the first-run `/create-epics` handoff
+- [ ] The regeneration next-step ("Updated. Recommend notifying the team…") is shown instead of the first-run `/skill:create-epics` handoff
 
 ---
 
@@ -181,7 +181,7 @@ Fixture defaults.
 - Review mode resolves to `full`
 - TD-MANIFEST returns REJECT, naming one rule that has no source ADR
 
-**Input:** `/create-control-manifest`
+**Input:** `/skill:create-control-manifest`
 
 **Expected behavior:**
 1. Skill shows the Phase 4 preview; user picks
@@ -209,7 +209,7 @@ Fixture defaults.
 **Fixture (malformed):**
 - `docs/architecture/` contains 3 ADRs, none with a `## Status` section
 
-**Input (both fixtures):** `/create-control-manifest`
+**Input (both fixtures):** `/skill:create-control-manifest`
 
 **Expected behavior (none Accepted):**
 1. N = 3; the `^## Status` Grep matches 3, none reading Accepted
@@ -220,12 +220,12 @@ Fixture defaults.
 **Expected behavior (malformed):**
 1. N = 3; the `^## Status` Grep matches nothing
 2. Reports "3 ADRs found, none has a `## Status` section — acceptance cannot be
-   determined. Run `/architecture-decision retrofit [file]` on each." and stops
+   determined. Run `/skill:architecture-decision retrofit [file]` on each." and stops
 
 **Assertions:**
 - [ ] None Accepted: the ask is shown and no empty manifest is written
 - [ ] Malformed: the run stops — the ADRs are not treated as Accepted and no manifest is written
-- [ ] Malformed: the retrofit command reads `/architecture-decision retrofit [file]` — the form that skill parses
+- [ ] Malformed: the retrofit command reads `/skill:architecture-decision retrofit [file]` — the form that skill parses
 - [ ] In neither fixture is a rule summary previewed or a "May I write" ask shown before the user proceeds
 
 ---
@@ -237,7 +237,7 @@ Fixture defaults.
 - [ ] Rule summary shown to user before the gate and before "May I write"
 - [ ] "May I write the Control Manifest?" asked before writing `docs/architecture/control-manifest.md`
 - [ ] TD-MANIFEST runs in `full`, is skipped with a named note in `lean`/`solo`
-- [ ] Ends with next-step handoff: `/create-epics layer: foundation` then `/create-stories [epic-slug]`
+- [ ] Ends with next-step handoff: `/skill:create-epics layer: foundation` then `/skill:create-stories [epic-slug]`
 
 ---
 

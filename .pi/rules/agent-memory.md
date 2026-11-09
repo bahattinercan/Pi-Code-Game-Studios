@@ -6,7 +6,7 @@ paths:
 # Agent Memory Rules
 
 **Agent memory is one of three writes that need no "May I write?"** The other two
-are named in `CLAUDE.md`:
+are named in `AGENTS.md`:
 
 - **Appends to `production/session-state/active.md`** — the session checkpoint
   the hooks and the next session rely on. An append, never a rewrite of what is

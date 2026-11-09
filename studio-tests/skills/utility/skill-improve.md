@@ -2,10 +2,10 @@
 
 ## Skill Summary
 
-`/skill-improve [skill-name]` runs one test → fix → retest → keep-or-revert
+`/skill:skill-improve [skill-name]` runs one test → fix → retest → keep-or-revert
 cycle on a single skill. It records a static baseline with
-`/skill-test static [name]` (FAIL and WARN counts, and which of Checks 1–7
-failed), then a category baseline with `/skill-test category [name]` when the
+`/skill:skill-test static [name]` (FAIL and WARN counts, and which of Checks 1–7
+failed), then a category baseline with `/skill:skill-test category [name]` when the
 skill has a `category:` in `studio-tests/catalog.yaml`. If both
 baselines are clean it stops with "No improvements needed." Otherwise it shows
 a diagnosis, proposes before/after fixes, asks "May I write this improved
@@ -26,19 +26,19 @@ restore runs only on a yes, and writes back the copy recorded in Phase 5 (never
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Phase 6 states both outcomes: "Score improved. Changes kept." and "Combined score did not improve."
 - [ ] Contains "May I write" collaborative protocol language before applying fixes
-- [ ] Has a next-step handoff (Phase 7: `/skill-test static all`, `/skill-improve [next-name]`, `/skill-test audit`)
+- [ ] Has a next-step handoff (Phase 7: `/skill:skill-test static all`, `/skill:skill-improve [next-name]`, `/skill:skill-test audit`)
 
 ---
 
 ## Director Gate Checks
 
-None. `/skill-improve` is a meta-utility skill. No director gates apply.
+None. `/skill:skill-improve` is a meta-utility skill. No director gates apply.
 
 ---
 
@@ -46,7 +46,7 @@ None. `/skill-improve` is a meta-utility skill. No director gates apply.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -62,7 +62,7 @@ Fixture defaults.
   1 FAIL (U1, because static checks fail)
 - The user approves the write; the re-test is clean in both dimensions
 
-**Input:** `/skill-improve some-skill`
+**Input:** `/skill:skill-improve some-skill`
 
 **Expected behavior:**
 1. Static baseline displayed: "Static baseline: 1 failures, 1 warnings" with
@@ -96,13 +96,13 @@ Fixture defaults.
   the combined count rises
 - The user approves the write, then answers yes to the revert
 
-**Input:** `/skill-improve some-skill`
+**Input:** `/skill:skill-improve some-skill`
 
 **Expected behavior:**
 1. Baseline recorded; fix proposed; "May I write …" approved; file written
 2. The re-test comparison's combined line reads `Combined: [before] → [after] (worse)`,
    with the after count higher; the after figures are what the re-run of
-   `/skill-test static some-skill` measured, not what the edit was meant to
+   `/skill:skill-test static some-skill` measured, not what the edit was meant to
    achieve (the added handoff is not counted as clearing Check 5 unless the
    re-run says so)
 3. Skill reports "Combined score did not improve." and shows what changed and
@@ -113,7 +113,7 @@ Fixture defaults.
 **Assertions:**
 - [ ] Re-test combined count is compared to the baseline before finalizing
 - [ ] A higher combined count takes the "did not improve" branch
-- [ ] The after score is read from the re-run of `/skill-test static`, never stated from the edit: the re-run is visible in the transcript, and the displayed after counts match its result (2 FAILs), not the 0 FAILs the edit aimed for
+- [ ] The after score is read from the re-run of `/skill:skill-test static`, never stated from the edit: the re-run is visible in the transcript, and the displayed after counts match its result (2 FAILs), not the 0 FAILs the edit aimed for
 - [ ] The revert is asked for, not automatic
 - [ ] The file is restored only after the user says yes, from the recorded copy — never via `git checkout`
 - [ ] "Score improved. Changes kept." is NOT reported
@@ -135,7 +135,7 @@ Fixture defaults.
 - catalog gives `gate-check` `category: gate`; the user approves the write, and
   the re-test is clean in both dimensions
 
-**Input:** `/skill-improve gate-check`
+**Input:** `/skill:skill-improve gate-check`
 
 **Expected behavior:**
 1. Static baseline and category baseline (`gate rubric`) both recorded
@@ -144,7 +144,7 @@ Fixture defaults.
    `references/4-assessment.md`, not back into `SKILL.md`
 4. The write question names both files: "May I write this improved version to
    `.pi/skills/gate-check/SKILL.md` and `.pi/skills/gate-check/references/4-assessment.md`?"
-5. Both `/skill-test static gate-check` and `/skill-test category gate-check` re-run
+5. Both `/skill:skill-test static gate-check` and `/skill:skill-test category gate-check` re-run
 6. The comparison ends `Combined: 3 → 0 (improved)`: "Score improved. Changes kept."
 
 **Assertions:**
@@ -165,13 +165,13 @@ Fixture defaults.
   static checks with no WARN: the five frontmatter fields, an `argument-hint`
   that matches its documented modes, three `## Phase N` headings, a `PASS` /
   `FAIL` verdict, `Write` in `allowed-tools` with "May I write" before it, a
-  closing next-step section naming `/skill-test`, and no `context: fork`
+  closing next-step section naming `/skill:skill-test`, and no `context: fork`
 - catalog gives `some-skill` `category: utility`; U1 and U2 both pass
 - A purpose-built skill, not a live one such as `brainstorm`: whether a live
-  skill is clean today can only be known by running `/skill-test`, so it is not
+  skill is clean today can only be known by running `/skill:skill-test`, so it is not
   a fixed fixture
 
-**Input:** `/skill-improve some-skill`
+**Input:** `/skill:skill-improve some-skill`
 
 **Expected behavior:**
 1. Static baseline 0/0 → proceeds to the category baseline (not an immediate stop)
@@ -193,7 +193,7 @@ Fixture defaults.
 - `.pi/skills/some-skill/SKILL.md` has at least 1 static failure; the user
   approves the write
 
-**Input:** `/skill-improve some-skill`
+**Input:** `/skill:skill-improve some-skill`
 
 **Expected behavior:**
 1. Skill runs the test-fix-retest loop
@@ -217,7 +217,7 @@ Fixture defaults.
   the re-test shows 0 FAILs and 1 WARN (Check 5)
 - The user approves the write, then answers no to the restore
 
-**Input:** `/skill-improve some-skill`
+**Input:** `/skill:skill-improve some-skill`
 
 **Expected behavior:**
 1. "Category: not yet assigned — skipping category checks." is shown
@@ -254,7 +254,7 @@ Fixture defaults.
 - `references/1-gather.md` is not changed by the fix
 - The user approves the write, then answers yes to the restore
 
-**Input:** `/skill-improve split-skill`
+**Input:** `/skill:skill-improve split-skill`
 
 **Expected behavior:**
 1. Phase 3 reads `SKILL.md` and every file in `references/` (`1-gather.md` and
@@ -280,7 +280,7 @@ Fixture defaults.
 - [ ] Each diagnosed gap names the file it is in (`SKILL.md` for Check 7, `references/2-report.md` for Check 5)
 - [ ] The phase fix is written to `references/2-report.md`, not folded back into `SKILL.md`
 - [ ] The text of every file the fix changes is recorded before the first write: both `SKILL.md` and `references/2-report.md`
-- [ ] The after score comes from the re-run of `/skill-test static split-skill`, not from the edit's intent
+- [ ] The after score comes from the re-run of `/skill:skill-test static split-skill`, not from the edit's intent
 - [ ] The restore question names both files the run wrote, and not `references/1-gather.md`
 - [ ] After the yes, both files hold exactly their pre-run text, and `references/1-gather.md` was never written
 - [ ] The restore uses the recorded copy, never `git checkout`
@@ -301,7 +301,7 @@ Fixture defaults.
 
 ## Coverage Notes
 
-- One fix-retest cycle per invocation; a further pass needs a new `/skill-improve` run.
+- One fix-retest cycle per invocation; a further pass needs a new `/skill:skill-improve` run.
 - Behavioral (spec-mode) results are not part of the loop — only static and
   category scores are.
 - The Phase 1 stops — usage text when no argument is given, "Skill '[name]' not

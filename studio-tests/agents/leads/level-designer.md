@@ -3,7 +3,7 @@
 ## Agent Summary
 **Domain owned:** Level layouts, encounter design (per-encounter difficulty), pacing charts, environmental storytelling, secret and optional content placement, flow analysis.
 **Does NOT own:** Game-wide systems (game-designer / systems-designer), story decisions (narrative-director — coordinates with), visual art style (art-director), level implementation in the engine and enemy AI code (programmers), game-wide difficulty parameters.
-**Gate IDs handled:** None. Design-review verdicts come from the `/design-review` skill, which spawns level-designer as a specialist that returns findings.
+**Gate IDs handled:** None. Design-review verdicts come from the `/skill:design-review` skill, which spawns level-designer as a specialist that returns findings.
 
 ---
 
@@ -39,8 +39,8 @@ Verified by reading the agent's `.pi/agents/level-designer.md` frontmatter:
 - [ ] Specifies the desired patrol in level design terms (e.g., route through named chokepoints and sight lines, pressure zones, spawn timing) for the programmer to implement
 
 ### Case 3: Review findings — specific, verdict left to the review skill
-**Scenario:** `/design-review` in full mode spawns level-designer as the adversarial specialist for the level document of "The Ancient Forge." The spawn prompt reads: "Your job is NOT to validate this design — your job is to find problems. Be specific and critical." Section 3 of the level introduces a dramatically harder elite enemy with new attack patterns, with no earlier moment that introduces it, no environmental readability cues (no visible cover or safe zones), and no checkpoint nearby.
-**Expected:** Returns specific findings locating the problem in section 3: the difficulty spike, the missing readability cues, and the missing checkpoint, each with a concrete spatial fix offered as an option. It returns findings, not a verdict — `/design-review` issues the verdict.
+**Scenario:** `/skill:design-review` in full mode spawns level-designer as the adversarial specialist for the level document of "The Ancient Forge." The spawn prompt reads: "Your job is NOT to validate this design — your job is to find problems. Be specific and critical." Section 3 of the level introduces a dramatically harder elite enemy with new attack patterns, with no earlier moment that introduces it, no environmental readability cues (no visible cover or safe zones), and no checkpoint nearby.
+**Expected:** Returns specific findings locating the problem in section 3: the difficulty spike, the missing readability cues, and the missing checkpoint, each with a concrete spatial fix offered as an option. It returns findings, not a verdict — `/skill:design-review` issues the verdict.
 **Assertions:**
 - [ ] Identifies section 3 specifically as the location of the issue
 - [ ] Identifies the three specific problems: difficulty spike without an introduction, missing readability cues, missing nearby checkpoint

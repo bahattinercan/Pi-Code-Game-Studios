@@ -7,7 +7,7 @@
 # /bug-triage, /team-qa, /day-one-patch, /regression-suite and /team-release,
 # and the session-start note's open-bug count.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # Whether an open S2 fails a gate, which statuses a skill treats as open, and
 # when a bug is "old" stay in the skill: every status is counted as written,
 # so a skill with a different rule can still apply it.

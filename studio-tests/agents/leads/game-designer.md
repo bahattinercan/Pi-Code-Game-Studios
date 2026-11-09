@@ -3,7 +3,7 @@
 ## Agent Summary
 **Domain owned:** Core loop design, progression systems, combat mechanics rules, economy design, player-facing rules and interactions, mechanic GDDs in `design/gdd/`.
 **Does NOT own:** Code implementation (lead-programmer / gameplay-programmer), art and audio direction (art-director / audio-director), final narrative content (narrative-director — coordinates with), detailed formula math (systems-designer — delegates to).
-**Gate IDs handled:** None. Design-review verdicts come from the `/design-review` skill (APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED / NOT ASSESSED); when that skill spawns game-designer as a specialist, the agent returns findings.
+**Gate IDs handled:** None. Design-review verdicts come from the `/skill:design-review` skill (APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED / NOT ASSESSED); when that skill spawns game-designer as a specialist, the agent returns findings.
 
 ---
 
@@ -38,8 +38,8 @@ Verified by reading the agent's `.pi/agents/game-designer.md` frontmatter:
 - [ ] Any design intent it adds (e.g., "the stamina system should reinforce the physical realism theme") is framed as input for the narrative team, not written as the lore itself
 
 ### Case 3: Review findings — specific, verdict left to the review skill
-**Scenario:** `/design-review` in full mode spawns game-designer as the adversarial specialist for `design/gdd/environmental-hazards.md`. The spawn prompt reads: "Your job is NOT to validate this design — your job is to find problems. Anchor your review to the Player Fantasy stated in Section B." The Player Fantasy is "the world is dangerous but fair — every hazard is readable and avoidable." The GDD defines three hazard types (fire, acid, electricity) but does not specify what happens when a player is in several hazards at once, what happens when a hazard hits during the dodge invincibility window, or the damage frequency (per-second, per-tick, on-enter).
-**Expected:** Returns specific findings naming the three undefined edge cases, tied to the stated Player Fantasy, as gaps to fill rather than a rejection of the mechanic. It returns findings, not a verdict — `/design-review` issues the verdict.
+**Scenario:** `/skill:design-review` in full mode spawns game-designer as the adversarial specialist for `design/gdd/environmental-hazards.md`. The spawn prompt reads: "Your job is NOT to validate this design — your job is to find problems. Anchor your review to the Player Fantasy stated in Section B." The Player Fantasy is "the world is dangerous but fair — every hazard is readable and avoidable." The GDD defines three hazard types (fire, acid, electricity) but does not specify what happens when a player is in several hazards at once, what happens when a hazard hits during the dodge invincibility window, or the damage frequency (per-second, per-tick, on-enter).
+**Expected:** Returns specific findings naming the three undefined edge cases, tied to the stated Player Fantasy, as gaps to fill rather than a rejection of the mechanic. It returns findings, not a verdict — `/skill:design-review` issues the verdict.
 **Assertions:**
 - [ ] Names each missing edge case: simultaneous multi-hazard exposure, a hazard during dodge invincibility, and the undefined damage frequency
 - [ ] Ties at least one gap to the stated Player Fantasy (e.g., an undefined damage frequency makes a hazard's threat unreadable, contradicting "readable and avoidable")
@@ -87,7 +87,7 @@ Verified by reading the agent's `.pi/agents/game-designer.md` frontmatter:
 ## Coverage Notes
 - Economy design review (resource sinks, faucets, inflation prevention) is not covered — a dedicated case should be added.
 - Progression system review (XP curves, unlock gates, player power trajectory) is not covered.
-- A direct "review this GDD" request is not covered — design-review verdicts come from `/design-review`, which the user runs.
+- A direct "review this GDD" request is not covered — design-review verdicts come from `/skill:design-review`, which the user runs.
 - Mechanic authoring at `modes.workflow` `minimal`, where there is no GDD and `design/game-brief.md` is the design record, is not covered.
 - Core loop validation across multiple interconnected systems (not just a single mechanic) is not covered — deferred to /skill:review-all-gdds integration.
 - Coordination protocol with systems-designer on formula ownership boundary could benefit from additional cases.

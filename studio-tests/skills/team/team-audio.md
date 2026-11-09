@@ -32,7 +32,7 @@ Skips the engine specialist when no engine is configured and records
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
 - [ ] The compiled audio design document is written by the orchestrator only after it asks via `AskUserQuestion` "May I write the audio design to `design/audio/audio-[feature].md`?" (`design/` is outside the bounded exception)
 - [ ] Every agent prompt ends with the return contract: path written, ≤5-bullet summary, BLOCKED/CONCERNS items one line each
-- [ ] Has a next-step handoff at the end (references `/dev-story`, `/asset-audit`)
+- [ ] Has a next-step handoff at the end (references `/skill:dev-story`, `/skill:asset-audit`)
 - [ ] Error Recovery Protocol section is present: verify a named artifact is on disk before treating a step as done, surface BLOCKED immediately, always produce a partial report, full procedure in `.pi/docs/error-recovery-protocol.md`
 - [ ] `AskUserQuestion` is used at step transitions before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `review_mode`, `automation` and `team.size`, and requires a one-line active-set announcement before Step 1
@@ -48,7 +48,7 @@ Skips the engine specialist when no engine is configured and records
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -65,7 +65,7 @@ Fixture defaults.
 - Existing audio assets are listed in `assets/audio/`
 - No accessibility gaps exist in the planned audio event list
 
-**Input:** `/team-audio combat`
+**Input:** `/skill:team-audio combat`
 
 **Expected behavior:**
 1. Before any spawn, one line announces the active set for `team.size: studio`
@@ -107,7 +107,7 @@ Fixture defaults.
 - sound-designer's audio event list includes "EnemyNearbyAlert" — a spatial audio cue that warns the player an enemy is approaching from off-screen
 - accessibility-specialist reviews the event list and finds "EnemyNearbyAlert" has no visual fallback (no on-screen indicator, no subtitle, no controller rumble specified)
 
-**Input:** `/team-audio stealth` (Step 2 scenario)
+**Input:** `/skill:team-audio stealth` (Step 2 scenario)
 
 **Expected behavior:**
 1. Steps 1–2 proceed; accessibility-specialist and sound-designer are spawned in parallel
@@ -136,16 +136,16 @@ Fixture defaults.
 **Fixture:**
 - Any project state
 
-**Input:** `/team-audio` (no argument)
+**Input:** `/skill:team-audio` (no argument)
 
 **Expected behavior:**
 1. Skill detects no argument is provided
-2. Outputs usage guidance: e.g., "Usage: `/team-audio [feature or area to design audio for] [--review full|lean|solo]` — specify the feature or area to design audio for (e.g., `combat`, `main menu`, `forest biome`, `boss encounter`)"
+2. Outputs usage guidance: e.g., "Usage: `/skill:team-audio [feature or area to design audio for] [--review full|lean|solo]` — specify the feature or area to design audio for (e.g., `combat`, `main menu`, `forest biome`, `boss encounter`)"
 3. Skill exits without spawning any agents
 
 **Assertions:**
 - [ ] Skill does NOT spawn any agents when no argument is provided
-- [ ] Usage message shows the full argument-hint — `/team-audio [feature or area to design audio for] [--review full|lean|solo]` — and argument examples
+- [ ] Usage message shows the full argument-hint — `/skill:team-audio [feature or area to design audio for] [--review full|lean|solo]` — and argument examples
 - [ ] Skill does NOT attempt to infer a feature from existing design docs without user direction
 - [ ] No `AskUserQuestion` is used — output is direct guidance
 
@@ -159,7 +159,7 @@ Fixture defaults.
 - No sound bible exists at `design/audio/sound-bible.md` or `design/gdd/sound-bible.md`
 - Engine is configured; other context files are present
 
-**Input:** `/team-audio main menu`
+**Input:** `/skill:team-audio main menu`
 
 **Expected behavior:**
 1. Context gathering: orchestrator reads `design/gdd/main-menu.md` and checks for `design/audio/sound-bible.md`
@@ -187,7 +187,7 @@ Fixture defaults.
 - GDD for the target feature exists
 - Sound bible may or may not exist
 
-**Input:** `/team-audio boss encounter`
+**Input:** `/skill:team-audio boss encounter`
 
 **Expected behavior:**
 1. Steps 1–2 proceed normally (audio-director, sound-designer, accessibility-specialist)
@@ -214,8 +214,8 @@ Fixture defaults.
   it), `team.size: studio` (pinned: so every step and agent in the pipeline is active)
 - `engine.name` is Godot; `design/gdd/combat.md` and `design/audio/sound-bible.md`
   exist; no accessibility gaps in the event list
-- Run A: `/team-audio combat --review full`. Run B: `/team-audio combat` (resolves
-  `lean`). Run C: `/team-audio combat --review solo`
+- Run A: `/skill:team-audio combat --review full`. Run B: `/skill:team-audio combat` (resolves
+  `lean`). Run C: `/skill:team-audio combat --review solo`
 
 **Expected behavior:**
 1. All three runs open with the same active-set line for `team.size: studio`
@@ -248,7 +248,7 @@ Fixture defaults.
 - [ ] A partial report is always produced when some agents complete and others block
 - [ ] Audio design document path follows the pattern `design/audio/audio-[feature].md`
 - [ ] Verdict is exactly COMPLETE (qualified `— engine validation NOT ASSESSED ([reason])` when that step was skipped) or BLOCKED — no other verdict values used
-- [ ] Next Steps handoff references `/dev-story` and `/asset-audit`
+- [ ] Next Steps handoff references `/skill:dev-story` and `/skill:asset-audit`
 
 ---
 

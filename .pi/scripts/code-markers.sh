@@ -8,7 +8,7 @@
 # milestone review would otherwise run by hand, so they all read the same
 # counts.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # Whether a FIXME blocks a release is the checklist's rule. A scan that found
 # nothing because there was nothing to scan says so: scanned_files 0, and exit
 # 3 when the code root itself is unknown.

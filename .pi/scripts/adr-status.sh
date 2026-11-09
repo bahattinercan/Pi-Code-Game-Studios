@@ -10,7 +10,7 @@
 # owns the dependency graph and its cycles; this script reads the same
 # Depends On row the same way, so the two agree on every edge.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # Whether a Proposed ADR blocks a story, which sections an ADR must have, and
 # what a missing Layer row means are the calling skill's rules: the skills'
 # own lists of required sections disagree, so this script reports every

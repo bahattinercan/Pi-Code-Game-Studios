@@ -7,7 +7,7 @@
 # Replaces the hand-run section steps in /create-control-manifest, /create-epics,
 # /create-stories, /dev-story, /propagate-design-change and /story-done.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # A section's status is the rule below applied to its lines; whether a
 # Placeholder section blocks anything is the calling skill's call.
 #

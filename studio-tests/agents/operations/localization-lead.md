@@ -78,4 +78,4 @@
 - Case 3 (plural forms) and Case 5 (RTL) are locale-correctness tests — these affect shipping quality in non-English markets
 - Case 4 (key naming conflict) is a pipeline hygiene test — duplicate keys cause ongoing translator confusion and cost
 - Case 5 requires the target locale list to be in context; if it is not provided, the agent should ask rather than choose — which languages to support is producer's decision
-- No automated runner; review manually or via `/skill-test`
+- No automated runner; review manually or via `/skill:skill-test`

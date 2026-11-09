@@ -14,8 +14,8 @@ AI work is flagged) and announces that collapse before Phase 1. Uses
 gate before implementation. Every agent writes to a destination named in the skill's
 path table; the orchestrator's only write is the GDD, `design/gdd/[feature].md`,
 from the game-designer's draft after a "May I write" approval. Produces a summary report with
-verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
-`/balance-check`, and `/team-polish`.
+verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/skill:code-review`,
+`/skill:balance-check`, and `/skill:team-polish`.
 
 ---
 
@@ -27,7 +27,7 @@ verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
 - [ ] Contains "File Write Protocol" — sub-agent drafts and QA artifacts stay inside the bounded exception, and implementation files (code root, `assets/`) are outside it, asked for once as a set; the one orchestrator write is `design/gdd/[feature].md`, after its own "May I write" ask, because `design/` is outside the exception
 - [ ] Names a concrete destination per phase: `production/combat/[feature]-gdd-draft.md` (the game-designer's draft of `design/gdd/[feature].md`), `docs/architecture/[feature]-sketch.md`, `docs/architecture/[feature]-engine-notes.md`, `production/qa/test-cases/[feature]-cases.md`, `production/qa/bugs/BUG-[NNNN].md`
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
-- [ ] Has a next-step handoff at the end (references `/code-review`, `/balance-check`, `/team-polish`)
+- [ ] Has a next-step handoff at the end (references `/skill:code-review`, `/skill:balance-check`, `/skill:team-polish`)
 - [ ] Error Recovery Protocol section is present: verify a named artifact is on disk before treating a phase as done, surface BLOCKED immediately, always produce a partial report, full procedure (surface → assess → options → partial report) in `.pi/docs/error-recovery-protocol.md`
 - [ ] Uses `AskUserQuestion` at phase transitions for user approval before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `team.size`, and the skill requires a one-line active-set announcement before Phase 1
@@ -42,7 +42,7 @@ verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -58,7 +58,7 @@ Fixture defaults.
 - No existing GDD for the requested combat feature
 - The feature involves NPC reactions (enemies parry and riposte), so AI work is flagged
 
-**Input:** `/team-combat parry and riposte system`
+**Input:** `/skill:team-combat parry and riposte system`
 
 **Expected behavior:**
 1. Before any spawn, one line announces the active set for `team.size: small` (the full Team Composition pipeline)
@@ -69,7 +69,7 @@ Fixture defaults.
 6. Phase 4 — integration wires together all Phase 3 outputs; tuning knobs verified as data-driven; `AskUserQuestion` confirms integration before Phase 5
 7. Phase 5 — qa-tester spawned; writes test cases from acceptance criteria to `production/qa/test-cases/parry-riposte-cases.md`; verifies edge cases; performance impact checked against budget
 8. Phase 6 — summary report produced: design status, implementation status per team member, test results, open issues; verdict: COMPLETE
-9. Next steps listed: `/code-review`, `/balance-check`, `/team-polish`
+9. Next steps listed: `/skill:code-review`, `/skill:balance-check`, `/skill:team-polish`
 
 **Assertions:**
 - [ ] Active-set line naming `team.size: small` appears before the first agent is spawned
@@ -81,7 +81,7 @@ Fixture defaults.
 - [ ] No implementation file (code root, `assets/`) is written before one ask covering the whole Phase 3 set
 - [ ] Nothing is written under `design/` before the Phase 1 "May I write" approval, and the orchestrator's only Write is `design/gdd/parry-riposte.md`
 - [ ] Verdict COMPLETE present in final report
-- [ ] Next steps include `/code-review`, `/balance-check`, `/team-polish`
+- [ ] Next steps include `/skill:code-review`, `/skill:balance-check`, `/skill:team-polish`
 - [ ] Design doc covers all 8 required GDD sections
 
 ---
@@ -93,13 +93,13 @@ Fixture defaults.
 - `design/gdd/parry-riposte.md` exists (Phase 1 already complete)
 - ai-programmer agent returns BLOCKED because no AI system architecture ADR exists (ADR status is Proposed)
 
-**Input:** `/team-combat parry and riposte system`
+**Input:** `/skill:team-combat parry and riposte system`
 
 **Expected behavior:**
 1. Phase 1 — design doc found; game-designer confirms it is valid; phase approved
 2. Phase 2 — gameplay-programmer completes architecture sketch; ai-programmer returns BLOCKED: "ADR for AI behavior system is Proposed — cannot implement until ADR is Accepted"
 3. Error Recovery Protocol triggered: "ai-programmer: BLOCKED — AI behavior ADR is Proposed"
-4. `AskUserQuestion` presented with options: (a) Skip ai-programmer and note the gap; (b) Retry with narrower scope; (c) Stop here and run `/architecture-decision` first
+4. `AskUserQuestion` presented with options: (a) Skip ai-programmer and note the gap; (b) Retry with narrower scope; (c) Stop here and run `/skill:architecture-decision` first
 5. If user chooses (a): Phase 3 proceeds with gameplay-programmer, technical-artist, sound-designer only; ai-programmer gap noted in partial report
 6. Final report produced: partial implementation documented, ai-programmer section marked BLOCKED, overall verdict: BLOCKED
 
@@ -108,7 +108,7 @@ Fixture defaults.
 - [ ] `AskUserQuestion` offers at minimum three options: skip / retry / stop
 - [ ] Partial report produced — completed agents' work is not discarded
 - [ ] Overall verdict is BLOCKED (not COMPLETE) when any agent is unresolved
-- [ ] Blocked reason references the ADR and suggests `/architecture-decision`
+- [ ] Blocked reason references the ADR and suggests `/skill:architecture-decision`
 - [ ] Orchestrator does not silently proceed past the blocked dependency
 
 ---
@@ -118,17 +118,17 @@ Fixture defaults.
 **Fixture:**
 - Any project state
 
-**Input:** `/team-combat` (no argument)
+**Input:** `/skill:team-combat` (no argument)
 
 **Expected behavior:**
 1. Skill detects no argument provided
 2. Outputs usage message explaining the required argument (combat feature description)
-3. Shows the invocation format `/team-combat [combat feature description] [--review full|lean|solo]` with examples (`melee parry system`, `ranged weapon spread`)
+3. Shows the invocation format `/skill:team-combat [combat feature description] [--review full|lean|solo]` with examples (`melee parry system`, `ranged weapon spread`)
 4. Skill exits without spawning any subagents
 
 **Assertions:**
 - [ ] Skill does NOT spawn any subagents when no argument is given
-- [ ] Usage message shows the full argument-hint: `/team-combat [combat feature description] [--review full|lean|solo]`
+- [ ] Usage message shows the full argument-hint: `/skill:team-combat [combat feature description] [--review full|lean|solo]`
 - [ ] Error message includes at least one example of a valid invocation
 - [ ] No file reads beyond what is needed to detect the missing argument
 - [ ] Verdict is NOT shown (pipeline never runs)
@@ -143,7 +143,7 @@ Fixture defaults.
 - Architecture sketch has been approved with option [A]
 - Engine specialist has validated architecture
 
-**Input:** `/team-combat parry and riposte system` (resuming from Phase 2 complete)
+**Input:** `/skill:team-combat parry and riposte system` (resuming from Phase 2 complete)
 
 **Expected behavior:**
 1. Phase 3 begins after architecture approval
@@ -169,7 +169,7 @@ Fixture defaults.
 **Fixture (variant B — no engine configured):**
 - As variant A, except `engine.name` is unset in `project.yaml` and `.pi/docs/technical-preferences.md` has no Primary engine specialist (shows `[TO BE CONFIGURED]`)
 
-**Input:** `/team-combat parry and riposte system`
+**Input:** `/skill:team-combat parry and riposte system`
 
 **Expected behavior (variant A):**
 1. Phase 2 — gameplay-programmer produces architecture sketch
@@ -207,7 +207,7 @@ Fixture defaults.
 - [ ] Phase 3 agents launched in parallel per skill spec
 - [ ] Partial report always produced even when agents are BLOCKED
 - [ ] Verdict is one of COMPLETE / NEEDS WORK / BLOCKED
-- [ ] Next steps present at end of output: `/code-review`, `/balance-check`, `/team-polish`
+- [ ] Next steps present at end of output: `/skill:code-review`, `/skill:balance-check`, `/skill:team-polish`
 - [ ] At `team.size: studio`, the primary engine specialist's prompt allows its sub-specialists, Phase 5's qa-tester is told to find how the feature breaks rather than confirm it works, and the report says the adversarial pass ran; below `studio` neither addition appears
 
 ---
@@ -217,7 +217,7 @@ Fixture defaults.
 - The NEEDS WORK verdict path (qa-tester finds failures in Phase 5) is not separately tested
   here; it follows the same error recovery and partial report protocol as Case 2.
 - "Retry with narrower scope" error recovery option is listed in assertions but its full
-  recursive behavior (splitting via `/create-stories`) is covered by the `/create-stories` spec.
+  recursive behavior (splitting via `/skill:create-stories`) is covered by the `/skill:create-stories` spec.
 - Phase 4 integration logic (wiring gameplay, AI, VFX, audio) is validated implicitly by
   the Happy Path case; a dedicated integration test would require fixture code files.
 - Engine specialist unavailable (no engine configured) is covered by Case 5 variant B.

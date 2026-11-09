@@ -46,7 +46,7 @@ Before drafting anything:
    - **Bounded exception — orchestrated runs.** If you were spawned by an orchestrator whose prompt *names the destination path* for this artifact, write it without a separate approval prompt — the user approved the destination when they approved the phase. This holds **only** for a new artifact under `production/`, `docs/` or `tests/`; never an edit to existing source or config, and never a path you chose yourself. If you were invoked directly, or no path was named for you, ask as above.
 
 6. **Offer next steps:**
-   - "Ready for `/localize extract`?"
+   - "Ready for `/skill:localize extract`?"
    - "Shall I prepare the context notes translators will need?"
 
 #### Collaborative Mindset

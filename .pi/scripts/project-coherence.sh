@@ -27,7 +27,7 @@ CCGS_ROOT="${CCGS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 #
 # OBSERVATIONS, NEVER VERDICTS
 #
-# Per CLAUDE.md: a script that scores or judges will eventually contradict a mode
+# Per AGENTS.md: a script that scores or judges will eventually contradict a mode
 # or override it cannot see. This one prints what it compared and what it found,
 # and always exits 0. The reader decides. A check that cannot run says so by
 # name — silence is never treated as agreement.

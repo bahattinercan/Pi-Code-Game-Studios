@@ -10,7 +10,7 @@ CCGS_ROOT="${CCGS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 # file at a time, these are easy to miss. This script finds each one and prints
 # where it is, so a change to any of them can be seen and planned for.
 #
-# OBSERVATIONS, NEVER VERDICTS (CLAUDE.md, "Helpers emit observations"). A
+# OBSERVATIONS, NEVER VERDICTS (AGENTS.md, "Helpers emit observations"). A
 # construct found here is not a defect: Claude Code runs every one of them. It
 # prints what it found, with denominators first, and always exits 0 once it has
 # run. Whether a construct should stay, move to frontmatter or be reworded is the
@@ -24,7 +24,7 @@ CCGS_ROOT="${CCGS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 # Files read, in groups:
 #   skills        .pi/skills/<name>/**/*.md
 #   agents        .pi/agents/*.md
-#   instructions  CLAUDE.md, CLAUDE.local.md, .pi/CLAUDE.md, <top-level folder>/CLAUDE.md,
+#   instructions  AGENTS.md, CLAUDE.local.md, .pi/AGENTS.md, <top-level folder>/AGENTS.md,
 #                 .pi/rules/*.md
 #   docs          .pi/docs/**/*.md
 #   hooks         .pi/hooks/*.sh and .pi/statusline.sh
@@ -50,8 +50,8 @@ CCGS_ROOT="${CCGS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 #   frontmatter    fm:<key> (a skill key beyond name, description, license, compatibility and
 #                  metadata; an agent key beyond name and description), tools-string (an
 #                  agent's tools written as one comma string)
-#   instructions   CLAUDE.md (each instruction file), @import (outside code), rule-file,
-#                  rule-paths, cc-path:.pi/rules, cc-path:.pi/CLAUDE.md,
+#   instructions   AGENTS.md (each instruction file), @import (outside code), rule-file,
+#                  rule-paths, cc-path:.pi/rules, cc-path:.pi/AGENTS.md,
 #                  shared-path:.pi/docs and other framework folders under .pi/
 #   hooks          hook:<Event>[<matcher>] (a registration in settings), hook-payload:<field>
 #                  and hook-answer:<token> (in hook scripts), var:CCGS_ROOT,
@@ -141,9 +141,9 @@ STATIC = [
     ("shell-lines", "shell-line"),
     ("arguments", "$ARGUMENTS"), ("arguments", "$N"),
     ("frontmatter", "tools-string"),
-    ("instructions", "CLAUDE.md"), ("instructions", "@import"),
+    ("instructions", "AGENTS.md"), ("instructions", "@import"),
     ("instructions", "rule-file"), ("instructions", "rule-paths"),
-    ("instructions", "cc-path:.pi/rules"), ("instructions", "cc-path:.pi/CLAUDE.md"),
+    ("instructions", "cc-path:.pi/rules"), ("instructions", "cc-path:.pi/AGENTS.md"),
     ("hooks", "var:CCGS_ROOT"),
     ("settings", "cc-path:.pi/settings.json"), ("settings", "cc-path:.pi/settings.local.json"),
     ("settings", "cc-path:.pi/output-styles"),
@@ -157,7 +157,7 @@ STATIC_FEATURE = dict((c, f) for f, c in STATIC)
 
 # Under .pi/: what Claude Code itself reads, and the feature each belongs to.
 CC_PATHS = {"skills": "skill-loading", "commands": "skill-loading", "agents": "subagents",
-            "agent-memory": "subagents", "rules": "instructions", "CLAUDE.md": "instructions",
+            "agent-memory": "subagents", "rules": "instructions", "AGENTS.md": "instructions",
             "settings.json": "settings", "settings.local.json": "settings", "output-styles": "settings"}
 # The framework's own folders under .pi/ (anything else defaults to instructions).
 SHARED_FEATURE = {"hooks": "hooks", "scripts": "shell-lines", "statusline.sh": "settings"}
@@ -340,10 +340,10 @@ if os.path.isdir(agent_dir):
         if f.endswith(".md"):
             agents[f[:-3]] = os.path.join(agent_dir, f)
 
-instruction_files = [p for p in (os.path.join(root, "CLAUDE.md"), os.path.join(root, "CLAUDE.local.md"),
-                                 os.path.join(claude, "CLAUDE.md")) if os.path.isfile(p)]
+instruction_files = [p for p in (os.path.join(root, "AGENTS.md"), os.path.join(root, "CLAUDE.local.md"),
+                                 os.path.join(claude, "AGENTS.md")) if os.path.isfile(p)]
 for d in sorted(os.listdir(root)):
-    p = os.path.join(root, d, "CLAUDE.md")
+    p = os.path.join(root, d, "AGENTS.md")
     if not d.startswith(".") and os.path.isfile(p):
         instruction_files.append(p)
 rules_dir = os.path.join(claude, "rules")
@@ -426,8 +426,8 @@ read_instr = read_instr + sorted(p for p in imported if os.path.normpath(p) not 
 
 for path in read_instr:
     lines = read_lines(path)
-    if os.path.basename(path) in ("CLAUDE.md", "CLAUDE.local.md"):
-        add("instructions", "CLAUDE.md", path, 1)
+    if os.path.basename(path) in ("AGENTS.md", "CLAUDE.local.md"):
+        add("instructions", "AGENTS.md", path, 1)
     scan_text(path, lines, imports=True)
 for path in read_rules:
     lines = read_lines(path)

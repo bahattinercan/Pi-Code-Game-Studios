@@ -7,7 +7,7 @@
 # folder's .gitkeep, the engine's test folders or assembly definitions, the CI
 # workflow and the smoke-test seed.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # It reports what it did with each path and what is still missing; whether
 # the project may advance a gate on the strength of it is the skill's call.
 #

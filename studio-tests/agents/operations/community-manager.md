@@ -14,7 +14,7 @@
 - [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over technical content, QA strategy, or bug fixing
 - [ ] Tone and Voice states that a brand-voice or style guide the project supplies overrides its defaults (tone, person, glossary terms)
-- [ ] For a release, it works from the patch notes release-manager produces with `/patch-notes` rather than regenerating them
+- [ ] For a release, it works from the patch notes release-manager produces with `/skill:patch-notes` rather than regenerating them
 
 ---
 
@@ -83,4 +83,4 @@
 - Case 3 (crisis communication) is a brand-safety test — verify the agent de-escalates rather than inflames
 - Case 4 requires a brand voice document to be in context; test is incomplete without it
 - Case 5 is the most important context-awareness test for tone consistency and for sourcing every claim
-- No automated runner; review manually or via `/skill-test`
+- No automated runner; review manually or via `/skill:skill-test`

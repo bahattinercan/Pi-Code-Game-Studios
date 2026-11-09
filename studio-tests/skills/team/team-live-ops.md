@@ -27,7 +27,7 @@ requiring user approval before handoff to production.
 - [ ] Has a File Write Protocol section limiting sub-agent writes to the bounded exception (named path, new artifact under `production/`, `docs/` or `tests/`, gated phase) — a sub-agent asks outside those bounds
 - [ ] Names a destination per agent under `production/live-ops/[season-slug]/` — `brief.md`, `narrative.md`, `economy.md`, `analytics.md`, `narrative-text.md`, `copy.md`, `comms.md` — one file per agent
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
-- [ ] Has a next-step handoff at the end referencing `/design-review`, `/sprint-plan`, and `/team-release`
+- [ ] Has a next-step handoff at the end referencing `/skill:design-review`, `/skill:sprint-plan`, and `/skill:team-release`
 - [ ] Uses `AskUserQuestion` at phase transitions to capture user approval before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `team.size`, and the skill requires a one-line active-set announcement before Phase 1
 - [ ] States explicitly that Phases 3 and 4 can run simultaneously (parallel spawning)
@@ -40,7 +40,7 @@ requiring user approval before handoff to production.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -50,13 +50,13 @@ Fixture defaults.
 ### Case 1: Happy Path — All 7 phases complete, season plan produced
 
 **Fixture:**
-- Resolved config block: `team.size: studio`, `automation: collaborative`, `workflow: standard` (pinned: unset resolves to minimal, whose next steps use the brief's build order instead of `/sprint-plan`; Case 6 covers that)
+- Resolved config block: `team.size: studio`, `automation: collaborative`, `workflow: standard` (pinned: unset resolves to minimal, whose next steps use the brief's build order instead of `/skill:sprint-plan`; Case 6 covers that)
 - `design/live-ops/economy-rules.md` exists with current economy configuration
 - `design/live-ops/ethics-policy.md` exists with the project ethics policy
 - Game concept document exists at its standard path
 - No existing season documents for the new season name being planned
 
-**Input:** `/team-live-ops "Season 2: The Frozen Wastes"`
+**Input:** `/skill:team-live-ops "Season 2: The Frozen Wastes"`
 
 **Expected behavior:**
 1. Before any spawn, one line announces the active set for `team.size: studio`
@@ -79,7 +79,7 @@ Fixture defaults.
 - [ ] Three output documents written to `design/live-ops/seasons/` with the `S[N]_[name].md`, `S[N]_[name]_analytics.md`, `S[N]_[name]_comms.md` naming convention
 - [ ] The `design/live-ops/` documents are written by the orchestrator only after its `AskUserQuestion` approval — no sub-agent writes under `design/`
 - [ ] Verdict: COMPLETE appears in final output, only after the user approves the season plan
-- [ ] Next steps reference `/design-review`, `/sprint-plan`, and `/team-release`
+- [ ] Next steps reference `/skill:design-review`, `/skill:sprint-plan`, and `/skill:team-release`
 
 ---
 
@@ -90,7 +90,7 @@ Fixture defaults.
 - `design/live-ops/ethics-policy.md` contains the rule "No randomized premium rewards without published drop rates and a pity timer"
 - economy-designer (Phase 3) proposes a "Mystery Chest" mechanic with randomized premium rewards, unpublished drop rates and no pity timer
 
-**Input:** `/team-live-ops "Season 3: Shadow Tournament"`
+**Input:** `/skill:team-live-ops "Season 3: Shadow Tournament"`
 
 **Expected behavior:**
 1. Phases 1–4 proceed normally; economy-designer proposes Mystery Chest mechanic
@@ -114,16 +114,16 @@ Fixture defaults.
 **Fixture:**
 - Any project state
 
-**Input:** `/team-live-ops` (no argument)
+**Input:** `/skill:team-live-ops` (no argument)
 
 **Expected behavior:**
 1. No argument detected
-2. Outputs: "Usage: `/team-live-ops [season name or event description] [--review full|lean|solo]` — Provide the name or description of the season or live event to plan."
+2. Outputs: "Usage: `/skill:team-live-ops [season name or event description] [--review full|lean|solo]` — Provide the name or description of the season or live event to plan."
 3. Skill exits immediately without spawning any subagents
 
 **Assertions:**
 - [ ] Skill does NOT guess a season name or fabricate a scope
-- [ ] Usage message shows the full argument-hint: `/team-live-ops [season name or event description] [--review full|lean|solo]`
+- [ ] Usage message shows the full argument-hint: `/skill:team-live-ops [season name or event description] [--review full|lean|solo]`
 - [ ] No Agent calls are issued before the argument check fails
 - [ ] No files are read or written
 
@@ -137,7 +137,7 @@ Fixture defaults.
 - Phase 1 (season brief) and Phase 2 (narrative framing) already approved
 - Phase 3 (economy-designer) and Phase 4 (analytics-engineer) inputs are independent of each other
 
-**Input:** `/team-live-ops "Season 1: The First Thaw"` (observed at Phase 3/4 transition)
+**Input:** `/skill:team-live-ops "Season 1: The First Thaw"` (observed at Phase 3/4 transition)
 
 **Expected behavior:**
 1. After Phase 2 is approved by the user, the orchestrator issues both Agent calls (economy-designer and analytics-engineer) before awaiting either result
@@ -161,7 +161,7 @@ Fixture defaults.
 - `design/live-ops/ethics-policy.md` does NOT exist
 - All other fixtures are present
 
-**Input:** `/team-live-ops "Season 4: Desert Heat"`
+**Input:** `/skill:team-live-ops "Season 4: Desert Heat"`
 
 **Expected behavior:**
 1. Phases 1–6 proceed normally
@@ -187,18 +187,18 @@ Fixture defaults.
 - `design/game-brief.md` exists with a build order; no `production/sprints/` folder
 - `design/live-ops/economy-rules.md` and `design/live-ops/ethics-policy.md` exist, and the economy design raises no ethics flag
 
-**Input:** `/team-live-ops "Season 5: Harvest Moon"`
+**Input:** `/skill:team-live-ops "Season 5: Harvest Moon"`
 
 **Expected behavior:**
 1. Phase 0 resolves `workflow` along with `review_mode`, `automation` and `team.size`
 2. The pipeline runs as in Case 1 and ends with Verdict: COMPLETE after the user approves the season plan
-3. Next Steps: `/design-review` on the season design document; instead of `/sprint-plan`, add the season's content work to the brief's build order, because `minimal` has no sprints; `/team-release` when the content is ready
+3. Next Steps: `/skill:design-review` on the season design document; instead of `/skill:sprint-plan`, add the season's content work to the brief's build order, because `minimal` has no sprints; `/skill:team-release` when the content is ready
 
 **Assertions:**
 - [ ] `workflow` is among the keys Phase 0 resolves
 - [ ] The scheduling step says to add the season's content work to the brief's build order
-- [ ] `/sprint-plan` is not recommended
-- [ ] `/design-review` and `/team-release` are still listed
+- [ ] `/skill:sprint-plan` is not recommended
+- [ ] `/skill:design-review` and `/skill:team-release` are still listed
 - [ ] The rest of the run (active-set line, parallel Phases 3 and 4, ethics review, "May I write" before the `design/live-ops/seasons/` documents) is unchanged by `workflow`
 
 ---
@@ -214,7 +214,7 @@ Fixture defaults.
 - [ ] Error recovery: any BLOCKED agent is surfaced immediately with AskUserQuestion options (skip / retry / stop)
 - [ ] Partial reports are produced if any phase blocks — work is never discarded
 - [ ] Verdict: COMPLETE only after user approves the consolidated season plan; BLOCKED if any unresolved ethics violation exists
-- [ ] Next steps after a COMPLETE plan include `/design-review`, `/sprint-plan` (at `workflow: minimal`, the brief's build order in its place), and `/team-release`; a run that ends BLOCKED on an ethics flag names the revision and re-run instead
+- [ ] Next steps after a COMPLETE plan include `/skill:design-review`, `/skill:sprint-plan` (at `workflow: minimal`, the brief's build order in its place), and `/skill:team-release`; a run that ends BLOCKED on an ethics flag names the revision and re-run instead
 
 ---
 

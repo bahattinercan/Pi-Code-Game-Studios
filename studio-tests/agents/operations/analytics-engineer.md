@@ -91,4 +91,4 @@
 - Case 6 (mutual exclusion) is a data integrity test — overlapping tests produce unusable results; this must be caught
 - Case 4 (data vs. design intent) is a coordination test — verify the agent leaves the call to game-designer
 - Case 5 is the most important context-awareness test; naming convention drift across schemas causes dashboard breakage
-- No automated runner; review manually or via `/skill-test`
+- No automated runner; review manually or via `/skill:skill-test`

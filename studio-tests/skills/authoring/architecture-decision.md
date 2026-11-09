@@ -2,8 +2,8 @@
 
 ## Skill Summary
 
-`/architecture-decision` authors one Architecture Decision Record (ADR). It has
-three entry modes: normal authoring (`/architecture-decision [title]`),
+`/skill:architecture-decision` authors one Architecture Decision Record (ADR). It has
+three entry modes: normal authoring (`/skill:architecture-decision [title]`),
 `retrofit <path>` (adds missing sections to an existing ADR without touching the
 rest), and `accept <ADR-id>` (the only path that moves an ADR from `Proposed` to
 `Accepted`). When retrofit asks for a missing Status and the user answers
@@ -18,21 +18,21 @@ one pass, has the primary engine specialist validate it (Step 5.5), runs the
 TD-ADR gate in `full` review mode only (Step 5.6), runs a GDD sync check that
 always reports, and asks once — "May I write it?" — before writing
 `docs/architecture/adr-[NNNN]-[slug].md`. A separate approval covers the registry
-update. The closing output tells the user to run `/architecture-review` in a
-fresh session and `/architecture-decision accept ADR-NNNN` when the decision is
+update. The closing output tells the user to run `/skill:architecture-review` in a
+fresh session and `/skill:architecture-decision accept ADR-NNNN` when the decision is
 settled. Authoring never sets `Accepted` and never unblocks stories.
 
 ---
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains status/verdict keywords: `Proposed`, `Accepted`, and the TD-ADR outcomes `CONCERNS` / `REJECT`
 - [ ] Contains "May I write" collaborative protocol language (whole-ADR write approval and registry approval)
-- [ ] Has a next-step handoff at the end (`/architecture-review`, `accept ADR-NNNN`)
+- [ ] Has a next-step handoff at the end (`/skill:architecture-review`, `accept ADR-NNNN`)
 - [ ] Documents gate behavior: engine specialist validation, then TD-ADR in full mode; TD-ADR skipped in lean/solo with a named note
 - [ ] Documents that authoring always produces `Proposed` and only acceptance mode sets `Accepted` — retrofit's `Accepted` answer is routed through it
 - [ ] Mentions the engine version stamp from `docs/engine-reference/` (Engine Compatibility table)
@@ -65,7 +65,7 @@ In every mode the written ADR has `Status: Proposed`.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -82,7 +82,7 @@ Fixture defaults.
 - `design/gdd/visual-effects.md` exists; the user confirms it as the GDD driving the decision, and its names match the ADR's Key Interfaces
 - The engine specialist finds only minor notes; TD-ADR returns APPROVE
 
-**Input:** `/architecture-decision rendering-approach`
+**Input:** `/skill:architecture-decision rendering-approach`
 
 **Expected behavior:**
 1. Step 1 reads `VERSION.md` first and displays the ENGINE KNOWLEDGE GAP WARNING for the Rendering domain
@@ -95,7 +95,7 @@ Fixture defaults.
 8. GDD sync check prints `GDD sync: checked 1 referenced GDD(s), no naming inconsistencies.` — never silent
 9. "ADR draft is complete. May I write it?" — on yes, writes `docs/architecture/adr-0003-rendering-approach.md` with `Status: Proposed`
 10. Registry candidates are shown and "May I update `docs/registry/architecture.yaml` with these [N] new stances?" is asked separately
-11. Closing output includes the fixed notice to run `/architecture-review` in a fresh session, and "Run `/architecture-decision accept ADR-0003` when the decision is settled"
+11. Closing output includes the fixed notice to run `/skill:architecture-review` in a fresh session, and "Run `/skill:architecture-decision accept ADR-0003` when the decision is settled"
 
 **Assertions:**
 - [ ] `VERSION.md` is read before any other step, and the knowledge-gap warning is shown for the HIGH-risk domain
@@ -105,7 +105,7 @@ Fixture defaults.
 - [ ] The written ADR has `Status: Proposed` even though TD-ADR returned APPROVE
 - [ ] The GDD sync check reports the clean result for `visual-effects.md` in one line
 - [ ] The registry update has its own approval prompt, separate from the ADR write
-- [ ] Closing output contains the fresh-session `/architecture-review` notice and the `accept ADR-0003` command
+- [ ] Closing output contains the fresh-session `/skill:architecture-review` notice and the `accept ADR-0003` command
 
 ---
 
@@ -115,7 +115,7 @@ Fixture defaults.
 - Same as Case 1, but TD-ADR returns CONCERNS: "Alternatives do not address the mobile renderer"
 - One point stays unresolved after revision (which renderer to target on mobile)
 
-**Input:** `/architecture-decision rendering-approach`
+**Input:** `/skill:architecture-decision rendering-approach`
 
 **Expected behavior:**
 1. TD-ADR spawns with the draft, engine version, domain and related ADRs
@@ -138,10 +138,10 @@ Fixture defaults.
 **Fixture:**
 - Scenario (a): `project.yaml` has `modes.review_mode: lean` and `engine.name: Godot`
 - Scenario (b): same project, invoked with `--review solo`
-- Scenario (c): invoked with `--review solo` on a project with no engine configured — `engine.name` unset and `.pi/docs/technical-preferences.md` still `[TO BE CONFIGURED]`; at Step 1's prompt the user carries on without running `/setup-engine`
+- Scenario (c): invoked with `--review solo` on a project with no engine configured — `engine.name` unset and `.pi/docs/technical-preferences.md` still `[TO BE CONFIGURED]`; at Step 1's prompt the user carries on without running `/skill:setup-engine`
 - `design/gdd/` holds no GDD, so the ADR's GDD Requirements Addressed names none
 
-**Input:** (a) `/architecture-decision save-format` (b) and (c) `/architecture-decision save-format --review solo`
+**Input:** (a) `/skill:architecture-decision save-format` (b) and (c) `/skill:architecture-decision save-format --review solo`
 
 **Expected behavior:**
 1. (a) and (b): the engine specialist validation (Step 5.5) runs
@@ -170,7 +170,7 @@ Fixture defaults.
 - ADR-0003 is Accepted
 - The user states the proposal when invoking the skill, before Step 1: the decision is to deliver damage by direct method calls
 
-**Input:** `/architecture-decision damage-pipeline`, with that description in the same message
+**Input:** `/skill:architecture-decision damage-pipeline`, with that description in the same message
 
 **Expected behavior:**
 1. Step 3a reads the registry before opening any existing ADR, and presents the relevant stances as locked constraints under "Existing Architectural Stances (must not contradict)"
@@ -192,10 +192,10 @@ Fixture defaults.
 **Fixture:**
 - `docs/architecture/adr-0005-physics-layers.md` exists with `Status: Proposed`
 - Scenario (a): its `## ADR Dependencies` lists `Depends On: ADR-0002`, and ADR-0002 is `Proposed`
-- Scenario (b): its only dependency is ADR-0001, which is `Accepted`; three files under `production/epics/*/story-*.md` name `ADR-0005` and are Blocked — two in the header form `/create-stories` writes (`> **Status**: Blocked`), one as `**Status:** Blocked`
+- Scenario (b): its only dependency is ADR-0001, which is `Accepted`; three files under `production/epics/*/story-*.md` name `ADR-0005` and are Blocked — two in the header form `/skill:create-stories` writes (`> **Status**: Blocked`), one as `**Status:** Blocked`
 - `modes.automation` is `autonomous`
 
-**Input:** `/architecture-decision accept ADR-0005`
+**Input:** `/skill:architecture-decision accept ADR-0005`
 
 **Expected behavior:**
 1. The skill globs `docs/architecture/adr-0005-*.md` and reads the single match
@@ -227,7 +227,7 @@ Fixture defaults.
   - `story-003.md`: blocked for an unrelated reason that names no ADR-0005
 - The user answers `[A] Yes — accept it`
 
-**Input:** `/architecture-decision accept ADR-0005`
+**Input:** `/skill:architecture-decision accept ADR-0005`
 
 **Expected behavior:**
 1. The dependency check passes
@@ -254,7 +254,7 @@ Fixture defaults.
 - ADR-0001 is `Accepted`
 - One file under `production/epics/*/story-*.md` names `ADR-0004` and has `> **Status**: Blocked`
 
-**Input:** `/architecture-decision retrofit docs/architecture/adr-0004-input-mapping.md`
+**Input:** `/skill:architecture-decision retrofit docs/architecture/adr-0004-input-mapping.md`
 
 **Expected behavior:**
 1. The retrofit block lists Status (BLOCKING), ADR Dependencies (HIGH) and Date (MEDIUM — the fixture has no `## Date` and no `## Last Verified`) as missing, then asks "Shall I add the 3 missing sections? I will not modify any existing content."
@@ -282,7 +282,7 @@ Fixture defaults.
 - [ ] Authoring always writes `Status: Proposed`; `Accepted` is set only by acceptance mode after its dependency check and explicit user confirmation — directly through `accept`, or when retrofit hands it an `Accepted` answer
 - [ ] Engine validation and the GDD sync check each report `NOT ASSESSED` when they cannot run, never a silent pass
 - [ ] Authoring does not unblock stories; it lists the stories still waiting on the ADR
-- [ ] Ends with next-step handoff: `/architecture-review` in a fresh session, and `/architecture-decision accept ADR-NNNN`
+- [ ] Ends with next-step handoff: `/skill:architecture-review` in a fresh session, and `/skill:architecture-decision accept ADR-NNNN`
 
 ---
 

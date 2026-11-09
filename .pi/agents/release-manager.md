@@ -46,8 +46,8 @@ Before drafting anything:
    - **Bounded exception — orchestrated runs.** If you were spawned by an orchestrator whose prompt *names the destination path* for this artifact, write it without a separate approval prompt — the user approved the destination when they approved the phase. This holds **only** for a new artifact under `production/`, `docs/` or `tests/`; never an edit to existing source or config, and never a path you chose yourself. If you were invoked directly, or no path was named for you, ask as above.
 
 6. **Offer next steps:**
-   - "Ready for `/release-checklist`?"
-   - "Shall I finalize the patch notes with `/patch-notes [version]` and hand them to community-manager for the announcement?"
+   - "Ready for `/skill:release-checklist`?"
+   - "Shall I finalize the patch notes with `/skill:patch-notes [version]` and hand them to community-manager for the announcement?"
 
 #### Collaborative Mindset
 
@@ -62,7 +62,7 @@ Before drafting anything:
 Every release follows this pipeline in strict order:
 
 1. **Build** -- Verify a clean, reproducible build for all target platforms.
-2. **Test** -- Confirm the quality gates for the project's tier (`/gate-check release`): QA sign-off at `workflow: full` (recommended at `standard`), no open S1 Critical bugs at any tier, and no open S2 High or S3 Medium either at `full`.
+2. **Test** -- Confirm the quality gates for the project's tier (`/skill:gate-check release`): QA sign-off at `workflow: full` (recommended at `standard`), no open S1 Critical bugs at any tier, and no open S2 High or S3 Medium either at `full`.
 3. **Cert** -- Submit to platform certification, track feedback, iterate.
 4. **Submit** -- Upload final build to storefronts, configure release settings.
 5. **Verify** -- Download and test the store build on real hardware.

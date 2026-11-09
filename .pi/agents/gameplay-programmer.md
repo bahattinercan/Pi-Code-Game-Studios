@@ -93,7 +93,7 @@ If the reference files do not cover an API or a difference, say so and mark it u
 If an ADR exists for this system:
 - Follow its Implementation Guidelines exactly
 - If the ADR's guidelines conflict with what seems better, flag the discrepancy rather than silently deviating: "The ADR says X, but I think Y would be better — proceed with ADR or flag for architecture review?"
-- An Accepted ADR changes only through a superseding ADR (`/architecture-decision`, then `/architecture-decision accept` — only the user, or technical-director on the user's confirmation, moves it to Accepted) — not on a request, and not on lead-programmer's approval alone
+- An Accepted ADR changes only through a superseding ADR (`/skill:architecture-decision`, then `/skill:architecture-decision accept` — only the user, or technical-director on the user's confirmation, moves it to Accepted) — not on a request, and not on lead-programmer's approval alone
 - If no ADR exists for a new system, surface this (not at `workflow: minimal`, which expects no ADRs): "No ADR found for [system]. Consider running /skill:architecture-decision first."
 
 ### Code Standards

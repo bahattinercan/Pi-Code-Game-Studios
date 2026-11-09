@@ -145,7 +145,7 @@ fi
 # Warn, never reconcile. Only /gate-check should change a stage (on a PASS, or
 # a CONCERNS whose risks you accepted), so a hook that "helpfully" rewrote the
 # mirror would be advancing a phase gate nobody passed. Helpers emit
-# observations, never verdicts (CLAUDE.md).
+# observations, never verdicts (AGENTS.md).
 STAGE_YAML=""
 STAGE_TXT=""
 if [ -f "project.yaml" ] && command -v get_yaml_key >/dev/null 2>&1; then
@@ -225,14 +225,14 @@ if [ -n "$CODE_ROOT" ] && [ -d "$CODE_ROOT" ]; then
 fi
 
 # --- engine reference vs configured engine -----------------------------------
-# /setup-engine is the only thing that rewrites CLAUDE.md's ENGINE-REFERENCE-IMPORT
+# /setup-engine is the only thing that rewrites AGENTS.md's ENGINE-REFERENCE-IMPORT
 # line. Edit engine.name in project.yaml by hand and the import keeps loading the
 # previous engine's reference as project instructions -- every session, silently.
-# An OBSERVATION, never an action (CLAUDE.md): it reports, the user decides.
+# An OBSERVATION, never an action (AGENTS.md): it reports, the user decides.
 # Printed BEFORE the session state: hook output past 10,000 characters is cut
 # to a preview, so a warning below a long checkpoint could be lost.
-if [ -f project.yaml ] && [ -f CLAUDE.md ]; then
-    ERI=$(grep -m1 -E '^@docs/engine-reference/[a-z]+/VERSION\.md' CLAUDE.md 2>/dev/null \
+if [ -f project.yaml ] && [ -f AGENTS.md ]; then
+    ERI=$(grep -m1 -E '^@docs/engine-reference/[a-z]+/VERSION\.md' AGENTS.md 2>/dev/null \
           | sed -n 's|^@docs/engine-reference/\([a-z]*\)/VERSION\.md.*|\1|p')
     # engine.name, not the first `name:` line: `project.name: Marrow` above the
     # engine block read as engine "marrow" and warned on a correct project. The
@@ -245,7 +245,7 @@ if [ -f project.yaml ] && [ -f CLAUDE.md ]; then
         echo ""
         echo "!! ENGINE REFERENCE MISMATCH"
         echo "   project.yaml engine.name : $CFG"
-        echo "   CLAUDE.md imports        : docs/engine-reference/$ERI/VERSION.md"
+        echo "   AGENTS.md imports        : docs/engine-reference/$ERI/VERSION.md"
         echo "   Every session is loading the $ERI reference on a $CFG project."
         echo "   Fix: re-run /setup-engine, or edit the ENGINE-REFERENCE-IMPORT line."
     fi
@@ -346,7 +346,7 @@ if [ -f "$STATE_FILE" ] && { ! command -v session_state_enabled >/dev/null 2>&1 
         echo "        recovery reads a bounded checkpoint instead of a slice."
     fi
     # Rotation is an OBSERVATION, never an action: helpers in .pi/scripts/
-    # emit observations, never verdicts (CLAUDE.md). The user decides.
+    # emit observations, never verdicts (AGENTS.md). The user decides.
     if [ "${TOTAL_LINES:-0}" -gt 200 ] 2>/dev/null; then
         echo "  Note: $TOTAL_LINES lines. Narrative can be rotated into"
         echo "        production/session-logs/ — bash .pi/scripts/rotate-session-state.sh"

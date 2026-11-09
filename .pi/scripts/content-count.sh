@@ -9,7 +9,7 @@
 # and Phase 3) and the "planned content" count /consistency-check and
 # /asset-spec make from the same registry.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # A band name is the rule row that matched. Whether a system is HIGH PRIORITY
 # (the skill's text does not say whether "NOT STARTED or EARLY, AND tagged MVP
 # or Vertical Slice, OR blocking" groups as (A AND B) OR C or A AND (B OR C))

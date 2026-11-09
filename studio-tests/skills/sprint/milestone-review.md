@@ -2,7 +2,7 @@
 
 ## Skill Summary
 
-`/milestone-review` reviews a milestone's progress from its definition in
+`/skill:milestone-review` reviews a milestone's progress from its definition in
 `production/milestones/` (when one exists) and the sprint reports in
 `production/sprints/`: feature completeness, quality metrics, code health, risk,
 velocity, scope recommendations and a Go/No-Go recommendation (NOT ASSESSED /
@@ -24,14 +24,14 @@ Verdicts: COMPLETE (review saved), BLOCKED (write declined), or
 
 ## Static Assertions (Structural)
 
-Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
+Checked against the SKILL.md by `/skill:skill-test spec` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, NOT ASSESSED
 - [ ] Contains Go/No-Go recommendation values: GO, CONDITIONAL GO, NO-GO
 - [ ] Contains "May I write" language (skill writes review document)
-- [ ] Has a next-step handoff (`/gate-check`, `/sprint-plan`)
+- [ ] Has a next-step handoff (`/skill:gate-check`, `/skill:sprint-plan`)
 
 ---
 
@@ -51,7 +51,7 @@ recommends GO.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -66,12 +66,12 @@ Fixture defaults.
 - 7 features have `Status: Complete`
 - 1 feature has `Status: Deferred` (deferred to milestone-04)
 - `production/sprints/sprint-007.md` through `sprint-009.md` exist with the
-  headings `/sprint-plan` writes
+  headings `/skill:sprint-plan` writes
 - The features' stories exist under `production/epics/`; none is `Blocked`
 - `project.yaml` sets `modes.review_mode: full`
 - The producer returns ON TRACK
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill reads `milestone-03.md`, globs the sprint reports (N = 3) and greps
@@ -108,7 +108,7 @@ Fixture defaults.
 - `project.yaml` sets `modes.review_mode: full`
 - The producer returns OFF TRACK
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill reads the milestone and sprint reports, then greps the story files for
@@ -142,7 +142,7 @@ Fixture defaults.
 - The producer returns AT RISK, citing the 2 added features as scope drift and
   listing mitigations
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill compiles the review
@@ -172,21 +172,21 @@ Fixture defaults.
 - No story files, no `production/sprint-status.yaml` and no `production/qa/bugs/`
 - `project.yaml` sets `modes.review_mode: full`
 
-**Input:** `/milestone-review current`
+**Input:** `/skill:milestone-review current`
 
 **Expected behavior:**
 1. Skill lists its inputs and records each as FOUND or ABSENT
 2. Every required input is ABSENT, so the skill stops and reports
    `NOT ASSESSED — NO DATA` as the whole verdict
 3. The report names what was missing and where it comes from: sprint reports
-   are written by `/sprint-plan`; milestone definitions are authored by hand
+   are written by `/skill:sprint-plan`; milestone definitions are authored by hand
    from `.pi/docs/templates/milestone-definition.md`
 4. No milestone definition is fabricated, no gate is spawned, no file is written
 
 **Assertions:**
 - [ ] Skill does not crash and does not fill the review template with estimated values
 - [ ] Verdict is `NOT ASSESSED — NO DATA` — not GO and not COMPLETE
-- [ ] Output names the missing inputs and where each comes from (`/sprint-plan` for sprint reports; the milestone-definition template for milestones)
+- [ ] Output names the missing inputs and where each comes from (`/skill:sprint-plan` for sprint reports; the milestone-definition template for milestones)
 - [ ] PR-MILESTONE is not spawned and no "May I write" prompt appears
 
 ---
@@ -196,10 +196,10 @@ Fixture defaults.
 **Fixture:**
 - `production/milestones/milestone-03.md` lists 5 features, all `Status: Complete`
 - Sprint reports exist in `production/sprints/`
-- `production/qa/bugs/` does not exist — no bug has been filed with `/bug-report`
+- `production/qa/bugs/` does not exist — no bug has been filed with `/skill:bug-report`
 - `project.yaml` sets `modes.review_mode: solo`
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill reads `review_mode` from the injected config block — `solo`
@@ -228,7 +228,7 @@ Fixture defaults.
 - `project.yaml` sets `modes.rigor: standard` and pins no review mode, so the
   injected block reads `review_mode: lean (rigor:standard)`
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill reads `review_mode` from the injected config block — `lean`
@@ -256,7 +256,7 @@ Fixture defaults.
 - The producer returns NOT ASSESSED — no target date to judge against
 - Asked for the date, the user has none to give
 
-**Input:** `/milestone-review milestone-03`
+**Input:** `/skill:milestone-review milestone-03`
 
 **Expected behavior:**
 1. Skill compiles the review and spawns PR-MILESTONE; it returns NOT ASSESSED

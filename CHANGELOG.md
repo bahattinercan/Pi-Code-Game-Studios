@@ -360,7 +360,7 @@ less.** A fix release for 1.1.2.
   notice means and where to read the settings instead.
 - **The three writes that need no "May I write?"** — agent memory, appends to
   `active.md`, and an agent's new file at the path its skill named — are now
-  named in `CLAUDE.md`, which named none of them, and in the agent-memory rule,
+  named in `AGENTS.md`, which named none of them, and in the agent-memory rule,
   which named one.
 - **Docs corrected**: the settings, workflow and protocol docs, the README, the
   setup requirements and the 1.1.0 and 1.1.2 notes on what the default
@@ -698,7 +698,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
   COMPLETE", a word the skill has never used. Each spec is rewritten against
   its current skill or agent, and each case still tests a specific behavior.
   `/skill-test` now judges an agent by what it actually sees: its own file,
-  `CLAUDE.md` and the files it imports, the gate definition for a gate case, and
+  `AGENTS.md` and the files it imports, the gate definition for a gate case, and
   any skills it preloads. A rule every agent receives, such as escalating a
   conflict to the shared parent, is no longer reported missing from each one.
 - **Directors answer each gate in its own words.** The four directors were told
@@ -735,7 +735,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
   project's figure when it gives one.
 - **`devops-engineer` follows trunk-based development.** It prescribed GitFlow —
   a long-lived `develop` branch with feature branches cut from it — while
-  CLAUDE.md sets trunk-based. It now describes the trunk flow `/team-release`
+  AGENTS.md sets trunk-based. It now describes the trunk flow `/team-release`
   and `/hotfix` now use too: short-lived branches off `main`, releases tagged
   on `main`, a release branch only to stabilise one. `release-manager` and
   `/hotfix` merge fixes back to `main` rather than a "development branch", and

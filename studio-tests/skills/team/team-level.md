@@ -14,8 +14,8 @@ world-builder and accessibility-specialist. The orchestrator compiles all team
 outputs itself and writes `design/levels/[level-name].md` only after asking "May I
 write…?" via `AskUserQuestion`; per-agent artifacts are written by sub-agents under
 the bounded write exception. Uses `AskUserQuestion` at each step gate. Produces a
-summary report with verdict COMPLETE / BLOCKED and handoffs to `/design-review`,
-`/dev-story`, `/qa-plan`.
+summary report with verdict COMPLETE / BLOCKED and handoffs to `/skill:design-review`,
+`/skill:dev-story`, `/skill:qa-plan`.
 
 ---
 
@@ -27,7 +27,7 @@ summary report with verdict COMPLETE / BLOCKED and handoffs to `/design-review`,
 - [ ] File Write Protocol: per-agent artifacts are written by sub-agents under the bounded exception (named path, new artifact under `production/`, `docs/` or `tests/`, gated step); the one exception is the compiled level doc, which the orchestrator writes itself after its own "May I write …?" prompt
 - [ ] Names a destination per agent under `production/levels/[level-name]/` — `narrative.md`, `lore.md`, `visual-direction.md`, `layout.md`, `systems.md`, `production-concepts.md`, `accessibility.md` — and qa-tester's at `production/qa/test-cases/[level-name]-cases.md`
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
-- [ ] Has a next-step handoff at the end (references `/design-review`, `/dev-story`, `/qa-plan`)
+- [ ] Has a next-step handoff at the end (references `/skill:design-review`, `/skill:dev-story`, `/skill:qa-plan`)
 - [ ] Error Recovery Protocol section is present: verify a named artifact is on disk before treating a step as done, surface BLOCKED immediately, always produce a partial report, full procedure (surface → assess → options → partial report) in `.pi/docs/error-recovery-protocol.md`
 - [ ] Uses `AskUserQuestion` at step transitions for user approval before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `team.size`, and the skill requires a one-line active-set announcement before Step 1
@@ -44,7 +44,7 @@ summary report with verdict COMPLETE / BLOCKED and handoffs to `/design-review`,
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -61,7 +61,7 @@ Fixture defaults.
 - `design/narrative/` directory exists with relevant narrative docs
 - World-building docs for the forest region exist
 
-**Input:** `/team-level forest dungeon`
+**Input:** `/skill:team-level forest dungeon`
 
 **Expected behavior:**
 1. Before any spawn, one line announces the active set for `team.size: studio`
@@ -73,7 +73,7 @@ Fixture defaults.
 7. Step 5 — qa-tester spawned: test cases for critical path, boundary/edge cases (sequence breaks, softlocks), playtest checklist, acceptance criteria
 8. Orchestrator compiles all team outputs into the level design template itself — it does not re-spawn level-designer to do it — then asks via `AskUserQuestion`: "May I write the compiled level design to `design/levels/forest-dungeon.md`?" and writes on approval
 9. Summary report: area overview, encounter count, estimated asset list, narrative beats, cross-team dependencies, open cross-level dependencies, accessibility concerns with resolution status; verdict: COMPLETE
-10. Next steps listed: `/design-review design/levels/forest-dungeon.md`, `/dev-story`, `/qa-plan`
+10. Next steps listed: `/skill:design-review design/levels/forest-dungeon.md`, `/skill:dev-story`, `/skill:qa-plan`
 
 **Assertions:**
 - [ ] Active-set line naming `team.size: studio` appears before the first agent is spawned
@@ -85,7 +85,7 @@ Fixture defaults.
 - [ ] The compiled level doc is written by the orchestrator, not a re-spawned agent, and only after its own "May I write" approval
 - [ ] Level doc saved to `design/levels/forest-dungeon.md` (slugified from argument)
 - [ ] Verdict COMPLETE in final summary report
-- [ ] Next steps include `/design-review`, `/dev-story`, `/qa-plan`
+- [ ] Next steps include `/skill:design-review`, `/skill:dev-story`, `/skill:qa-plan`
 - [ ] Summary report includes: area overview, encounter count, estimated asset list, narrative beats
 
 ---
@@ -98,7 +98,7 @@ Fixture defaults.
 - World-building docs for the forest region do NOT exist
 - world-builder agent returns BLOCKED: "No world-building docs found for the forest region — cannot provide lore context"
 
-**Input:** `/team-level forest dungeon`
+**Input:** `/skill:team-level forest dungeon`
 
 **Expected behavior:**
 1. Context gathering completes
@@ -126,17 +126,17 @@ Fixture defaults.
 **Fixture:**
 - Any project state
 
-**Input:** `/team-level` (no argument)
+**Input:** `/skill:team-level` (no argument)
 
 **Expected behavior:**
 1. Skill detects no argument provided
 2. Outputs usage message explaining the required argument (level name or area to design)
-3. Shows the invocation format `/team-level [level name or area to design] [--review full|lean|solo]` with examples (`forest temple`, `tutorial village`, `final boss arena`)
+3. Shows the invocation format `/skill:team-level [level name or area to design] [--review full|lean|solo]` with examples (`forest temple`, `tutorial village`, `final boss arena`)
 4. Skill exits without reading any project files or spawning any subagents
 
 **Assertions:**
 - [ ] Skill does NOT spawn any subagents when no argument is given
-- [ ] Usage message shows the full argument-hint: `/team-level [level name or area to design] [--review full|lean|solo]`
+- [ ] Usage message shows the full argument-hint: `/skill:team-level [level name or area to design] [--review full|lean|solo]`
 - [ ] At least one example of a valid invocation is shown
 - [ ] No GDD or level files read before failing
 - [ ] Verdict is NOT shown (pipeline never starts)
@@ -151,7 +151,7 @@ Fixture defaults.
 - `design/accessibility-requirements.md` committed tier: Standard
 - accessibility-specialist (Step 4, parallel) flags a BLOCKING concern: the critical path through the forest dungeon requires players to distinguish between two environmental hazards (toxic pools vs. shallow water) using color alone — no shape, icon, or audio cue differentiates them
 
-**Input:** `/team-level forest dungeon`
+**Input:** `/skill:team-level forest dungeon`
 
 **Expected behavior:**
 1. Steps 1–3 complete; Step 4 parallel phase begins
@@ -182,7 +182,7 @@ Fixture defaults.
 - level-designer (Step 2) produces a layout that specifies entry/exit points connecting to "the crystal caves" (an adjacent area)
 - `design/levels/crystal-caves.md` does NOT exist — the crystal caves area has not been designed yet
 
-**Input:** `/team-level forest dungeon`
+**Input:** `/skill:team-level forest dungeon`
 
 **Expected behavior:**
 1. Step 2 — level-designer produces layout including: "West exit connects to crystal-caves entry point A"
@@ -190,7 +190,7 @@ Fixture defaults.
 3. Dependency gap surfaced: "Level references crystal-caves as an adjacent area but `design/levels/crystal-caves.md` does not exist"
 4. `AskUserQuestion` presented with options:
    - (a) Proceed with a placeholder reference — note the dependency in the level doc as UNRESOLVED
-   - (b) Pause and run `/team-level crystal caves` first to establish that area
+   - (b) Pause and run `/skill:team-level crystal caves` first to establish that area
 5. Skill does NOT invent crystal caves content to satisfy the reference
 6. If user chooses (a): level doc compiled with the west exit marked UNRESOLVED; flagged in the open cross-level dependencies section of the summary report
 7. Final report includes open cross-level dependencies section
@@ -198,7 +198,7 @@ Fixture defaults.
 **Assertions:**
 - [ ] Skill detects the missing adjacent area by checking `design/levels/` — does not assume it will be created later
 - [ ] Skill does NOT fabricate crystal caves content (lore, layout, connections) to resolve the reference
-- [ ] `AskUserQuestion` offers a "design crystal caves first" option referencing `/team-level`
+- [ ] `AskUserQuestion` offers a "design crystal caves first" option referencing `/skill:team-level`
 - [ ] If user proceeds with placeholder, level doc explicitly marks the west exit as UNRESOLVED
 - [ ] Summary report includes an open cross-level dependencies section listing unresolved references
 - [ ] Circular or forward references do not cause the skill to loop or crash
@@ -216,7 +216,7 @@ Fixture defaults.
 - [ ] Partial report always produced even when agents are BLOCKED
 - [ ] Accessibility BLOCKING concerns surface before Step 5 and require explicit user acknowledgment
 - [ ] Verdict is one of COMPLETE / BLOCKED
-- [ ] Next steps present at end: `/design-review`, `/dev-story`, `/qa-plan`
+- [ ] Next steps present at end: `/skill:design-review`, `/skill:dev-story`, `/skill:qa-plan`
 
 ---
 

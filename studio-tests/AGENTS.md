@@ -8,12 +8,12 @@ framework. It is self-contained and separate from any game project.
 | File | Purpose |
 |------|---------|
 | `catalog.yaml` | Master registry for all 74 skills and 49 agents. Contains category, spec path, and last-test tracking fields. Always read this first when running any test command. |
-| `quality-rubric.md` | Category-specific pass/fail metrics. Read the matching `###` section for the skill's category when running `/skill-test category`. |
+| `quality-rubric.md` | Category-specific pass/fail metrics. Read the matching `###` section for the skill's category when running `/skill:skill-test category`. |
 | `skills/[category]/[name].md` | Behavioral spec for a skill — 5 or more test cases + protocol compliance assertions. |
 | `agents/[tier]/[name].md` | Behavioral spec for an agent — 5 or more test cases + protocol compliance assertions. |
 | `templates/skill-test-spec.md` | Template for writing new skill spec files. |
 | `templates/agent-test-spec.md` | Template for writing new agent spec files. |
-| `results/` | Written by `/skill-test spec` when results are saved. Not gitignored — add it to `.gitignore` to keep results out of commits. |
+| `results/` | Written by `/skill:skill-test spec` when results are saved. Not gitignored — add it to `.gitignore` to keep results out of commits. |
 
 ## Path conventions
 
@@ -77,7 +77,7 @@ A tier is the directory a spec lives in. The rubric category is the agent's
    `skills:` entry for a skill, the `agents:` entry for an agent
 2. Read the skill at `.pi/skills/[name]/SKILL.md` and every file in its
    `references/` folder, or the agent at `.pi/agents/[name].md`
-3. Read the project `CLAUDE.md` and the files it imports with `@`: every
+3. Read the project `AGENTS.md` and the files it imports with `@`: every
    subagent receives them, so a rule stated there (for example a redirect in
    `coordination-rules.md`) counts as the skill's or agent's own
 4. Read the spec at the `spec:` path
@@ -114,7 +114,7 @@ own section when most of its cases need one.
 
 ## Workflow for improving a skill
 
-Use `/skill-improve [name]`. It handles the full loop:
+Use `/skill:skill-improve [name]`. It handles the full loop:
 test → diagnose → propose fix → rewrite → retest → keep or revert.
 
 ## Spec validity note
@@ -128,7 +128,7 @@ correct the spec toward the right behavior, not toward what the skill currently 
 ## This folder is deletable
 
 Nothing in `.pi/` imports from here, and every other CCGS skill and agent works
-without it — but `/skill-test` and `/skill-improve` read it by path. Without it,
-`/skill-test static` still works, `/skill-test spec` and `/skill-test category`
-stop working, `/skill-test audit` reports that no catalog exists, and
-`/skill-improve` skips its category checks (the table in `README.md` has the detail).
+without it — but `/skill:skill-test` and `/skill:skill-improve` read it by path. Without it,
+`/skill:skill-test static` still works, `/skill:skill-test spec` and `/skill:skill-test category`
+stop working, `/skill:skill-test audit` reports that no catalog exists, and
+`/skill:skill-improve` skips its category checks (the table in `README.md` has the detail).

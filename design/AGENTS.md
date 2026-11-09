@@ -27,7 +27,7 @@ before flagging a section as missing — see `.pi/docs/workflow-modes.md`.
 > `minimal` warns a jam project about six sections its own configuration says it
 > does not need, which trains the user to ignore the warning.
 
-**Section-name alias:** the GDD template and `/design-system` author section 3
+**Section-name alias:** the GDD template and `/skill:design-system` author section 3
 as `## Detailed Design`; the standard calls it **Detailed Rules**. Same required
 section — accept either heading, never rewrite one into the other.
 
@@ -37,13 +37,13 @@ section — accept either heading, never rewrite one into the other.
 
 **Design order:** Foundation → Core → Feature → Presentation → Polish
 
-**Validation:** Run `/design-review [path]` after authoring any GDD.
-Run `/review-all-gdds` after completing a set of related GDDs.
+**Validation:** Run `/skill:design-review [path]` after authoring any GDD.
+Run `/skill:review-all-gdds` after completing a set of related GDDs.
 
 ## Quick Specs (`design/quick-specs/`)
 
 Lightweight specs for tuning changes, minor mechanics, or balance adjustments.
-Use `/quick-design` to author.
+Use `/skill:quick-design` to author.
 
 ## UX Specs (`design/ux/`)
 
@@ -52,12 +52,12 @@ Use `/quick-design` to author.
 - Interaction pattern library: `design/ux/interaction-patterns.md`
 - Accessibility requirements: `design/accessibility-requirements.md`
 
-Use `/ux-design` to author. Validate with `/ux-review` before passing to `/team-ui`.
+Use `/skill:ux-design` to author. Validate with `/skill:ux-review` before passing to `/skill:team-ui`.
 
 > **Accessibility requirements sit OUTSIDE `design/ux/` on purpose.** They are a
 > project-wide standard the per-screen specs consult, not a spec for one screen.
 > `.pi/docs/workflow-catalog.yaml`, the Pre-Production, Production and Polish
-> gates, and `/architecture-review` all check `design/accessibility-requirements.md`
+> gates, and `/skill:architecture-review` all check `design/accessibility-requirements.md`
 > at that exact path. Do not "tidy" it under `design/ux/` — every one of those
 > checks would stop matching, and the Technical Setup → Pre-Production gate would
-> become unpassable. `/ux-design` states the same rule at its `accessibility` mode.
+> become unpassable. `/skill:ux-design` states the same rule at its `accessibility` mode.

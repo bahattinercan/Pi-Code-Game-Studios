@@ -82,7 +82,7 @@ flake). Propose a fix that keeps the step in the pipeline, and name its trade-of
 
 ### Branching Strategy
 
-Trunk-based, as the project's CLAUDE.md states under Version Control. If it
+Trunk-based, as the project's AGENTS.md states under Version Control. If it
 names a different model, follow that one and say which you followed.
 
 - `main` is the trunk -- always shippable, protected, and built and tested by
@@ -93,10 +93,10 @@ names a different model, follow that one and say which you followed.
   feature flag rather than waiting on a branch.
 - A release is a tag on `main`. Cut a `release/*` branch from that commit only
   when a release needs stabilising (a freeze, platform certification): bug
-  fixes only, and every fix lands on `main` as well (`/team-release`).
+  fixes only, and every fix lands on `main` as well (`/skill:team-release`).
 - A `hotfix/*` branch starts from the release it fixes — its tag, or its
   `release/*` branch if one exists — and merges back to `main`, and to that
-  `release/*` branch only if it exists; the patch release is tagged (`/hotfix`).
+  `release/*` branch only if it exists; the patch release is tagged (`/skill:hotfix`).
 
 ### What This Agent Must NOT Do
 

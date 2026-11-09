@@ -32,7 +32,7 @@ dependency is unresolved.
 - [ ] Names a concrete draft path per agent (including level-designer and localization-lead) and the final `design/narrative/` document each design artifact becomes — localization-lead's review is not one, and stays in `production/`
 - [ ] Every agent prompt ends with the return contract: path written, ≤5-bullet summary, BLOCKED/CONCERNS items one line each
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
-- [ ] Has a next-step handoff at the end (references `/design-review`, `/localize extract`, `/dev-story`)
+- [ ] Has a next-step handoff at the end (references `/skill:design-review`, `/skill:localize extract`, `/skill:dev-story`)
 - [ ] Error Recovery Protocol section is present: verify a named artifact is on disk, surface BLOCKED immediately, always produce a partial report, full procedure in `.pi/docs/error-recovery-protocol.md`
 - [ ] `AskUserQuestion` is used at phase transitions before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `team.size`, and the skill requires a one-line active-set announcement before Phase 1
@@ -45,7 +45,7 @@ dependency is unresolved.
 
 Every case's `project.yaml` sets `modes.rigor: minimal` and
 `modes.automation: collaborative`, with no `project.local.yaml`, unless its own
-Fixture says otherwise. Rules: `studio-tests/CLAUDE.md` §
+Fixture says otherwise. Rules: `studio-tests/AGENTS.md` §
 Fixture defaults.
 
 ---
@@ -61,7 +61,7 @@ Fixture defaults.
 - Existing lore entries exist for cross-reference (e.g., `design/narrative/lore/`)
 - No lore contradictions exist between existing entries and the new content
 
-**Input:** `/team-narrative faction introduction cutscene for the Ironveil faction`
+**Input:** `/skill:team-narrative faction introduction cutscene for the Ironveil faction`
 
 **Expected behavior:**
 1. Before any spawn, one line announces the active set for `team.size: studio`
@@ -102,7 +102,7 @@ Fixture defaults.
 - The new narrative brief (from Phase 1) states the Ironveil were founded 50 years ago
 - The writer has been spawned in parallel with the world-builder in Phase 2
 
-**Input:** `/team-narrative ironveil faction introduction cutscene`
+**Input:** `/skill:team-narrative ironveil faction introduction cutscene`
 
 **Expected behavior:**
 1. Phases 1–2 begin normally
@@ -132,16 +132,16 @@ Fixture defaults.
 **Fixture:**
 - Any project state
 
-**Input:** `/team-narrative` (no argument)
+**Input:** `/skill:team-narrative` (no argument)
 
 **Expected behavior:**
 1. Skill detects no argument is provided
-2. Outputs usage guidance: e.g., "Usage: `/team-narrative [narrative content description] [--review full|lean|solo]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`)"
+2. Outputs usage guidance: e.g., "Usage: `/skill:team-narrative [narrative content description] [--review full|lean|solo]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`)"
 3. Skill exits without spawning any agents
 
 **Assertions:**
 - [ ] Skill does NOT spawn any agents when no argument is provided
-- [ ] Usage message shows the full argument-hint — `/team-narrative [narrative content description] [--review full|lean|solo]` — and an argument example
+- [ ] Usage message shows the full argument-hint — `/skill:team-narrative [narrative content description] [--review full|lean|solo]` — and an argument example
 - [ ] Skill does NOT attempt to guess or infer a narrative topic from project files
 - [ ] No `AskUserQuestion` is used — output is direct guidance
 
@@ -155,7 +155,7 @@ Fixture defaults.
 - Phase 5 begins; writer and world-builder complete without issues
 - localization-lead finds a dialogue line that uses a hardcoded formatted date string (e.g., `"On March 12th, Year 3"`) that cannot survive locale-specific translation without a locale-aware formatter, and returns it as a BLOCKED item in its return contract
 
-**Input:** `/team-narrative ironveil faction introduction cutscene` (Phase 5 scenario)
+**Input:** `/skill:team-narrative ironveil faction introduction cutscene` (Phase 5 scenario)
 
 **Expected behavior:**
 1. Phase 5 spawns writer, localization-lead, and world-builder in parallel
@@ -186,7 +186,7 @@ Fixture defaults.
 - No character voice profiles exist in `design/narrative/characters/` for either character
 - Phase 2 begins; world-builder and art-director proceed normally
 
-**Input:** `/team-narrative ironveil surrender negotiation scene`
+**Input:** `/skill:team-narrative ironveil surrender negotiation scene`
 
 **Expected behavior:**
 1. Phase 1 completes; narrative brief lists Commander Varek and Advisor Selene as characters
@@ -217,7 +217,7 @@ Fixture defaults.
   (pinned: the roster is the one thing `review_mode` still touches); `modes.review_mode`
   is not set, so each run's `--review` value decides
 - `design/gdd/faction-intro.md`, character voice profiles and existing lore exist
-- Runs A and D: `/team-narrative faction introduction cutscene --review full`.
+- Runs A and D: `/skill:team-narrative faction introduction cutscene --review full`.
   Runs B and E: `--review lean`. Runs C and F: `--review solo`
 
 **Expected behavior:**
@@ -253,7 +253,7 @@ Fixture defaults.
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped
 - [ ] A partial report is always produced when some agents complete and others block
 - [ ] Verdict is exactly COMPLETE, `COMPLETE — consistency NOT ASSESSED ([input])` or BLOCKED — no other verdict values used
-- [ ] Next Steps handoff references `/design-review`, `/localize extract`, and `/dev-story`
+- [ ] Next Steps handoff references `/skill:design-review`, `/skill:localize extract`, and `/skill:dev-story`
 
 ---
 

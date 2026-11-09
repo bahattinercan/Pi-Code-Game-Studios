@@ -9,7 +9,7 @@
 # tool), a setting the tool ignores. This script finds those and prints them, so
 # every later change to an agent or a delegating skill is read the same way.
 #
-# OBSERVATIONS, NEVER VERDICTS (CLAUDE.md, "Helpers emit observations"). It
+# OBSERVATIONS, NEVER VERDICTS (AGENTS.md, "Helpers emit observations"). It
 # prints what it found, with denominators first, and always exits 0 once it has
 # run. Whether a tool list is beyond the job, whether two agents really overlap,
 # whether a brief is good enough: the reader decides. The delegation markers are

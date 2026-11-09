@@ -11,19 +11,19 @@ ADR Dependencies, Engine Compatibility, GDD Requirements Addressed
 
 **Status lifecycle:** `Proposed` → `Accepted` → `Superseded`
 - Never skip `Accepted` — stories referencing a `Proposed` ADR are auto-blocked
-- Use `/architecture-decision` to create ADRs through the guided flow
+- Use `/skill:architecture-decision` to create ADRs through the guided flow
 
 **TR Registry:** `docs/architecture/tr-registry.yaml`
 - Stable requirement IDs (e.g. `TR-movement-001`) that link GDD requirements to stories
 - Never renumber existing IDs — only append new ones
-- Updated by `/architecture-review` Phase 8
+- Updated by `/skill:architecture-review` Phase 8
 
 **Control Manifest:** `docs/architecture/control-manifest.md`
 - Flat programmer rules sheet: Required / Forbidden / Guardrails per layer
 - Date-stamped `Manifest Version:` in header
-- Stories embed this version; `/story-done` checks for staleness
+- Stories embed this version; `/skill:story-done` checks for staleness
 
-**Validation:** Run `/architecture-review` after completing a set of ADRs.
+**Validation:** Run `/skill:architecture-review` after completing a set of ADRs.
 
 ## Engine Reference (`docs/engine-reference/`)
 

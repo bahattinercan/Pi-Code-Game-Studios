@@ -9,7 +9,7 @@
 # new entry, scoring and prioritizing, reporting, and the "match before
 # appending" check.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # stats prints added and resolved counts and their difference, not the words
 # growing, stable or shrinking; ages are in days, because the register records
 # dates, not sprints. What "more than 3 sprints" is in days, and which items

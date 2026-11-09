@@ -33,7 +33,7 @@
 # requested and none examined, which a caller could not distinguish from
 # "nothing to do". It is now reported as UNRESOLVED.
 #
-# Observation-only per the load-bearing convention in CLAUDE.md: this script
+# Observation-only per the load-bearing convention in AGENTS.md: this script
 # emits facts (UNCHANGED / CHANGED / NEW / RECEIPT: NONE), never verdicts.
 # The calling skill decides what to do — including automation-mode handling,
 # which this script cannot see.

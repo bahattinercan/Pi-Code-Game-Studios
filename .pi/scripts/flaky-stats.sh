@@ -7,7 +7,7 @@
 # Replaces the hand-run parse and tiering of a flakiness review, and the
 # "which tests failed in which runs" counting done from the same logs.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 # The tier row (high, moderate, low, below-low, suspected, always-fail) is the
 # rule that matched, printed with its text. Whether to quarantine, what to tell
 # the user and what "confirmed" means stay in the skill.

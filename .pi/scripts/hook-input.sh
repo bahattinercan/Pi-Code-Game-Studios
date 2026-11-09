@@ -6,7 +6,7 @@
 # (validate-read.sh) read the payload through this script, so the JSON
 # decoding and the Edit rebuild exist once.
 #
-# EMITS OBSERVATIONS, NOT A VERDICT (CLAUDE.md, "Helpers in .pi/scripts/").
+# EMITS OBSERVATIONS, NOT A VERDICT (AGENTS.md, "Helpers in .pi/scripts/").
 #
 # Usage: bash .pi/scripts/hook-input.sh [--root DIR] [--new FILE] < payload.json
 #   --new FILE   also write the content the file will hold to FILE: Write's

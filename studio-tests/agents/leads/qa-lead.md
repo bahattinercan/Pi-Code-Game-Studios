@@ -12,7 +12,7 @@
 Verified by reading the agent's `.pi/agents/qa-lead.md` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references test strategy, story readiness, coverage, bug triage — not generic)
-- [ ] `tools:` includes Read for story files, test files, and coding-standards; Bash because it runs `/smoke-check` before every QA hand-off; Write/Edit for the QA plans and sign-off reports it produces, each write gated on the user's approval in its collaboration protocol
+- [ ] `tools:` includes Read for story files, test files, and coding-standards; Bash because it runs `/skill:smoke-check` before every QA hand-off; Write/Edit for the QA plans and sign-off reports it produces, each write gated on the user's approval in its collaboration protocol
 - [ ] Model tier is `inherit` — frontmatter `model:` reads exactly `inherit` (tiers: `.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over implementation decisions or game design
 
@@ -25,7 +25,7 @@ Verified by reading the agent's `.pi/agents/qa-lead.md` frontmatter:
 **Expected:** Returns the verdict ADEQUATE with rationale confirming that all three ACs are specific and each can be verified by an automated test.
 **Assertions:**
 - [ ] Verdict is exactly one of ADEQUATE / GAPS / INADEQUATE (the QL-STORY-READY verdicts) — every input the gate names is supplied, so NOT ASSESSED does not apply
-- [ ] States the verdict word `ADEQUATE` explicitly — `/story-readiness` and `/create-stories` branch on the bare verdict word
+- [ ] States the verdict word `ADEQUATE` explicitly — `/skill:story-readiness` and `/skill:create-stories` branch on the bare verdict word
 - [ ] Rationale addresses each of the three ACs and confirms each can be verified by an automated test (the gate's Logic-story check)
 - [ ] Output stays within QA scope — does not comment on whether the mechanic is designed well
 
