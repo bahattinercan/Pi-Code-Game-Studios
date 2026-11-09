@@ -20,7 +20,7 @@ instead. Edit the sources, not this file.
 │   ├── agents/                  # 49 definitions Pi's workflow registry loads as agentType
 │   ├── rules/                   # path-scoped standards, injected by extensions/ccgs-rules.ts
 │   ├── hooks/                   # the scripts, fired by extensions/ccgs-hooks.ts
-│   └── extensions/              # ccgs-hooks.ts, ccgs-rules.ts
+│   └── extensions/              # ccgs-hooks.ts, ccgs-rules.ts, ccgs-guard.ts
 ├── <code root>/                 # Game source code — THE PATH IS ENGINE-SPECIFIC, see below
 ├── assets/                      # Game assets (art, audio, vfx, shaders, data)
 ├── design/                      # Game design documents (gdd, narrative, levels, balance)

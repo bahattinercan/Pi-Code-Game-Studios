@@ -11,6 +11,7 @@
  * {additionalContext}}` for a warning that somebody actually sees.
  *
  * Event map:
+ *   (any tool_call)         -> ccgs-guard.ts first: the original permissions.deny
  *   session_start          -> session-start.sh, detect-gaps.sh (+ rules index)
  *   tool_call  bash        -> validate-commit.sh (blocking), validate-push.sh
  *   tool_call  read        -> validate-read.sh (blocking), path-scoped rules
@@ -31,6 +32,7 @@ import path from "node:path";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { type Rule, loadRules, matchRules } from "./ccgs-rules.ts";
+import { checkCommand, checkPath } from "./ccgs-guard.ts";
 
 type HookResult = { code: number; stdout: string; stderr: string };
 type HookJson = { systemMessage?: string; additionalContext?: string };
@@ -145,6 +147,13 @@ export default function (pi: ExtensionAPI) {
     const base = { hook_event_name: "PreToolUse" };
 
     if (isToolCallEventType("bash", event)) {
+      // permissions.deny from the original settings, checked before any script:
+      // this is the one slot that can refuse a command outright.
+      const denied = checkCommand(event.input.command);
+      if (denied) {
+        ctx.ui.notify("Denied by the project guard", "error");
+        return { block: true, reason: denied.reason };
+      }
       const tool_input = { command: event.input.command, timeout: event.input.timeout };
       const commit = await runScript(root, "validate-commit.sh", payload(ctx, { ...base, tool_name: "Bash", tool_input }));
       const blocked = await applyResult(ctx, commit, "validate-commit");
@@ -156,6 +165,11 @@ export default function (pi: ExtensionAPI) {
     }
 
     if (isToolCallEventType("read", event)) {
+      const deniedRead = checkPath("read", event.input.path);
+      if (deniedRead) {
+        ctx.ui.notify("Denied by the project guard", "error");
+        return { block: true, reason: deniedRead.reason };
+      }
       const tool_input = { file_path: event.input.path, offset: event.input.offset, limit: event.input.limit };
       const res = await runScript(root, "validate-read.sh", payload(ctx, { ...base, tool_name: "Read", tool_input }));
       const blocked = await applyResult(ctx, res, "validate-read");
@@ -165,6 +179,11 @@ export default function (pi: ExtensionAPI) {
     }
 
     if (isToolCallEventType("write", event)) {
+      const deniedWrite = checkPath("write", event.input.path);
+      if (deniedWrite) {
+        ctx.ui.notify("Denied by the project guard", "error");
+        return { block: true, reason: deniedWrite.reason };
+      }
       const tool_input = { file_path: event.input.path, content: event.input.content };
       const guard = await runScript(root, "validate-write.sh", payload(ctx, { ...base, tool_name: "Write", tool_input }));
       const blocked = await applyResult(ctx, guard, "validate-write");
@@ -176,6 +195,11 @@ export default function (pi: ExtensionAPI) {
     }
 
     if (isToolCallEventType("edit", event)) {
+      const deniedEdit = checkPath("edit", event.input.path);
+      if (deniedEdit) {
+        ctx.ui.notify("Denied by the project guard", "error");
+        return { block: true, reason: deniedEdit.reason };
+      }
       const tool_input = { file_path: event.input.path, old_string: event.input.oldText, new_string: event.input.newText };
       const guard = await runScript(root, "validate-write.sh", payload(ctx, { ...base, tool_name: "Edit", tool_input }));
       const blocked = await applyResult(ctx, guard, "validate-write");

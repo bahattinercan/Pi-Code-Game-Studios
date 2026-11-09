@@ -192,15 +192,44 @@ The catalog is structurally consistent again, but the score has not been
 re-earned by a real `/skill:skill-test audit` run — treat it as unproven until
 someone does.
 
+### 11. Permission deny list — `.pi/extensions/ccgs-guard.ts`
+
+`permissions.deny` in `settings.json` held 130 entries that reduced to about ten
+rules with every CLI-flag permutation spelled out. Pi has no settings-level deny
+list; `tool_call` is the slot that can refuse a call, and that is where the
+intent now lives.
+
+| Rule | Blocked |
+|---|---|
+| destructive remove | `rm` with recursive **and** force, in any spelling (`-rf`, `-r -f`, `--recursive --force`, `-rf*`) |
+| forced push | `git push` with `--force`, `-f`, `-uf`, `--force-with-lease`, or a `+refspec` |
+| history loss | `git reset --hard`, `git clean` with any force flag |
+| escalation | `sudo`, `chmod 777` |
+| Windows delete | `powershell`/`pwsh` `Remove-Item -Recurse` |
+| secrets | reading or writing any `.env*` path |
+| binary assets | editing `.uasset` / `.umap` (Unreal corrupts them silently) |
+
+**Deliberately narrower than upstream.** The original patterns matched anywhere
+after `git`, so `git commit -m "push + pull"` was denied — upstream documents
+this and tells you to reword the message. This port parses the subcommand and its
+flags instead, so that commit is allowed while `git push --force` is still
+blocked. Quoted text is never treated as a command, so
+`echo 'do not run sudo rm -rf /'` passes. Nothing the original blocked as a
+*damaging call* was loosened.
+
+`tools/test-guard.mjs` is the evidence: 43 command cases (every dangerous shape
+plus the false positives that motivated the rewrite) and 11 path cases.
+
 ## Deliberately not ported
 
 - **Status line** — `.pi/statusline.sh` (context %, model, stage, epic
   breadcrumb) has no Pi counterpart. Pi's footer extensions own that surface
   (`pi-powerline-footer` in this environment). The script is kept for reference.
 - **`.pi/docs/reference/claude-code-settings.json`** — the original settings,
-  kept pristine. It is not a Pi settings file and nothing reads it. Its deny list
-  is still only a list: Pi's permission surface is `tool_call` in the extension,
-  and the deny entries have not been re-expressed there yet.
+  kept pristine as the record of what the port answered. It is not a Pi settings
+  file and nothing reads it; the deny list it carried is live in
+  `ccgs-guard.ts`, and the allow list (`pytest`, `dir`) is unnecessary here —
+  Pi asks for permissions itself rather than through a static allow list.
 
 ## Still unproven
 
@@ -214,14 +243,15 @@ someone does.
 Run from the repository root:
 
 ```bash
-bash tools/verify-port.sh                          # all 10 gates
+bash tools/verify-port.sh                          # all 11 gates
 ```
 
 The gate checks shell syntax, a real `resolve_config` call, the generated
 `APPEND_SYSTEM.md`, all 74 skill frontmatters, Claude leftovers, the settings
 file, all 49 agent definitions, that both extension modules parse, the rule
 matcher against the real rule files, and two live hook scripts — one warning
-(`systemMessage` JSON) and one block (read guard, exit 2).
+(`systemMessage` JSON) and one block (read guard, exit 2), and the permission
+guard against every dangerous shape the original deny list covered.
 
 Individual checks, for when one gate fails:
 
@@ -230,4 +260,5 @@ bash -n .pi/hooks/*.sh .pi/scripts/*.sh                    # shell syntax
 bash .pi/hooks/yaml-helper.sh resolve_config --keys automation,workflow,qa.level
 node tools/build-append-system.mjs --check                 # generated file current
 node --experimental-strip-types tools/test-rules.mjs       # rule matcher
+node --experimental-strip-types tools/test-guard.mjs       # permission guard
 ```

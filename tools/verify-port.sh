@@ -117,7 +117,7 @@ console.log(`  ok   ${count} definitions, Pi tool names, no model pin`);
 ' || fail=1
 
 echo "8. hook extension parses"
-for f in .pi/extensions/ccgs-hooks.ts .pi/extensions/ccgs-rules.ts; do
+for f in .pi/extensions/ccgs-hooks.ts .pi/extensions/ccgs-rules.ts .pi/extensions/ccgs-guard.ts; do
   if node --experimental-strip-types --check "$f" 2>/dev/null; then ok "$(basename "$f")"; else bad "$f does not parse"; fi
 done
 
@@ -147,6 +147,16 @@ case "$guard" in
   *exit=2*) ok "read guard blocks a whole-file read of a 45 KB design doc" ;;
   *) bad "read guard did not block (exit code missing)" ;;
 esac
+
+echo "11. permission guard (the original deny list, as decisions)"
+if node --experimental-strip-types tools/test-guard.mjs >/tmp/ccgs-guard.log 2>&1; then
+  paths=$(grep -cE '^  ok   (block|allow)  (read|write|edit) ' /tmp/ccgs-guard.log)
+  cmds=$(grep -cE '^  ok   (block|allow)  [^ ]' /tmp/ccgs-guard.log)
+  ok "$((cmds - paths)) command cases and $paths path cases"
+else
+  bad "the guard disagrees with the original deny list"
+  grep 'FAIL' /tmp/ccgs-guard.log | head -6 | sed 's/^/       /'
+fi
 
 echo
 if [ "$fail" -eq 0 ]; then echo "PASS"; else echo "FAIL"; fi

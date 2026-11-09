@@ -37,7 +37,8 @@ PORTING.md         What the Pi port changed, and what is still pending
 .pi/rules/         Path-scoped coding standards (injected by .pi/extensions/ccgs-rules.ts)
 .pi/docs/          Reference docs, templates, registries
 .pi/scripts/        Helper scripts the skills call
-.pi/extensions/     ccgs-hooks.ts (the hook adapter), ccgs-rules.ts (path rules)
+.pi/extensions/     ccgs-hooks.ts (hook adapter), ccgs-rules.ts (path rules),
+                    ccgs-guard.ts (permission denials)
 .pi/hooks/         The hook scripts, fired by .pi/extensions/ccgs-hooks.ts
 src/               Game source code — the code root is ENGINE-SPECIFIC
 assets/            Art, audio, VFX, shaders, data files
