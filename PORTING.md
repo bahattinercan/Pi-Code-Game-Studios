@@ -258,6 +258,15 @@ colon (`s/^[^:]*:[[:space:]]*//`), and the placeholder is colon-free. This is th
 class of bug a port introduces and no unit test sees: the *data* the code parses
 changed shape.
 
+### 14. The gate has to survive a fresh clone
+
+Copying the repo to a clean directory to test it end to end made the gate fail on
+its own third check: `.pi/APPEND_SYSTEM.md` is committed with LF, but a Windows
+checkout writes CRLF into the source docs, so the generator built a CRLF body,
+compared it against the LF file, and reported "stale". The generator now
+normalises to LF before concatenating. Anyone cloning on Windows would have hit
+this on their first `bash tools/verify-port.sh`.
+
 ## Proven in a live session
 
 The extension was loaded by a real Pi process (`pi -a --print`, project trusted

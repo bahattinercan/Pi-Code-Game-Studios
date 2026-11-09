@@ -36,7 +36,14 @@ for (const [rel, title] of SOURCES) {
     console.error(`missing source: ${rel}`);
     process.exit(1);
   }
-  const text = fs.readFileSync(abs, "utf8").replace(/^\uFEFF/, "").trimEnd();
+  // Normalise line endings: a Windows checkout writes CRLF into the sources while
+  // the committed APPEND_SYSTEM.md is LF, so without this the --check mode would
+  // report the generated file as stale on every fresh clone.
+  const text = fs
+    .readFileSync(abs, "utf8")
+    .replace(/^\uFEFF/, "")
+    .replace(/\r\n/g, "\n")
+    .trimEnd();
   // Demote the source's own H1 so the sections sit under one document.
   const demoted = text.replace(/^# /m, "## ");
   body += `\n\n<!-- source: ${rel} -->\n## ${title} · \`${rel}\`\n\n${demoted}\n`;
