@@ -117,7 +117,7 @@ console.log(`  ok   ${count} definitions, Pi tool names, no model pin`);
 ' || fail=1
 
 echo "8. hook extension parses"
-for f in .pi/extensions/ccgs-hooks.ts .pi/extensions/ccgs-rules.ts .pi/extensions/ccgs-guard.ts; do
+for f in .pi/extensions/ccgs-hooks.ts .pi/lib/ccgs-rules.ts .pi/lib/ccgs-guard.ts; do
   if node --experimental-strip-types --check "$f" 2>/dev/null; then ok "$(basename "$f")"; else bad "$f does not parse"; fi
 done
 

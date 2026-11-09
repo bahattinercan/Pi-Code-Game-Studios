@@ -31,8 +31,8 @@ import fs from "node:fs";
 import path from "node:path";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
-import { type Rule, loadRules, matchRules } from "./ccgs-rules.ts";
-import { checkCommand, checkPath } from "./ccgs-guard.ts";
+import { type Rule, loadRules, matchRules } from "../lib/ccgs-rules.ts";
+import { checkCommand, checkPath } from "../lib/ccgs-guard.ts";
 
 type HookResult = { code: number; stdout: string; stderr: string };
 type HookJson = { systemMessage?: string; additionalContext?: string };

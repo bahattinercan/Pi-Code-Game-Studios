@@ -5,7 +5,7 @@
 // list got wrong or that must keep working — the commit-message false positive
 // is the one that motivated parsing instead of glob matching.
 
-import { checkCommand, checkPath, segments } from "../.pi/extensions/ccgs-guard.ts";
+import { checkCommand, checkPath, segments } from "../.pi/lib/ccgs-guard.ts";
 
 let failed = 0;
 const block = (cmd, why) => {

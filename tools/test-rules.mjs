@@ -3,7 +3,7 @@
 // Real project files, real globs. Run from the repository root.
 
 import path from "node:path";
-import { loadRules, matchRules, globToRegExp } from "../.pi/extensions/ccgs-rules.ts";
+import { loadRules, matchRules, globToRegExp } from "../.pi/lib/ccgs-rules.ts";
 
 const root = process.cwd();
 const rules = loadRules(root);

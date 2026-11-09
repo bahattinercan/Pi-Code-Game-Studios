@@ -231,12 +231,33 @@ plus the false positives that motivated the rewrite) and 11 path cases.
   `ccgs-guard.ts`, and the allow list (`pytest`, `dir`) is unnecessary here —
   Pi asks for permissions itself rather than through a static allow list.
 
-## Still unproven
+## Proven in a live session
 
-- The extension has never run inside a live Pi session. Its logic is tested
-  against the scripts' real contract and its matcher against the real globs, but
-  the event wiring itself is untested end to end.
-- No workflow run has dispatched an `agentType` from this registry yet.
+The extension was loaded by a real Pi process (`pi -a --print`, project trusted
+for the run) and did what the unit tests said it would:
+
+| Probe | Result |
+|---|---|
+| `chmod 777 /tmp/…` | refused: *"chmod 777 is denied: world-writable files in a repository are a supply-chain hole."* |
+| `read .env` | refused: *"`.env` is a secrets file, denied by the original Read and Edit rules for .env paths."* |
+| `write src/gameplay/probe.gd` | allowed, and the `gameplay-code` rule was injected with it — the model cited it unprompted |
+
+That first run also found a defect the unit tests could not: **Pi loads every
+`.ts` file under `.pi/extensions/` as an extension**, so the two helper modules
+(`ccgs-guard.ts`, `ccgs-rules.ts`) aborted startup with
+*"Extension does not export a valid factory function"*. They now live in
+`.pi/lib/` and are imported from there. Only `ccgs-hooks.ts` sits in
+`.pi/extensions/`.
+
+Still unproven:
+
+- No workflow run has dispatched an `agentType` from the 49-definition registry
+  yet — that path is validated by parsing, not by a dispatch.
+- The hook adapter has been seen to block, but not yet to warn: the warning path
+  (`systemMessage` → notify, `additionalContext` → message) is exercised only by
+  the contract tests in the gate.
+- `studio-tests`' score has not been re-earned by a real `/skill:skill-test audit`
+  run after the rubric rewrite.
 
 ## Verification
 
