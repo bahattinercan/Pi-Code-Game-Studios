@@ -1,6 +1,8 @@
 # Pi port — status
 
-This repository is a fork of
+This repository —
+[bahattinercan/Pi-Code-Game-Studios](https://github.com/bahattinercan/Pi-Code-Game-Studios)
+— is a fork of
 [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios)
 1.2.0, converted to run under [Pi](https://pi.dev) instead of Claude Code.
 

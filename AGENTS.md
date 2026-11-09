@@ -1,4 +1,4 @@
-# Claude Code Game Studios — Pi port
+# Pi Code Game Studios
 
 Indie game development managed through a coordinated studio of specialist roles:
 directors who guard the vision, leads who own their domains, specialists who do

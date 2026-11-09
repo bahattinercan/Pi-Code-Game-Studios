@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Claude Code Game Studios — Pi port</h1>
+  <h1 align="center">Pi Code Game Studios</h1>
   <p align="center">
     Turn a single Pi session into a full game development studio.
     <br />
@@ -9,13 +9,14 @@
 
 > **This is a port.** The original is
 > [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios),
-> built for Claude Code. This fork runs the studio under
-> [Pi](https://pi.dev) instead: `.pi/` in place of `.claude/`, `/skill:<name>`
-> commands, an explicit config step instead of inline shell, and the always-on
-> constraints generated into `.pi/APPEND_SYSTEM.md`. **Read
-> [PORTING.md](PORTING.md) first** — it lists what moved, and the three things
-> that are still pending (the hook extension, the agent registry, path-scoped
-> rule loading).
+> built for Claude Code. This fork —
+> [bahattinercan/Pi-Code-Game-Studios](https://github.com/bahattinercan/Pi-Code-Game-Studios)
+> — runs the studio under [Pi](https://pi.dev) instead: `.pi/` in place of
+> `.claude/`, `/skill:<name>` commands, an explicit config step instead of inline
+> shell, and the always-on constraints generated into `.pi/APPEND_SYSTEM.md`.
+> **Read [PORTING.md](PORTING.md) first** — it lists what moved, and the three
+> things that are still pending (the hook extension, the agent registry,
+> path-scoped rule loading).
 >
 > Upstream's Claude Code documentation below has been rewritten only where a
 > Pi user would be misled; treat `PORTING.md` as authoritative where they differ.
@@ -37,7 +38,7 @@
 
 Building a game solo with AI is powerful — but a single chat session has no structure. No one stops you from hardcoding magic numbers, skipping design docs, or writing spaghetti code. There's no QA pass, no design review, no one asking "does this actually fit the game's vision?"
 
-**Claude Code Game Studios** solves this by giving your AI session the structure of a real studio. Instead of one general-purpose assistant, you get 49 specialized agents organized into a studio hierarchy — directors who guard the vision, department leads who own their domains, and specialists who do the hands-on work. Each agent has defined responsibilities, escalation paths, and quality gates.
+**Pi Code Game Studios** solves this by giving your AI session the structure of a real studio. Instead of one general-purpose assistant, you get 49 role definitions organized into a studio hierarchy — directors who guard the vision, department leads who own their domains, and specialists who do the hands-on work. Each role has defined responsibilities, escalation paths, and quality gates.
 
 The result: you still make every decision, but now you have a team that asks the right questions, catches mistakes early, and keeps your project organized from first brainstorm to launch.
 
@@ -198,17 +199,18 @@ Helpers fail gracefully if optional tools are missing — you lose validation, n
 
 1. **Clone or use as template**:
    ```bash
-   git clone https://github.com/Donchitos/Claude-Code-Game-Studios.git my-game
+   git clone https://github.com/bahattinercan/Pi-Code-Game-Studios.git my-game
    cd my-game
    ```
 
-2. **Open Claude Code in the project's root folder** (the one holding
+2. **Open Pi in the project's root folder** (the one holding
    `AGENTS.md` and `project.yaml`) and start a session:
    ```bash
-   claude
+   pi
    ```
-   Starting it in a subfolder such as `src/` skips the project's hooks, deny
-   rules and ask-first permission mode.
+   Starting it in a subfolder such as `src/` means the project's skills, config
+   and `APPEND_SYSTEM.md` are not loaded — Pi resolves them from the folder it
+   starts in.
 
 3. **Run `/skill:start`** — the system asks where you are (no idea, vague concept,
    clear design, existing work) and guides you to the right workflow. No assumptions.
@@ -425,14 +427,16 @@ Primary development on **Windows 10** with Git Bash. The hooks and scripts are a
 
 ## Community
 
-- **Discussions** — [GitHub Discussions](https://github.com/Donchitos/Claude-Code-Game-Studios/discussions) for questions, ideas, and showcasing what you've built
-- **Issues** — [Bug reports and feature requests](https://github.com/Donchitos/Claude-Code-Game-Studios/issues)
+- **Discussions** — [GitHub Discussions](https://github.com/bahattinercan/Pi-Code-Game-Studios/discussions) for questions about this port. Upstream's own discussions live at `Donchitos/Claude-Code-Game-Studios`.
+- **Issues** — [Bug reports and feature requests](https://github.com/bahattinercan/Pi-Code-Game-Studios/issues) for the port; report upstream defects to [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios/issues)
 
 ---
 
 ## Supporting This Project
 
-Claude Code Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
+Pi Code Game Studios is a port. The work behind the agents, skills, hooks and
+templates is **Donchitos'**, and that is where support belongs — this fork only
+rewrites the Claude Code layer for Pi.
 
 <p>
   <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"></a>
