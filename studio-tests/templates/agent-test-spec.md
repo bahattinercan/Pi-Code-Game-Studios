@@ -14,8 +14,8 @@ delegates vs. handles directly. Include which gates it triggers (if any).]
 ## Static Assertions (Structural)
 
 - [ ] Agent file exists at `.pi/agents/[name].md`
-- [ ] Frontmatter has `name`, `description`, `model`, `tools` fields
-- [ ] Model tier is `[opus | sonnet | haiku | inherit]` — frontmatter `model:` reads exactly that alias (tiers: `.pi/docs/model-tiers.md`)
+- [ ] `tools:` lists only Pi coding tools (`read`, `write`, `edit`, `grep`, `find`, `bash`) — not Claude names like `Glob` or `WebSearch` (no `model:`, no `maxTurns:` — neither is a Pi agent-registry field)
+- [ ] Model is inherited — no `model:` in frontmatter; a workflow run picks a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Domain clearly stated
 - [ ] Escalation path documented
 - [ ] Does not make decisions outside its domain

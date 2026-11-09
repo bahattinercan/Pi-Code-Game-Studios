@@ -1,9 +1,12 @@
 ---
 name: economy-designer
 description: "Resource economies — loot tables, sink/faucet analysis, progression curve calibration, economic balance."
-tools: Read, Glob, Grep, Write, Edit
-model: inherit
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
 disallowedTools: Bash
 memory: project
 ---

@@ -11,7 +11,7 @@
 
 - [ ] `description:` field is present and domain-specific (references player communication, patch notes, community management)
 - [ ] `tools:` reads `Read, Glob, Grep, Write, Edit` and `disallowedTools:` names `Bash` — drafts and documents only, no shell or build tools
-- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over technical content, QA strategy, or bug fixing
 - [ ] Tone and Voice states that a brand-voice or style guide the project supplies overrides its defaults (tone, person, glossary terms)
 - [ ] For a release, it works from the patch notes release-manager produces with `/skill:patch-notes` rather than regenerating them

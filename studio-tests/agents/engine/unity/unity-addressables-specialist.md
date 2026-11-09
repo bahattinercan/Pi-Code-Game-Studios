@@ -11,7 +11,7 @@ No gate IDs assigned.
 
 - [ ] `description:` field is present and domain-specific (references Addressables / asset loading / content catalogs / remote delivery)
 - [ ] `tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over rendering systems or gameplay using the loaded assets
 
 ---

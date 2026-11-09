@@ -180,8 +180,11 @@ gates, the gate mode logic must also be correct.
 Used by `/skill:skill-test category [agent-name]` to evaluate an agent definition in
 `.pi/agents/` against its category's metrics.
 
-No category fixes a model. Each agent's tier is its own frontmatter `model:`,
-and its spec in `agents/` asserts that alias; see `.pi/docs/model-tiers.md`.
+No category fixes a model, and no agent sets one: Pi's registry binds tools and
+the body prompt, not a tier alias. Every agent inherits the orchestrating
+session's model, and a workflow run asks for a bigger one per call with
+`agent(prompt, { tier })`. Each agent's spec in `agents/` asserts that nothing
+pins a model; see `.pi/docs/model-tiers.md`.
 
 ### `director`
 

@@ -11,7 +11,7 @@ No gate IDs assigned.
 
 - [ ] `description:` field is present and domain-specific (references game mechanics / player systems)
 - [ ] `tools:` list includes Read, Write, Edit, Bash, Glob, Grep — excludes tools only needed by orchestration agents
-- [ ] Model tier is `inherit` — frontmatter `model:` reads exactly `inherit` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over UI, AI behavior, or engine/rendering code
 
 ---

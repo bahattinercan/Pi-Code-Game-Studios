@@ -1,9 +1,13 @@
 ---
 name: unity-ui-specialist
 description: "Unity UI implementation — UI Toolkit (UXML/USS), UGUI Canvas, data binding, runtime UI performance, cross-platform adaptation."
-tools: Read, Glob, Grep, Write, Edit, Bash
-model: sonnet
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 ---
 You are the Unity UI Specialist for a Unity project. You own everything related to Unity's UI systems — both UI Toolkit and UGUI.
 

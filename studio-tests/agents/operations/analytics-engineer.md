@@ -11,7 +11,7 @@
 
 - [ ] `description:` field is present and domain-specific (references telemetry, A/B testing, event tracking, analytics)
 - [ ] `tools:` reads `Read, Glob, Grep, Write, Edit, Bash, WebSearch` — Bash serves the data-pipeline work `description:` names; tracking in game code is excluded by the body's "What This Agent Must NOT Do" list, not by the tool list
-- [ ] Model tier is `inherit` — frontmatter `model:` reads exactly `inherit` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over game implementation, economy design, or live ops scheduling
 
 ---

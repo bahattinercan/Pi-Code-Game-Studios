@@ -12,7 +12,7 @@
 
 - [ ] `description:` field is present and domain-specific (references test cases, bug reports, test execution, regression testing)
 - [ ] `tools:` list is Read, Glob, Grep, Write, Edit, Bash. The grant cannot be path-scoped, so the no-source-edits boundary must be written in the body: "What This Agent Must NOT Do" lists "Fix bugs (report them for assignment)", and the orchestrated-run write exception covers only a new artifact under `production/`, `docs/` or `tests/`, "never an edit to existing source or config"
-- [ ] Model tier is `inherit` — frontmatter `model:` reads exactly `inherit` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over test strategy, fix implementation, or acceptance criterion definition
 
 ---

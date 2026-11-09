@@ -1,9 +1,12 @@
 ---
 name: level-designer
 description: "Spatial design for levels and areas — encounter layouts, pacing, difficulty, layout planning, environmental storytelling."
-tools: Read, Glob, Grep, Write, Edit
-model: inherit
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
 disallowedTools: Bash
 memory: project
 ---

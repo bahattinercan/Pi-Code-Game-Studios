@@ -228,9 +228,9 @@ Fixture defaults.
 **Fixture:**
 - `catalog.yaml` lists `creative-director` under `agents:` with
   `spec: studio-tests/agents/directors/creative-director.md`
-- `.pi/agents/creative-director.md` declares `model: opus`; there is no
-  `.pi/skills/creative-director/`
-- The spec asserts "Model tier is `opus`"
+- `.pi/agents/creative-director.md` declares `tools:` but no `model:`; there is
+  no `.pi/skills/creative-director/`
+- The spec asserts "Model is inherited"
 - Suppose one spec case is a redirect: the agent is asked to pick the project's
   engine. The agent's "What This Agent Must NOT Do" list says "Make engine or
   architecture choices (delegate to technical-director)"; it never restates the
@@ -242,9 +242,9 @@ Fixture defaults.
 1. Skill resolves the name through the catalog's `agents:` section — it does not
    report "Skill 'creative-director' not found"
 2. Skill reads the agent file and the agent spec
-3. Static assertions are compared exactly with the frontmatter: "Model tier is
-   `opus`" PASSES against `model: opus`, and would FAIL (not PARTIAL) against
-   `model: inherit`
+3. Static assertions are compared exactly with the frontmatter: "Model is
+   inherited" PASSES while `model:` is absent, and would FAIL (not PARTIAL)
+   once a `model:` alias is added back
 4. Test cases are evaluated against the agent's instructions; Protocol
    Compliance uses the spec's own list
 5. The redirect case is met: the loaded `coordination-rules.md` rule 2 covers

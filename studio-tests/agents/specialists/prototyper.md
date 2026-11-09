@@ -11,7 +11,7 @@
 
 - [ ] `description:` field is present and domain-specific (references throwaway builds / concept prototypes / speed over standards)
 - [ ] `tools:` reads Read, Glob, Grep, Write, Edit, Bash (it writes and runs throwaway builds) and `isolation:` reads `worktree` — frontmatter cannot scope writes to a directory, so the boundary to `prototypes/` is the body's Isolation Requirements (next assertion)
-- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition explicitly states that prototype code is not production code and must not be copied into the production code root
 
 ---

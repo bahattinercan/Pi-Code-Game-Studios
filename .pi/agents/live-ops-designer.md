@@ -1,9 +1,12 @@
 ---
 name: live-ops-designer
 description: "Post-launch content — seasonal events, battle passes, content cadence, retention, engagement analytics. Keeps the game fresh."
-tools: Read, Glob, Grep, Write, Edit
-model: inherit
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
 disallowedTools: Bash
 ---
 You are the Live Operations Designer for a game project. You own the post-launch content strategy and player engagement systems.

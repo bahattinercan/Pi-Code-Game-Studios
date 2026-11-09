@@ -13,10 +13,14 @@ instead. Edit the sources, not this file.
 ```text
 /
 ├── AGENTS.md                    # Master configuration (Pi reads it as a context file)
-├── PORTING.md                   # What the Pi port changed, and what is still pending
+├── PORTING.md                   # What the Pi port changed, and what still is not proven
 ├── project.yaml                 # Machine-readable project config — engine, modes, stage (source of truth)
-├── .pi/                         # Skills, agents, rules, hooks, docs, scripts
-│   └── APPEND_SYSTEM.md         # Generated — the constraints that used to be @imports
+├── .pi/                         # Skills, agents, rules, hooks, docs, scripts, extensions
+│   ├── APPEND_SYSTEM.md         # Generated — the constraints that used to be @imports
+│   ├── agents/                  # 49 definitions Pi's workflow registry loads as agentType
+│   ├── rules/                   # path-scoped standards, injected by extensions/ccgs-rules.ts
+│   ├── hooks/                   # the scripts, fired by extensions/ccgs-hooks.ts
+│   └── extensions/              # ccgs-hooks.ts, ccgs-rules.ts
 ├── <code root>/                 # Game source code — THE PATH IS ENGINE-SPECIFIC, see below
 ├── assets/                      # Game assets (art, audio, vfx, shaders, data)
 ├── design/                      # Game design documents (gdd, narrative, levels, balance)

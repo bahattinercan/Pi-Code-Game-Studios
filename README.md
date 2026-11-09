@@ -14,9 +14,10 @@
 > — runs the studio under [Pi](https://pi.dev) instead: `.pi/` in place of
 > `.claude/`, `/skill:<name>` commands, an explicit config step instead of inline
 > shell, and the always-on constraints generated into `.pi/APPEND_SYSTEM.md`.
-> **Read [PORTING.md](PORTING.md) first** — it lists what moved, and the three
-> things that are still pending (the hook extension, the agent registry,
-> path-scoped rule loading).
+> **Read [PORTING.md](PORTING.md) first.** The hooks now run through
+> `.pi/extensions/ccgs-hooks.ts`, the 49 agents load as Pi `agentType`s, and the
+> path-scoped rules are injected by `.pi/extensions/ccgs-rules.ts`. What
+> genuinely did not survive — and why — is in its last two sections.
 >
 > Upstream's Claude Code documentation below has been rewritten only where a
 > Pi user would be misled; treat `PORTING.md` as authoritative where they differ.

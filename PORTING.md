@@ -93,80 +93,141 @@ Claude Code was already paying for the same four imports.
 
 ---
 
-## Not ported
+## Ported in the same pass
 
-### Hooks — 15 event hooks, no equivalent loaded
+### 7. Hooks — `.pi/extensions/ccgs-hooks.ts`
 
-Claude Code ran `.pi/hooks/*.sh` on `PreToolUse`, `PostToolUse`, `SessionStart`,
-`Stop`, `PreCompact`, `Notification`, `SubagentStart` and `SubagentStop`. Those
-scripts still exist and still work when called by hand, but **nothing fires them
-in Pi**. In particular these guarantees are currently off:
+Claude Code ran the scripts in `.pi/hooks/` on its own event model and read the
+event config out of `settings.json`. Pi has neither, so the scripts are unchanged
+and **this extension feeds them the payload Claude Code used to**: `{tool_name,
+tool_input, cwd}` on stdin, exit 2 to block, `{systemMessage,
+hookSpecificOutput.additionalContext}` for a warning.
 
-| Hook | What you lose until it is ported |
-|---|---|
-| `validate-commit.sh` | Hardcoded-value and JSON checks before a commit |
-| `validate-push.sh` | Warnings on protected-branch pushes and release commands |
-| `validate-read.sh` | Refusal of whole-file reads of large design docs |
-| `validate-write.sh` | Warnings on overwriting a file the skills say never to overwrite |
-| `validate-registry.sh` | Warns when a registry write deletes or renumbers an entry |
-| `validate-assets.sh` | Asset naming and data-file JSON validation |
-| `session-start.sh` / `detect-gaps.sh` | Branch orientation, fresh-project and missing-design-doc nudges |
-| `session-stop.sh` / `pre-compact.sh` | Session checkpoint archiving |
-| `log-agent*.sh` / `validate-agent-artifact.sh` | Subagent audit trail |
+| Pi event | Scripts | Effect |
+|---|---|---|
+| `session_start` | `session-start.sh`, `detect-gaps.sh` | Branch orientation and gap nudges, injected as a message |
+| `tool_call` · bash | `validate-commit.sh` (**blocking**), `validate-push.sh` | Commit shape and protected-branch warnings |
+| `tool_call` · read | `validate-read.sh` (**blocking**) | Refuses a whole-file read of a design doc over the size bar, answers with its headings |
+| `tool_call` · write/edit | `validate-write.sh`, `validate-registry.sh` | Warnings the rules used to give |
+| `tool_result` · write/edit | `validate-assets.sh`, `validate-skill-change.sh` | Asset naming, data JSON, and the `/skill:skill-test` nudge |
+| `session_before_compact` | `pre-compact.sh` | Compaction logged before it happens |
+| `agent_end` | `session-stop.sh` | Checkpoint archiving, fire and forget |
 
-The replacement is one Pi extension. `pi.on("tool_call")` blocks and can mutate
-input (the `PreToolUse` slot), `pi.on("tool_result")` modifies results
-(`PostToolUse`), `session_start`, `session_before_compact` and `agent_end` cover
-the rest. The deny list in the old `.pi/docs/reference/claude-code-settings.json`
-moves there too — Pi's `tool_call` can block, which is closer to the Claude Code
-behaviour than a warning.
+Pi's `tool_call` can block, which is closer to the Claude Code contract than a
+warning, so the read guard and the commit check now genuinely stop the call.
+Every hook gets a 20 s ceiling: a hanging script cannot wedge the agent.
 
-### Agents — 49 role definitions, no loader
+The field names needed one translation — Pi's tools take `path`, `oldText`,
+`newText`, where the scripts expect `file_path`, `old_string`, `new_string`.
 
-`.pi/agents/*.md` is Claude Code's subagent format: a markdown body plus
-`tools:` and `model:` frontmatter. Pi has no such directory. Its equivalents are
-named agent types in the agent registry (bound tools, model and instructions, used
-via `agent(prompt, { agentType })`) and separate Pi sessions under Orca.
+**Not mapped, on purpose**
 
-The 49 files are retained as prose: each one is a usable role brief, and the
-`team-*` skills quote them. Converting them is a rewrite, not a rename — the
-frontmatter has no Pi reader. Until then, a subagent inherits the session model
-and gets its role from the brief text.
+- `log-agent.sh`, `log-agent-stop.sh`, `validate-agent-artifact.sh` fired on
+  `SubagentStart`/`SubagentStop`. Pi's subagents are workflow-managed and emit no
+  start/stop hook, so there is no honest place to attach them. The audit trail is
+  **gone**, not faked.
+- `notify.sh` raised a Windows toast when a permission prompt appeared. Pi draws
+  that prompt in its own UI; a second toast is noise.
+- `update-check.sh` asked GitHub for upstream's latest release. In a fork that
+  reports the wrong project's versions, so it stays off.
 
-### Path-scoped rules
+### 8. Agents — the 49 definitions are now loadable
 
-`.pi/rules/*.md` were attached automatically by file path (`src/gameplay/**`,
-`design/narrative/**`, …). Pi loads context files by directory, not by glob, so
-those 14 rule files are now references that a skill or brief has to name. The
-`tool_call` extension can restore a reminder — it cannot restore the enforcement
-without blocking, which the rules never did.
+Pi's workflow extension already scans `.pi/agents/*.md` and binds `name`,
+`description`, `tools`, `disallowedTools`, `model`, `thinking`, `isolation` plus
+the body as the subagent's prompt — the same shape Claude Code used. So this was
+frontmatter surgery, not a rewrite:
 
-### Status line, notifications, audit
+- `tools:` mapped to Pi's coding tools — `Read`→`read`, `Write`→`write`,
+  `Edit`→`edit`, `Grep`→`grep`, `Glob`→`find`, `Bash`→`bash`.
+- `WebSearch` and `Agent` dropped: the former is a host-extension tool that
+  subagents do not load, the latter would be recursion.
+- `model:` and `maxTurns:` dropped. `maxTurns` is not a registry field, and a
+  `model:` alias (`sonnet`, `opus`) is **not** resolvable by Pi's model registry —
+  an explicit unresolvable model throws on dispatch rather than falling back.
 
-`.pi/statusline.sh` (context %, model, stage, epic breadcrumb) and `notify.sh`
-(Windows toast) have no Pi counterpart. Pi's status line is a footer extension
-(`pi-powerline-footer` in this environment). `.pi/docs/reference/claude-code-settings.json`
-keeps the original settings for reference — it is **not** a Pi settings file and
-is not read by anything.
+Verified by parsing all 49 with Pi's own `parseFrontmatter` plus the registry's
+field rules: 49 definitions, tools `bash, edit, find, grep, read, write`, no
+problems. They are reachable as `agent("…", { agentType: "creative-director" })`.
 
-### `studio-tests/` expectations
+**What that costs:** the three directors used to pin `opus` and the sixteen
+specialists `sonnet`. Now every subagent inherits the orchestrating session's
+model, and a workflow asks for a bigger one per call (`{ tier: "big" }`). See
+`.pi/docs/model-tiers.md` for the classification that replaces the pins.
 
-The skill and agent test catalog is intact and its structural checks still run,
-but `/skill:skill-test` asserts against Claude Code conventions (`model:` present,
-`allowed-tools` declared, `/name` invocation). Expect false failures until the
-rubrics are rewritten for Pi. The score is not meaningful yet.
+### 9. Path-scoped rules — `.pi/extensions/ccgs-rules.ts`
 
----
+The 14 rule files still carry `paths:` globs. The extension matches them on
+`read`, `write` and `edit` and injects a matching rule once per session, as a
+message — the same "context, not enforcement" semantic, and slightly wider than
+Claude Code's read-only trigger, which never fired when a file was created in a
+watched directory.
+
+Glob translation covers `**`, `*`, `?` and `{a,b}`, and the tests in
+`tools/test-rules.mjs` run against the real rule files:
+
+```bash
+node --experimental-strip-types tools/test-rules.mjs
+```
+
+A rule with no `paths:` is not injected by the extension — always-on constraints
+live in `AGENTS.md` and the generated `.pi/APPEND_SYSTEM.md`, which is where Pi
+actually reads them.
+
+### 10. `studio-tests/` rubrics moved to Pi conventions
+
+The rubrics asserted Claude Code conventions, so they would have failed correct
+skills. Changes:
+
+- 49 agent specs: "Model tier is `opus`" became "no `model:` in frontmatter — the
+  subagent inherits the session model".
+- `skill-test` checks 1, 4, 6 and 7: required fields are `name` + `description`
+  and the Claude-only keys are now **forbidden**; the `allowed-tools` guard is
+  read from the body instead; check 6 asks for a **Step 0** block where config is
+  resolved and fails on any surviving `` !` `` line; check 7 replaces
+  `argument-hint` with "the body must state the argument fallback".
+- `templates/agent-test-spec.md` and `quality-rubric.md` follow the same rules.
+
+The catalog is structurally consistent again, but the score has not been
+re-earned by a real `/skill:skill-test audit` run — treat it as unproven until
+someone does.
+
+## Deliberately not ported
+
+- **Status line** — `.pi/statusline.sh` (context %, model, stage, epic
+  breadcrumb) has no Pi counterpart. Pi's footer extensions own that surface
+  (`pi-powerline-footer` in this environment). The script is kept for reference.
+- **`.pi/docs/reference/claude-code-settings.json`** — the original settings,
+  kept pristine. It is not a Pi settings file and nothing reads it. Its deny list
+  is still only a list: Pi's permission surface is `tool_call` in the extension,
+  and the deny entries have not been re-expressed there yet.
+
+## Still unproven
+
+- The extension has never run inside a live Pi session. Its logic is tested
+  against the scripts' real contract and its matcher against the real globs, but
+  the event wiring itself is untested end to end.
+- No workflow run has dispatched an `agentType` from this registry yet.
 
 ## Verification
 
 Run from the repository root:
 
 ```bash
-bash -n .pi/hooks/*.sh .pi/scripts/*.sh            # shell syntax
-bash .pi/hooks/yaml-helper.sh resolve_config --keys automation,workflow,qa.level
-node tools/build-append-system.mjs --check          # generated file is current
+bash tools/verify-port.sh                          # all 10 gates
 ```
 
-Skill frontmatter was validated for all 74 files: valid `---` fences, `name` and
-`description` present, no Claude-only keys left.
+The gate checks shell syntax, a real `resolve_config` call, the generated
+`APPEND_SYSTEM.md`, all 74 skill frontmatters, Claude leftovers, the settings
+file, all 49 agent definitions, that both extension modules parse, the rule
+matcher against the real rule files, and two live hook scripts — one warning
+(`systemMessage` JSON) and one block (read guard, exit 2).
+
+Individual checks, for when one gate fails:
+
+```bash
+bash -n .pi/hooks/*.sh .pi/scripts/*.sh                    # shell syntax
+bash .pi/hooks/yaml-helper.sh resolve_config --keys automation,workflow,qa.level
+node tools/build-append-system.mjs --check                 # generated file current
+node --experimental-strip-types tools/test-rules.mjs       # rule matcher
+```

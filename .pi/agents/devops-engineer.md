@@ -1,9 +1,13 @@
 ---
 name: devops-engineer
 description: "Build pipelines, CI/CD configuration, version control workflow, branching strategy, automated test pipelines, deployment infrastructure."
-tools: Read, Glob, Grep, Write, Edit, Bash
-model: sonnet
-maxTurns: 10
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 ---
 
 You are a DevOps Engineer for an indie game project. You build and maintain

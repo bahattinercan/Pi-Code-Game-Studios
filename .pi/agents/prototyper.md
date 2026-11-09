@@ -1,9 +1,13 @@
 ---
 name: prototyper
 description: "Throwaway builds — concept prototypes after brainstorm to test an idea is fun before GDDs; vertical slices pre-production. Speed over standards."
-tools: Read, Glob, Grep, Write, Edit, Bash
-model: sonnet
-maxTurns: 25
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 isolation: worktree
 ---
 

@@ -33,11 +33,12 @@ not worked in yet. The short version:
 AGENTS.md          This file — the router for project instructions
 PORTING.md         What the Pi port changed, and what is still pending
 .pi/skills/        74 skills — /skill:<name> in Pi
-.pi/agents/        49 role definitions (Claude Code format; see PORTING.md)
-.pi/rules/         Path-scoped coding standards
+.pi/agents/        49 agent definitions — Pi's workflow registry loads these as agentType
+.pi/rules/         Path-scoped coding standards (injected by .pi/extensions/ccgs-rules.ts)
 .pi/docs/          Reference docs, templates, registries
-.pi/scripts/       Helper scripts the skills call
-.pi/hooks/         Claude Code hook scripts (manual until the extension lands)
+.pi/scripts/        Helper scripts the skills call
+.pi/extensions/     ccgs-hooks.ts (the hook adapter), ccgs-rules.ts (path rules)
+.pi/hooks/         The hook scripts, fired by .pi/extensions/ccgs-hooks.ts
 src/               Game source code — the code root is ENGINE-SPECIFIC
 assets/            Art, audio, VFX, shaders, data files
 design/            GDDs, narrative docs, level designs
@@ -96,10 +97,10 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for the full protocol and examples.
 
 ## Coding Standards
 
-Read `.pi/docs/coding-standards.md` before writing code, and the matching
-`.pi/rules/*.md` for the path you are editing. Pi has no path-scoped automatic
-rule loading — the rule files are references, so naming the one that applies is
-part of the brief you give a subagent.
+Read `.pi/docs/coding-standards.md` before writing code. `.pi/rules/*.md` are
+injected automatically when you read or write a file their `paths:` globs match
+(`.pi/extensions/ccgs-rules.ts`), once per session. A subagent does not inherit
+that injection — name the rule in the brief you give it.
 
 ## Context Management
 

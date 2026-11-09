@@ -1,9 +1,12 @@
 ---
 name: creative-director
 description: "Highest creative authority — vision, tone, aesthetic direction. Use when a decision affects game identity or department leads deadlock."
-tools: Read, Glob, Grep, Write, Edit, WebSearch
-model: opus
-maxTurns: 30
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
 memory: project
 disallowedTools: Bash
 ---

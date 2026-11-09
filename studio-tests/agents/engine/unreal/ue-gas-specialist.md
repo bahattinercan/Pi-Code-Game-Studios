@@ -11,7 +11,7 @@
 
 - [ ] `description:` field is present and domain-specific (references GAS, abilities, GameplayEffects, AttributeSets)
 - [ ] `tools:` reads Read, Glob, Grep, Write, Edit, Bash — no `Agent` tool
-- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
+- [ ] No `model:` in frontmatter — the subagent inherits the orchestrating session's model; a workflow run sets a tier with `agent(prompt, { tier })` (`.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over UI implementation or low-level net serialization
 
 ---

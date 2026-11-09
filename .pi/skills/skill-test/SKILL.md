@@ -81,17 +81,19 @@ For each skill being tested, read its `SKILL.md` and every file in its `referenc
 fully, and run all 7 checks on them as one skill — the longest skills keep each
 phase in `references/`. The frontmatter checks (1, 6 and 7) read `SKILL.md`.
 
-### Check 1 — Required Frontmatter Fields
-The file must contain all of these in the YAML frontmatter block:
-- `name:`
-- `description:`
-- `argument-hint:`
-- `user-invocable:`
-- `allowed-tools:`
+### Check 1 — Frontmatter Matches the Agent Skills Spec
+The file must contain, in the YAML frontmatter block:
+- `name:` — lowercase, hyphenated, matching the directory
+- `description:` — states what the skill does and when it applies
 
-**FAIL** if any are absent. A file whose frontmatter does not parse fails Check 1
-too — malformed YAML is a structural defect this check exists to catch, not an
-unassessable file; see the per-skill result rule below.
+And must **not** contain any of these Claude Code keys, which Pi ignores:
+`model:`, `allowed-tools:`, `argument-hint:`, `user-invocable:`, `maxTurns:`
+
+**FAIL** if `name:` or `description:` is absent, or if a Claude-only key is
+present — a leftover key reads as a guarantee (`allowed-tools:`) that Pi does not
+enforce, which is worse than no key. A file whose frontmatter does not parse
+fails Check 1 too — malformed YAML is a structural defect this check exists to
+catch, not an unassessable file; see the per-skill result rule below.
 
 ### Check 2 — Multiple Phases
 The skill must have ≥2 numbered phase headings. Look for patterns like:
@@ -134,7 +136,9 @@ The skill must contain ask-before-write language. Look for:
 - `"ask"` + `"write"` in close proximity (within same section)
 
 **WARN** if absent (some read-only skills legitimately skip this).
-**FAIL** if `allowed-tools` includes `Write` or `Edit` but no ask-before-write language is found.
+**FAIL** if the skill's phases instruct `Write` or `Edit` and no ask-before-write
+language is found. Pi gives a skill no tool allowlist, so the body is the only
+place this gate can come from — that makes the check stronger here, not weaker.
 
 ### Check 5 — Next-Step Handoff
 The skill must end with a recommended next action or follow-up path. Look for:
@@ -144,19 +148,24 @@ The skill must end with a recommended next action or follow-up path. Look for:
 
 **WARN** if absent.
 
-### Check 6 — Fork Context Complexity
-If frontmatter contains `context: fork`, the skill should have ≥5 phase headings
-(`##` level or numbered Phase N headers). Fork context is for complex multi-phase
-skills; simple skills should not use it.
+### Check 6 — Step 0 Present Where Config Is Resolved
+Pi has no inline `` !`bash` `` execution, so a skill that needs `project.yaml`
+must open with an explicit **Step 0** command block instead of assuming the
+values are already in context.
 
-**WARN** if `context: fork` is set but fewer than 5 phases found.
+**WARN** if the body calls `.pi/hooks/yaml-helper.sh resolve_config` or
+`.pi/scripts/story-status.sh` without a preceding `**Step 0` block.
+**FAIL** if any `` !` `` line survives in the body — that is a Claude Code
+construct and it silently does nothing in Pi.
 
-### Check 7 — Argument Hint Plausibility
-`argument-hint` must be non-empty. If the skill body mentions multiple modes
-(e.g., "Mode A | Mode B"), the hint should reflect them. Cross-reference the
-hint against the first phase's "Parse Arguments" section.
+### Check 7 — Arguments Have a Documented Default
+Pi has no `argument-hint` for skills: `/skill:name <args>` appends the text to the
+loaded instructions. So the body itself must say what happens when nothing is
+typed. If the skill takes input — its description shows `[something]`, or the
+body parses arguments — the first phase must name the fallback ("with nothing
+typed, take X from the checkpoint" or "ask which one").
 
-**WARN** if hint is `""` or if documented modes don't match hint.
+**WARN** if the skill appears to take arguments and no fallback is stated.
 
 ### Agent and Delegation Observations (not scored)
 
@@ -205,21 +214,21 @@ For a single skill:
 ```
 === Skill Static Check: /[name] ===
 
-Check 1 — Frontmatter Fields:    PASS
+Check 1 — Spec Frontmatter:      PASS (name, description; no Claude-only keys)
 Check 2 — Multiple Phases:       PASS (7 phases found)
 Check 3 — Verdict Keywords:      PASS (PASS, FAIL, CONCERNS)
 Check 4 — Collaborative Protocol: PASS ("May I write" found)
 Check 5 — Next-Step Handoff:     WARN (no follow-up section found)
-Check 6 — Fork Context Complexity: PASS (8 phases, context: fork set)
-Check 7 — Argument Hint:         PASS
+Check 6 — Step 0 For Config:     PASS (Step 0 block precedes resolve_config)
+Check 7 — Argument Default:      PASS (fallback stated in Phase 1)
 
 Observations (not scored):
   Delegation, "Phase 3: Implementation" (line 202): ux-designer, ui-programmer.
     The brief names the output file and limits but no sources to read.
 
 Compatibility (not scored):
-  questions: AskUserQuestion (lines 13, 88) · shell-lines: shell-line (line 10)
-  frontmatter: allowed-tools, argument-hint, model, user-invocable (lines 4-7)
+  shell-lines: none · Claude-only frontmatter: none
+  step-0: yaml-helper.sh resolve_config (lines 9-13)
 
 Verdict: WARNINGS (1 warning, 0 failures)
 Recommended: Add a "Follow-Up Actions" section at the end of the skill.

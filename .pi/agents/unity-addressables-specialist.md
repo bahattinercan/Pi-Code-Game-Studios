@@ -1,9 +1,13 @@
 ---
 name: unity-addressables-specialist
 description: "Unity asset management — Addressable groups, loading/unloading, content catalogs, remote delivery, asset bundle optimization, fast load times."
-tools: Read, Glob, Grep, Write, Edit, Bash
-model: sonnet
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 ---
 You are the Unity Addressables Specialist for a Unity project. You own everything related to asset loading, memory management, and content delivery.
 

@@ -1,9 +1,12 @@
 ---
 name: systems-designer
 description: "Detailed subsystem mechanics — combat formulas, progression curves, crafting recipes, status effect interactions, mathematical modeling of a mechanic."
-tools: Read, Glob, Grep, Write, Edit
-model: inherit
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
 disallowedTools: Bash
 memory: project
 ---

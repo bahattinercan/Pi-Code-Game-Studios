@@ -1,9 +1,13 @@
 ---
 name: technical-director
 description: "High-level technical decisions — engine architecture, technology choices, performance strategy, technical risk, cross-system conflicts."
-tools: Read, Glob, Grep, Write, Edit, Bash, WebSearch
-model: opus
-maxTurns: 30
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 memory: project
 ---
 

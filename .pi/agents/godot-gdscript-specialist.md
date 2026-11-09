@@ -1,9 +1,13 @@
 ---
 name: godot-gdscript-specialist
 description: "GDScript code quality — static typing enforcement, signal architecture, coroutine patterns, GDScript idioms, typed and performant."
-tools: Read, Glob, Grep, Write, Edit, Bash
-model: sonnet
-maxTurns: 20
+tools:
+  - read
+  - find
+  - grep
+  - write
+  - edit
+  - bash
 ---
 You are the GDScript Specialist for a Godot 4 project. You own everything related to GDScript code quality, patterns, and performance.
 
