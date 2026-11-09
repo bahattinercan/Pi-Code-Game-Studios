@@ -11,16 +11,16 @@
 #   - Never delete entries — set status: "superseded_by: ADR-NNNN" instead,
 #     quoted: unquoted, the second colon makes the file invalid YAML.
 #   - When a stance changes: update the entry, set revised: to today's date,
-#     add a comment with the old value, and run /architecture-review to check
+#     add a comment with the old value, and run /skill:architecture-review to check
 #     what ADRs are now invalidated.
 #   - adr: is the authoritative source. All other ADRs that depend on this
 #     stance list themselves in referenced_by.
 #
-# WRITTEN BY: /architecture-decision (Phase 5 — after ADR is approved)
-# READ BY:    /architecture-decision (Step 2 — before authoring begins)
-#             /architecture-review (Phase 4 — cross-ADR conflict baseline)
-#             /create-stories (to embed architectural constraints in stories)
-#             /dev-story (to check implementation against accepted stances)
+# WRITTEN BY: /skill:architecture-decision (Phase 5 — after ADR is approved)
+# READ BY:    /skill:architecture-decision (Step 2 — before authoring begins)
+#             /skill:architecture-review (Phase 4 — cross-ADR conflict baseline)
+#             /skill:create-stories (to embed architectural constraints in stories)
+#             /skill:dev-story (to check implementation against accepted stances)
 #
 # SEARCH PATTERNS (for skills using Grep):
 #   All state owners:       Grep pattern="^  - state:" path="docs/registry/architecture.yaml"
@@ -30,7 +30,7 @@
 #   All forbidden patterns: Grep pattern="^  - pattern:" (forbidden_patterns section)
 #   Superseded entries:     Grep pattern="superseded_by: ADR-"
 #
-# LAYOUT: the one shape .claude/scripts/registry.sh reads. Each section is a
+# LAYOUT: the one shape .pi/scripts/registry.sh reads. Each section is a
 #   key at column 0 holding a block list, or [] while it is empty. Each entry
 #   starts with its section's name key ("- state:", "- contract:", "- system:"
 #   or "- target_fps:" for the frame budget, "- purpose:", "- pattern:"), the
@@ -108,7 +108,7 @@ interfaces: []
 # Conflicts: allocations that sum to more than the total budget = unshippable.
 #
 # Register a budget when an ADR explicitly claims a frame time allocation.
-# The registry lets /architecture-review verify the total doesn't exceed the target.
+# The registry lets /skill:architecture-review verify the total doesn't exceed the target.
 
 performance_budgets: []
 

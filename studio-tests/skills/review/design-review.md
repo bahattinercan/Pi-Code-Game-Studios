@@ -1,4 +1,4 @@
-# Skill Test Spec: /design-review
+# Skill Test Spec: /skill:design-review
 
 ## Skill Summary
 
@@ -7,7 +7,7 @@ design standard (Overview, Player Fantasy, Detailed Rules, Formulas, Edge
 Cases, Dependencies, Tuning Knobs, Acceptance Criteria). Which sections are
 REQUIRED depends on the workflow tier resolved for that system: all 8 at
 `full`; 5 at `standard` (plus Formulas when the system defines numeric rules).
-It gathers section presence with `.claude/scripts/gdd-structure-check.sh`,
+It gathers section presence with `.pi/scripts/gdd-structure-check.sh`,
 validates the declared dependency graph, checks internal consistency,
 implementability and cross-system fit, and produces a verdict of APPROVED,
 NEEDS REVISION, MAJOR REVISION NEEDED, or NOT ASSESSED.
@@ -60,7 +60,7 @@ Fixture defaults.
 **Expected behavior:**
 1. Freshness check (`review-receipts.sh check …`) finds no receipt → full review
 2. Skill reads the target document in full and reads CLAUDE.md
-3. Skill runs `bash .claude/scripts/gdd-structure-check.sh design/gdd/light-manipulation.md`
+3. Skill runs `bash .pi/scripts/gdd-structure-check.sh design/gdd/light-manipulation.md`
 4. Skill Globs `design/gdd/` for each declared dependency
 5. Skill checks internal consistency, implementability and cross-system fit
 6. No agents are spawned (lean)

@@ -1,9 +1,9 @@
-# Skill Test Spec: /onboard
+# Skill Test Spec: /skill:onboard
 
 ## Skill Summary
 
 `/onboard [role|area]` generates an onboarding document for a new contributor or
-agent. It reads `CLAUDE.md`, the matching agent definition in `.claude/agents/`
+agent. It reads `CLAUDE.md`, the matching agent definition in `.pi/agents/`
 when a role is given, scans the area that role works in (the code root for
 programmers, `design/` for designers, `design/narrative/` for narrative, `tests/`
 for QA, `production/` for production) and reads recent git history.
@@ -56,14 +56,14 @@ Fixture defaults.
 **Fixture:**
 - `CLAUDE.md` exists
 - `project.yaml` has `engine.name: Godot`, so the code root is `src/`
-- `src/` holds game code; `.claude/agents/gameplay-programmer.md` exists
+- `src/` holds game code; `.pi/agents/gameplay-programmer.md` exists
 - `production/sprints/sprint-005.md` exists; git log has recent commits
 - `modes.automation` is unset (defaults to `collaborative`)
 
 **Input:** `/onboard gameplay-programmer`
 
 **Expected behavior:**
-1. Skill reads `CLAUDE.md` and `.claude/agents/gameplay-programmer.md`
+1. Skill reads `CLAUDE.md` and `.pi/agents/gameplay-programmer.md`
 2. Skill scans the code root `src/` for architecture, patterns and key files, and
    reads recent git history
 3. Skill generates a document headed `# Onboarding: gameplay-programmer` with the
@@ -87,14 +87,14 @@ Fixture defaults.
 ### Case 2: Designer Role — Scans design/, Not the Code Root
 
 **Fixture:**
-- `CLAUDE.md` exists; `.claude/agents/game-designer.md` exists
+- `CLAUDE.md` exists; `.pi/agents/game-designer.md` exists
 - `design/gdd/` holds three system GDDs
 - `src/` also holds code
 
 **Input:** `/onboard game-designer`
 
 **Expected behavior:**
-1. Skill reads `CLAUDE.md` and `.claude/agents/game-designer.md`
+1. Skill reads `CLAUDE.md` and `.pi/agents/game-designer.md`
 2. Phase 2 takes the designers branch and scans `design/` for existing design
    documents
 3. "Current State of Your Area" reflects the three GDDs found
@@ -113,7 +113,7 @@ Fixture defaults.
 
 **Fixture:**
 - `CLAUDE.md` does not exist
-- `.claude/agents/` does not exist, so no agent definition can be read
+- `.pi/agents/` does not exist, so no agent definition can be read
 - `tests/` does not exist; the directory is not a git repository
 
 **Input:** `/onboard qa-tester`
@@ -123,7 +123,7 @@ Fixture defaults.
 2. Because every required input is ABSENT, it stops and reports
    `NOT ASSESSED — NO DATA` as the whole verdict
 3. The report names what was missing and what produces it: `/test-setup` for
-   `tests/`; `CLAUDE.md` and `.claude/agents/` come with the framework itself —
+   `tests/`; `CLAUDE.md` and `.pi/agents/` come with the framework itself —
    no skill creates them — so they are reported as missing from the install,
    not attributed to a skill
 4. No onboarding document is generated and no file is written
@@ -132,7 +132,7 @@ Fixture defaults.
 - [ ] Inputs are recorded as FOUND or ABSENT before any report is produced
 - [ ] Verdict is `NOT ASSESSED — NO DATA`, not COMPLETE
 - [ ] The missing inputs are named; `tests/` points to `/test-setup`
-- [ ] No skill is named as the producer of `CLAUDE.md` or `.claude/agents/` — none creates them
+- [ ] No skill is named as the producer of `CLAUDE.md` or `.pi/agents/` — none creates them
 - [ ] No template is filled in and no "May I write" ask appears
 
 ---
@@ -140,7 +140,7 @@ Fixture defaults.
 ### Case 4: Edge Case — Programmer Role With an Unresolved Code Root
 
 **Fixture:**
-- `CLAUDE.md` exists; `.claude/agents/gameplay-programmer.md` exists
+- `CLAUDE.md` exists; `.pi/agents/gameplay-programmer.md` exists
 - `project.yaml` has no `engine.name`, technical-preferences has
   `[TO BE CONFIGURED]`, and both `src/` and `Assets/` exist (ambiguous tree)
 

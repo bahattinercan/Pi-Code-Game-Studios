@@ -1,4 +1,4 @@
-# Skill Test Spec: /scope-check
+# Skill Test Spec: /skill:scope-check
 
 ## Skill Summary
 
@@ -201,7 +201,7 @@ Fixture defaults.
 - [ ] Emits NOT ASSESSED instead of a percentage when the baseline has no items or the current state cannot be read
 - [ ] Does not write any files
 - [ ] No director gates are invoked
-- [ ] Declares `model: haiku` (when a declared tier is used: `.claude/docs/model-tiers.md`)
+- [ ] Declares `model: haiku` (when a declared tier is used: `.pi/docs/model-tiers.md`)
 
 ---
 

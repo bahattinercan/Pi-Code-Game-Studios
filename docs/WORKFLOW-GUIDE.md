@@ -10,7 +10,7 @@
 > a formal gate (`/gate-check`) that must pass before you advance. At
 > `rigor: minimal` -- the default -- nothing requires a gate; see
 > [The Default Path](#the-default-path-rigor-minimal). The authoritative
-> phase sequence is defined in `.claude/docs/workflow-catalog.yaml` and read
+> phase sequence is defined in `.pi/docs/workflow-catalog.yaml` and read
 > by `/help`.
 
 ---
@@ -51,12 +51,12 @@ git clone <repo-url> my-game
 cd my-game
 ```
 
-### Step 2: Run /start
+### Step 2: Run /skill:start
 
 If this is your first session:
 
 ```
-/start
+/skill:start
 ```
 
 This guided onboarding asks where you are and routes you to the right phase:
@@ -82,7 +82,7 @@ Recent commits:
 ===================================
 ```
 
-If you see this, hooks are working. If not, check `.claude/settings.json` to
+If you see this, hooks are working. If not, check `.pi/settings.json` to
 make sure the hook paths are correct for your OS.
 
 ### Step 4: Ask for Help Anytime
@@ -90,7 +90,7 @@ make sure the hook paths are correct for your OS.
 At any point, run:
 
 ```
-/help
+/skill:help
 ```
 
 This reads your current phase from `project.stage` in `project.yaml` (falling
@@ -133,7 +133,7 @@ production/           # Sprint plans, milestones, releases
   sprints/
   milestones/
   releases/
-  epics/              # Epic and story files (from /create-epics + /create-stories)
+  epics/              # Epic and story files (from /skill:create-epics + /skill:create-stories)
   playtests/          # Playtest reports
   session-state/      # Ephemeral session state (gitignored)
   session-logs/       # Session audit trail (gitignored)
@@ -187,7 +187,7 @@ with defined pillars and a player journey. This is where you figure out
 ### Phase 1 Pipeline
 
 ```
-/brainstorm  -->  game-concept.md  -->  /design-review  -->  /setup-engine
+/skill:brainstorm  -->  game-concept.md  -->  /skill:design-review  -->  /skill:setup-engine
      |                                        |                    |
      v                                        v                    v
   10 concepts     Concept doc with       Validation          Engine pinned in
@@ -195,12 +195,12 @@ with defined pillars and a player journey. This is where you figure out
   Player motiv.   core loop, USP         document
                                                                    |
                                                                    v
-                                                             /prototype
+                                                             /skill:prototype
                                                        (concept prototype — 1 day max)
-                                                        PROCEED ↓     PIVOT → /brainstorm
+                                                        PROCEED ↓     PIVOT → /skill:brainstorm
                                                                    |
                                                                    v (PROCEED)
-                                                             /map-systems
+                                                             /skill:map-systems
                                                                    |
                                                                    v
                                                             systems-index.md
@@ -208,18 +208,18 @@ with defined pillars and a player journey. This is where you figure out
                                                              priority tiers)
 ```
 
-### Step 1.1: Brainstorm With /brainstorm
+### Step 1.1: Brainstorm With /skill:brainstorm
 
 This is your starting point. Run the brainstorm skill:
 
 ```
-/brainstorm
+/skill:brainstorm
 ```
 
 Or with a genre hint:
 
 ```
-/brainstorm roguelike deckbuilder
+/skill:brainstorm roguelike deckbuilder
 ```
 
 **What happens:** The brainstorm skill guides you through a collaborative 6-phase
@@ -247,7 +247,7 @@ The concept document includes:
 ### Step 1.2: Review the Concept (Optional but Recommended)
 
 ```
-/design-review design/gdd/game-concept.md
+/skill:design-review design/gdd/game-concept.md
 ```
 
 Validates structure and completeness before you proceed.
@@ -255,20 +255,20 @@ Validates structure and completeness before you proceed.
 ### Step 1.3: Choose Your Engine
 
 ```
-/setup-engine
+/skill:setup-engine
 ```
 
 Or with a specific engine:
 
 ```
-/setup-engine godot 4.7
+/skill:setup-engine godot 4.7
 ```
 
-**What /setup-engine does:**
+**What /skill:setup-engine does:**
 
 - Writes engine, language, specialists, naming conventions, and performance
   budgets to `project.yaml` (the source of truth) and mirrors them to
-  `.claude/docs/technical-preferences.md` (the human-readable legacy fallback)
+  `.pi/docs/technical-preferences.md` (the human-readable legacy fallback)
 - Detects knowledge gaps (engine version newer than LLM training data) and
   advises cross-referencing `docs/engine-reference/`
 - Creates version-pinned reference docs in `docs/engine-reference/`
@@ -283,7 +283,7 @@ become your go-to experts.
 Before writing individual GDDs, enumerate all the systems your game needs:
 
 ```
-/map-systems
+/skill:map-systems
 ```
 
 This creates `design/gdd/systems-index.md` -- a master tracking document that:
@@ -300,7 +300,7 @@ production.
 ### Step 1.5: Art Bible
 
 ```
-/art-bible
+/skill:art-bible
 ```
 
 Authors `design/art/art-bible.md`, the visual identity every asset follows.
@@ -312,7 +312,7 @@ game has visual-asset stories; at `minimal` it is optional.
 ### Phase 1 Gate
 
 ```
-/gate-check systems-design
+/skill:gate-check systems-design
 ```
 
 **Requirements to pass:**
@@ -322,7 +322,7 @@ game has visual-asset stories; at `minimal` it is optional.
 - Recommended: a concept prototype whose REPORT.md says PROCEED
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-systems-design.md`, has the full
+file, `.pi/skills/gate-check/references/gate-systems-design.md`, has the full
 checklist and what each tier drops.
 
 **Verdict:** PASS / CONCERNS / NOT ASSESSED / FAIL. PASS advances the stage.
@@ -344,7 +344,7 @@ and then all GDDs are cross-checked for consistency.
 ### Phase 2 Pipeline
 
 ```
-/map-systems next  -->  /design-system  -->  /design-review
+/skill:map-systems next  -->  /skill:design-system  -->  /skill:design-review
        |                     |                     |
        v                     v                     v
   Picks next system    Section-by-section     Validates 8
@@ -353,7 +353,7 @@ and then all GDDs are cross-checked for consistency.
        |
        |  (repeat for each MVP system)
        v
-/review-all-gdds
+/skill:review-all-gdds
        |
        v
   Cross-GDD consistency + design theory review
@@ -365,7 +365,7 @@ and then all GDDs are cross-checked for consistency.
 Design each system in dependency order using the guided workflow:
 
 ```
-/map-systems next
+/skill:map-systems next
 ```
 
 This picks the highest-priority undesigned system and hands off to
@@ -374,10 +374,10 @@ This picks the highest-priority undesigned system and hands off to
 You can also design a specific system directly:
 
 ```
-/design-system combat-system
+/skill:design-system combat-system
 ```
 
-**What /design-system does:**
+**What /skill:design-system does:**
 
 1. Reads your game concept, systems index, and any upstream/downstream GDDs
 2. Runs a Technical Feasibility Pre-Check (domain mapping + feasibility brief)
@@ -409,7 +409,7 @@ animation feel targets (startup/active/recovery), impact moments, weight profile
 Before the next system starts, validate the current one:
 
 ```
-/design-review design/gdd/combat-system.md
+/skill:design-review design/gdd/combat-system.md
 ```
 
 Checks the sections your `modes.workflow` tier requires (all 8 at `full`, 5 at
@@ -424,7 +424,7 @@ Only APPROVED GDDs should proceed.
 For tuning changes, small additions, or tweaks that do not warrant a full GDD:
 
 ```
-/quick-design "add 10% damage bonus for flanking attacks"
+/skill:quick-design "add 10% damage bonus for flanking attacks"
 ```
 
 This creates a lightweight spec in `design/quick-specs/` instead of a full
@@ -435,7 +435,7 @@ This creates a lightweight spec in `design/quick-specs/` instead of a full
 After all MVP system GDDs are approved individually:
 
 ```
-/review-all-gdds
+/skill:review-all-gdds
 ```
 
 This reads ALL GDDs simultaneously and runs two analysis phases:
@@ -472,7 +472,7 @@ If your game has story, lore, or dialogue, this is when you build it:
 ### Phase 2 Gate
 
 ```
-/gate-check technical-setup
+/skill:gate-check technical-setup
 ```
 
 **Requirements to pass:**
@@ -485,7 +485,7 @@ If your game has story, lore, or dialogue, this is when you build it:
   and not NOT ASSESSED, which means the GDDs could not be compared
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-technical-setup.md`, has the full
+file, `.pi/skills/gate-check/references/gate-technical-setup.md`, has the full
 checklist and what each tier drops.
 
 ---
@@ -501,7 +501,7 @@ gives programmers flat, actionable rules. You also establish UX foundations.
 ### Phase 3 Pipeline
 
 ```
-/create-architecture  -->  /architecture-decision (x N)  -->  /architecture-review
+/skill:create-architecture  -->  /skill:architecture-decision (x N)  -->  /skill:architecture-review
         |                          |                                   |
         v                          v                                   v
   Master architecture       Per-decision ADRs              Validates completeness,
@@ -509,7 +509,7 @@ gives programmers flat, actionable rules. You also establish UX foundations.
   all systems               adr-*.md                       engine compatibility
                                                                       |
                                                                       v
-                                                         /create-control-manifest
+                                                         /skill:create-control-manifest
                                                                       |
                                                                       v
                                                          Flat programmer rules
@@ -517,16 +517,16 @@ gives programmers flat, actionable rules. You also establish UX foundations.
                                                          control-manifest.md
         Also in this phase:
         -------------------
-        /ux-design  -->  /ux-review
-        Accessibility requirements doc  (/ux-design accessibility)
-        Interaction pattern library     (/ux-design patterns)
-        /test-setup  -->  test framework + CI workflow
+        /skill:ux-design  -->  /skill:ux-review
+        Accessibility requirements doc  (/skill:ux-design accessibility)
+        Interaction pattern library     (/skill:ux-design patterns)
+        /skill:test-setup  -->  test framework + CI workflow
 ```
 
 ### Step 3.1: Master Architecture Document
 
 ```
-/create-architecture
+/skill:create-architecture
 ```
 
 Creates the overarching architecture document in `docs/architecture/architecture.md`
@@ -537,7 +537,7 @@ covering system boundaries, data flow, and integration points.
 For each significant technical decision:
 
 ```
-/architecture-decision "State Machine vs Behavior Tree for NPC AI"
+/skill:architecture-decision "State Machine vs Behavior Tree for NPC AI"
 ```
 
 **What happens:** The skill guides you through creating an ADR with:
@@ -556,7 +556,7 @@ ADRs go through a lifecycle: Proposed > Accepted > Superseded/Deprecated.
 project:
 
 ```
-/architecture-decision retrofit docs/architecture/adr-005.md
+/skill:architecture-decision retrofit docs/architecture/adr-005.md
 ```
 
 This detects which template sections are missing and adds only those, never
@@ -565,7 +565,7 @@ overwriting existing content.
 ### Step 3.3: Architecture Review
 
 ```
-/architecture-review
+/skill:architecture-review
 ```
 
 Validates all ADRs together:
@@ -577,7 +577,7 @@ Validates all ADRs together:
 ### Step 3.4: Control Manifest
 
 ```
-/create-control-manifest
+/skill:create-control-manifest
 ```
 
 Takes all Accepted ADRs and produces a flat programmer rules sheet:
@@ -605,7 +605,7 @@ gate checks.
 ### Step 3.6: Test Framework
 
 ```
-/test-setup
+/skill:test-setup
 ```
 
 Scaffolds the engine's test root, `.github/workflows/tests.yml` and one example
@@ -615,7 +615,7 @@ there are systems to test.
 ### Phase 3 Gate
 
 ```
-/gate-check pre-production
+/skill:gate-check pre-production
 ```
 
 **Requirements to pass:**
@@ -632,7 +632,7 @@ there are systems to test.
   (`/ux-design accessibility`, `/ux-design patterns`)
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-pre-production.md`, has the full
+file, `.pi/skills/gate-check/references/gate-pre-production.md`, has the full
 checklist and what each tier drops.
 
 ---
@@ -648,7 +648,7 @@ Vertical Slice that proves the core loop is fun.
 ### Phase 4 Pipeline
 
 ```
-/ux-design  -->  /vertical-slice  -->  /create-epics  -->  /create-stories  -->  /sprint-plan
+/skill:ux-design  -->  /skill:vertical-slice  -->  /skill:create-epics  -->  /skill:create-stories  -->  /skill:sprint-plan
     |                   |                   |                   |                       |
     v                   v                   v                   v                       v
   UX specs       Production-quality   Epic files in       Story files in          First sprint with
@@ -657,12 +657,12 @@ Vertical Slice that proves the core loop is fun.
                  PROCEED/PIVOT/KILL   (one per module)    (one per behaviour)     sprint-*.md
     |                                                          |
     v                                                          v
- /ux-review                                             /story-readiness
+ /skill:ux-review                                             /skill:story-readiness
  (validates specs                                       (validates each story
   before epics)                                          before pickup)
                                                                |
                                                                v
-                                                           /dev-story
+                                                           /skill:dev-story
                                                          (implements the story,
                                                           routes to right agent)
 ```
@@ -675,8 +675,8 @@ exist and what player interactions they must support.
 **UX Specs:**
 
 ```
-/ux-design main-menu
-/ux-design core-gameplay-hud
+/skill:ux-design main-menu
+/skill:ux-design core-gameplay-hud
 ```
 
 Three modes: screen/flow, HUD, and interaction patterns. Output goes to
@@ -694,7 +694,7 @@ checks — no need to re-specify them per screen.
 **Interaction Pattern Library:**
 
 ```
-/ux-design patterns
+/skill:ux-design patterns
 ```
 
 Started in Phase 3 (the Pre-Production gate checks it); extend it here as the
@@ -705,7 +705,7 @@ dialogue box, etc.) with animation and sound standards.
 **UX Review:**
 
 ```
-/ux-review all
+/skill:ux-review all
 ```
 
 Validates UX specs for GDD alignment and accessibility tier compliance.
@@ -717,7 +717,7 @@ The vertical slice is the production-quality proof that you can build the full
 game loop end-to-end before committing to full Production.
 
 ```
-/vertical-slice
+/skill:vertical-slice
 ```
 
 **What it proves:** Does a player, starting from nothing, experience the core
@@ -744,10 +744,10 @@ NOT ASSESSED while nobody has played it through.
 ### Step 4.3: Create Epics and Stories From Design Artifacts
 
 ```
-/create-epics layer: foundation
-/create-stories [epic-slug]   # repeat for each epic
-/create-epics layer: core
-/create-stories [epic-slug]   # repeat for each core epic
+/skill:create-epics layer: foundation
+/skill:create-stories [epic-slug]   # repeat for each epic
+/skill:create-epics layer: core
+/skill:create-stories [epic-slug]   # repeat for each core epic
 ```
 
 `/create-epics` reads your GDDs, ADRs, and architecture to define epic scope —
@@ -765,7 +765,7 @@ automatically to the correct programmer agent.
 ### Step 4.4: Validate Stories Before Pickup
 
 ```
-/story-readiness production/epics/combat/story-combat-damage-calc.md
+/skill:story-readiness production/epics/combat/story-combat-damage-calc.md
 ```
 
 Checks: Design completeness, Architecture coverage, Scope clarity, Definition
@@ -774,7 +774,7 @@ of Done. Verdict: READY / NEEDS WORK / BLOCKED / NOT ASSESSED.
 ### Step 4.5: Effort Estimation
 
 ```
-/estimate production/epics/combat/story-combat-damage-calc.md
+/skill:estimate production/epics/combat/story-combat-damage-calc.md
 ```
 
 Provides effort estimates with risk assessment.
@@ -782,7 +782,7 @@ Provides effort estimates with risk assessment.
 ### Step 4.6: Plan Your First Sprint
 
 ```
-/sprint-plan new
+/skill:sprint-plan new
 ```
 
 **What happens:** The `producer` agent collaborates on sprint planning:
@@ -810,7 +810,7 @@ runs end to end.
 ### Phase 4 Gate
 
 ```
-/gate-check production
+/skill:gate-check production
 ```
 
 **Requirements to pass:**
@@ -828,7 +828,7 @@ runs end to end.
   built but not yet played → NOT ASSESSED
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-production.md`, has the full
+file, `.pi/skills/gate-check/references/gate-production.md`, has the full
 checklist and what each tier drops.
 
 ---
@@ -845,7 +845,7 @@ is content-complete.
 ### Phase 5 Pipeline (Per Sprint)
 
 ```
-/sprint-plan new  -->  /story-readiness  -->  implement  -->  /story-done
+/skill:sprint-plan new  -->  /skill:story-readiness  -->  implement  -->  /skill:story-done
        |                     |                    |                |
        v                     v                    v                v
   Sprint created       Story validated      Code written     8-phase review:
@@ -855,9 +855,9 @@ is content-complete.
        |
        |  (repeat per story until sprint complete)
        v
-  /sprint-status  (quick 30-line snapshot anytime)
-  /scope-check    (if scope is growing)
-  /retrospective  (at sprint end)
+  /skill:sprint-status  (quick 30-line snapshot anytime)
+  /skill:scope-check    (if scope is growing)
+  /skill:retrospective  (at sprint end)
 ```
 
 ### Step 5.1: The Story Lifecycle
@@ -865,13 +865,13 @@ is content-complete.
 The production phase centers on the **story lifecycle**:
 
 ```
-/story-readiness  -->  implement  -->  /story-done  -->  next story
+/skill:story-readiness  -->  implement  -->  /skill:story-done  -->  next story
 ```
 
 **1. Story Readiness:** Before picking up a story, validate it:
 
 ```
-/story-readiness production/epics/combat/story-combat-damage-calc.md
+/skill:story-readiness production/epics/combat/story-combat-damage-calc.md
 ```
 
 This checks design completeness, architecture coverage, ADR status (blocks
@@ -894,7 +894,7 @@ implement.
 **3. Story Completion:** When a story is done:
 
 ```
-/story-done production/epics/combat/story-combat-damage-calc.md
+/skill:story-done production/epics/combat/story-combat-damage-calc.md
 ```
 
 This runs an 8-phase completion review:
@@ -914,7 +914,7 @@ Tech debt discovered during review is logged to `docs/tech-debt-register.md`.
 Check progress anytime:
 
 ```
-/sprint-status
+/skill:sprint-status
 ```
 
 Quick 30-line snapshot reading from `production/sprint-status.yaml`.
@@ -922,7 +922,7 @@ Quick 30-line snapshot reading from `production/sprint-status.yaml`.
 If scope is growing:
 
 ```
-/scope-check production/sprints/sprint-003.md
+/skill:scope-check production/sprints/sprint-003.md
 ```
 
 This compares current scope against the original plan and flags scope increase,
@@ -931,7 +931,7 @@ recommends cuts.
 ### Step 5.3: Content Tracking
 
 ```
-/content-audit
+/skill:content-audit
 ```
 
 Compares GDD-specified content against what has been implemented. Catches
@@ -942,7 +942,7 @@ content gaps early.
 When a GDD changes after stories have been created:
 
 ```
-/propagate-design-change design/gdd/combat-system.md
+/skill:propagate-design-change design/gdd/combat-system.md
 ```
 
 Git-diffs the GDD, finds affected ADRs, generates an impact report, and
@@ -953,11 +953,11 @@ walks you through Superseded/update/keep decisions.
 For features spanning multiple domains, use team skills:
 
 ```
-/team-combat "healing ability with HoT and cleanse"
-/team-narrative "Act 2 story content"
-/team-ui "inventory screen redesign"
-/team-level "forest dungeon level"
-/team-audio "combat audio pass"
+/skill:team-combat "healing ability with HoT and cleanse"
+/skill:team-narrative "Act 2 story content"
+/skill:team-ui "inventory screen redesign"
+/skill:team-level "forest dungeon level"
+/skill:team-audio "combat audio pass"
 ```
 
 Each team skill coordinates a 6-phase collaborative workflow:
@@ -975,7 +975,7 @@ The orchestration is automated, but **decision points stay with you**.
 At the end of a sprint:
 
 ```
-/retrospective
+/skill:retrospective
 ```
 
 Analyzes planned vs. completed, velocity, blockers, and actionable improvements.
@@ -983,7 +983,7 @@ Analyzes planned vs. completed, velocity, blockers, and actionable improvements.
 Then plan the next sprint:
 
 ```
-/sprint-plan new
+/skill:sprint-plan new
 ```
 
 ### Step 5.7: Milestone Reviews
@@ -991,7 +991,7 @@ Then plan the next sprint:
 At milestone checkpoints:
 
 ```
-/milestone-review "alpha"
+/skill:milestone-review "alpha"
 ```
 
 Produces feature completeness, quality metrics, risk assessment, and go/no-go
@@ -1000,7 +1000,7 @@ recommendation.
 ### Phase 5 Gate
 
 ```
-/gate-check polish
+/skill:gate-check polish
 ```
 
 **Requirements to pass:**
@@ -1016,7 +1016,7 @@ recommendation.
 - No open S1 Critical bugs, and performance within budget
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-polish.md`, has the full
+file, `.pi/skills/gate-check/references/gate-polish.md`, has the full
 checklist and what each tier drops.
 
 ---
@@ -1031,29 +1031,29 @@ performance, balance, accessibility, audio, visual polish, and playtesting.
 ### Phase 6 Pipeline
 
 ```
-/perf-profile  -->  /balance-check  -->  /asset-audit  -->  /playtest-report (x3)
+/skill:perf-profile  -->  /skill:balance-check  -->  /skill:asset-audit  -->  /skill:playtest-report (x3)
        |                  |                    |                    |
        v                  v                    v                    v
   Profile CPU/GPU    Analyze formulas     Verify naming,      Cover: new player,
   memory, optimize   and data for         formats, sizes      mid-game, difficulty
   bottlenecks        broken progressions                      curve
 
-  /tech-debt  -->  /team-polish
+  /skill:tech-debt  -->  /skill:team-polish
        |                |
        v                v
   Track and        Coordinated pass:
   prioritize       performance + art +
   debt items       audio + UX + QA
 
-  /security-audit  -->  /localize qa  -->  /release-checklist  -->  /changelog
-                        (per language)                           + /patch-notes
+  /skill:security-audit  -->  /skill:localize qa  -->  /skill:release-checklist  -->  /skill:changelog
+                        (per language)                           + /skill:patch-notes
   Release readiness: the Polish -> Release gate checks all four.
 ```
 
 ### Step 6.1: Performance Profiling
 
 ```
-/perf-profile
+/skill:perf-profile
 ```
 
 Guides you through structured performance profiling:
@@ -1064,7 +1064,7 @@ Guides you through structured performance profiling:
 ### Step 6.2: Balance Analysis
 
 ```
-/balance-check assets/data/combat_damage.json
+/skill:balance-check assets/data/combat_damage.json
 ```
 
 Analyzes balance data for statistical outliers, broken progression curves,
@@ -1073,7 +1073,7 @@ degenerate strategies, and economy imbalances.
 ### Step 6.3: Asset Audit
 
 ```
-/asset-audit
+/skill:asset-audit
 ```
 
 Verifies naming conventions, file format standards, and size budgets across
@@ -1082,7 +1082,7 @@ all assets.
 ### Step 6.4: Playtesting (Required: 3 Sessions)
 
 ```
-/playtest-report
+/skill:playtest-report
 ```
 
 Generates structured playtest reports. Three sessions are required, covering:
@@ -1093,7 +1093,7 @@ Generates structured playtest reports. Three sessions are required, covering:
 ### Step 6.5: Technical Debt Assessment
 
 ```
-/tech-debt
+/skill:tech-debt
 ```
 
 Scans for TODO/FIXME/HACK comments, code duplication, overly complex functions,
@@ -1102,7 +1102,7 @@ missing tests, and outdated dependencies. Each item categorized and prioritized.
 ### Step 6.6: Coordinated Polish Pass
 
 ```
-/team-polish "combat system"
+/skill:team-polish "combat system"
 ```
 
 Coordinates 4 specialists in parallel:
@@ -1118,7 +1118,7 @@ You set priorities; the team executes with your approval at each step.
 ### Step 6.7: Localization and Accessibility
 
 ```
-/localize scan
+/skill:localize scan
 ```
 
 Scans for hardcoded strings, concatenation that breaks translation, text that
@@ -1130,7 +1130,7 @@ requirements document.
 ### Step 6.8: Security Audit
 
 ```
-/security-audit
+/skill:security-audit
 ```
 
 Required for the release gate at `standard` and `full`: the newest report must
@@ -1140,7 +1140,7 @@ ASSESSED leaves the gate's security item NOT ASSESSED.
 ### Step 6.9: Localization QA
 
 ```
-/localize qa
+/skill:localize qa
 ```
 
 Run it for every language you ship. At `full` the release gate needs a PASS (or
@@ -1149,7 +1149,7 @@ PASS WITH CONDITIONS) for each; a locale nobody has checked is NOT ASSESSED.
 ### Step 6.10: Release Checklist
 
 ```
-/release-checklist all
+/skill:release-checklist all
 ```
 
 The argument is the platform scope (`pc`, `console`, `mobile` or `all`), not a
@@ -1166,14 +1166,14 @@ Generates a comprehensive pre-release checklist covering:
 ### Step 6.11: Changelog and Patch Notes
 
 ```
-/patch-notes v1.0.0
+/skill:patch-notes v1.0.0
 ```
 
 Generates player-friendly patch notes from git history and sprint data.
 Translates developer language into player language.
 
 ```
-/changelog v1.0.0
+/skill:changelog v1.0.0
 ```
 
 Generates an internal changelog (more technical, for the team).
@@ -1184,7 +1184,7 @@ now; `/team-release` publishes them once the release is a GO.
 ### Phase 6 Gate
 
 ```
-/gate-check release
+/skill:gate-check release
 ```
 
 **Requirements to pass:**
@@ -1199,7 +1199,7 @@ now; `/team-release` publishes them once the release is a GO.
   HIGH finding, and a `/localize qa` pass for every locale you ship
 
 This is the `full` list. `standard` and `minimal` drop items; the gate's own
-file, `.claude/skills/gate-check/references/gate-release.md`, has the full
+file, `.pi/skills/gate-check/references/gate-release.md`, has the full
 checklist and what each tier drops.
 
 ---
@@ -1213,7 +1213,7 @@ Your game is polished, tested, and ready. Now you ship it.
 ### Phase 7 Pipeline
 
 ```
-/launch-checklist  -->  /team-release
+/skill:launch-checklist  -->  /skill:team-release
         |                      |
         v                      v
   Full cross-department    Coordinate:
@@ -1221,13 +1221,13 @@ Your game is polished, tested, and ready. Now you ship it.
   per department)          deployment, launch
 
   The release checklist, security audit and patch notes are done in Polish,
-  before /gate-check release.   Also: /hotfix, /day-one-patch
+  before /skill:gate-check release.   Also: /skill:hotfix, /skill:day-one-patch
 ```
 
 ### Step 7.1: Launch Readiness (Full Validation)
 
 ```
-/launch-checklist
+/skill:launch-checklist
 ```
 
 Complete cross-department validation:
@@ -1257,7 +1257,7 @@ READY (a blocking item failed).
 ### Step 7.2: Coordinate the Release
 
 ```
-/team-release
+/skill:team-release
 ```
 
 Coordinates release-manager, QA, and DevOps through:
@@ -1282,7 +1282,7 @@ git push origin main --tags
 **Hotfix workflow** for critical production bugs:
 
 ```
-/hotfix "Players losing save data when inventory exceeds 99 items"
+/skill:hotfix "Players losing save data when inventory exceeds 99 items"
 ```
 
 Bypasses normal sprint processes with a full audit trail:
@@ -1295,7 +1295,7 @@ Bypasses normal sprint processes with a full audit trail:
 
 ```
 Ask Claude to create a post-mortem using the template at
-.claude/docs/templates/post-mortem.md
+.pi/docs/templates/post-mortem.md
 ```
 
 ---
@@ -1323,8 +1323,8 @@ for your machine only. `/start` does not set it.
 **Override for a single run** without changing your setting:
 
 ```
-/brainstorm space horror --review full
-/architecture-decision --review solo
+/skill:brainstorm space horror --review full
+/skill:architecture-decision --review solo
 ```
 
 The `--review` flag works on all gate-using skills. The first of these that is
@@ -1332,7 +1332,7 @@ set wins: the flag, `project.local.yaml`, `project.yaml`, a legacy
 `production/review-mode.txt`, then the rigor default. A `review-mode.txt` left
 from an older version still overrides rigor — delete it if the mode surprises you.
 
-Full gate definitions and check pattern: `.claude/docs/director-gates.md`
+Full gate definitions and check pattern: `.pi/docs/director-gates.md`
 
 ---
 
@@ -1413,7 +1413,7 @@ The system has 15 hooks that run automatically:
 | `validate-write.sh` | Before a file write | Warns when a write would break a rule the skills state (never blocks) |
 | `validate-registry.sh` | Before an entity or TR-ID registry write | Warns when an entry would be deleted or renumbered, or a status is not in the header's list |
 | `validate-assets.sh` | After a file write | Checks data-file JSON, and asset naming in Godot's `assets/` |
-| `validate-skill-change.sh` | Skill file written | Advises running `/skill-test` after `.claude/skills/` changes |
+| `validate-skill-change.sh` | Skill file written | Advises running `/skill-test` after `.pi/skills/` changes |
 | `log-agent.sh` | Agent start | Logs agent invocations for audit trail |
 | `log-agent-stop.sh` | Agent stop | Completes agent audit trail (start + stop) |
 | `validate-agent-artifact.sh` | Agent stop | Warns when a subagent stops without writing the file its brief named |
@@ -1444,16 +1444,16 @@ machine-readable story tracker. Written by `/sprint-plan` (init) and
 For existing projects that already have some artifacts:
 
 ```
-/adopt
+/skill:adopt
 ```
 
 Or targeted:
 
 ```
-/adopt gdds
-/adopt adrs
-/adopt stories
-/adopt infra
+/skill:adopt gdds
+/skill:adopt adrs
+/skill:adopt stories
+/skill:adopt infra
 ```
 
 This audits existing artifacts for **format** (not existence), classifies gaps
@@ -1464,8 +1464,8 @@ it never regenerates existing work, only fills gaps.
 Individual skills also support retrofit mode:
 
 ```
-/design-system retrofit design/gdd/combat-system.md
-/architecture-decision retrofit docs/architecture/adr-005.md
+/skill:design-system retrofit design/gdd/combat-system.md
+/skill:architecture-decision retrofit docs/architecture/adr-005.md
 ```
 
 These detect which sections are present vs. missing and fill only the gaps.
@@ -1476,12 +1476,12 @@ Phase gates are formal checkpoints. Run `/gate-check` with the phase you are
 entering:
 
 ```
-/gate-check systems-design       # Concept -> Systems Design
-/gate-check technical-setup      # Systems Design -> Technical Setup
-/gate-check pre-production       # Technical Setup -> Pre-Production
-/gate-check production           # Pre-Production -> Production
-/gate-check polish               # Production -> Polish
-/gate-check release              # Polish -> Release
+/skill:gate-check systems-design       # Concept -> Systems Design
+/skill:gate-check technical-setup      # Systems Design -> Technical Setup
+/skill:gate-check pre-production       # Technical Setup -> Pre-Production
+/skill:gate-check production           # Pre-Production -> Production
+/skill:gate-check polish               # Production -> Polish
+/skill:gate-check release              # Polish -> Release
 ```
 
 **Verdicts:**
@@ -1503,7 +1503,7 @@ instead.
 For code that exists without design docs (common after brownfield adoption):
 
 ```
-/reverse-document design src/gameplay/combat/
+/skill:reverse-document design src/gameplay/combat/
 ```
 
 Reads existing code and generates GDD-format design documentation from it.
@@ -1728,102 +1728,102 @@ conflicts go to `producer`.
 ### Workflow 1: "I just started and have no game idea"
 
 ```
-1. /start (routes you based on where you are)
-2. /brainstorm (collaborative ideation, pick a concept)
-3. /setup-engine (pin engine and version)
-4. /design-review on concept doc (optional, recommended)
-5. /map-systems (decompose concept into systems with deps and priorities)
-6. /gate-check systems-design (verify you're ready for Systems Design)
-7. /design-system per system (guided GDD authoring)
+1. /skill:start (routes you based on where you are)
+2. /skill:brainstorm (collaborative ideation, pick a concept)
+3. /skill:setup-engine (pin engine and version)
+4. /skill:design-review on concept doc (optional, recommended)
+5. /skill:map-systems (decompose concept into systems with deps and priorities)
+6. /skill:gate-check systems-design (verify you're ready for Systems Design)
+7. /skill:design-system per system (guided GDD authoring)
 ```
 
 ### Workflow 2: "I have designs and want to start coding"
 
 ```
-1. /design-review on each GDD (make sure they're solid)
-2. /review-all-gdds (cross-GDD consistency)
-3. /gate-check technical-setup
-4. /create-architecture + /architecture-decision (per major decision)
-5. /architecture-review
-6. /create-control-manifest
-7. /art-bible (sections 1–4 now) + /test-setup + /ux-design accessibility + /ux-design patterns
-8. /gate-check pre-production
-9. /ux-design per key screen + /ux-review
-10. /vertical-slice (recommended before committing to epics)
-11. /create-epics layer: foundation + /create-stories [slug] (define epics, break into stories)
-12. /sprint-plan new
-13. /gate-check production
-14. /story-readiness -> implement -> /story-done (story lifecycle)
+1. /skill:design-review on each GDD (make sure they're solid)
+2. /skill:review-all-gdds (cross-GDD consistency)
+3. /skill:gate-check technical-setup
+4. /skill:create-architecture + /skill:architecture-decision (per major decision)
+5. /skill:architecture-review
+6. /skill:create-control-manifest
+7. /skill:art-bible (sections 1–4 now) + /skill:test-setup + /skill:ux-design accessibility + /skill:ux-design patterns
+8. /skill:gate-check pre-production
+9. /skill:ux-design per key screen + /skill:ux-review
+10. /skill:vertical-slice (recommended before committing to epics)
+11. /skill:create-epics layer: foundation + /skill:create-stories [slug] (define epics, break into stories)
+12. /skill:sprint-plan new
+13. /skill:gate-check production
+14. /skill:story-readiness -> implement -> /skill:story-done (story lifecycle)
 ```
 
 ### Workflow 3: "I need to add a complex feature mid-production"
 
 ```
-1. /design-system or /quick-design (depending on scope)
-2. /design-review to validate
-3. /propagate-design-change if modifying existing GDDs
-4. /estimate for effort and risk
-5. /team-combat, /team-narrative, /team-ui, etc. (appropriate team skill)
-6. /story-done when complete
-7. /balance-check if it affects game balance
+1. /skill:design-system or /skill:quick-design (depending on scope)
+2. /skill:design-review to validate
+3. /skill:propagate-design-change if modifying existing GDDs
+4. /skill:estimate for effort and risk
+5. /skill:team-combat, /skill:team-narrative, /skill:team-ui, etc. (appropriate team skill)
+6. /skill:story-done when complete
+7. /skill:balance-check if it affects game balance
 ```
 
 ### Workflow 4: "Something broke in production"
 
 ```
-1. /hotfix "description of the issue"
+1. /skill:hotfix "description of the issue"
 2. Fix is implemented on hotfix branch
-3. /code-review the fix
+3. /skill:code-review the fix
 4. Run tests
-5. /release-checklist for hotfix build
+5. /skill:release-checklist for hotfix build
 6. Deploy and backport
 ```
 
 ### Workflow 5: "I have an existing project and want to use this system"
 
 ```
-1. /start (choose Path D -- existing work)
-2. /project-stage-detect (determines current phase)
-3. /adopt (audits existing artifacts, builds migration plan)
-4. /design-system retrofit [path] (fill GDD gaps)
-5. /architecture-decision retrofit [path] (fill ADR gaps)
-6. /gate-check at appropriate transition
+1. /skill:start (choose Path D -- existing work)
+2. /skill:project-stage-detect (determines current phase)
+3. /skill:adopt (audits existing artifacts, builds migration plan)
+4. /skill:design-system retrofit [path] (fill GDD gaps)
+5. /skill:architecture-decision retrofit [path] (fill ADR gaps)
+6. /skill:gate-check at appropriate transition
 ```
 
 ### Workflow 6: "Starting a new sprint"
 
 ```
-1. /retrospective (review last sprint)
-2. /sprint-plan new (create next sprint)
-3. /scope-check (ensure scope is manageable)
-4. /story-readiness per story before pickup
+1. /skill:retrospective (review last sprint)
+2. /skill:sprint-plan new (create next sprint)
+3. /skill:scope-check (ensure scope is manageable)
+4. /skill:story-readiness per story before pickup
 5. Implement stories
-6. /story-done per completed story
-7. /sprint-status for quick progress checks
+6. /skill:story-done per completed story
+7. /skill:sprint-status for quick progress checks
 ```
 
 ### Workflow 7: "Shipping the game"
 
 ```
-1. /tech-debt (decide what's acceptable at launch)
-2. /security-audit (the release gate reads the newest report)
-3. /localize qa for every language you ship
-4. /release-checklist all
-5. /changelog and /patch-notes (drafts; /team-release finalizes them)
-6. /gate-check release (verify Polish is complete and the game is ready to release)
-7. /launch-checklist (full cross-department validation)
-8. /team-release (coordinate the release)
+1. /skill:tech-debt (decide what's acceptable at launch)
+2. /skill:security-audit (the release gate reads the newest report)
+3. /skill:localize qa for every language you ship
+4. /skill:release-checklist all
+5. /skill:changelog and /skill:patch-notes (drafts; /skill:team-release finalizes them)
+6. /skill:gate-check release (verify Polish is complete and the game is ready to release)
+7. /skill:launch-checklist (full cross-department validation)
+8. /skill:team-release (coordinate the release)
 9. Ship!
-10. /hotfix if anything breaks post-launch
+10. /skill:hotfix if anything breaks post-launch
 11. Post-mortem after launch stabilizes
 ```
 
 ### Workflow 8: "I'm lost / don't know what to do next"
 
 ```
-1. /help (reads your phase, checks artifacts, tells you what's next)
-2. If /help doesn't help: /project-stage-detect (full audit)
-3. If stage seems wrong: /gate-check at the transition you think you're at
+1. /skill:help (reads your phase, checks artifacts, tells you what's next)
+2. If /skill:help doesn't help: /skill:project-stage-detect (full audit)
+3. If stage seems wrong: /skill:gate-check at the transition you think you're at
 ```
 
 ---
@@ -1851,7 +1851,7 @@ conflicts go to `producer`.
    shader. Do not ask `qa-tester` to make design decisions. The hierarchy
    exists for a reason.
 
-6. **Run /help when uncertain.** It reads your actual project state and tells
+6. **Run /skill:help when uncertain.** It reads your actual project state and tells
    you the single most important next step.
 
 7. **Run `/design-review` before handing designs to programmers.** This

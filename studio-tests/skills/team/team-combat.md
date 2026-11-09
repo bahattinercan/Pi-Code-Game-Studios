@@ -1,4 +1,4 @@
-# Skill Test Spec: /team-combat
+# Skill Test Spec: /skill:team-combat
 
 ## Skill Summary
 
@@ -28,12 +28,12 @@ verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
 - [ ] Names a concrete destination per phase: `production/combat/[feature]-gdd-draft.md` (the game-designer's draft of `design/gdd/[feature].md`), `docs/architecture/[feature]-sketch.md`, `docs/architecture/[feature]-engine-notes.md`, `production/qa/test-cases/[feature]-cases.md`, `production/qa/bugs/BUG-[NNNN].md`
 - [ ] Defines a phase gate as a decision point the pipeline itself lists, whatever the `automation` mode, and claims no director spawn at phase gates
 - [ ] Has a next-step handoff at the end (references `/code-review`, `/balance-check`, `/team-polish`)
-- [ ] Error Recovery Protocol section is present: verify a named artifact is on disk before treating a phase as done, surface BLOCKED immediately, always produce a partial report, full procedure (surface → assess → options → partial report) in `.claude/docs/error-recovery-protocol.md`
+- [ ] Error Recovery Protocol section is present: verify a named artifact is on disk before treating a phase as done, surface BLOCKED immediately, always produce a partial report, full procedure (surface → assess → options → partial report) in `.pi/docs/error-recovery-protocol.md`
 - [ ] Uses `AskUserQuestion` at phase transitions for user approval before proceeding (`collaborative` mode)
 - [ ] Phase 0 resolves `team.size`, and the skill requires a one-line active-set announcement before Phase 1
 - [ ] Phase 0 resolves `workflow`, and Phase 1 sizes the GDD by it: `## Summary` plus all 8 sections at `full`, the 5 standard sections plus Formulas for numeric rules at `standard`, optional at `minimal` (the game brief is the record)
 - [ ] Phase 3 is explicitly marked as parallel (gameplay-programmer, ai-programmer, technical-artist, sound-designer)
-- [ ] Phase 2 includes spawning the primary engine specialist, derived from `engine.name` in `project.yaml` (Godot → `godot-specialist`), falling back to the Primary line in `.claude/docs/technical-preferences.md`
+- [ ] Phase 2 includes spawning the primary engine specialist, derived from `engine.name` in `project.yaml` (Godot → `godot-specialist`), falling back to the Primary line in `.pi/docs/technical-preferences.md`
 - [ ] Team Composition lists all seven roles (game-designer, gameplay-programmer, ai-programmer, technical-artist, sound-designer, engine specialist, qa-tester)
 
 ---
@@ -167,7 +167,7 @@ Fixture defaults.
 - Architecture sketch produced by gameplay-programmer is available, and the orchestrator has read it
 
 **Fixture (variant B — no engine configured):**
-- As variant A, except `engine.name` is unset in `project.yaml` and `.claude/docs/technical-preferences.md` has no Primary engine specialist (shows `[TO BE CONFIGURED]`)
+- As variant A, except `engine.name` is unset in `project.yaml` and `.pi/docs/technical-preferences.md` has no Primary engine specialist (shows `[TO BE CONFIGURED]`)
 
 **Input:** `/team-combat parry and riposte system`
 

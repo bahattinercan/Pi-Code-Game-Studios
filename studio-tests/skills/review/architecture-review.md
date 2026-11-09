@@ -1,4 +1,4 @@
-# Skill Test Spec: /architecture-review
+# Skill Test Spec: /skill:architecture-review
 
 ## Skill Summary
 
@@ -6,7 +6,7 @@
 of architectural decisions covers the game's design. It extracts technical
 requirements (TR-IDs) from every GDD, maps each one to the ADRs that cover it
 in a traceability matrix, detects cross-ADR conflicts, orders ADRs by
-dependency (via `.claude/scripts/adr-dep-graph.sh`), audits engine
+dependency (via `.pi/scripts/adr-dep-graph.sh`), audits engine
 compatibility against `docs/engine-reference/`, consults the primary engine
 specialist, and checks `docs/architecture/architecture.md` coverage of the
 systems index. It produces a PASS / CONCERNS / NOT ASSESSED / FAIL verdict.
@@ -79,7 +79,7 @@ Fixture defaults.
    targeted Greps rather than whole files, and reports
    "Loaded [N] GDDs, [M] ADRs, engine: Godot 4.6"
 3. Skill extracts TR-IDs (reusing any existing `tr-registry.yaml` IDs) and builds the matrix
-4. Skill runs `bash .claude/scripts/adr-dep-graph.sh` and prints the recommended implementation order from its `ORDER:` row
+4. Skill runs `bash .pi/scripts/adr-dep-graph.sh` and prints the recommended implementation order from its `ORDER:` row
 5. Skill runs the engine audit and consults `godot-specialist`
 6. Report ends with `### Verdict: PASS`
 7. Phase 8 asks what to write; Phase 9 offers `/gate-check pre-production`

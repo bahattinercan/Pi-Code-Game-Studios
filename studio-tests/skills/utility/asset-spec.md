@@ -1,4 +1,4 @@
-# Skill Test Spec: /asset-spec
+# Skill Test Spec: /skill:asset-spec
 
 ## Skill Summary
 

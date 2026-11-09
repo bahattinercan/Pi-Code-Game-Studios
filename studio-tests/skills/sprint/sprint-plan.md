@@ -1,4 +1,4 @@
-# Skill Test Spec: /sprint-plan
+# Skill Test Spec: /skill:sprint-plan
 
 ## Skill Summary
 
@@ -42,7 +42,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 | PR-SPRINT | After the draft is presented, before write approval | full only (not lean/solo) |
 
 PR-SPRINT verdicts: REALISTIC / CONCERNS / UNREALISTIC — or NOT ASSESSED
-[missing input] (`.claude/docs/director-gates.md`), which is never treated as
+[missing input] (`.pi/docs/director-gates.md`), which is never treated as
 REALISTIC.
 
 ---
@@ -165,7 +165,7 @@ Fixture defaults.
 2. Skill drafts the sprint and presents it
 3. PR-SPRINT is skipped; output notes "PR-SPRINT skipped — Lean mode."
 4. The QA plan check still runs: skill states "This sprint has no QA plan …" and
-   asks via `AskUserQuestion` with [A] Run /qa-plan sprint now and
+   asks via `AskUserQuestion` with [A] Run /skill:qa-plan sprint now and
    [B] Skip for now
 5. User selects [A]; skill asks for direct approval of the write
 6. User approves; both files are written; verdict COMPLETE

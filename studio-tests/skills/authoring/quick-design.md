@@ -1,4 +1,4 @@
-# Skill Test Spec: /quick-design
+# Skill Test Spec: /skill:quick-design
 
 ## Skill Summary
 
@@ -71,7 +71,7 @@ Fixture defaults.
 1. The skill classifies the change as Tweak and asks "I've classified this as **Tweak** — [reason]. Is that correct?" with options `[A]`–`[F]`
 2. The context scan reads the relevant section of `design/gdd/movement.md`, the systems index and `design/quick-specs/`, and reports "Found GDD at `design/gdd/movement.md`. Relevant section: [section]. Prior quick specs for this system: `design/quick-specs/dash-cooldown-tuning-[earlier-date].md` — agrees."
 3. It drafts the Tweak/Addition format: Change Summary, Motivation, Design Delta (quoting the current GDD rule), New Rules / Values, Affected Systems, Acceptance Criteria, GDD Update Required?
-4. It presents the full draft, then asks with `[A] Approve — write it as shown` / `[B] Revise — I'll describe what to change` / `[C] This grew too large — redirect to /design-system instead`
+4. It presents the full draft, then asks with `[A] Approve — write it as shown` / `[B] Revise — I'll describe what to change` / `[C] This grew too large — redirect to /skill:design-system instead`
 5. On `[A]`: "May I write this Quick Design Spec to `design/quick-specs/dash-invincibility-tweak-[YYYY-MM-DD].md`?" — on yes, creates `design/quick-specs/` if needed and writes the file
 6. Because the spec changes a rule in `movement.md`, it then asks separately "May I update `design/gdd/movement.md` — specifically the [section] section?", showing old vs. new text first
 7. It prints the handoff block (path, type, system, GDD update status) and "Verdict: **COMPLETE**"
@@ -87,11 +87,11 @@ Fixture defaults.
 
 ---
 
-### Case 2: Failure Path — Scope too large; redirected to /design-system
+### Case 2: Failure Path — Scope too large; redirected to /skill:design-system
 
 **Fixture:**
 - Scenario (a): the request is "redesign the entire combat system"
-- Scenario (b): a Tweak is drafted, and at the approval step the user picks `[C] This grew too large — redirect to /design-system instead`
+- Scenario (b): a Tweak is drafted, and at the approval step the user picks `[C] This grew too large — redirect to /skill:design-system instead`
 
 **Input:** (a) `/quick-design redesign the entire combat system` (b) `/quick-design allow combo to cancel into roll`
 

@@ -1,4 +1,4 @@
-# Skill Test Spec: /bug-triage
+# Skill Test Spec: /skill:bug-triage
 
 ## Skill Summary
 

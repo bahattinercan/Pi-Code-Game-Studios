@@ -58,7 +58,7 @@ changed. Resolve each one — your game content goes in, structural improvements
 come along for the ride. Then commit the merge.
 
 **Tip:** The files most likely to conflict are `CLAUDE.md`, `project.yaml`, and
-`.claude/docs/technical-preferences.md`, because you've filled them in with
+`.pi/docs/technical-preferences.md`, because you've filled them in with
 your engine and project settings. Keep your content; accept the structural changes.
 
 **If git refuses with `fatal: refusing to merge unrelated histories`**, your
@@ -72,7 +72,7 @@ resolving hundreds of files by hand. Use Strategy A2 instead.
 Best when: your repo has no common history with the template but you do use git.
 
 > **First, check whether you have edited any framework files.** The checkout
-> below **replaces** everything under `.claude/`. Files *you added* survive, but
+> below **replaces** everything under `.pi/`. Files *you added* survive, but
 > your edits to files the framework also ships are overwritten — agent
 > definitions and director gates are the ones people customise most.
 >
@@ -98,7 +98,7 @@ git diff --cached --stat -- .claude
 
 # Restore any file whose local edits you want to keep. This is one command per
 # file, deliberately: each is a decision between your version and the new one.
-git checkout HEAD -- .claude/docs/technical-preferences.md   # v1.0 config; v1.1 keeps config in project.yaml
+git checkout HEAD -- .pi/docs/technical-preferences.md   # v1.0 config; v1.1 keeps config in project.yaml
 git checkout HEAD -- <any other file you customised>
 
 git status   # review what changed before committing
@@ -126,8 +126,8 @@ opposite actions:
   legacy files instead, which is what the converter is for:
 
   ```bash
-  bash .claude/scripts/migrate-v1-config.sh --dry-run   # preview
-  bash .claude/scripts/migrate-v1-config.sh             # writes project.yaml
+  bash .pi/scripts/migrate-v1-config.sh --dry-run   # preview
+  bash .pi/scripts/migrate-v1-config.sh             # writes project.yaml
   ```
 
   If you skip this, `detect-gaps.sh` will nudge you at the next session start —
@@ -167,7 +167,7 @@ Best when: you didn't use git to set up the template (just downloaded a zip).
 
 1. Download or clone the new version alongside your repo.
 2. Copy the files listed under **"Safe to overwrite"** directly — except any
-   file the list marks as yours, such as `.claude/docs/technical-preferences.md`.
+   file the list marks as yours, such as `.pi/docs/technical-preferences.md`.
 3. For files under **"Merge carefully"**, open both versions side-by-side
    and manually merge the structural changes while keeping your content.
 
@@ -185,19 +185,19 @@ pre-approve only the commands they run
 
 | Category | Changes |
 |----------|---------|
-| **Config helper** | `yaml-helper.sh` runs six read-only lookups directly (`bash .claude/hooks/yaml-helper.sh resolve_setting <key>` and five more), from the project root; `/settings` and `/perf-profile` call it that way |
+| **Config helper** | `yaml-helper.sh` runs six read-only lookups directly (`bash .pi/hooks/yaml-helper.sh resolve_setting <key>` and five more), from the project root; `/settings` and `/perf-profile` call it that way |
 | **Hooks** | `post-compact.sh` removed: its output never reached Claude. `pre-compact.sh` only logs the compaction. `session-stop.sh` runs in the background and prints nothing. `notify.sh` fires for permission and idle prompts only |
 | **New hooks** | `validate-read.sh` refuses a whole-file read of a design doc over 40 KB and answers with its headings, so the retry reads one section (`features.read_guard: off` turns it off, `features.read_guard_kb` sets the size). `validate-write.sh` and `validate-registry.sh` warn, never block, when a write would break a rule the skills state (a file they never overwrite, the prototype boundary, an append-only registry). `validate-agent-artifact.sh` warns when a subagent stops without writing the file its brief named |
 | **Update alert** | Session start prints one line when a newer release is out. It asks GitHub at most once a day, in the background, and never waits; `updates.check: false` in `project.yaml` or `project.local.yaml` turns it off, and CI runs never ask |
-| **Worktrees** | `settings.json` sets `worktree.baseRef` to `"head"`, so a worktree (the prototyper's, an isolated subagent's, `claude --worktree`) starts from your current commit, not the remote's default branch. The new `.worktreeinclude` copies `project.local.yaml`, `CLAUDE.local.md` and `.claude/settings.local.json` into each one. The prototyper names uncommitted files its worktree can't see, and says which of its checks it could not run |
-| **Rules** | New `.claude/rules/scene-files.md`: engine scene and asset files (`.tscn`, `.tres`, `.unity`, `.prefab`, `Assets/**/*.asset`) are changed in the editor where possible |
-| **Templates** | New layouts in `.claude/docs/templates/`: bug reports, launch and certification checklists, patch notes, start paths and more. `/create-stories` writes stories from `story.md`; the other skills do not use the new layouts yet |
-| **Permissions** | `settings.json`: the three Bash `.env` deny rules removed; `Read(**/.env*)` and `Edit(**/.env*)` already cover them. No skill pre-approves bare `Bash` any more: 34 skills now pre-approve only the commands their text runs (framework scripts, `git log` and the like). A command a skill does not name, such as your `commands.test`, asks first; approve it once, or add `Bash(<your command> *)` to `.claude/settings.local.json` |
-| **Git** | `.gitignore` ignores `.claude/worktrees/` |
+| **Worktrees** | `settings.json` sets `worktree.baseRef` to `"head"`, so a worktree (the prototyper's, an isolated subagent's, `claude --worktree`) starts from your current commit, not the remote's default branch. The new `.worktreeinclude` copies `project.local.yaml`, `CLAUDE.local.md` and `.pi/settings.local.json` into each one. The prototyper names uncommitted files its worktree can't see, and says which of its checks it could not run |
+| **Rules** | New `.pi/rules/scene-files.md`: engine scene and asset files (`.tscn`, `.tres`, `.unity`, `.prefab`, `Assets/**/*.asset`) are changed in the editor where possible |
+| **Templates** | New layouts in `.pi/docs/templates/`: bug reports, launch and certification checklists, patch notes, start paths and more. `/create-stories` writes stories from `story.md`; the other skills do not use the new layouts yet |
+| **Permissions** | `settings.json`: the three Bash `.env` deny rules removed; `Read(**/.env*)` and `Edit(**/.env*)` already cover them. No skill pre-approves bare `Bash` any more: 34 skills now pre-approve only the commands their text runs (framework scripts, `git log` and the like). A command a skill does not name, such as your `commands.test`, asks first; approve it once, or add `Bash(<your command> *)` to `.pi/settings.local.json` |
+| **Git** | `.gitignore` ignores `.pi/worktrees/` |
 | **Docs** | `settings-local-template.md` uses the current permission mode names and narrower example rules |
 | **Skill testing** | `CCGS Skill Testing Framework/` is renamed `studio-tests/`. `/skill-test`, `/skill-improve` and the `spec:` paths in its `catalog.yaml` use the new name; the two skills say so while the old folder is still there |
-| **Skills** | `/create-stories`, `/story-readiness`, `/create-epics`, `/dev-story`, `/story-done` and `/start` are rebuilt: shorter, with rarely used branches moved to each skill's `references/` folder (`/start` stays one `SKILL.md`) and fixed steps handed to scripts in `.claude/scripts/`. `/dev-story` and `/story-done` replace 1.1.3's numbered phase files with fewer, named ones. `/start` works out the rigor from what you describe and shows it on one card with a single save question, instead of asking for it. `/brainstorm`'s full concept path moved to `references/full-concept.md` |
-| **Stories** | New story template `.claude/docs/templates/story.md` with a `## Files` section: `/create-stories` lists the planned files, `/dev-story` replaces the list with the files it changed, and `/story-done` checks scope against it. `/create-stories` proposes an estimate (`S`, `M` or `L`) for each story, which you can change before it writes them |
+| **Skills** | `/create-stories`, `/story-readiness`, `/create-epics`, `/dev-story`, `/story-done` and `/start` are rebuilt: shorter, with rarely used branches moved to each skill's `references/` folder (`/start` stays one `SKILL.md`) and fixed steps handed to scripts in `.pi/scripts/`. `/dev-story` and `/story-done` replace 1.1.3's numbered phase files with fewer, named ones. `/start` works out the rigor from what you describe and shows it on one card with a single save question, instead of asking for it. `/brainstorm`'s full concept path moved to `references/full-concept.md` |
+| **Stories** | New story template `.pi/docs/templates/story.md` with a `## Files` section: `/create-stories` lists the planned files, `/dev-story` replaces the list with the files it changed, and `/story-done` checks scope against it. `/create-stories` proposes an estimate (`S`, `M` or `L`) for each story, which you can change before it writes them |
 | **Evidence** | `/dev-story` writes `stamp.txt` beside a story's screenshots. `/story-done` names any of the story's files that changed after the evidence was captured; it reports this and never blocks on it |
 | **Gates** | The Technical Setup → Pre-Production gate reads each `/architecture-review` report's `Mode:` line and counts the report only for what that mode checked. Reports written by 1.1.3 have no `Mode:` line and count for nothing, so run `/architecture-review` once after upgrading, before that gate |
 | **Engine references** | `docs/engine-reference/` now covers Godot 4.7 (was 4.6) and Unreal Engine 5.8 (was 5.7). Unity stays on 6.3 LTS, the newest LTS, and records 6.4 to 6.6 and the 6.7 beta. Release timelines carry vendor-sourced dates |
@@ -209,21 +209,21 @@ pre-approve only the commands they run
 
 **Existing files to overwrite (no user content), and new files to add:**
 ```
-.claude/hooks/*.sh                           ← take the whole folder: 13 hooks
+.pi/hooks/*.sh                           ← take the whole folder: 13 hooks
                                                changed, yaml-helper.sh among
                                                them, and 5 are new. Take
-                                               .claude/scripts/ in the same
+                                               .pi/scripts/ in the same
                                                step: the hooks call its helpers
-.claude/scripts/**                           ← 25 new helper scripts, 7 changed
-.claude/statusline.sh
-.claude/skills/**                            ← if you edited a skill, see
+.pi/scripts/**                           ← 25 new helper scripts, 7 changed
+.pi/statusline.sh
+.pi/skills/**                            ← if you edited a skill, see
                                                Merge Carefully
-.claude/agents/*.md                          ← all 49 changed; if you edited
+.pi/agents/*.md                          ← all 49 changed; if you edited
                                                one, see Merge Carefully
-.claude/docs/**                              ← EXCEPT technical-preferences.md,
+.pi/docs/**                              ← EXCEPT technical-preferences.md,
                                                which is yours and unchanged in
                                                1.2.0
-.claude/rules/scene-files.md                 ← new
+.pi/rules/scene-files.md                 ← new
 docs/WORKFLOW-GUIDE.md
 docs/engine-reference/<engine>/              ← unless your project stays on
                                                Godot 4.6 or Unreal 5.7; see
@@ -243,7 +243,7 @@ and a default export packed them into the game.
 With Strategy A2, also check out what this release changes outside `.claude`
 (your README aside): `git checkout template/main -- studio-tests production/.gdignore .worktreeinclude docs/WORKFLOW-GUIDE.md`.
 
-Take `.claude/hooks/` whole, not only its new files: a 1.1.3 `yaml-helper.sh`
+Take `.pi/hooks/` whole, not only its new files: a 1.1.3 `yaml-helper.sh`
 answers the new lookups (`resolve_setting modes.rigor` and the rest) with its
 usage line, so `/settings`, `/perf-profile` and the command the update notice
 prints stop working, and the rebuilt skills lose their review and gate lines.
@@ -257,11 +257,11 @@ which is every file you never edited. Check each item instead of making it
 again (a hook entry added twice runs twice). The steps are for files that
 conflicted, and for Strategies A2 and C.
 
-**`.claude/settings.json`** — if you have not edited it, overwrite it with the
+**`.pi/settings.json`** — if you have not edited it, overwrite it with the
 shipped file. If you have:
 
 - Delete the `"PostCompact"` entry under `hooks`, and delete
-  `.claude/hooks/post-compact.sh`. Do both: an entry left pointing at the
+  `.pi/hooks/post-compact.sh`. Do both: an entry left pointing at the
   deleted script fails on every compaction.
 - Under `"Stop"`, add `"async": true` to the `session-stop.sh` hook.
 - Under `"Notification"`, change `"matcher": ""` to
@@ -277,15 +277,15 @@ shipped file. If you have:
   `"PreToolUse"`, a `"Write|Edit"` entry running `validate-registry.sh` and
   `validate-write.sh`, and a `"Read"` entry running `validate-read.sh`; under
   `"SubagentStop"`, `validate-agent-artifact.sh` after `log-agent-stop.sh`.
-  Take `.claude/hooks/` and `.claude/scripts/` (Safe to Overwrite) first: an
+  Take `.pi/hooks/` and `.pi/scripts/` (Safe to Overwrite) first: an
   entry pointing at a missing script fails every time it fires, and the four
-  hooks call helpers in `.claude/scripts/`, so without them every Read and
+  hooks call helpers in `.pi/scripts/`, so without them every Read and
   Write prints "guard skipped".
 - Add `"worktree": { "baseRef": "head" }` at the top level. Without it, Claude
   Code makes each worktree from the remote's default branch, so a prototype or
   isolated subagent works on code without your local commits.
 
-**`.gitignore`** — add `.claude/worktrees/`. Without it, a worktree made by the
+**`.gitignore`** — add `.pi/worktrees/`. Without it, a worktree made by the
 prototyper, an isolated subagent or `claude --worktree` shows up as untracked
 files, and `git add -A` stages it as an embedded repository.
 
@@ -300,13 +300,13 @@ mawk and BWK awk may misread an awk program with carriage returns, and a CRLF
 
 **`project.yaml`** — optionally set `framework.version: 1.2.0`. Nothing reads it
 for this release: the update alert compares against the version stamp in
-`.claude/hooks/update-check.sh`, which arrives with the hooks folder. Leave
+`.pi/hooks/update-check.sh`, which arrives with the hooks folder. Leave
 `updates.check` and `features.read_guard` unset to keep their defaults (on).
 
 **`CLAUDE.md`** — one wording change in the Technical Preferences paragraph;
 nothing to do if you edited the file.
 
-**`.claude/settings.local.json`** — if you copied `Bash(git *)` from the old
+**`.pi/settings.local.json`** — if you copied `Bash(git *)` from the old
 `settings-local-template.md`, it approves every git command, `git push`
 included. Narrow it to the commands you mean, such as `Bash(git add *)` and
 `Bash(git commit *)`.
@@ -318,9 +318,9 @@ under `studio-tests/`, and in `studio-tests/catalog.yaml` change their `spec:`
 paths from `CCGS Skill Testing Framework/` to `studio-tests/`. Then delete the
 old folder: `/skill-test` and `/skill-improve` only read the new one.
 
-**`.claude/skills/` and `.claude/scripts/`** — take the rebuilt skill folders
+**`.pi/skills/` and `.pi/scripts/`** — take the rebuilt skill folders
 whole (`create-stories`, `story-readiness`, `create-epics`, `dev-story`,
-`story-done`, `start`, `brainstorm`), and take `.claude/scripts/` with them: they
+`story-done`, `start`, `brainstorm`), and take `.pi/scripts/` with them: they
 call scripts 1.1.3 did not have (`adr-status.sh`, `story-facts.sh`,
 `md-section.sh`, `session-state.sh`, `write-guard.sh`, `project-state.sh`,
 `set-stage.sh`, `config-set.sh`). If you edited one of these skills, make your
@@ -344,7 +344,7 @@ To move it to the current actions, change `actions/checkout@v4` and
 `actions/upload-artifact@v4` to `@v7`. On a self-hosted runner (the Unreal
 template), update the runner to 2.327.1 or newer first: v7 runs on Node.js 24.
 
-**`.claude/agents/`** — all 49 agent files changed: an agent ends its turn with
+**`.pi/agents/`** — all 49 agent files changed: an agent ends its turn with
 its question instead of waiting for a yes it cannot receive, the GDScript, Unity,
 Unreal and Blueprint specialists leave scene and asset files to the editor, the engine agents follow the
 new engine versions, and the prototyper checks what its worktree cannot see. Take
@@ -353,7 +353,7 @@ the folder; if you edited an agent, make your edit again on the new text.
 **Your registries** (`design/registry/entities.yaml`,
 `docs/architecture/tr-registry.yaml`, `docs/registry/architecture.yaml`) — keep
 yours: they hold your project's entries. The shipped files gained `# LAYOUT:`
-comment lines in their headers describing the shape `.claude/scripts/registry.sh`
+comment lines in their headers describing the shape `.pi/scripts/registry.sh`
 reads; copy them into your header if you like. Nothing reads the comment.
 1.1.3's `/architecture-decision` wrote a replaced entry in
 `docs/registry/architecture.yaml` as `status: superseded_by: ADR-NNNN`, without
@@ -361,7 +361,7 @@ quotes. Quote each one: `status: "superseded_by: ADR-NNNN"`. Unquoted, the secon
 colon makes the file invalid YAML. `registry.sh` still reads the old form and
 prints an `UNQUOTED` row naming each line to change.
 
-**`.claude/docs/templates/sprint-plan.md`** — take it. It gains a
+**`.pi/docs/templates/sprint-plan.md`** — take it. It gains a
 `## Goal Prerequisites` section that `/sprint-plan` fills; sprint plans you
 already wrote need no change.
 
@@ -377,12 +377,12 @@ instead of whether the code changed after it.
 ### Files: Delete
 
 ```
-.claude/hooks/post-compact.sh      → removed; delete its PostCompact entry in settings.json too
+.pi/hooks/post-compact.sh      → removed; delete its PostCompact entry in settings.json too
 CCGS Skill Testing Framework/      → renamed studio-tests/; move any specs you wrote first (above)
-.claude/skills/dev-story/references/2-load-context.md, 3-route.md, 4-implement.md,
+.pi/skills/dev-story/references/2-load-context.md, 3-route.md, 4-implement.md,
   5-test-evidence.md, 6-collect.md, 7-session-state.md
                                    → replaced by engine-checks.md and version-mismatch.md
-.claude/skills/story-done/references/1-find-story.md, 2-read-story.md, 3-verify-criteria.md,
+.pi/skills/story-done/references/1-find-story.md, 2-read-story.md, 3-verify-criteria.md,
   4-deviations.md, 5-code-review-gate.md, 6-completion-report.md, 7-update-status.md,
   8-next-story.md                  → replaced by review-gates.md, sprint-next.md and tech-debt-row.md
 ```
@@ -416,16 +416,16 @@ No setting changes meaning, and nothing is migrated automatically.
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/**                            ← 14 skills gain a references/
+.pi/skills/**                            ← 14 skills gain a references/
                                                folder; if you edited one of
                                                them, see Merge Carefully. 39
                                                skills gain a title line
-.claude/hooks/validate-commit.sh, validate-push.sh, yaml-helper.sh,
+.pi/hooks/validate-commit.sh, validate-push.sh, yaml-helper.sh,
 pre-compact.sh, session-stop.sh
-.claude/scripts/project-coherence.sh
-.claude/agents/*.md                          ← 15 agents changed; merge any
+.pi/scripts/project-coherence.sh
+.pi/agents/*.md                          ← 15 agents changed; merge any
                                                you edited
-.claude/docs/**                              ← EXCEPT technical-preferences.md,
+.pi/docs/**                              ← EXCEPT technical-preferences.md,
                                                which is yours and unchanged in
                                                1.1.3
 docs/WORKFLOW-GUIDE.md, docs/CLAUDE.md, docs/COLLABORATIVE-DESIGN-PRINCIPLE.md,
@@ -439,14 +439,14 @@ CCGS Skill Testing Framework/
 
 ### Files: Merge Carefully
 
-**`.claude/settings.json`** — if you have not edited it, overwrite it with the
+**`.pi/settings.json`** — if you have not edited it, overwrite it with the
 shipped file. If you have, remove these from `allow`: `Bash(git status*)`,
 `Bash(git diff*)`, `Bash(git log*)`, `Bash(git branch*)`, `Bash(git rev-parse*)`,
 `Bash(ls *)` and `Bash(python -m json.tool*)`; change `Bash(python -m pytest*)`
 and `Bash(py -m pytest*)` to `Bash(python -m pytest *)` and
 `Bash(py -m pytest *)`; and add `Edit(**/.env*)` to `deny`. Read-only git
 commands still run without a prompt after the change. **If you copied any of
-the removed rules into `.claude/settings.local.json`, remove them there too:** a
+the removed rules into `.pi/settings.local.json`, remove them there too:** a
 copy keeps approving `git branch -D`, `--output` files and `json.tool` writes
 without asking.
 
@@ -455,7 +455,7 @@ the shipped Collaboration Protocol section. If you have, copy its three new
 lines: the exemptions under "May I write", "A skipped or dismissed question is
 not an answer", and "Started outside this file's folder? Warn first".
 
-**`.claude/rules/agent-memory.md`, `.claude/rules/skill-authoring.md`** — if you
+**`.pi/rules/agent-memory.md`, `.pi/rules/skill-authoring.md`** — if you
 have not edited them, overwrite them with the shipped files.
 
 **One of the 14 long skills, if you edited it** — its `SKILL.md` now holds the
@@ -502,24 +502,24 @@ No setting changes meaning, and nothing is migrated automatically.
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/**                            ← nearly every skill changed, including
+.pi/skills/**                            ← nearly every skill changed, including
                                                gate-check/references/gate-production.md
-.claude/hooks/*.sh                           ← validate-commit, validate-push,
+.pi/hooks/*.sh                           ← validate-commit, validate-push,
                                                validate-assets, validate-skill-change,
                                                session-start, detect-gaps, pre-compact,
                                                post-compact, log-agent, log-agent-stop,
                                                log-instructions, yaml-helper
-.claude/statusline.sh
-.claude/scripts/artifact-check.sh, project-coherence.sh, migrate-v1-config.sh,
+.pi/statusline.sh
+.pi/scripts/artifact-check.sh, project-coherence.sh, migrate-v1-config.sh,
                                                gdd-structure-check.sh, review-scope.sh
-.claude/scripts/review-receipts.sh           ← falls back to shasum, which every Mac has
-.claude/scripts/godot-parse-check.gd         ← new: /dev-story's Godot parse check
-.claude/scripts/story-status.sh              ← new: the story list /help and
-                                               /sprint-status route from
-.claude/agents/*.md                          ← nearly every agent changed (see Agents
+.pi/scripts/review-receipts.sh           ← falls back to shasum, which every Mac has
+.pi/scripts/godot-parse-check.gd         ← new: /skill:dev-story's Godot parse check
+.pi/scripts/story-status.sh              ← new: the story list /skill:help and
+                                               /skill:sprint-status route from
+.pi/agents/*.md                          ← nearly every agent changed (see Agents
                                                above); merge any you edited, and see
                                                Director agents' memory below
-.claude/docs/**                              ← EXCEPT technical-preferences.md, which
+.pi/docs/**                              ← EXCEPT technical-preferences.md, which
                                                is yours and unchanged in 1.1.2.
                                                Includes templates/game-brief.md
                                                (new Reference game line)
@@ -535,7 +535,7 @@ plugins/gameplay-ability-system.md
                                              ← corrected examples; the Godot, Unity
                                                and Unreal references gain Command Line
                                                sections (build and test commands per
-                                               platform, with sources). If /setup-engine
+                                               platform, with sources). If /skill:setup-engine
                                                has updated your copy of one, merge
                                                that file instead
 README.md, CHANGELOG.md, UPGRADING.md        ← keep your README if it is your game's
@@ -546,7 +546,7 @@ CCGS Skill Testing Framework/
 
 ### Files: Merge Carefully
 
-**`.claude/settings.json`** — if you have not edited it, overwrite it with the
+**`.pi/settings.json`** — if you have not edited it, overwrite it with the
 shipped file. If you have, change the `matcher` of the
 `PreToolUse` entry that runs `validate-commit.sh` and `validate-push.sh` from
 `"Bash"` to `"Bash|PowerShell"`, and copy the new `deny` rules: the
@@ -567,7 +567,7 @@ commands, or plain prose such as `git commit -m "push + pull"` (`push` then ` +`
 `git clean -fn`, is denied too; write it `git clean -n`. 1.1.1's
 `Bash(git clean -f*)` is covered by the new rules and can go.
 
-**`.claude/rules/*.md`** — if you have not edited a rule, overwrite it with the
+**`.pi/rules/*.md`** — if you have not edited a rule, overwrite it with the
 shipped file. If you have, keep your text, copy
 every `paths:` line from the shipped file — they changed in eight rules — and
 merge the five changed bodies named below. Without
@@ -665,8 +665,8 @@ move tests to `Source/<Module>/Private/Tests/`, and replace
 
 **Director agents' memory** — `creative-director`, `producer` and
 `technical-director` now declare `memory: project`, so they read and write
-`.claude/agent-memory/<agent>/` in this project. Notes they saved before are in
-`~/.claude/agent-memory/<agent>/` and are no longer read; copy the ones that
+`.pi/agent-memory/<agent>/` in this project. Notes they saved before are in
+`~/.pi/agent-memory/<agent>/` and are no longer read; copy the ones that
 belong to this project across. If you edited those agent files, change
 `memory: user` to `memory: project` in their frontmatter.
 
@@ -702,8 +702,8 @@ for this release.
 | Category | Changes |
 |----------|---------|
 | **Skill fix (66 skills)** | The config line at the top of each skill is now one plain `bash` command, pre-approved in that skill's own `allowed-tools`. The 1.1.0 line aborted the skill outside auto mode |
-| **Helper** | `.claude/hooks/yaml-helper.sh` can be run directly as `bash yaml-helper.sh resolve_config …`, and finds the project root from its own location |
-| **Docs** | `.claude/docs/config-resolution.md` documents the required form and why |
+| **Helper** | `.pi/hooks/yaml-helper.sh` can be run directly as `bash yaml-helper.sh resolve_config …`, and finds the project root from its own location |
+| **Docs** | `.pi/docs/config-resolution.md` documents the required form and why |
 
 No settings, config files or agents change. Your `project.yaml` and
 `project.local.yaml` are untouched apart from the version stamp.
@@ -714,10 +714,10 @@ No settings, config files or agents change. Your `project.yaml` and
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/*/SKILL.md                 ← all skills with a config line (66)
-.claude/hooks/yaml-helper.sh              ← direct-execution entry point
-.claude/docs/config-resolution.md         ← corrected "why this command" section
-.claude/docs/director-gates.md            ← example line updated
+.pi/skills/*/SKILL.md                 ← all skills with a config line (66)
+.pi/hooks/yaml-helper.sh              ← direct-execution entry point
+.pi/docs/config-resolution.md         ← corrected "why this command" section
+.pi/docs/director-gates.md            ← example line updated
 ```
 
 ---
@@ -729,7 +729,7 @@ version and change two lines in it — the config line and the `allowed-tools`
 entry — to this form, with your skill's folder name in place of `<name>`:
 
 ```markdown
-allowed-tools: …, Bash(bash "*/.claude/skills/<name>/../../hooks/yaml-helper.sh" resolve_config *)
+allowed-tools: …, Bash(bash "*/.pi/skills/<name>/../../hooks/yaml-helper.sh" resolve_config *)
 ```
 ```markdown
 !`bash "${CLAUDE_SKILL_DIR}/../../hooks/yaml-helper.sh" resolve_config --keys <same keys as before>`
@@ -760,7 +760,7 @@ this section covers what to do about it.
 
 See [CHANGELOG.md](CHANGELOG.md#110--2026-09-23) for the complete list. The
 short version: `project.yaml` replaces `production/stage.txt`,
-`production/review-mode.txt`, and `.claude/docs/technical-preferences.md` as
+`production/review-mode.txt`, and `.pi/docs/technical-preferences.md` as
 the primary config store (all three still work as a fallback — nothing is
 force-deleted), a new `modes` block controls how much process the project
 carries (`modes.rigor: minimal | standard | full`), and a new `/settings`
@@ -795,7 +795,7 @@ and `/help` and `/gate-check` will suggest raising it as your project grows.
 
 ### Files: Safe to Overwrite
 
-**Take `.claude/` as a whole. Do not copy a subset.** v1.1 adds around 73 new
+**Take `.pi/` as a whole. Do not copy a subset.** v1.1 adds around 73 new
 files under that directory — `automation-modes.md`, `workflow-modes.md`,
 `config-resolution.md`, `effects-map.md`, 28 director gates, the game-brief
 template, 7 guidance templates, 8 scripts, 6 gate-check references, 10
@@ -805,8 +805,8 @@ fails at the moment you run them rather than at the moment you copy. That is why
 there is no short file list here.
 
 ```
-.claude/          (the whole directory — new and changed files alike)
-                  EXCEPT .claude/docs/technical-preferences.md — see the note below.
+.pi/          (the whole directory — new and changed files alike)
+                  EXCEPT .pi/docs/technical-preferences.md — see the note below.
                   The template ships a placeholder copy of that file; overwriting
                   yours silently discards your Forbidden Patterns and Allowed
                   Libraries, which have no project.yaml equivalent. Back it up
@@ -824,16 +824,16 @@ UPGRADING.md
 Your own tests under `tests/` and any tooling under `tools/` are yours; the
 template ships nothing into either, so nothing there is at risk.
 
-Copying is additive: files *you* added under `.claude/` survive, because nothing
+Copying is additive: files *you* added under `.pi/` survive, because nothing
 is deleted. Only files the template also ships get replaced.
 
 All 74 `SKILL.md` files changed in v1.1, and 66 of them now resolve config via
 `resolve_config`. If you have not hand-edited any skill file, taking them all is
 safe.
 
-> **Two things under `.claude/` are yours — check them before you copy.**
+> **Two things under `.pi/` are yours — check them before you copy.**
 >
-> - `.claude/docs/technical-preferences.md` still holds your Forbidden Patterns
+> - `.pi/docs/technical-preferences.md` still holds your Forbidden Patterns
 >   and Allowed Libraries, which have no `project.yaml` equivalent. Keep your
 >   copy; see [Merge Carefully](#claudedocstechnical-preferencesmd) below.
 > - Anything else you customised — agent definitions and director gates are the
@@ -843,7 +843,7 @@ safe.
 >   changed there too.
 
 (`project.yaml` itself is not copied from the template — `/start` generates it
-for new projects, and `.claude/scripts/migrate-v1-config.sh` builds it from
+for new projects, and `.pi/scripts/migrate-v1-config.sh` builds it from
 your legacy config files for existing ones.)
 
 ### Files: Merge Carefully
@@ -852,17 +852,17 @@ your legacy config files for existing ones.)
 
 This file does not exist in v1.0. If you have an existing project with
 `production/stage.txt`, `production/review-mode.txt`, or a filled-in
-`.claude/docs/technical-preferences.md`, **do not hand-author
+`.pi/docs/technical-preferences.md`, **do not hand-author
 `project.yaml`** — those files hold your project's actual configuration and
 migrating them by hand risks transcription errors the tooling is built to
 avoid. Follow the dedicated
 [migration guide](docs/migration-guide-v1.1.md) instead, which walks
-`.claude/scripts/migrate-v1-config.sh` end to end.
+`.pi/scripts/migrate-v1-config.sh` end to end.
 
 If you're starting fresh (no legacy files with real values), just run
 `/start` — it writes a complete `project.yaml` for you.
 
-#### `.claude/docs/technical-preferences.md`
+#### `.pi/docs/technical-preferences.md`
 
 Stays in place. Most of its content (engine, naming, performance budgets,
 testing framework, specialists) has a `project.yaml` equivalent now and is
@@ -874,7 +874,7 @@ home permanently; `--finalize` migration never deletes it.
 
 1. If you have an existing project (not starting fresh), read
    [docs/migration-guide-v1.1.md](docs/migration-guide-v1.1.md) and run
-   `.claude/scripts/migrate-v1-config.sh --dry-run` to see what migration
+   `.pi/scripts/migrate-v1-config.sh --dry-run` to see what migration
    would do before committing to it.
 2. Run `/settings` to see your effective configuration once `project.yaml`
    exists — it shows you the value, source, and whether each setting is
@@ -913,19 +913,19 @@ home permanently; `--finalize` migration never deletes it.
 
 **New files to add:**
 ```
-.claude/skills/art-bible/SKILL.md
-.claude/skills/asset-spec/SKILL.md
-.claude/docs/director-gates.md
+.pi/skills/art-bible/SKILL.md
+.pi/skills/asset-spec/SKILL.md
+.pi/docs/director-gates.md
 ```
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/brainstorm/SKILL.md
-.claude/skills/gate-check/SKILL.md
-.claude/skills/team-level/SKILL.md
-.claude/skills/team-narrative/SKILL.md
-.claude/skills/design-system/SKILL.md
-.claude/docs/workflow-catalog.yaml
+.pi/skills/brainstorm/SKILL.md
+.pi/skills/gate-check/SKILL.md
+.pi/skills/team-level/SKILL.md
+.pi/skills/team-narrative/SKILL.md
+.pi/skills/design-system/SKILL.md
+.pi/docs/workflow-catalog.yaml
 README.md
 UPGRADING.md
 ```
@@ -959,14 +959,14 @@ None — all changes are to infrastructure files with no user content.
 
 **New files to add:**
 ```
-.claude/skills/vertical-slice/SKILL.md
+.pi/skills/vertical-slice/SKILL.md
 CONTRIBUTING.md
 SECURITY.md
 ```
 
 **Existing files to overwrite (no user content):**
-- All files under `.claude/skills/` modified in the commit range (skill audit + AskUserQuestion widgets + `--review` argument-hints)
-- `.claude/hooks/log-agent.sh` (`agent_type` logging fix)
+- All files under `.pi/skills/` modified in the commit range (skill audit + AskUserQuestion widgets + `--review` argument-hints)
+- `.pi/hooks/log-agent.sh` (`agent_type` logging fix)
 - `README.md`, `docs/WORKFLOW-GUIDE.md`, `docs/skill-flow-diagrams.md`
 - `UPGRADING.md`
 
@@ -988,7 +988,7 @@ None — all changes are to infrastructure files with no user content.
 
 | Category | Changes |
 |----------|---------|
-| **New system** | Director gates — named review checkpoints shared across all workflow skills. Defined in `.claude/docs/director-gates.md` |
+| **New system** | Director gates — named review checkpoints shared across all workflow skills. Defined in `.pi/docs/director-gates.md` |
 | **New feature** | Gate intensity modes: `full` (all director gates), `lean` (phase gates only), `solo` (no directors). Set globally via `production/review-mode.txt` during `/start`, or override per-run with `--review [mode]` on any gate-using skill |
 | **New agent** | `godot-csharp-specialist` — C# code quality in Godot 4 projects |
 | **Skill updates (13)** | All gate-using skills now parse `--review [full\|lean\|solo]` and include it in their argument-hint: `brainstorm`, `map-systems`, `design-system`, `architecture-decision`, `create-architecture`, `create-epics`, `create-stories`, `sprint-plan`, `milestone-review`, `playtest-report`, `prototype`, `story-done`, `gate-check` |
@@ -1002,28 +1002,28 @@ None — all changes are to infrastructure files with no user content.
 
 **New files to add:**
 ```
-.claude/agents/godot-csharp-specialist.md
-.claude/docs/director-gates.md
+.pi/agents/godot-csharp-specialist.md
+.pi/docs/director-gates.md
 ```
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/brainstorm/SKILL.md
-.claude/skills/map-systems/SKILL.md
-.claude/skills/design-system/SKILL.md
-.claude/skills/architecture-decision/SKILL.md
-.claude/skills/create-architecture/SKILL.md
-.claude/skills/create-epics/SKILL.md
-.claude/skills/create-stories/SKILL.md
-.claude/skills/sprint-plan/SKILL.md
-.claude/skills/milestone-review/SKILL.md
-.claude/skills/playtest-report/SKILL.md
-.claude/skills/prototype/SKILL.md
-.claude/skills/story-done/SKILL.md
-.claude/skills/gate-check/SKILL.md
-.claude/skills/start/SKILL.md
-.claude/skills/quick-design/SKILL.md
-.claude/skills/setup-engine/SKILL.md
+.pi/skills/brainstorm/SKILL.md
+.pi/skills/map-systems/SKILL.md
+.pi/skills/design-system/SKILL.md
+.pi/skills/architecture-decision/SKILL.md
+.pi/skills/create-architecture/SKILL.md
+.pi/skills/create-epics/SKILL.md
+.pi/skills/create-stories/SKILL.md
+.pi/skills/sprint-plan/SKILL.md
+.pi/skills/milestone-review/SKILL.md
+.pi/skills/playtest-report/SKILL.md
+.pi/skills/prototype/SKILL.md
+.pi/skills/story-done/SKILL.md
+.pi/skills/gate-check/SKILL.md
+.pi/skills/start/SKILL.md
+.pi/skills/quick-design/SKILL.md
+.pi/skills/setup-engine/SKILL.md
 README.md
 docs/WORKFLOW-GUIDE.md
 UPGRADING.md
@@ -1042,7 +1042,7 @@ No files require manual merging in this release. All changes are to infrastructu
 #### Director Gates System
 
 All major workflow skills now reference named gate checkpoints defined in
-`.claude/docs/director-gates.md`. Gates are identified by domain prefix and name
+`.pi/docs/director-gates.md`. Gates are identified by domain prefix and name
 (e.g., `CD-CONCEPT`, `TD-ARCHITECTURE`, `LP-CODE-REVIEW`). Each gate defines
 which director to spawn, what inputs to pass, what verdicts mean, and how
 lean/solo modes affect it.
@@ -1063,9 +1063,9 @@ Set globally during `/start` (writes `production/review-mode.txt`). Override any
 individual run with `--review [mode]` on any gate-using skill:
 
 ```
-/design-system combat --review lean
-/gate-check systems-design --review full
-/brainstorm my-game-idea --review solo
+/skill:design-system combat --review lean
+/skill:gate-check systems-design --review full
+/skill:brainstorm my-game-idea --review solo
 ```
 
 ---
@@ -1073,7 +1073,7 @@ individual run with `--review [mode]` on any gate-using skill:
 ### After Upgrading
 
 1. Run `/start` once to set your preferred review mode — or create `production/review-mode.txt` manually with `full`, `lean`, or `solo`.
-2. If you're mid-project, review `.claude/docs/director-gates.md` to understand which gates apply to your current phase.
+2. If you're mid-project, review `.pi/docs/director-gates.md` to understand which gates apply to your current phase.
 3. Run `/skill-test static all` to verify all skills pass structural checks.
 
 ---
@@ -1098,27 +1098,27 @@ individual run with `--review [mode]` on any gate-using skill:
 
 **New files to add:**
 ```
-.claude/skills/consistency-check/SKILL.md
+.pi/skills/consistency-check/SKILL.md
 ```
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/team-combat/SKILL.md      ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/team-narrative/SKILL.md   ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/team-ui/SKILL.md          ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/team-release/SKILL.md     ← no-arg guard, verdict keywords, NO-GO path
-.claude/skills/team-polish/SKILL.md      ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/team-audio/SKILL.md       ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/team-level/SKILL.md       ← no-arg guard, verdict keywords, adjacent area checks
-.claude/skills/team-live-ops/SKILL.md    ← no-arg guard, verdict keywords, ethics enforcement
-.claude/skills/team-qa/SKILL.md          ← no-arg guard, verdict keywords, gate improvements
-.claude/skills/map-systems/SKILL.md      ← verdict keywords
-.claude/skills/create-epics/SKILL.md     ← "May I write" protocol fix, verdict keywords
-.claude/skills/create-stories/SKILL.md   ← verdict keywords
-.claude/agents/game-designer.md          ← genre-agnostic language
-.claude/agents/systems-designer.md       ← genre-agnostic language
-.claude/agents/economy-designer.md       ← genre-agnostic language
-.claude/agents/live-ops-designer.md      ← genre-agnostic language
+.pi/skills/team-combat/SKILL.md      ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/team-narrative/SKILL.md   ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/team-ui/SKILL.md          ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/team-release/SKILL.md     ← no-arg guard, verdict keywords, NO-GO path
+.pi/skills/team-polish/SKILL.md      ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/team-audio/SKILL.md       ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/team-level/SKILL.md       ← no-arg guard, verdict keywords, adjacent area checks
+.pi/skills/team-live-ops/SKILL.md    ← no-arg guard, verdict keywords, ethics enforcement
+.pi/skills/team-qa/SKILL.md          ← no-arg guard, verdict keywords, gate improvements
+.pi/skills/map-systems/SKILL.md      ← verdict keywords
+.pi/skills/create-epics/SKILL.md     ← "May I write" protocol fix, verdict keywords
+.pi/skills/create-stories/SKILL.md   ← verdict keywords
+.pi/agents/game-designer.md          ← genre-agnostic language
+.pi/agents/systems-designer.md       ← genre-agnostic language
+.pi/agents/economy-designer.md       ← genre-agnostic language
+.pi/agents/live-ops-designer.md      ← genre-agnostic language
 ```
 
 ---
@@ -1170,46 +1170,46 @@ No files require manual merging in this release. All changes are to infrastructu
 
 **New files to add:**
 ```
-.claude/skills/ux-design/SKILL.md
-.claude/skills/ux-review/SKILL.md
-.claude/skills/help/SKILL.md
-.claude/skills/quick-design/SKILL.md
-.claude/skills/review-all-gdds/SKILL.md
-.claude/skills/story-readiness/SKILL.md
-.claude/skills/story-done/SKILL.md
-.claude/skills/sprint-status/SKILL.md
-.claude/skills/adopt/SKILL.md
-.claude/skills/create-architecture/SKILL.md
-.claude/skills/create-control-manifest/SKILL.md
-.claude/skills/create-epics/SKILL.md
-.claude/skills/create-stories/SKILL.md
-.claude/skills/dev-story/SKILL.md
-.claude/skills/propagate-design-change/SKILL.md
-.claude/skills/content-audit/SKILL.md
-.claude/skills/architecture-review/SKILL.md
-.claude/skills/qa-plan/SKILL.md
-.claude/skills/smoke-check/SKILL.md
-.claude/skills/soak-test/SKILL.md
-.claude/skills/regression-suite/SKILL.md
-.claude/skills/test-setup/SKILL.md
-.claude/skills/test-helpers/SKILL.md
-.claude/skills/test-evidence-review/SKILL.md
-.claude/skills/test-flakiness/SKILL.md
-.claude/skills/skill-test/SKILL.md
-.claude/skills/bug-triage/SKILL.md
-.claude/skills/team-live-ops/SKILL.md
-.claude/skills/team-qa/SKILL.md
-.claude/hooks/log-agent-stop.sh
-.claude/hooks/notify.sh
-.claude/hooks/post-compact.sh
-.claude/hooks/validate-skill-change.sh
-.claude/docs/workflow-catalog.yaml
-.claude/docs/templates/ux-spec.md
-.claude/docs/templates/hud-design.md
-.claude/docs/templates/accessibility-requirements.md
-.claude/docs/templates/interaction-pattern-library.md
-.claude/docs/templates/player-journey.md
-.claude/docs/templates/difficulty-curve.md
+.pi/skills/ux-design/SKILL.md
+.pi/skills/ux-review/SKILL.md
+.pi/skills/help/SKILL.md
+.pi/skills/quick-design/SKILL.md
+.pi/skills/review-all-gdds/SKILL.md
+.pi/skills/story-readiness/SKILL.md
+.pi/skills/story-done/SKILL.md
+.pi/skills/sprint-status/SKILL.md
+.pi/skills/adopt/SKILL.md
+.pi/skills/create-architecture/SKILL.md
+.pi/skills/create-control-manifest/SKILL.md
+.pi/skills/create-epics/SKILL.md
+.pi/skills/create-stories/SKILL.md
+.pi/skills/dev-story/SKILL.md
+.pi/skills/propagate-design-change/SKILL.md
+.pi/skills/content-audit/SKILL.md
+.pi/skills/architecture-review/SKILL.md
+.pi/skills/qa-plan/SKILL.md
+.pi/skills/smoke-check/SKILL.md
+.pi/skills/soak-test/SKILL.md
+.pi/skills/regression-suite/SKILL.md
+.pi/skills/test-setup/SKILL.md
+.pi/skills/test-helpers/SKILL.md
+.pi/skills/test-evidence-review/SKILL.md
+.pi/skills/test-flakiness/SKILL.md
+.pi/skills/skill-test/SKILL.md
+.pi/skills/bug-triage/SKILL.md
+.pi/skills/team-live-ops/SKILL.md
+.pi/skills/team-qa/SKILL.md
+.pi/hooks/log-agent-stop.sh
+.pi/hooks/notify.sh
+.pi/hooks/post-compact.sh
+.pi/hooks/validate-skill-change.sh
+.pi/docs/workflow-catalog.yaml
+.pi/docs/templates/ux-spec.md
+.pi/docs/templates/hud-design.md
+.pi/docs/templates/accessibility-requirements.md
+.pi/docs/templates/interaction-pattern-library.md
+.pi/docs/templates/player-journey.md
+.pi/docs/templates/difficulty-curve.md
 design/CLAUDE.md
 src/CLAUDE.md
 docs/CLAUDE.md
@@ -1217,14 +1217,14 @@ docs/CLAUDE.md
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/gate-check/SKILL.md
-.claude/skills/sprint-plan/SKILL.md
-.claude/skills/sprint-status/SKILL.md
-.claude/skills/design-review/SKILL.md
-.claude/skills/team-ui/SKILL.md
-.claude/skills/story-readiness/SKILL.md
-.claude/skills/story-done/SKILL.md
-.claude/docs/templates/game-design-document.md    ← adds Game Feel section
+.pi/skills/gate-check/SKILL.md
+.pi/skills/sprint-plan/SKILL.md
+.pi/skills/sprint-status/SKILL.md
+.pi/skills/design-review/SKILL.md
+.pi/skills/team-ui/SKILL.md
+.pi/skills/story-readiness/SKILL.md
+.pi/skills/story-done/SKILL.md
+.pi/docs/templates/game-design-document.md    ← adds Game Feel section
 README.md
 docs/WORKFLOW-GUIDE.md
 UPGRADING.md
@@ -1232,34 +1232,34 @@ UPGRADING.md
 
 **Agent files to overwrite** (if you haven't written custom prompts into them):
 ```
-.claude/agents/prototyper.md         ← adds isolation: worktree
-.claude/agents/art-director.md       ← adds memory: project
-.claude/agents/audio-director.md     ← adds memory: project
-.claude/agents/economy-designer.md   ← adds memory: project
-.claude/agents/game-designer.md      ← adds memory: project
-.claude/agents/gameplay-programmer.md ← adds memory: project
-.claude/agents/lead-programmer.md    ← adds memory: project
-.claude/agents/level-designer.md     ← adds memory: project
-.claude/agents/narrative-director.md ← adds memory: project
-.claude/agents/systems-designer.md   ← adds memory: project
-.claude/agents/technical-artist.md   ← adds memory: project
-.claude/agents/ui-programmer.md      ← adds memory: project
-.claude/agents/ux-designer.md        ← adds memory: project
-.claude/agents/world-builder.md      ← adds memory: project
+.pi/agents/prototyper.md         ← adds isolation: worktree
+.pi/agents/art-director.md       ← adds memory: project
+.pi/agents/audio-director.md     ← adds memory: project
+.pi/agents/economy-designer.md   ← adds memory: project
+.pi/agents/game-designer.md      ← adds memory: project
+.pi/agents/gameplay-programmer.md ← adds memory: project
+.pi/agents/lead-programmer.md    ← adds memory: project
+.pi/agents/level-designer.md     ← adds memory: project
+.pi/agents/narrative-director.md ← adds memory: project
+.pi/agents/systems-designer.md   ← adds memory: project
+.pi/agents/technical-artist.md   ← adds memory: project
+.pi/agents/ui-programmer.md      ← adds memory: project
+.pi/agents/ux-designer.md        ← adds memory: project
+.pi/agents/world-builder.md      ← adds memory: project
 ```
 
 ---
 
 ### Files: Merge Carefully
 
-#### `.claude/settings.json`
+#### `.pi/settings.json`
 
 Four new hooks are registered in this version. If you haven't customized `settings.json`, overwriting is safe. Otherwise, add the following hook entries manually:
 
 - `log-agent-stop.sh` — `SubagentStop` event (agent audit trail stop)
 - `notify.sh` — `Notification` event (Windows toast notification)
 - `post-compact.sh` — `PostCompact` event (session recovery reminder)
-- `validate-skill-change.sh` — `PostToolUse` event filtered to `.claude/skills/` writes
+- `validate-skill-change.sh` — `PostToolUse` event filtered to `.pi/skills/` writes
 
 #### Customized agent files
 
@@ -1325,7 +1325,7 @@ Also new: **`/bug-triage`** re-evaluates all open bugs for priority, severity, a
 `/skill-test` is a meta-skill for validating the harness itself. Run it after editing any skill file. Three modes:
 - `lint` — validates YAML frontmatter and required fields
 - `spec [skill-name]` — runs behavioral spec tests against a specific skill
-- `catalog` — checks that all skills in `.claude/skills/` are indexed in the catalog
+- `catalog` — checks that all skills in `.pi/skills/` are indexed in the catalog
 
 The new `validate-skill-change.sh` hook reminds you to run `/skill-test` automatically when a skill file is modified.
 
@@ -1336,7 +1336,7 @@ The new `validate-skill-change.sh` hook reminds you to run `/skill-test` automat
 
 #### Model Tier Routing
 
-Skills are now explicitly assigned to Haiku, Sonnet, or Opus tiers based on task complexity. Read-only status checks use Haiku; complex multi-document synthesis uses Opus; everything else defaults to Sonnet. Tier assignments are documented in `.claude/docs/coordination-rules.md`.
+Skills are now explicitly assigned to Haiku, Sonnet, or Opus tiers based on task complexity. Read-only status checks use Haiku; complex multi-document synthesis uses Opus; everything else defaults to Sonnet. Tier assignments are documented in `.pi/docs/coordination-rules.md`.
 
 #### Directory CLAUDE.md Files
 
@@ -1346,13 +1346,13 @@ Three new directory-scoped CLAUDE.md files (`design/`, `src/`, `docs/`) provide 
 
 ### After Upgrading
 
-1. **Verify new hooks** are registered in `.claude/settings.json` — check for all four: `log-agent-stop.sh`, `notify.sh`, `post-compact.sh`, `validate-skill-change.sh`.
+1. **Verify new hooks** are registered in `.pi/settings.json` — check for all four: `log-agent-stop.sh`, `notify.sh`, `post-compact.sh`, `validate-skill-change.sh`.
 
 2. **Test the audit trail** by spawning any subagent — both start and stop events should appear in `production/session-logs/`.
 
 3. **Generate sprint-status.yaml** if you're in active production:
    ```
-   /sprint-plan status
+   /skill:sprint-plan status
    ```
 
 4. **Run `/adopt`** if you have existing GDDs or ADRs that predate this template version — it will identify which sections need to be added without overwriting your content.
@@ -1383,7 +1383,7 @@ The `/design-systems` skill was renamed to `/map-systems` for clarity
 |----------|---------|
 | **New skills** | `/design-system` (guided GDD authoring, section-by-section) |
 | **Renamed skills** | `/design-systems` → `/map-systems` (breaking rename) |
-| **New files** | `.claude/statusline.sh`, `.claude/settings.json` statusline config |
+| **New files** | `.pi/statusline.sh`, `.pi/settings.json` statusline config |
 | **Skill updates** | `/gate-check` — writes `production/stage.txt` on PASS, new phase definitions |
 | **Skill updates** | `brainstorm`, `start`, `design-review`, `project-stage-detect`, `setup-engine` — cross-reference fixes |
 | **Bug fixes** | `log-agent.sh`, `validate-commit.sh` — hook execution fixed |
@@ -1395,21 +1395,21 @@ The `/design-systems` skill was renamed to `/map-systems` for clarity
 
 **New files to add:**
 ```
-.claude/skills/design-system/SKILL.md
-.claude/statusline.sh
+.pi/skills/design-system/SKILL.md
+.pi/statusline.sh
 ```
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/map-systems/SKILL.md      ← was design-systems/SKILL.md
-.claude/skills/gate-check/SKILL.md
-.claude/skills/brainstorm/SKILL.md
-.claude/skills/start/SKILL.md
-.claude/skills/design-review/SKILL.md
-.claude/skills/project-stage-detect/SKILL.md
-.claude/skills/setup-engine/SKILL.md
-.claude/hooks/log-agent.sh
-.claude/hooks/validate-commit.sh
+.pi/skills/map-systems/SKILL.md      ← was design-systems/SKILL.md
+.pi/skills/gate-check/SKILL.md
+.pi/skills/brainstorm/SKILL.md
+.pi/skills/start/SKILL.md
+.pi/skills/design-review/SKILL.md
+.pi/skills/project-stage-detect/SKILL.md
+.pi/skills/setup-engine/SKILL.md
+.pi/hooks/log-agent.sh
+.pi/hooks/validate-commit.sh
 README.md
 docs/WORKFLOW-GUIDE.md
 UPGRADING.md
@@ -1417,22 +1417,22 @@ UPGRADING.md
 
 **Delete (replaced by rename):**
 ```
-.claude/skills/design-systems/   ← entire directory; replaced by map-systems/
+.pi/skills/design-systems/   ← entire directory; replaced by map-systems/
 ```
 
 ---
 
 ### Files: Merge Carefully
 
-#### `.claude/settings.json`
+#### `.pi/settings.json`
 
 The new version adds a `statusLine` configuration block pointing to
-`.claude/statusline.sh`. If you haven't customized `settings.json`, overwriting
+`.pi/statusline.sh`. If you haven't customized `settings.json`, overwriting
 is safe. Otherwise, add this block manually:
 
 ```json
 "statusLine": {
-  "script": ".claude/statusline.sh"
+  "script": ".pi/statusline.sh"
 }
 ```
 
@@ -1442,7 +1442,7 @@ is safe. Otherwise, add this block manually:
 
 #### Custom Status Line
 
-`.claude/statusline.sh` displays a 7-stage production pipeline breadcrumb in
+`.pi/statusline.sh` displays a 7-stage production pipeline breadcrumb in
 the terminal status line:
 
 ```
@@ -1471,7 +1471,7 @@ future sessions without requiring manual file edits.
 
 1. **Delete the old skill directory:**
    ```bash
-   rm -rf .claude/skills/design-systems/
+   rm -rf .pi/skills/design-systems/
    ```
 
 2. **Test the status line** by starting a Claude Code session — you should see
@@ -1479,8 +1479,8 @@ future sessions without requiring manual file edits.
 
 3. **Verify hook execution** still works:
    ```bash
-   bash .claude/hooks/log-agent.sh '{}' '{}'
-   bash .claude/hooks/validate-commit.sh '{}' '{}'
+   bash .pi/hooks/log-agent.sh '{}' '{}'
+   bash .pi/hooks/validate-commit.sh '{}' '{}'
    ```
 
 ---
@@ -1514,12 +1514,12 @@ versions directly with no risk to your project content.
 
 **New files to add:**
 ```
-.claude/skills/start/SKILL.md
-.claude/skills/map-systems/SKILL.md
-.claude/skills/design-system/SKILL.md
-.claude/docs/templates/systems-index.md
-.claude/hooks/detect-gaps.sh
-.claude/hooks/session-start.sh
+.pi/skills/start/SKILL.md
+.pi/skills/map-systems/SKILL.md
+.pi/skills/design-system/SKILL.md
+.pi/docs/templates/systems-index.md
+.pi/hooks/detect-gaps.sh
+.pi/hooks/session-start.sh
 production/session-state/.gitkeep
 docs/examples/README.md
 .github/ISSUE_TEMPLATE/bug_report.md
@@ -1529,30 +1529,30 @@ docs/examples/README.md
 
 **Existing files to overwrite (no user content):**
 ```
-.claude/skills/brainstorm/SKILL.md
-.claude/skills/design-review/SKILL.md
-.claude/skills/gate-check/SKILL.md
-.claude/skills/project-stage-detect/SKILL.md
-.claude/skills/setup-engine/SKILL.md
-.claude/skills/team-audio/SKILL.md
-.claude/skills/team-combat/SKILL.md
-.claude/skills/team-level/SKILL.md
-.claude/skills/team-narrative/SKILL.md
-.claude/skills/team-polish/SKILL.md
-.claude/skills/team-release/SKILL.md
-.claude/skills/team-ui/SKILL.md
-.claude/hooks/log-agent.sh
-.claude/hooks/pre-compact.sh
-.claude/hooks/session-stop.sh
-.claude/hooks/validate-assets.sh
-.claude/hooks/validate-commit.sh
-.claude/hooks/validate-push.sh
-.claude/rules/design-docs.md
-.claude/docs/hooks-reference.md
-.claude/docs/skills-reference.md
-.claude/docs/quick-start.md
-.claude/docs/directory-structure.md
-.claude/docs/context-management.md
+.pi/skills/brainstorm/SKILL.md
+.pi/skills/design-review/SKILL.md
+.pi/skills/gate-check/SKILL.md
+.pi/skills/project-stage-detect/SKILL.md
+.pi/skills/setup-engine/SKILL.md
+.pi/skills/team-audio/SKILL.md
+.pi/skills/team-combat/SKILL.md
+.pi/skills/team-level/SKILL.md
+.pi/skills/team-narrative/SKILL.md
+.pi/skills/team-polish/SKILL.md
+.pi/skills/team-release/SKILL.md
+.pi/skills/team-ui/SKILL.md
+.pi/hooks/log-agent.sh
+.pi/hooks/pre-compact.sh
+.pi/hooks/session-stop.sh
+.pi/hooks/validate-assets.sh
+.pi/hooks/validate-commit.sh
+.pi/hooks/validate-push.sh
+.pi/rules/design-docs.md
+.pi/docs/hooks-reference.md
+.pi/docs/skills-reference.md
+.pi/docs/quick-start.md
+.pi/docs/directory-structure.md
+.pi/docs/context-management.md
 docs/COLLABORATIVE-DESIGN-PRINCIPLE.md
 docs/WORKFLOW-GUIDE.md
 README.md
@@ -1560,20 +1560,20 @@ README.md
 
 **Agent files to overwrite** (if you haven't written custom prompts into them):
 ```
-.claude/agents/art-director.md
-.claude/agents/audio-director.md
-.claude/agents/creative-director.md
-.claude/agents/economy-designer.md
-.claude/agents/game-designer.md
-.claude/agents/level-designer.md
-.claude/agents/live-ops-designer.md
-.claude/agents/narrative-director.md
-.claude/agents/producer.md
-.claude/agents/systems-designer.md
-.claude/agents/technical-director.md
-.claude/agents/ux-designer.md
-.claude/agents/world-builder.md
-.claude/agents/writer.md
+.pi/agents/art-director.md
+.pi/agents/audio-director.md
+.pi/agents/creative-director.md
+.pi/agents/economy-designer.md
+.pi/agents/game-designer.md
+.pi/agents/level-designer.md
+.pi/agents/live-ops-designer.md
+.pi/agents/narrative-director.md
+.pi/agents/producer.md
+.pi/agents/systems-designer.md
+.pi/agents/technical-director.md
+.pi/agents/ux-designer.md
+.pi/agents/world-builder.md
+.pi/agents/writer.md
 ```
 
 If you *have* customized agent prompts, see "Merge carefully" below.
@@ -1600,19 +1600,19 @@ rules-reference, review-workflow).
 - Slimmer imports list (drop the 5 redundant `@` imports if present)
 - Updated collaboration protocol wording
 
-#### `.claude/docs/technical-preferences.md`
+#### `.pi/docs/technical-preferences.md`
 
 If you ran `/setup-engine`, this file has your engine config, naming
 conventions, and performance budgets. Keep all of it. The template version
 is just the empty placeholder.
 
-#### `.claude/docs/templates/game-concept.md`
+#### `.pi/docs/templates/game-concept.md`
 
 Minor structural update — a `## Next Steps` section was added pointing to
 `/map-systems`. Add that section to your copy if you want the updated
 guidance, but it's not required.
 
-#### `.claude/settings.json`
+#### `.pi/settings.json`
 
 Check whether the new version adds any permission rules you want. The change
 was minor (schema update). If you haven't customized your `settings.json`,
@@ -1656,8 +1656,8 @@ docs/MULTI-STAGE-DOCUMENT-WORKFLOW.md → content merged into context-management
 4. **Test hook execution** — if you're on Windows, verify the new hooks run
    without errors in Git Bash:
    ```bash
-   bash .claude/hooks/detect-gaps.sh '{}' '{}'
-   bash .claude/hooks/session-start.sh '{}' '{}'
+   bash .pi/hooks/detect-gaps.sh '{}' '{}'
+   bash .pi/hooks/session-start.sh '{}' '{}'
    ```
 
 ---

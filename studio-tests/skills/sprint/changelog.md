@@ -1,4 +1,4 @@
-# Skill Test Spec: /changelog
+# Skill Test Spec: /skill:changelog
 
 ## Skill Summary
 

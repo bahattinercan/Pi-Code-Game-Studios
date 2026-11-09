@@ -1,4 +1,4 @@
-# Skill Test Spec: /story-readiness
+# Skill Test Spec: /skill:story-readiness
 
 ## Skill Summary
 
@@ -281,7 +281,7 @@ Fixture defaults.
 2. Both verdicts are BLOCKED, listing the ADR under Blockers: the decision no longer
    stands
 3. A's `Fix:` reads `BLOCKED: ADR-0006 is Superseded by ADR-0009 — point the story
-   at ADR-0009 (edit its ADR field — /create-stories never rewrites an existing
+   at ADR-0009 (edit its ADR field — /skill:create-stories never rewrites an existing
    story).` B's names `ADR-0008` with the status `Deprecated`
 4. Nothing is written: the skill only tells the user to edit the story's ADR field
 

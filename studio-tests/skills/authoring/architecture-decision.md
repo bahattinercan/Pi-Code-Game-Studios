@@ -1,4 +1,4 @@
-# Skill Test Spec: /architecture-decision
+# Skill Test Spec: /skill:architecture-decision
 
 ## Skill Summary
 
@@ -138,7 +138,7 @@ Fixture defaults.
 **Fixture:**
 - Scenario (a): `project.yaml` has `modes.review_mode: lean` and `engine.name: Godot`
 - Scenario (b): same project, invoked with `--review solo`
-- Scenario (c): invoked with `--review solo` on a project with no engine configured — `engine.name` unset and `.claude/docs/technical-preferences.md` still `[TO BE CONFIGURED]`; at Step 1's prompt the user carries on without running `/setup-engine`
+- Scenario (c): invoked with `--review solo` on a project with no engine configured — `engine.name` unset and `.pi/docs/technical-preferences.md` still `[TO BE CONFIGURED]`; at Step 1's prompt the user carries on without running `/setup-engine`
 - `design/gdd/` holds no GDD, so the ADR's GDD Requirements Addressed names none
 
 **Input:** (a) `/architecture-decision save-format` (b) and (c) `/architecture-decision save-format --review solo`

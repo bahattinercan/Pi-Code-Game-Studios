@@ -75,8 +75,8 @@ A tier is the directory a spec lives in. The rubric category is the agent's
 
 1. Read `catalog.yaml` to get the `spec:` path and `category:` — from the
    `skills:` entry for a skill, the `agents:` entry for an agent
-2. Read the skill at `.claude/skills/[name]/SKILL.md` and every file in its
-   `references/` folder, or the agent at `.claude/agents/[name].md`
+2. Read the skill at `.pi/skills/[name]/SKILL.md` and every file in its
+   `references/` folder, or the agent at `.pi/agents/[name].md`
 3. Read the project `CLAUDE.md` and the files it imports with `@`: every
    subagent receives them, so a rule stated there (for example a redirect in
    `coordination-rules.md`) counts as the skill's or agent's own
@@ -99,7 +99,7 @@ modes:
 
 - A setting the case's Fixture names wins over the block, and an explicit
   sub-knob (`modes.workflow`, `modes.review_mode`, `qa.level`, …) wins over the
-  `rigor` preset (`.claude/docs/config-resolution.md` § Defaults).
+  `rigor` preset (`.pi/docs/config-resolution.md` § Defaults).
 - A case that says `project.yaml` sets no `modes` keys, or that there is no
   `project.yaml`, runs without the block: it tests the unset defaults.
 - There is no `project.local.yaml` unless the case names one.
@@ -127,7 +127,7 @@ correct the spec toward the right behavior, not toward what the skill currently 
 
 ## This folder is deletable
 
-Nothing in `.claude/` imports from here, and every other CCGS skill and agent works
+Nothing in `.pi/` imports from here, and every other CCGS skill and agent works
 without it — but `/skill-test` and `/skill-improve` read it by path. Without it,
 `/skill-test static` still works, `/skill-test spec` and `/skill-test category`
 stop working, `/skill-test audit` reports that no catalog exists, and

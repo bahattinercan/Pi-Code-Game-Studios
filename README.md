@@ -9,10 +9,10 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <a href=".claude/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".claude/skills"><img src="https://img.shields.io/badge/skills-74-green" alt="74 Skills"></a>
-  <a href=".claude/hooks"><img src="https://img.shields.io/badge/hooks-15-orange" alt="15 Hooks"></a>
-  <a href=".claude/rules"><img src="https://img.shields.io/badge/rules-14-red" alt="14 Rules"></a>
+  <a href=".pi/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
+  <a href=".pi/skills"><img src="https://img.shields.io/badge/skills-74-green" alt="74 Skills"></a>
+  <a href=".pi/hooks"><img src="https://img.shields.io/badge/hooks-15-orange" alt="15 Hooks"></a>
+  <a href=".pi/rules"><img src="https://img.shields.io/badge/rules-14-red" alt="14 Rules"></a>
   <a href="https://code.claude.com/docs"><img src="https://img.shields.io/badge/built%20for-Claude%20Code-f5f5f5?logo=anthropic" alt="Built for Claude Code"></a>
   <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20this%20project-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy Me a Coffee"></a>
   <a href="https://github.com/sponsors/Donchitos"><img src="https://img.shields.io/badge/GitHub%20Sponsors-Support%20this%20project-ea4aaa?logo=githubsponsors&logoColor=white" alt="GitHub Sponsors"></a>
@@ -243,13 +243,13 @@ outside rigor and is likewise personally overridable.
 View or change any setting with the `/settings` skill:
 
 ```
-/settings                              # view effective config
-/settings modes.review_mode            # view one setting
-/settings modes.rigor=full             # write to project.yaml (team-wide)
-/settings --local modes.review_mode=solo   # write to project.local.yaml (just you)
+/skill:settings                              # view effective config
+/skill:settings modes.review_mode            # view one setting
+/skill:settings modes.rigor=full             # write to project.yaml (team-wide)
+/skill:settings --local modes.review_mode=solo   # write to project.local.yaml (just you)
 ```
 
-Full schema and per-setting behavior: `.claude/docs/effects-map.md`.
+Full schema and per-setting behavior: `.pi/docs/effects-map.md`.
 
 ## Upgrading
 
@@ -261,7 +261,7 @@ versions, and which files are safe to overwrite vs. which need a manual merge.
 
 ```
 CLAUDE.md                           # Master configuration
-.claude/
+.pi/
   settings.json                     # Hooks, permissions, safety rules
   agents/                           # 49 agent definitions (markdown + YAML frontmatter)
   skills/                           # 74 slash commands (subdirectory per skill)
@@ -271,7 +271,7 @@ CLAUDE.md                           # Master configuration
   rules/                            # 14 path-scoped coding standards
   statusline.sh                     # Status line script (context%, model, stage, epic breadcrumb)
   docs/
-    workflow-catalog.yaml           # 7-phase pipeline definition (read by /help)
+    workflow-catalog.yaml           # 7-phase pipeline definition (read by /skill:help)
     templates/                      # 62 document templates (+ per-section guidance)
 src/                                # Game source code (Godot). The code root is
                                     #   ENGINE-SPECIFIC: Unity compiles only
@@ -294,11 +294,11 @@ you check that an edited or newly written skill still holds up — a catalog of 
 templates for writing specs of your own.
 
 ```
-/skill-test static [name]     # structural linter — 7 compliance checks
-/skill-test category [name]   # category-specific quality rubric
-/skill-test spec [name]       # behavioral spec assertions
-/skill-test audit             # coverage report across skills and agents
-/skill-improve [name]         # test-fix-retest loop; keeps or reverts on score change
+/skill:skill-test static [name]     # structural linter — 7 compliance checks
+/skill:skill-test category [name]   # category-specific quality rubric
+/skill:skill-test spec [name]       # behavioral spec assertions
+/skill:skill-test audit             # coverage report across skills and agents
+/skill:skill-improve [name]         # test-fix-retest loop; keeps or reverts on score change
 ```
 
 It tests the *framework*, never your game — game tests live in `tests/`.
@@ -330,7 +330,7 @@ You stay in control. The agents provide structure and expertise, not autonomy.
 That is how a terminal session started at the project root behaves out of the
 box. The `guided` and `autonomous` automation settings, and Claude Code's own
 auto mode, trade some of these prompts for speed; see
-[setup-requirements.md](.claude/docs/setup-requirements.md) for the routes into
+[setup-requirements.md](.pi/docs/setup-requirements.md) for the routes into
 auto mode.
 
 ### Automated Safety
@@ -353,7 +353,7 @@ auto mode.
 | `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
 | `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
 | `validate-agent-artifact.sh` | Agent stops | Warns when a subagent stops without writing the file its brief named |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.claude/skills/` change |
+| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.pi/skills/` change |
 
 > **Note**: `validate-commit.sh`, `validate-push.sh`, `validate-read.sh`, `validate-write.sh`, `validate-registry.sh`, `validate-assets.sh` and `validate-skill-change.sh` fire on every Bash, PowerShell, Read, Write or Edit tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
 

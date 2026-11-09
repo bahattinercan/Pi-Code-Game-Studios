@@ -1,4 +1,4 @@
-# Skill Test Spec: /design-system
+# Skill Test Spec: /skill:design-system
 
 ## Skill Summary
 

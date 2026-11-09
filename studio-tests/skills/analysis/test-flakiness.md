@@ -1,4 +1,4 @@
-# Skill Test Spec: /test-flakiness
+# Skill Test Spec: /skill:test-flakiness
 
 ## Skill Summary
 

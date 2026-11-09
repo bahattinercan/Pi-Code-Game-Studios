@@ -1,4 +1,4 @@
-# Skill Test Spec: /smoke-check
+# Skill Test Spec: /skill:smoke-check
 
 ## Skill Summary
 

@@ -1,4 +1,4 @@
-# Skill Test Spec: /sprint-status
+# Skill Test Spec: /skill:sprint-status
 
 ## Skill Summary
 
@@ -109,7 +109,7 @@ Fixture defaults.
 
 ---
 
-### Case 3: No Sprint Files — Guidance to run /sprint-plan
+### Case 3: No Sprint Files — Guidance to run /skill:sprint-plan
 
 **Fixture:**
 - `production/sprints/` directory is absent
@@ -257,7 +257,7 @@ Fixture defaults.
 - [ ] Presents the story status table before the Burndown verdict
 - [ ] Does not ask for approval
 - [ ] Ends with at most one recommended next step
-- [ ] Declares `model: haiku` (when a declared tier is used: `.claude/docs/model-tiers.md`)
+- [ ] Declares `model: haiku` (when a declared tier is used: `.pi/docs/model-tiers.md`)
 
 ---
 

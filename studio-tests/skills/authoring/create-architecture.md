@@ -1,4 +1,4 @@
-# Skill Test Spec: /create-architecture
+# Skill Test Spec: /skill:create-architecture
 
 ## Skill Summary
 
@@ -53,7 +53,7 @@ Review mode comes from the resolved `review_mode` (`modes.review_mode` in
 In `full` mode: after `docs/architecture/architecture.md` is written, TD-ARCHITECTURE
 (`technical-director`) and LP-FEASIBILITY (`lead-programmer`) review it. Each is
 a spawned agent that reads its own gate file
-(`.claude/docs/director-gates/td-architecture.md`, `lp-feasibility.md`); their
+(`.pi/docs/director-gates/td-architecture.md`, `lp-feasibility.md`); their
 inputs are independent, so they spawn together and both verdicts are collected
 before Step 3 presents them. The parent never reads those files: it passes
 TD-ARCHITECTURE the document path, the Technical Requirements Baseline (TR-IDs

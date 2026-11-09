@@ -1,4 +1,4 @@
-# Skill Test Spec: /test-helpers
+# Skill Test Spec: /skill:test-helpers
 
 ## Skill Summary
 
@@ -87,7 +87,7 @@ Fixture defaults.
 
 ---
 
-### Case 2: Engine Not Configured — Stops with /setup-engine
+### Case 2: Engine Not Configured — Stops with /skill:setup-engine
 
 **Fixture:**
 - `project.yaml` has no `engine` block; `technical-preferences.md` shows

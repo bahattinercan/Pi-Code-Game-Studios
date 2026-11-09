@@ -1,4 +1,4 @@
-# Skill Test Spec: /localize
+# Skill Test Spec: /skill:localize
 
 ## Skill Summary
 
@@ -181,7 +181,7 @@ Fixture defaults.
 ### Case 6: Scan With an Unresolved Code Root — NOT ASSESSED, never "no hardcoded strings"
 
 **Fixture:**
-- `project.yaml` has no `engine.name`; `.claude/docs/technical-preferences.md`
+- `project.yaml` has no `engine.name`; `.pi/docs/technical-preferences.md`
   reads `[TO BE CONFIGURED]`
 - Both `src/` and `Assets/` exist and hold UI code with hardcoded strings
   (ambiguous tree)

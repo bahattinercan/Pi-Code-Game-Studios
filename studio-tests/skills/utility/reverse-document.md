@@ -1,4 +1,4 @@
-# Skill Test Spec: /reverse-document
+# Skill Test Spec: /skill:reverse-document
 
 ## Skill Summary
 
@@ -211,7 +211,7 @@ Fixture defaults.
 **Expected behavior:**
 1. The tier resolves to `minimal` from the config block, not assumed
 2. Findings are presented and answered before any draft
-3. The draft is a one-page game brief in the `.claude/docs/templates/game-brief.md`
+3. The draft is a one-page game brief in the `.pi/docs/templates/game-brief.md`
    format — not a GDD — for this one system
 4. The provenance banner sits directly under the title
 5. Skill asks "May I write this to `design/health-system-brief.md`?" — not
@@ -239,7 +239,7 @@ Fixture defaults.
 **Expected behavior:**
 1. The tier resolves to `minimal` from the config block; the path is the code root itself, so the target is the whole game, not one system
 2. Findings are presented and answered before any draft
-3. The draft is a one-page game brief in the `.claude/docs/templates/game-brief.md` format covering the whole game (pitch, core loop, what is built), not a GDD and not a brief for one system
+3. The draft is a one-page game brief in the `.pi/docs/templates/game-brief.md` format covering the whole game (pitch, core loop, what is built), not a GDD and not a brief for one system
 4. The provenance banner sits directly under the title
 5. Skill asks "May I write this to `design/game-brief.md`?" — not `design/gdd/`, and not a `design/[system-name]-brief.md` path
 6. File written on approval; verdict COMPLETE

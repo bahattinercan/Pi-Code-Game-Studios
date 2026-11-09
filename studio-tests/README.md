@@ -32,7 +32,7 @@ studio-tests/
 ├── README.md              ← you are here
 ├── CLAUDE.md              ← tells Claude how to use this framework
 ├── catalog.yaml           ← master registry: all 74 skills + 49 agents, coverage tracking
-├── quality-rubric.md      ← category-specific pass/fail metrics for /skill-test category
+├── quality-rubric.md      ← category-specific pass/fail metrics for /skill:skill-test category
 │
 ├── skills/                ← behavioral spec files for all 74 skills
 │   ├── gate/              ← gate category specs
@@ -60,7 +60,7 @@ studio-tests/
 │   ├── skill-test-spec.md ← template for skill behavioral specs
 │   └── agent-test-spec.md ← template for agent behavioral specs
 │
-└── results/               ← test run outputs (written by /skill-test spec; not gitignored — add it to .gitignore to keep them out of commits)
+└── results/               ← test run outputs (written by /skill:skill-test spec; not gitignored — add it to .gitignore to keep them out of commits)
 ```
 
 ---
@@ -72,36 +72,36 @@ All testing is driven by two skills already in the framework:
 ### Check structural compliance
 
 ```
-/skill-test static [skill-name]     # Check one skill (7 checks)
-/skill-test static all              # Check all 74 skills
+/skill:skill-test static [skill-name]     # Check one skill (7 checks)
+/skill:skill-test static all              # Check all 74 skills
 ```
 
 ### Run a behavioral spec test
 
 ```
-/skill-test spec gate-check         # Evaluate a skill against its written spec
-/skill-test spec design-review
-/skill-test spec creative-director  # Agents too: evaluates agents/directors/creative-director.md
+/skill:skill-test spec gate-check         # Evaluate a skill against its written spec
+/skill:skill-test spec design-review
+/skill:skill-test spec creative-director  # Agents too: evaluates agents/directors/creative-director.md
 ```
 
 ### Check against category rubric
 
 ```
-/skill-test category gate-check     # Evaluate one skill against its category metrics
-/skill-test category art-director   # Or one agent, against its agent category
-/skill-test category all            # Run rubric checks across every categorized skill and agent
+/skill:skill-test category gate-check     # Evaluate one skill against its category metrics
+/skill:skill-test category art-director   # Or one agent, against its agent category
+/skill:skill-test category all            # Run rubric checks across every categorized skill and agent
 ```
 
 ### See full coverage picture
 
 ```
-/skill-test audit                   # Skills + agents: has-spec, last tested, result
+/skill:skill-test audit                   # Skills + agents: has-spec, last tested, result
 ```
 
 ### Improve a failing skill
 
 ```
-/skill-improve gate-check           # Test → diagnose → propose fix → retest loop
+/skill:skill-improve gate-check           # Test → diagnose → propose fix → retest loop
 ```
 
 ---

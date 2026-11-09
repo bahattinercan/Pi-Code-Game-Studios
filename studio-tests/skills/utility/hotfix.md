@@ -1,4 +1,4 @@
-# Skill Test Spec: /hotfix
+# Skill Test Spec: /skill:hotfix
 
 ## Skill Summary
 
@@ -99,7 +99,7 @@ Fixture defaults.
 8. Merges to `main`, tags `v1.2.1` on the fixed build, and confirms the fix is on `main`
 9. Asks "May I update `production/qa/bugs/BUG-0031.md` …?" before setting it to
    `Fixed — Pending Verification`, then prints "Hotfix Deployed: boss-arena-crash"
-   with `Tag: v1.2.1` and `Next: /bug-report verify`
+   with `Tag: v1.2.1` and `Next: /skill:bug-report verify`
 
 **Assertions:**
 - [ ] The hotfix record is written before the branch is created

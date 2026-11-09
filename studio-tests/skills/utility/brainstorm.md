@@ -1,4 +1,4 @@
-# Skill Test Spec: /brainstorm
+# Skill Test Spec: /skill:brainstorm
 
 ## Skill Summary
 

@@ -1,4 +1,4 @@
-# Skill Test Spec: /asset-audit
+# Skill Test Spec: /skill:asset-audit
 
 ## Skill Summary
 
@@ -260,14 +260,14 @@ Fixture defaults.
 ### Case 9: Engine Unresolved — Stop before scanning
 
 **Fixture:**
-- `project.yaml` has no `engine.name`; `.claude/docs/technical-preferences.md` reads `[TO BE CONFIGURED]`
+- `project.yaml` has no `engine.name`; `.pi/docs/technical-preferences.md` reads `[TO BE CONFIGURED]`
 - Both `src/` and `Source/` exist, so the tree does not decide the engine
 - `design/art/art-bible.md` has asset standards; `assets/art/` holds PNG files
 
 **Input:** `/asset-audit`
 
 **Expected behavior:**
-1. Phase 2 cannot resolve the engine or its code root per `.claude/docs/code-root-resolution.md`
+1. Phase 2 cannot resolve the engine or its code root per `.pi/docs/code-root-resolution.md`
 2. The skill stops with `NOT ASSESSED — engine unresolved`, naming `/setup-engine`
 3. No asset root is guessed, so the Godot naming patterns are not applied and no section is reported clean
 

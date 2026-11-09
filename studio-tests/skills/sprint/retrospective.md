@@ -1,4 +1,4 @@
-# Skill Test Spec: /retrospective
+# Skill Test Spec: /skill:retrospective
 
 ## Skill Summary
 

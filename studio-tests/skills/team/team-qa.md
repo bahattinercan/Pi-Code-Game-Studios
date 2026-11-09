@@ -1,4 +1,4 @@
-# Skill Test Spec: /team-qa
+# Skill Test Spec: /skill:team-qa
 
 ## Skill Summary
 
@@ -106,7 +106,7 @@ Fixture defaults.
 **Expected behavior:**
 1. Phase 1 completes normally
 2. Phase 2: Spawns `qa-lead` via Agent; qa-lead reads the smoke report and records `Smoke Check: FAIL` with both failures listed prominently
-3. `AskUserQuestion` "QA Strategy Review" is presented, including the option "Smoke check failed — fix issues and re-run /team-qa"
+3. `AskUserQuestion` "QA Strategy Review" is presented, including the option "Smoke check failed — fix issues and re-run /skill:team-qa"
 4. Skill does not proceed to Phase 3: it surfaces the failures from the smoke report and stops — the user must fix them, re-run `/smoke-check sprint`, and then re-run `/team-qa`
 5. No QA plan, test cases, manual QA or sign-off report is produced; a partial report is given
 6. Verdict: BLOCKED — smoke check failed

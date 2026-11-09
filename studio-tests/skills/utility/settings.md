@@ -1,4 +1,4 @@
-# Skill Test Spec: /settings
+# Skill Test Spec: /skill:settings
 
 ## Skill Summary
 
@@ -16,7 +16,7 @@ Every write is validated against the schema enums first, then confirmed with an
 `AskUserQuestion` approval gate (`[A] Yes, write` / `[B] No, cancel`). A
 `project.yaml` write is a `schema_changes` decision, so it is confirmed even in
 `autonomous` mode. `--local` refuses a key that is not on the local-override
-whitelist. A setting that `.claude/docs/effects-map.md` marks with a
+whitelist. A setting that `.pi/docs/effects-map.md` marks with a
 `> ### RESERVED` banner is stored when asked, but every form says nothing reads
 it. The skill gives no verdict: it prints and writes configuration. No director
 gates apply.
@@ -32,7 +32,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 - [ ] No verdict keyword is required: the output is configuration, not a judgement (`/skill-test static` Check 3 gives a WARN, never a FAIL, for this skill)
 - [ ] Both write phases ask for approval with `AskUserQuestion` before the `Edit` or `Write`
 - [ ] The reserved set is derived from `effects-map.md`'s `> ### RESERVED` headings, not hardcoded
-- [ ] Points to `.claude/docs/settings-guidance.md` for which value to choose
+- [ ] Points to `.pi/docs/settings-guidance.md` for which value to choose
 
 ---
 
@@ -109,7 +109,7 @@ Fixture defaults.
 
 **Expected behavior:**
 1. Prints `Effective value: standard` and `Source: derived from rigor: standard`
-2. Adds the line `Set explicitly with: /settings qa.level=<value>   (an explicit value wins over rigor)`
+2. Adds the line `Set explicitly with: /skill:settings qa.level=<value>   (an explicit value wins over rigor)`
 3. `Locally overridden: no`; the whitelist line reads `locked — project-wide`
 
 **Assertions:**
@@ -219,7 +219,7 @@ Fixture defaults.
 ### Case 7: Reserved setting — stored on request, flagged on every form
 
 **Fixture:**
-- `.claude/docs/effects-map.md` is the live file; pick a key whose section
+- `.pi/docs/effects-map.md` is the live file; pick a key whose section
   carries the `> ### RESERVED` banner (`accessibility.target` when this spec
   was written — re-derive it with the skill's own grep)
 - `project.yaml` does not set that key; the user answers `[A] Yes, write`

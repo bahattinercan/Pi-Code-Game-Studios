@@ -1,4 +1,4 @@
-# Skill Test Spec: /day-one-patch
+# Skill Test Spec: /skill:day-one-patch
 
 ## Skill Summary
 

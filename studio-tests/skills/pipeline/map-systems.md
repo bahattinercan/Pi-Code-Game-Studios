@@ -1,4 +1,4 @@
-# Skill Test Spec: /map-systems
+# Skill Test Spec: /skill:map-systems
 
 ## Skill Summary
 
@@ -7,7 +7,7 @@
 enumerates explicit and implicit systems, maps dependencies into layers
 (Foundation → Core → Feature → Presentation → Polish), assigns priority tiers
 (MVP / Vertical Slice / Alpha / Full Vision), derives a design order, and writes
-`design/gdd/systems-index.md` from `.claude/docs/templates/systems-index.md` after
+`design/gdd/systems-index.md` from `.pi/docs/templates/systems-index.md` after
 approval. Each collaborative phase ends with an `AskUserQuestion`.
 
 Three director gates run in sequence, each in its own phase:

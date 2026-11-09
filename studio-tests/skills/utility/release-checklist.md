@@ -1,4 +1,4 @@
-# Skill Test Spec: /release-checklist
+# Skill Test Spec: /skill:release-checklist
 
 ## Skill Summary
 
@@ -159,7 +159,7 @@ Fixture defaults.
 **Expected behavior:**
 1. The code root is unresolved, so no scan runs
 2. Codebase Health reads `NOT ASSESSED — code root unresolved`
-   (`.claude/docs/code-root-resolution.md`), not `0` TODO/FIXME/HACK
+   (`.pi/docs/code-root-resolution.md`), not `0` TODO/FIXME/HACK
 3. The test line reads `Test results: NOT ASSESSED — no test output or CI logs
    found` rather than being omitted
 4. The rest of the checklist is still generated and offered for writing

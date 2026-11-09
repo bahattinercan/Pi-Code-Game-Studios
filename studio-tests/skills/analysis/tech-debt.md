@@ -1,4 +1,4 @@
-# Skill Test Spec: /tech-debt
+# Skill Test Spec: /skill:tech-debt
 
 ## Skill Summary
 
@@ -137,14 +137,14 @@ Fixture defaults.
 ### Case 3b: Code Root Unresolved — NOT ASSESSED, nothing scanned on a guess
 
 **Fixture:**
-- `project.yaml` has no `engine.name`; `.claude/docs/technical-preferences.md` reads `[TO BE CONFIGURED]`
+- `project.yaml` has no `engine.name`; `.pi/docs/technical-preferences.md` reads `[TO BE CONFIGURED]`
 - Both `src/` and `Source/` exist and hold source files, so the tree does not decide the root
 - `docs/tech-debt-register.md` exists with 3 entries
 
 **Input:** `/tech-debt scan`
 
 **Expected behavior:**
-1. The code root cannot be resolved per `.claude/docs/code-root-resolution.md`
+1. The code root cannot be resolved per `.pi/docs/code-root-resolution.md`
 2. Skill reports `NOT ASSESSED — code root unresolved` and stops
 3. Neither directory is scanned on a guess; no "May I write" prompt, no register write, no COMPLETE verdict
 

@@ -1,4 +1,4 @@
-# Skill Test Spec: /test-setup
+# Skill Test Spec: /skill:test-setup
 
 ## Skill Summary
 
@@ -139,7 +139,7 @@ Fixture defaults.
 
 ---
 
-### Case 4: No Engine Configured — Redirects to /setup-engine
+### Case 4: No Engine Configured — Redirects to /skill:setup-engine
 
 **Fixture:**
 - `project.yaml` has no `engine.name`; `technical-preferences.md` shows

@@ -1,4 +1,4 @@
-# Skill Test Spec: /soak-test
+# Skill Test Spec: /skill:soak-test
 
 ## Skill Summary
 

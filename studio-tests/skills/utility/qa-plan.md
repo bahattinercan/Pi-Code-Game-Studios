@@ -1,4 +1,4 @@
-# Skill Test Spec: /qa-plan
+# Skill Test Spec: /skill:qa-plan
 
 ## Skill Summary
 

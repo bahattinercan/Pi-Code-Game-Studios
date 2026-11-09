@@ -1,4 +1,4 @@
-# Skill Test Spec: /balance-check
+# Skill Test Spec: /skill:balance-check
 
 ## Skill Summary
 

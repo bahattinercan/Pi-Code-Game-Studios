@@ -1,4 +1,4 @@
-# Skill Test Spec: /patch-notes
+# Skill Test Spec: /skill:patch-notes
 
 ## Skill Summary
 
@@ -6,17 +6,17 @@
 player-facing patch notes. Before reading any history it classifies recent
 commits as Game or Framework / maintenance (Unclear counts as Framework), uses
 only the Game commits, and says how many of how many it used. It gathers change
-data from `production/releases/[version]/changelog.md`, the version's entry in
+data from `production/releases/[version]/skill:changelog.md`, the version's entry in
 `docs/CHANGELOG.md`, and — as a fallback — `git log` from the previous release
-tag. It checks for a tone guide (`.claude/docs/technical-preferences.md`,
+tag. It checks for a tone guide (`.pi/docs/technical-preferences.md`,
 `docs/PATCH-NOTES-STYLE.md`, `design/community/tone-guide.md`) and a patch-notes
 template (`docs/patch-notes-template.md`,
-`.claude/docs/templates/patch-notes-template.md`), removes internal-only
+`.pi/docs/templates/patch-notes-template.md`), removes internal-only
 changes, and translates the rest into player language in Brief, Detailed
 (default) or Full style — or in the template's structure when one exists, saying
 which template it used. No director gates are used. The skill asks "May I write
 these patch notes to `docs/patch-notes/[version].md`, and an archive copy to
-`production/releases/[version]/patch-notes.md`?" — naming both files — and on
+`production/releases/[version]/skill:patch-notes.md`?" — naming both files — and on
 approval writes both. Verdicts:
 COMPLETE (notes generated and saved) or BLOCKED (no changelog data and no git
 history, or no Game commit in the history).
@@ -124,7 +124,7 @@ Fixture defaults.
   holds the matching Game commits
 - `design/community/tone-guide.md` exists with guidance: "upbeat, encouraging tone; avoid passive voice"
 - `docs/PATCH-NOTES-STYLE.md` does not exist and
-  `.claude/docs/technical-preferences.md` has no tone, voice or style fields
+  `.pi/docs/technical-preferences.md` has no tone, voice or style fields
 - No patch-notes template exists
 
 **Input:** `/patch-notes v0.4.0`
@@ -148,7 +148,7 @@ Fixture defaults.
 ### Case 4: Patch Note Template Exists — Used instead of the built-in styles
 
 **Fixture:**
-- `.claude/docs/templates/patch-notes-template.md` exists with a header block,
+- `.pi/docs/templates/patch-notes-template.md` exists with a header block,
   the sections `## New`, `## Fixed` and `## Known Issues`, and a footer
 - `docs/CHANGELOG.md` has a `v0.4.0` entry with one new feature and one bug fix,
   both player-facing; git history holds the matching Game commits
@@ -157,7 +157,7 @@ Fixture defaults.
 
 **Expected behavior:**
 1. Skill globs `docs/patch-notes-template.md` and
-   `.claude/docs/templates/patch-notes-template.md`; finds and reads the second
+   `.pi/docs/templates/patch-notes-template.md`; finds and reads the second
 2. Skill uses the template as the output structure instead of the built-in
    Brief / Detailed / Full templates — even though `--style full` was passed
 3. The new feature goes under `## New`, the fix under `## Fixed`
@@ -170,7 +170,7 @@ Fixture defaults.
 - [ ] The template's structure replaces the built-in style — no "Developer Commentary" section from the Full style despite `--style full`
 - [ ] The new feature is placed under `## New` and the fix under `## Fixed`
 - [ ] The template's header and footer are preserved in the output
-- [ ] Output notes that `.claude/docs/templates/patch-notes-template.md` was used, and that it replaced the requested `--style full`
+- [ ] Output notes that `.pi/docs/templates/patch-notes-template.md` was used, and that it replaced the requested `--style full`
 
 ---
 
@@ -252,7 +252,7 @@ Fixture defaults.
 ## Protocol Compliance
 
 - [ ] Runs the provenance check before reading history, uses only Game commits, and says how many were used
-- [ ] Reads the version's changelog entry (`production/releases/[version]/changelog.md`, `docs/CHANGELOG.md`) before falling back to `git log`
+- [ ] Reads the version's changelog entry (`production/releases/[version]/skill:changelog.md`, `docs/CHANGELOG.md`) before falling back to `git log`
 - [ ] Filters entries to player-facing items only, and lists the excluded internal changes for review
 - [ ] Rewrites entries in plain language without internal IDs
 - [ ] Always asks "May I write" before writing patch notes

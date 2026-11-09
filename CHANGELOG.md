@@ -38,12 +38,12 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   since ("re-capture it"), or say "no stamp" for older evidence. They report it
   and never block on it (#135, proposed by @jiangshoujie).
 - **Stories list their files.** The new story template,
-  `.claude/docs/templates/story.md`, has a `## Files` section: `/create-stories`
+  `.pi/docs/templates/story.md`, has a `## Files` section: `/create-stories`
   lists the planned files, `/dev-story` replaces them with the files it changed,
   and `/story-done` checks scope against the list. Its scope check used to look
   for a list no story had, so it could not run.
 - **Helper scripts answer what skills worked out by hand.** New scripts in
-  `.claude/scripts/` read story facts, ADR status, a Markdown section to its next
+  `.pi/scripts/` read story facts, ADR status, a Markdown section to its next
   heading, the project's stage, the session checkpoint and config writes. The
   rebuilt skills and `/settings` use them, so the same question gets the same
   answer each time and a long section is never cut off by a fixed-size grep.
@@ -73,7 +73,7 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   Prerequisites section and in Risks, without blocking (based on an idea in #76
   by @FreedomPortal).
 - **Rules for engine scene and asset files**, which a bad hand edit can corrupt.
-  The new path-scoped `.claude/rules/scene-files.md` covers `.tscn`, `.tres`,
+  The new path-scoped `.pi/rules/scene-files.md` covers `.tscn`, `.tres`,
   `.unity`, `.prefab` and `Assets/**/*.asset`: use the editor where you can,
   never invent a Godot `uid://`, never hand-edit Unity YAML while an Editor is
   reachable. `settings.json` denies `Edit(**/*.uasset)` and `Edit(**/*.umap)`,
@@ -88,7 +88,7 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   setting depends on something only Claude Code provides. These never change a
   verdict. `/skill-test` and `/skill-improve` now say what a pass proves: they
   read files and never run the skill.
-- **New templates** in `.claude/docs/templates/` for layouts the skills write,
+- **New templates** in `.pi/docs/templates/` for layouts the skills write,
   from bug reports and certification checklists to `/help` output and
   `sprint-status.yaml`. `/create-stories` writes from `story.md`; the other
   skills do not use the new layouts yet. The GDD template is now exactly the
@@ -136,8 +136,8 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   `settings.json` sets `worktree.baseRef: "head"`, so a worktree (the
   prototyper's, an isolated subagent's, `claude --worktree`) starts from your
   commit, not the remote's default branch. The new `.worktreeinclude` copies
-  `project.local.yaml`, `CLAUDE.local.md` and `.claude/settings.local.json` into
-  it, and `.gitignore` ignores `.claude/worktrees/`. The prototyper names its
+  `project.local.yaml`, `CLAUDE.local.md` and `.pi/settings.local.json` into
+  it, and `.gitignore` ignores `.pi/worktrees/`. The prototyper names its
   worktree and branch, lists uncommitted files it cannot see and asks you to
   commit the ones it needs, pulls Git LFS files when the project uses LFS, and
   says which checks it could not run.
@@ -163,7 +163,7 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   still fails a story with no estimate at `standard` and `full`, and a new story
   now has one.
 - **`yaml-helper.sh` answers six read-only lookups directly**, run from the
-  project root (`bash .claude/hooks/yaml-helper.sh resolve_setting <key>` and
+  project root (`bash .pi/hooks/yaml-helper.sh resolve_setting <key>` and
   five more); `/settings` and `/perf-profile` use them.
 - **`.gitattributes` keeps awk programs and `.worktreeinclude` LF** on every
   checkout, `core.autocrlf=true` on Windows included.
@@ -195,9 +195,9 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   `archive/` (#133), checks the copy the commit takes, and reads a PowerShell
   `git add` path with backslashes. `gdd-structure-check.sh` names sections
   holding only `[To be designed]` as placeholders.
-- **Session start.** A stray `.claude/.claude/` no longer makes hooks write
-  `.claude/production/`, and neither does a `CLAUDE_PROJECT_DIR` that points at
-  `.claude/` itself. The checkpoint preview says when it was written on
+- **Session start.** A stray `.pi/.pi/` no longer makes hooks write
+  `.pi/production/`, and neither does a `CLAUDE_PROJECT_DIR` that points at
+  `.pi/` itself. The checkpoint preview says when it was written on
   another branch. "Open bugs" counts only bugs that are not Closed or Verified
   Fixed. The sparse-design-docs notice counts only the GDDs at the top of
   `design/gdd/`, as the commit check does, and names the copies in subfolders
@@ -274,7 +274,7 @@ A minor release. [UPGRADING.md](UPGRADING.md#v113--v120) lists the
   default permission mode. Each now names the framework scripts and read-only
   commands its text runs. Anything else, including your `commands.test`, asks
   first: approve it once, or add `Bash(<your command> *)` to
-  `.claude/settings.local.json`. A skill you keep your own copy of needs the
+  `.pi/settings.local.json`. A skill you keep your own copy of needs the
   shipped `allowed-tools:` line.
 - **Tagging, merging and deploying are flagged before they run.** The push check
   also warns on `git tag`, `git merge`, `gh release`, `butler push` and
@@ -378,7 +378,7 @@ less.** A fix release for 1.1.2.
   `git status` and `git log` still run without a prompt. See
   [UPGRADING.md](UPGRADING.md#v112--v113) if you merged `settings.json` or
   copied these rules into `settings.local.json`.
-- **Start Claude Code at the project root.** It loads `.claude/settings.json`
+- **Start Claude Code at the project root.** It loads `.pi/settings.json`
   only from the folder it starts in, so a session started in `src/` or `design/`
   runs without the project's hooks, deny rules and ask-first mode. The README
   says so, and Claude now warns when it was started somewhere else.
@@ -434,7 +434,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
   the build order is done. All three agree on the order: an `In Review` story
   is closed first, then an `In Progress` one continues, then the next `Ready`
   or `Not Started` story in the build order. The new
-  `.claude/scripts/story-status.sh` lists the stories in that order before
+  `.pi/scripts/story-status.sh` lists the stories in that order before
   `/help` and `/sprint-status` run, and only `Complete` and `Done` stories
   count as done. `/project-stage-detect` no longer asks a minimal project for a
   sprint plan, and `/retrospective` no longer counts a story closed without
@@ -453,7 +453,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
   gdUnit4's own runner, with the flag that stops a script error from hanging the
   run at a `debug>` prompt. A run that finds no tests is NOT ASSESSED, not a
   pass. `/dev-story`'s parse check exited 0 on a parse error; it now loads each
-  changed script with `.claude/scripts/godot-parse-check.gd`, which also accepts
+  changed script with `.pi/scripts/godot-parse-check.gd`, which also accepts
   code that uses an autoload. `/smoke-check` imports the project before the
   tests: on a fresh clone, with no class cache, gdUnit4's runner did not load
   and the run exited 1 without a verdict.
@@ -642,7 +642,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
 - **Smaller fixes.** The status line counts a story whose status reads `Done.`
   or `Complete, verified` as done, as `/sprint-status` does. The skill-edit
   reminder no longer fires for skills outside the project, such as your own
-  `~/.claude/skills/`. `/help` finds an engine set only in
+  `~/.pi/skills/`. `/help` finds an engine set only in
   `technical-preferences.md`. On Windows and macOS a Godot project with `src/`
   and `assets/` gets its code root found — Godot's `assets/` was read as Unity's
   `Assets/`. Session start shows `solo` as the review mode when there is no
@@ -677,7 +677,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
   fixes a pinned agent overflowing a large-context session
   ([#67](https://github.com/Donchitos/Claude-Code-Game-Studios/issues/67)).
 - **Agent specs can be run, and they match the agents.** `/skill-test spec` and
-  `/skill-test category` looked only in `.claude/skills/`, so every agent spec
+  `/skill-test category` looked only in `.pi/skills/`, so every agent spec
   in the testing framework was refused as not found; both now take an agent
   name. The specs stated models no agent declares (36 of 49 — the three
   directors and `lead-programmer` named the right tier, but as a full model
@@ -743,7 +743,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
 - **Director memory stays in the project.** `creative-director`, `producer` and
   `technical-director` kept their memory in your home folder, shared by every
   project on the machine. Like the other 14 agents, they now keep it in the
-  project's gitignored `.claude/agent-memory/`. Notes already in the home folder
+  project's gitignored `.pi/agent-memory/`. Notes already in the home folder
   are not moved — [UPGRADING.md](UPGRADING.md#v111--v112) says how to keep them.
 - **Python 3 and Bash are listed as required** — every skill reads
   `project.yaml` through Python, and every hook runs in Bash. Install steps lead
@@ -995,7 +995,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
 - **Stories, ADRs and sprints agree.** `/dev-story` wrote `in_progress` to
   `sprint-status.yaml`, which nothing else reads; it now writes `in-progress`, and
   after an unfinished run the checkpoint says to resume `/dev-story` instead of
-  "Next step: /story-done". At `workflow: full` a story with `ADR: N/A` no longer
+  "Next step: /skill:story-done". At `workflow: full` a story with `ADR: N/A` no longer
   stops `/dev-story`; a Deprecated or Superseded ADR now blocks a story, naming
   its successor. `/architecture-decision accept` finds the blocked stories it
   should unblock — it searched for a status form `/create-stories` never
@@ -1042,7 +1042,7 @@ Godot, and the checks tell you what they found.** A fix release for bugs in
 - **`/skill-test` judges the same way in every mode.** Category mode ranked NOT
   ASSESSED differently from static and spec mode, and dropped a skill missing
   from the catalog from `category all`; unparseable frontmatter is now
-  NON-COMPLIANT, and agents are listed from `.claude/agents/`. The spec
+  NON-COMPLIANT, and agents are listed from `.pi/agents/`. The spec
   templates use the headings the specs do.
 - **The skill-flow diagram shows each step in its phase.** Release preparation
   (`/security-audit`, `/localize qa`, `/release-checklist`, `/changelog`,
@@ -1116,7 +1116,7 @@ Code 2.1.281 to 2.1.284, on Windows, Linux (bash 5 and 3.2) and macOS. **If you 
 - **`/changelog` works in a repository with no commits yet.**
 
 Checked on Claude Code 2.1.277 and 2.1.281, in every permission mode, from the
-project root and from subdirectories. See `.claude/docs/config-resolution.md`
+project root and from subdirectories. See `.pi/docs/config-resolution.md`
 for the form every skill's config line must take, if you write your own.
 
 ---
@@ -1134,7 +1134,7 @@ studio production no longer have to carry the same overhead.
   started at the project root asks before writing, even if your own Claude Code
   config runs in an auto-accept mode. It sets the starting mode only: resuming a
   session, switching modes mid-session, the VS Code extension and the Desktop
-  app can still put you in another one. `.claude/docs/setup-requirements.md`
+  app can still put you in another one. `.pi/docs/setup-requirements.md`
   lists them, and how to change the starting mode.
 
 - **`project.yaml` — one place for your project's configuration.** Engine,
@@ -1183,7 +1183,7 @@ studio production no longer have to carry the same overhead.
   `/gate-check`, `/hotfix` and `/day-one-patch` — engine choice is a one-time
   irreversible decision, a gate verdict nobody reads defeats the gate, and the
   two release skills need explicit sign-off. See
-  `.claude/docs/automation-modes.md` for the full list and reasons.
+  `.pi/docs/automation-modes.md` for the full list and reasons.
 - **`qa.level`** — how much test evidence is required before a story is done.
 - **`docs.density`** — how deeply written sections go.
 - **`team.size`** — which agents take part by default. Affects review depth
@@ -1320,7 +1320,7 @@ studio production no longer have to carry the same overhead.
 ### Deprecated
 
 - `production/stage.txt`, `production/review-mode.txt` and
-  `.claude/docs/technical-preferences.md` are superseded by `project.yaml`.
+  `.pi/docs/technical-preferences.md` are superseded by `project.yaml`.
   **Nothing breaks if you keep them** — they're still read when `project.yaml`
   doesn't have a value. Run the migration script with `--finalize` when you're
   ready to retire the first two. The third is kept on purpose: it still holds

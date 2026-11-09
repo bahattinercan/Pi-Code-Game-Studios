@@ -1,4 +1,4 @@
-# Skill Test Spec: /create-epics
+# Skill Test Spec: /skill:create-epics
 
 ## Skill Summary
 
@@ -39,7 +39,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 
 ## Director Gate Checks
 
-In `full` mode: PR-EPIC (`producer`, `.claude/docs/director-gates/pr-epic.md`)
+In `full` mode: PR-EPIC (`producer`, `.pi/docs/director-gates/pr-epic.md`)
 runs once all epics for the current layer are defined and before any epic file is
 written. Verdicts: REALISTIC → proceed to the write asks; CONCERNS →
 `AskUserQuestion` with `[A] Proceed as planned` / `[B] Revise epic boundaries` /

@@ -1,4 +1,4 @@
-# Skill Test Spec: /estimate
+# Skill Test Spec: /skill:estimate
 
 ## Skill Summary
 

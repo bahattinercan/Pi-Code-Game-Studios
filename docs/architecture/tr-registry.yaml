@@ -1,7 +1,7 @@
 # Technical Requirement ID Registry
 #
 # PURPOSE: Persistent, stable IDs for every GDD technical requirement.
-# Prevents TR-ID renumbering across /architecture-review runs, which would
+# Prevents TR-ID renumbering across /skill:architecture-review runs, which would
 # break story references.
 #
 # RULES:
@@ -14,15 +14,15 @@
 #     status: "superseded-by: TR-[system]-NNN" with the new TR-ID(s), quoted:
 #     unquoted, the second colon makes the file invalid YAML.
 #
-# WRITTEN BY: /architecture-review (appends new entries, never overwrites)
-# READ BY:    /create-stories (embed IDs in stories)
-#             /dev-story (current requirement text before implementing)
-#             /story-done (look up current requirement text at review time)
-#             /story-readiness (validate TR-ID exists and is active)
-#             /create-epics (trace requirements to ADR coverage)
-#             /test-helpers (map requirements to tested systems)
-#             /adopt (brownfield audit: is the registry there)
-#             /create-architecture (reuses registered IDs in its baseline)
+# WRITTEN BY: /skill:architecture-review (appends new entries, never overwrites)
+# READ BY:    /skill:create-stories (embed IDs in stories)
+#             /skill:dev-story (current requirement text before implementing)
+#             /skill:story-done (look up current requirement text at review time)
+#             /skill:story-readiness (validate TR-ID exists and is active)
+#             /skill:create-epics (trace requirements to ADR coverage)
+#             /skill:test-helpers (map requirements to tested systems)
+#             /skill:adopt (brownfield audit: is the registry there)
+#             /skill:create-architecture (reuses registered IDs in its baseline)
 #
 # ID FORMAT: TR-[system]-[NNN]
 #   [system] = a short lowercase slug for the system. It is an alias: the
@@ -31,7 +31,7 @@
 #
 # STATUS VALUES: active | deprecated | "superseded-by: TR-[system]-NNN"
 #
-# LAYOUT: the one shape .claude/scripts/registry.sh reads. requirements: holds
+# LAYOUT: the one shape .pi/scripts/registry.sh reads. requirements: holds
 #   a block list, or [] while it is empty. Each entry starts "- id: TR-..." with
 #   the dash at column 0, as in the examples (or 2, the same for every entry);
 #   its fields sit two columns past the dash. Quote a value that holds ": ". A

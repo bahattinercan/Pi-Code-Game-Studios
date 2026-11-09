@@ -1,4 +1,4 @@
-# Skill Test Spec: /start
+# Skill Test Spec: /skill:start
 
 ## Skill Summary
 

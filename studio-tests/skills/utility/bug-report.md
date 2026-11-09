@@ -1,4 +1,4 @@
-# Skill Test Spec: /bug-report
+# Skill Test Spec: /skill:bug-report
 
 ## Skill Summary
 

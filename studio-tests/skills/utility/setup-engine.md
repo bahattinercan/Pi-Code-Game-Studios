@@ -1,4 +1,4 @@
-# Skill Test Spec: /setup-engine
+# Skill Test Spec: /skill:setup-engine
 
 ## Skill Summary
 
@@ -9,7 +9,7 @@ or Both) before showing the Technology Stack. It then:
 
 - writes the Technology Stack and the `ENGINE-REFERENCE-IMPORT` line to
   `CLAUDE.md` after "May I write these engine settings to `CLAUDE.md`?"
-- fills `.claude/docs/technical-preferences.md` (the legacy mirror: naming
+- fills `.pi/docs/technical-preferences.md` (the legacy mirror: naming
   conventions, specialist routing table, input/platform, performance budgets)
   after the user approves the presented defaults
 - dual-writes the `engine`, `specialists`, `naming` and `commands` blocks to
@@ -263,7 +263,7 @@ Fixture defaults.
   returns every question as skipped
 - The sandbox carries the framework's `CLAUDE.md`. The rule this case checks is
   stated there ("A skipped or dismissed question is not an answer") and in
-  `.claude/docs/automation-modes.md`, not in `/setup-engine`'s own files; a rule
+  `.pi/docs/automation-modes.md`, not in `/setup-engine`'s own files; a rule
   `CLAUDE.md` loads counts as the skill's own (`/skill-test` spec mode, Step 3),
   so a sandbox without it is set up wrong, not a skill FAIL
 

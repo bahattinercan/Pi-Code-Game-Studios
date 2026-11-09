@@ -1,4 +1,4 @@
-# Skill Test Spec: /playtest-report
+# Skill Test Spec: /skill:playtest-report
 
 ## Skill Summary
 

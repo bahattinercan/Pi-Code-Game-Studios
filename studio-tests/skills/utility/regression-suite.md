@@ -1,4 +1,4 @@
-# Skill Test Spec: /regression-suite
+# Skill Test Spec: /skill:regression-suite
 
 ## Skill Summary
 

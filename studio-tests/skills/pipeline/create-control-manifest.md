@@ -1,4 +1,4 @@
-# Skill Test Spec: /create-control-manifest
+# Skill Test Spec: /skill:create-control-manifest
 
 ## Skill Summary
 
@@ -37,7 +37,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 ## Director Gate Checks
 
 One gate: **TD-MANIFEST** (`technical-director`,
-`.claude/docs/director-gates/td-manifest.md`), spawned after the user accepts the
+`.pi/docs/director-gates/td-manifest.md`), spawned after the user accepts the
 Phase 4 rule summary and before the Phase 5 write ask.
 
 - `full` → spawned; receives the Control Manifest Preview, the ADRs covered, the

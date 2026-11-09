@@ -1,4 +1,4 @@
-# Skill Test Spec: /consistency-check
+# Skill Test Spec: /skill:consistency-check
 
 ## Skill Summary
 
@@ -159,7 +159,7 @@ Fixture defaults.
 
 **Assertions:**
 - [ ] Skill outputs the empty-registry message naming `/design-system`
-- [ ] Verdict is NOT ASSESSED, naming the empty registry as the reason — never PASS, CONFLICTS FOUND, COMPLETE or BLOCKED, and never no verdict at all (`.claude/rules/skill-authoring.md` obligation 1)
+- [ ] Verdict is NOT ASSESSED, naming the empty registry as the reason — never PASS, CONFLICTS FOUND, COMPLETE or BLOCKED, and never no verdict at all (`.pi/rules/skill-authoring.md` obligation 1)
 - [ ] No file is written, including `production/session-state/active.md`
 - [ ] Skill does NOT crash or produce a partial report
 

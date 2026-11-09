@@ -1,4 +1,4 @@
-# Skill Test Spec: /perf-profile
+# Skill Test Spec: /skill:perf-profile
 
 ## Skill Summary
 
@@ -235,7 +235,7 @@ Fixture defaults.
 
 **Expected behavior:**
 1. Phase 2 runs the four `get_effective_yaml_key` reads as one command that
-   first changes to the project root and loads `.claude/hooks/yaml-helper.sh`
+   first changes to the project root and loads `.pi/hooks/yaml-helper.sh`
    from there
 2. All four keys return their committed values; none comes back empty because
    the helper or `project.yaml` was not found from the subfolder

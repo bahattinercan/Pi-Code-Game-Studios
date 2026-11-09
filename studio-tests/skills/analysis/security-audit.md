@@ -1,4 +1,4 @@
-# Skill Test Spec: /security-audit
+# Skill Test Spec: /skill:security-audit
 
 ## Skill Summary
 

@@ -18,11 +18,11 @@ The 8 GDD sections, in order:
 `standard` (Overview, Detailed Rules, Edge Cases, Dependencies, Acceptance
 Criteria, plus Formulas when the system has math); none at `minimal`, where
 `design/game-brief.md` is the design record instead of a GDD. Resolve the tier
-before flagging a section as missing — see `.claude/docs/workflow-modes.md`.
+before flagging a section as missing — see `.pi/docs/workflow-modes.md`.
 
 > **Three other places already encode the tier rule** —
-> `.claude/docs/coding-standards.md`, `.claude/rules/design-docs.md` and
-> `.claude/hooks/validate-commit.sh`. This file is the copy a session working in
+> `.pi/docs/coding-standards.md`, `.pi/rules/design-docs.md` and
+> `.pi/hooks/validate-commit.sh`. This file is the copy a session working in
 > `design/` reads first, so it must agree with them: demanding all 8 at
 > `minimal` warns a jam project about six sections its own configuration says it
 > does not need, which trains the user to ignore the warning.
@@ -56,7 +56,7 @@ Use `/ux-design` to author. Validate with `/ux-review` before passing to `/team-
 
 > **Accessibility requirements sit OUTSIDE `design/ux/` on purpose.** They are a
 > project-wide standard the per-screen specs consult, not a spec for one screen.
-> `.claude/docs/workflow-catalog.yaml`, the Pre-Production, Production and Polish
+> `.pi/docs/workflow-catalog.yaml`, the Pre-Production, Production and Polish
 > gates, and `/architecture-review` all check `design/accessibility-requirements.md`
 > at that exact path. Do not "tidy" it under `design/ux/` — every one of those
 > checks would stop matching, and the Technical Setup → Pre-Production gate would

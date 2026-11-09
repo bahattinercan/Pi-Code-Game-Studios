@@ -11,7 +11,7 @@
 
 - [ ] `description:` field is present and domain-specific (references throwaway builds / concept prototypes / speed over standards)
 - [ ] `tools:` reads Read, Glob, Grep, Write, Edit, Bash (it writes and runs throwaway builds) and `isolation:` reads `worktree` — frontmatter cannot scope writes to a directory, so the boundary to `prototypes/` is the body's Isolation Requirements (next assertion)
-- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.claude/docs/model-tiers.md`)
+- [ ] Model tier is `sonnet` — frontmatter `model:` reads exactly `sonnet` (tiers: `.pi/docs/model-tiers.md`)
 - [ ] Agent definition explicitly states that prototype code is not production code and must not be copied into the production code root
 
 ---
@@ -83,6 +83,6 @@
 ## Coverage Notes
 - Case 2 (production redirect) is critical — prototype code leaking into src/ is a common quality problem
 - Case 4 (abandonment honesty) tests whether the agent avoids sunk-cost bias — prototypes that fail should be cleanly abandoned
-- Case 5 requires that `project.yaml` has `engine.name` and `engine.language` configured; test is incomplete if not configured. With neither `project.yaml` nor `.claude/docs/technical-preferences.md` naming them, the expected output is a question about the engine and language, not a guess
+- Case 5 requires that `project.yaml` has `engine.name` and `engine.language` configured; test is incomplete if not configured. With neither `project.yaml` nor `.pi/docs/technical-preferences.md` naming them, the expected output is a question about the engine and language, not a guess
 - The intentional relaxation of coding standards is a feature, not a gap — do not flag missing tests or doc comments as failures in prototype output
 - No automated runner; review manually or via `/skill-test`

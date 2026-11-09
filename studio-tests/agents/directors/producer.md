@@ -9,11 +9,11 @@
 
 ## Static Assertions (Structural)
 
-Verified by reading the agent's `.claude/agents/producer.md` frontmatter:
+Verified by reading the agent's `.pi/agents/producer.md` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references scope, sprint, milestone, production — not generic)
 - [ ] `tools:` includes Write and Edit (it authors sprint plans per its Output Format and maintains the risk register) and Bash only because a preloaded skill needs it (`skills:` includes `scope-check`, which reads `git log`)
-- [ ] Model tier is `opus` — frontmatter `model:` reads exactly `opus` (tiers: `.claude/docs/model-tiers.md`)
+- [ ] Model tier is `opus` — frontmatter `model:` reads exactly `opus` (tiers: `.pi/docs/model-tiers.md`)
 - [ ] Agent definition does not claim authority over design decisions or technical architecture
 
 ---
@@ -97,6 +97,6 @@ Verified by reading the agent's `.claude/agents/producer.md` frontmatter:
 
 ## Coverage Notes
 - PR-EPIC (the epic-structure review `/create-epics` runs before it writes any epic) has no case yet.
-- PR-MILESTONE (milestone health review) is not covered — deferred to integration with /milestone-review skill.
+- PR-MILESTONE (milestone health review) is not covered — deferred to integration with /skill:milestone-review skill.
 - PR-PHASE-GATE is covered at `minimal` (Case 7); a `standard`/`full` Production gate judged against a sprint plan has no case yet.
 - Multi-sprint burn-down and velocity trend analysis are not covered here.

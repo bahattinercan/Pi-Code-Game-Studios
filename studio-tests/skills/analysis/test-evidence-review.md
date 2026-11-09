@@ -1,4 +1,4 @@
-# Skill Test Spec: /test-evidence-review
+# Skill Test Spec: /skill:test-evidence-review
 
 ## Skill Summary
 

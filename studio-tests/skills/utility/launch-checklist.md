@@ -1,4 +1,4 @@
-# Skill Test Spec: /launch-checklist
+# Skill Test Spec: /skill:launch-checklist
 
 ## Skill Summary
 

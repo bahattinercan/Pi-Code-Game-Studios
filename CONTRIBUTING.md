@@ -25,7 +25,7 @@ merged here — keep those in your own repo.
 These are the things that will get your PR rejected if you miss them.
 
 **Skill files**
-- Skills live in `.claude/skills/<name>/SKILL.md` — the subdirectory format is
+- Skills live in `.pi/skills/<name>/SKILL.md` — the subdirectory format is
   required. Flat `.md` files are silently ignored by Claude Code.
 - SKILL.md must include YAML frontmatter: `name`, `description`,
   `argument-hint`, `allowed-tools`, and `model`
@@ -74,9 +74,9 @@ what the output looked like.
 Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-feat: add /retrospective skill for end-of-sprint reviews
+feat: add /skill:retrospective skill for end-of-sprint reviews
 fix: correct grep -P usage in session-start hook
-docs: update skills-reference with new /qa-plan entry
+docs: update skills-reference with new /skill:qa-plan entry
 ```
 
 Types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`

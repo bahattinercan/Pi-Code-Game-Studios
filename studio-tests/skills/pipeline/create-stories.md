@@ -1,4 +1,4 @@
-# Skill Test Spec: /create-stories
+# Skill Test Spec: /skill:create-stories
 
 ## Skill Summary
 
@@ -234,7 +234,7 @@ Fixture defaults.
 - [ ] Per-story verdicts use ADEQUATE / GAPS / INADEQUATE and name the failing criterion
 - [ ] The GAPS verdict goes to the user with the three options — story 2's criteria are not revised before the user chooses
 - [ ] Story 2's revised criteria are shown before the write ask; it carries no specs until ADEQUATE
-- [ ] Had the user picked `Accept and proceed`, story 2 would be written with its criteria unchanged and its QA Test Cases reading `*Test cases not yet defined — run /qa-plan to generate them.*`
+- [ ] Had the user picked `Accept and proceed`, story 2 would be written with its criteria unchanged and its QA Test Cases reading `*Test cases not yet defined — run /skill:qa-plan to generate them.*`
 - [ ] Story 1's QA Test Cases section contains Given/When/Then (Logic/Integration) or Setup/Verify/Pass condition (Visual/Feel, UI) blocks from the gate
 - [ ] No "QL-STORY-READY skipped" note appears in `full` mode
 

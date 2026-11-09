@@ -1,4 +1,4 @@
-# Skill Test Spec: /help
+# Skill Test Spec: /skill:help
 
 ## Skill Summary
 
@@ -6,11 +6,11 @@
 next. It is read-only and declares the Haiku tier (`model: haiku`), which is
 used only when the user types `/help` in Manual mode — in auto mode, or when
 Claude starts the skill itself, the session model runs it
-(`.claude/docs/model-tiers.md`). Before it runs, it is handed the resolved
+(`.pi/docs/model-tiers.md`). Before it runs, it is handed the resolved
 config block (`project.stage`, `workflow`) and the output of
-`.claude/scripts/story-status.sh`; it reads the session checkpoint itself (Step 3). It then reads
-`.claude/docs/workflow-catalog.yaml`, resolves step completion for the current
-phase with one call to `bash .claude/scripts/artifact-check.sh --phase [phase]`,
+`.pi/scripts/story-status.sh`; it reads the session checkpoint itself (Step 3). It then reads
+`.pi/docs/workflow-catalog.yaml`, resolves step completion for the current
+phase with one call to `bash .pi/scripts/artifact-check.sh --phase [phase]`,
 and in Production reads `production/sprint-status.yaml`.
 
 When `workflow` resolves to `minimal` (the default, because `modes.rigor`
@@ -73,8 +73,8 @@ Fixture defaults.
 
 **Expected behavior:**
 1. Skill takes `project.stage: Production` and `workflow: standard` from the config block
-2. Skill reads `.claude/docs/workflow-catalog.yaml` and runs
-   `bash .claude/scripts/artifact-check.sh --phase production`
+2. Skill reads `.pi/docs/workflow-catalog.yaml` and runs
+   `bash .pi/scripts/artifact-check.sh --phase production`
 3. Skill reads `production/sprint-status.yaml`: the in-progress story is
    "currently active", ready-for-dev stories are "next up", done stories count as
    complete, the blocked story is named with its `blocker` text
@@ -100,7 +100,7 @@ Fixture defaults.
 **Fixture:**
 - `project.yaml` sets `project.stage: Concept`, `modes.rigor: full`, and
   `engine.name: "Godot"` (`full`, because at `standard` the art bible is
-  required only when visual-asset stories exist — `.claude/docs/workflow-modes.md`
+  required only when visual-asset stories exist — `.pi/docs/workflow-modes.md`
   — and a Concept-stage project has no stories to decide it by)
 - No `design/gdd/game-concept.md`, no `design/art/art-bible.md`, no
   `design/gdd/systems-index.md`, no sprint files
@@ -207,7 +207,7 @@ Fixture defaults.
    is not mapped
 2. Skill reads `active.md`'s STATUS and CHECKPOINT blocks (Step 3), then goes to
    Step 4m
-3. Skill runs `bash .claude/scripts/artifact-check.sh --path minimal`
+3. Skill runs `bash .pi/scripts/artifact-check.sh --path minimal`
 4. The injected `story-status.sh` list has story-002 on the first `IN_PROGRESS`
    line; the skill does not re-run the script or re-rank the stories
 5. Output uses the minimal shape: `## Where You Are: Minimal path — 1 of 3 stories complete`,

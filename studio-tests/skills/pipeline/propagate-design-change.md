@@ -1,4 +1,4 @@
-# Skill Test Spec: /propagate-design-change
+# Skill Test Spec: /skill:propagate-design-change
 
 ## Skill Summary
 
@@ -39,7 +39,7 @@ Checked against the SKILL.md by `/skill-test spec` — no fixture needed.
 ## Director Gate Checks
 
 One gate: **TD-CHANGE-IMPACT** (`technical-director`,
-`.claude/docs/director-gates/td-change-impact.md`), spawned after the Design
+`.pi/docs/director-gates/td-change-impact.md`), spawned after the Design
 Change Impact Report is presented and before the per-ADR resolution workflow.
 
 - `full` → spawned with the full impact report (change summary, classifications,

@@ -1,4 +1,4 @@
-# Skill Test Spec: /team-live-ops
+# Skill Test Spec: /skill:team-live-ops
 
 ## Skill Summary
 
