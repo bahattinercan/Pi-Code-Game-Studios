@@ -79,7 +79,7 @@ Grep pattern="^  - name:" path="design/registry/entities.yaml" output_mode="cont
 Take the intended values from the registry for any constant or formula it lists
 (the `constants:` and `formulas:` blocks); these are the authoritative cross-doc
 figures a GDD must not contradict. **If `design/registry/entities.yaml` does not
-exist or has no entries** (it ships as an empty stub until `/design-system`
+exist or has no entries** (it ships as an empty stub until `/skill:design-system`
 populates it), skip this and use the GDD alone.
 
 Then read the GDD for the system from `design/gdd/` to understand intended design
@@ -92,7 +92,7 @@ If the data files are FOUND but neither source gives targets for this domain,
 the sections that judge against targets (Outliers Detected, and Progression
 Analysis where the domain has a curve) are `NOT ASSESSED — NO DATA`. Each one names what was missing — the
 GDD it looked for in `design/gdd/`, and whether the registry was absent or empty
-— and names `/design-system`, which writes both.
+— and names `/skill:design-system`, which writes both.
 
 ---
 
@@ -198,11 +198,11 @@ If [A]:
 - Guide the user to update the relevant data file in `assets/data/` or formula in `design/balance/`
 - After each fix, offer to re-run the relevant balance checks to verify no new outliers were introduced
 - If the fix changes a tuning knob defined in a GDD or referenced by an ADR, remind the user:
-  > "This value is defined in a design document. Run `/propagate-design-change [path]` on the affected GDD to find downstream impacts before committing."
+  > "This value is defined in a design document. Run `/skill:propagate-design-change [path]` on the affected GDD to find downstream impacts before committing."
 
 If [B]:
 - Write the report to `design/balance/balance-check-[system]-[date].md` (create the directory if needed). Use the current date for [date] in YYYY-MM-DD format.
-- Confirm the file was written, then end with: "Re-run `/balance-check` after fixes to verify."
+- Confirm the file was written, then end with: "Re-run `/skill:balance-check` after fixes to verify."
 
 If [C]:
-- Summarize open issues and end with: "Re-run `/balance-check` after fixes to verify."
+- Summarize open issues and end with: "Re-run `/skill:balance-check` after fixes to verify."

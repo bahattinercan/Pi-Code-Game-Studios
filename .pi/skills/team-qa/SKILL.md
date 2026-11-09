@@ -91,7 +91,7 @@ Use the `Agent` tool to spawn each team member as a subagent:
 
 **End every agent prompt with a return contract:** "Write your full output to `[path]` — that named path is your write authorisation under the bounded exception below, so write it without a separate approval prompt. Return **only** (1) the path written, (2) a ≤5-bullet summary of decisions, (3) any BLOCKED/CONCERNS items, one line each. Do not restate the documents you read." Without it, an agent returns everything it read back into this session.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is a phase gate as defined above — one the pipeline lists as ending in an `AskUserQuestion` before it advances, whatever the automation mode. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is a phase gate as defined above — one the pipeline lists as ending in an `AskUserQuestion` before it advances, whatever the automation mode. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 At `team.size: studio`, Phase 4 spawns one qa-tester per story, in parallel; below that, one spawn covers the whole group.
 
@@ -102,13 +102,13 @@ At `team.size: studio`, Phase 4 spawns one qa-tester per story, in parallel; bel
 Before doing anything else, gather the full scope:
 
 1. Detect the current sprint or feature scope from the argument:
-   - If argument is a sprint identifier (e.g., `sprint-03`): Glob `production/sprints/sprint-*.md` and match by sprint number — `sprint-3`, `sprint-03` and `sprint-003` all name sprint 3 (`/sprint-plan` writes `sprint-NNN.md`). Read the matched file. If multiple match, use the most recently modified.
+   - If argument is a sprint identifier (e.g., `sprint-03`): Glob `production/sprints/sprint-*.md` and match by sprint number — `sprint-3`, `sprint-03` and `sprint-003` all name sprint 3 (`/skill:sprint-plan` writes `sprint-NNN.md`). Read the matched file. If multiple match, use the most recently modified.
    - If argument is `feature: [system-name]`: glob story files tagged for that system
    - If no argument: read `production/session-state/active.md` and `production/sprint-status.yaml` (if present) to infer the active sprint. If there is no sprint — at `rigor: minimal` there are none — ask which epic to cover and use `feature: [epic-slug]`; do not invent a sprint
 
 2. Read `project.stage` from `project.yaml` (fallback `production/stage.txt`) to confirm the current project phase.
 
-3. **Read the open bugs in scope** — the bugs already on file, before QA finds new ones: grep the `**Severity**`, `**Status**` and `**System**` lines of `production/qa/bugs/*.md`, as `/bug-triage` does. A bug is open unless its Status is `Closed` or `Verified Fixed`; it is in scope when its System is one the in-scope stories belong to, or it names an in-scope story — when unsure, list it. These go into the Phase 2 and Phase 6 briefs as **Open bugs in scope**: an open S1 or S2 here already makes the sign-off NOT APPROVED (Phase 6), whatever QA finds. No bug files → "Open bugs in scope: none on file".
+3. **Read the open bugs in scope** — the bugs already on file, before QA finds new ones: grep the `**Severity**`, `**Status**` and `**System**` lines of `production/qa/bugs/*.md`, as `/skill:bug-triage` does. A bug is open unless its Status is `Closed` or `Verified Fixed`; it is in scope when its System is one the in-scope stories belong to, or it names an in-scope story — when unsure, list it. These go into the Phase 2 and Phase 6 briefs as **Open bugs in scope**: an open S1 or S2 here already makes the sign-off NOT APPROVED (Phase 6), whatever QA finds. No bug files → "Open bugs in scope: none on file".
 
 4. Count stories found and report to the user:
    > "QA cycle starting for [sprint/feature]. Found [N] stories. Open bugs in scope: [N — S1: n, S2: n, or none on file]. Current stage: [stage]. Ready to begin QA strategy?"
@@ -123,7 +123,7 @@ Pass the qa-lead the **Open bugs in scope** from Phase 1 (ID, severity, story or
 - Identify which stories require automated test evidence vs. manual QA — at `qa.level: minimal` none requires a test: a Logic, Integration or Config/Data story without one reads `WAIVED` under Automated Required and gets its acceptance criteria walked in manual QA
 - Flag any stories with missing acceptance criteria or missing test evidence that would block QA
 - Estimate manual QA effort (number of test sessions needed)
-- **Before assessing smoke status, check for an existing smoke check report**: Glob `production/qa/smoke-*.md` and read the most recently modified file (if found). If a report exists, use its verdict and findings directly — do not re-interview the user. If no report exists, note: "No prior smoke check report found — run `/smoke-check sprint` before proceeding." and set smoke check status to UNKNOWN (treat as PASS WITH WARNINGS for the purpose of continuing). Produce a smoke check verdict: **PASS** / **PASS WITH WARNINGS [list]** / **NOT ASSESSED [what did not run]** / **FAIL [list of failures]** / **UNKNOWN (no report found)**
+- **Before assessing smoke status, check for an existing smoke check report**: Glob `production/qa/smoke-*.md` and read the most recently modified file (if found). If a report exists, use its verdict and findings directly — do not re-interview the user. If no report exists, note: "No prior smoke check report found — run `/skill:smoke-check sprint` before proceeding." and set smoke check status to UNKNOWN (treat as PASS WITH WARNINGS for the purpose of continuing). Produce a smoke check verdict: **PASS** / **PASS WITH WARNINGS [list]** / **NOT ASSESSED [what did not run]** / **FAIL [list of failures]** / **UNKNOWN (no report found)**
 - Produce a strategy summary table and smoke check result:
 
   | Story | Type | Automated Required | Manual Required | Blocker? |
@@ -147,9 +147,9 @@ options:
   - "Cancel — resolve blockers first"
 ```
 
-If smoke check **FAIL**: do not proceed to Phase 3. Surface the failures from the smoke check report and stop. The user must fix them, re-run `/smoke-check sprint`, and then re-run `/team-qa`.
-If smoke check **UNKNOWN**: surface a warning — "No smoke check report found. Recommend running `/smoke-check sprint` before QA. Proceeding with caution."
-If smoke check **NOT ASSESSED**: surface what the report says did not run — "The last smoke check could not assess [what did not run]. Recommend re-running `/smoke-check sprint` once it can. Proceeding with caution." — and continue as for UNKNOWN; the sign-off cannot be APPROVED on it (Phase 6).
+If smoke check **FAIL**: do not proceed to Phase 3. Surface the failures from the smoke check report and stop. The user must fix them, re-run `/skill:smoke-check sprint`, and then re-run `/skill:team-qa`.
+If smoke check **UNKNOWN**: surface a warning — "No smoke check report found. Recommend running `/skill:smoke-check sprint` before QA. Proceeding with caution."
+If smoke check **NOT ASSESSED**: surface what the report says did not run — "The last smoke check could not assess [what did not run]. Recommend re-running `/skill:smoke-check sprint` once it can. Proceeding with caution." — and continue as for UNKNOWN; the sign-off cannot be APPROVED on it (Phase 6).
 If smoke check **PASS WITH WARNINGS**: note the warnings for the sign-off report and continue.
 If blockers are present: list them explicitly. The user may choose to skip blocked stories or cancel the cycle.
 
@@ -228,13 +228,13 @@ options:
   - "BLOCKED — cannot test yet (reason)"
 ```
 
-After each FAIL result: use `AskUserQuestion` to collect the failure description, then spawn `qa-tester` via `Agent` to write a formal bug report in `production/qa/bugs/`, in `/bug-report`'s format — its Severity and Priority labels exactly as that template lists them (`S2-High`, `P1-Fix this sprint`, …), because `/bug-triage` parses them.
+After each FAIL result: use `AskUserQuestion` to collect the failure description, then spawn `qa-tester` via `Agent` to write a formal bug report in `production/qa/bugs/`, in `/skill:bug-report`'s format — its Severity and Priority labels exactly as that template lists them (`S2-High`, `P1-Fix this sprint`, …), because `/skill:bug-triage` parses them.
 
 **After each PASS or PASS WITH NOTES on a Visual/Feel or UI story, record its
 evidence in `production/qa/evidence/`.** The retained screenshot is the
 evidence: ask the tester to save one of each screen or effect the story touched
 under `production/qa/evidence/[story-slug]/`, and confirm it is on disk —
-`/story-done` checks for a retained image, not just the write-up. A UI story is
+`/skill:story-done` checks for a retained image, not just the write-up. A UI story is
 closed by those screenshots; a Visual/Feel story also needs the lead sign-off.
 Then ask "May I write the evidence for [story titles] to
 `production/qa/evidence/`?", once per story group, and write the evidence
@@ -245,11 +245,11 @@ Phase 5 summary as missing its retained evidence rather than writing a doc that
 implies one.
 
 > **This is not optional bookkeeping — it is the artifact the next skill gates
-> on.** `/story-done` globs `production/qa/evidence/` for Visual/Feel and UI
-> stories and reads the sign-off table; `/story-readiness`,
-> `/test-evidence-review` and `gate-release` read the same directory. Write
+> on.** `/skill:story-done` globs `production/qa/evidence/` for Visual/Feel and UI
+> stories and reads the sign-off table; `/skill:story-readiness`,
+> `/skill:test-evidence-review` and `gate-release` read the same directory. Write
 > anywhere else and a story can pass a full manual QA cycle here, then be told by
-> `/story-done` that no visual evidence exists. Visual/Feel and UI gates are
+> `/skill:story-done` that no visual evidence exists. Visual/Feel and UI gates are
 > **BLOCKING by default**, so that is a deadlock — QA passed, story cannot
 > close. It is a merely confusing flag only where `testing.strict.ui` or
 > `.visual` has been explicitly set to `false`.
@@ -258,9 +258,9 @@ implies one.
 > this session. An evidence file with pre-ticked approvals is worse than none: it
 > converts a missing signature into a recorded one.
 
-Bug report naming: `BUG-[NNNN].md`, numbered the way `/bug-report` numbers them — the
+Bug report naming: `BUG-[NNNN].md`, numbered the way `/skill:bug-report` numbers them — the
 highest ID in `production/qa/bugs/` plus one, zero-padded to four digits — so
-`/bug-report verify` and `close` can find it by its ID.
+`/skill:bug-report verify` and `close` can find it by its ID.
 
 After collecting all results, summarize:
 - Stories PASS: [count]
@@ -342,10 +342,10 @@ NOT ASSESSED: the build's health was never checked.
 > tell "verified good" from "never looked".
 
 Next step guidance by verdict:
-- NOT ASSESSED: "QA did not run to completion. Produce the missing evidence — write the Logic tests (at `qa.level` standard/full) or walk the waived stories' acceptance criteria (at `minimal`), walk the manual cases, run `/smoke-check` — then re-run `/team-qa`. Do not advance the build on this verdict."
-- APPROVED: "Build is ready for the next phase. Run `/gate-check` to validate advancement."
+- NOT ASSESSED: "QA did not run to completion. Produce the missing evidence — write the Logic tests (at `qa.level` standard/full) or walk the waived stories' acceptance criteria (at `minimal`), walk the manual cases, run `/skill:smoke-check` — then re-run `/skill:team-qa`. Do not advance the build on this verdict."
+- APPROVED: "Build is ready for the next phase. Run `/skill:gate-check` to validate advancement."
 - APPROVED WITH CONDITIONS: "Resolve conditions before advancing. S3/S4 bugs may be deferred to polish."
-- NOT APPROVED: "Resolve S1/S2 bugs and re-run `/team-qa` or targeted manual QA before advancing."
+- NOT APPROVED: "Resolve S1/S2 bugs and re-run `/skill:team-qa` or targeted manual QA before advancing."
 
 Ask: "May I write this QA sign-off report to `production/qa/qa-signoff-[sprint]-[date].md`?"
 
@@ -367,8 +367,8 @@ partial report.** Full procedure: `.pi/docs/error-recovery-protocol.md`.
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## Output

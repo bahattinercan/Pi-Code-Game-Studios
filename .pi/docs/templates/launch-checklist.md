@@ -70,7 +70,7 @@ Generated: [Date]
 - [ ] Full regression test suite passed
 - [ ] Zero S1 (Critical) bugs open
 - [ ] Zero S2 (High) bugs open (or documented exceptions) — at `workflow: full` instead: zero S2 (High) and S3 (Medium) bugs open, no exceptions
-- [ ] Soak test passed (the longest soak `/soak-test` runs, or longer by hand if a play session lasts longer)
+- [ ] Soak test passed (the longest soak `/skill:soak-test` runs, or longer by hand if a play session lasts longer)
 - [ ] Multiplayer stress test passed (if applicable)
 - [ ] All critical user paths tested on every platform
 - [ ] Edge cases tested (full storage, no network, suspend/resume)

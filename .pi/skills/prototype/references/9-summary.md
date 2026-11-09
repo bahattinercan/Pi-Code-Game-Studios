@@ -1,6 +1,6 @@
 # /skill:prototype — Phase 9: Summary and Next Steps
 
-> Part of `/prototype`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:prototype`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 9: Summary and Next Steps
@@ -12,17 +12,17 @@ Link to `prototypes/[concept-name]-concept/REPORT.md`.
 Your concept prototype validated the core idea. Now design it properly, informed by
 what you just learned.
 
-At `workflow: minimal`: `/create-stories` (from the brief), then `/dev-story`
+At `workflow: minimal`: `/skill:create-stories` (from the brief), then `/skill:dev-story`
 on the first story — the rest of this list is the `standard`/`full` path.
 
 Recommended path (in order, `standard`/`full`):
-1. `/design-review design/gdd/game-concept.md` — validate the concept doc against what the prototype revealed
-2. `/gate-check` — confirm readiness to advance to Systems Design
-3. `/art-bible` — define visual identity (optional but worth doing before GDDs)
-4. `/map-systems` — decompose the concept into all game systems
-5. `/design-system [mechanic]` — GDD for each MVP system; use prototype learnings
+1. `/skill:design-review design/gdd/game-concept.md` — validate the concept doc against what the prototype revealed
+2. `/skill:gate-check` — confirm readiness to advance to Systems Design
+3. `/skill:art-bible` — define visual identity (optional but worth doing before GDDs)
+4. `/skill:map-systems` — decompose the concept into all game systems
+5. `/skill:design-system [mechanic]` — GDD for each MVP system; use prototype learnings
    in the Tuning Knobs and Formulas sections
-6. `/review-all-gdds` — cross-system consistency check
+6. `/skill:review-all-gdds` — cross-system consistency check
 
 **Note:** If you used the HTML path and feel is still uncertain, consider running
 a quick engine path prototype targeting feel before writing GDDs.
@@ -38,11 +38,11 @@ two questions (plain text, one at a time):
 Ask: "May I write this to `prototypes/[concept-name]-concept/PIVOT-NOTE.md`?"
 
 If yes, write the file with: original hypothesis, what to keep, what to change, and
-the revised hypothesis for the next prototype. The next `/prototype` run picks it
+the revised hypothesis for the next prototype. The next `/skill:prototype` run picks it
 up at the start of Phase 1.
 
-- Run `/prototype [revised-concept]` to test the adjusted direction
-- Or `/brainstorm [hint]` if the concept needs more fundamental rethinking
+- Run `/skill:prototype [revised-concept]` to test the adjusted direction
+- Or `/skill:brainstorm [hint]` if the concept needs more fundamental rethinking
 
 **If KILL:**
 
@@ -69,7 +69,7 @@ Ask: "May I append this concept to `prototypes/GRAVEYARD.md`?" If yes, add one e
 
 This file exists so the same mistake doesn't get made twice on the next concept.
 
-- Run `/brainstorm open` or `/brainstorm [new-hint]` to explore a different concept
+- Run `/skill:brainstorm open` or `/skill:brainstorm [new-hint]` to explore a different concept
 - The prototype report is the deliverable — no further action needed
 
 **If NOT ASSESSED (nobody has played it):**
@@ -77,7 +77,7 @@ This file exists so the same mistake doesn't get made twice on the next concept.
 There is no fun evidence yet, so PROCEED, PIVOT and KILL are all unreachable —
 report NOT ASSESSED and stop here rather than guess.
 
-- Play it, then run `/prototype [same concept]` again
+- Play it, then run `/skill:prototype [same concept]` again
 - The report and the concept index row read NOT ASSESSED until a playtest happens
 
 ---

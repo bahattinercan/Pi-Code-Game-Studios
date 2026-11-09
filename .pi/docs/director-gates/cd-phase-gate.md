@@ -4,11 +4,11 @@
 
 Agent: `creative-director` | Model tier: Opus | Domain: Vision, pillars, player experience
 
-**Trigger**: At `/gate-check` when `modes.workflow` is `full` — the panel narrows by workflow, and only the full panel includes creative-director; spawn in parallel with TD-PHASE-GATE, PR-PHASE-GATE and AD-PHASE-GATE
+**Trigger**: At `/skill:gate-check` when `modes.workflow` is `full` — the panel narrows by workflow, and only the full panel includes creative-director; spawn in parallel with TD-PHASE-GATE, PR-PHASE-GATE and AD-PHASE-GATE
 
 **Context to pass**:
 - Target phase name and the resolved `workflow` tier
-- The target gate's required and recommended artifacts at the resolved tier (from `/gate-check`'s loaded gate file)
+- The target gate's required and recommended artifacts at the resolved tier (from `/skill:gate-check`'s loaded gate file)
 - List of all artifacts present (file paths)
 - Game pillars and core fantasy
 

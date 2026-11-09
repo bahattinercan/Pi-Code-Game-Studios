@@ -4,13 +4,13 @@
 
 Agent: `producer` | Model tier: Opus | Domain: Scope, timeline, dependencies, production risk
 
-**Trigger**: After epics are defined by `/create-epics`, before stories are
-broken out — validates the epic structure is producible before `/create-stories`
+**Trigger**: After epics are defined by `/skill:create-epics`, before stories are
+broken out — validates the epic structure is producible before `/skill:create-stories`
 is invoked
 
 **Context to pass**:
 - The epic structure for the layer, inline — every epic's scope summary and
-  governing-ADR count. `/create-epics` runs this gate *before* writing any epic
+  governing-ADR count. `/skill:create-epics` runs this gate *before* writing any epic
   file, so there are no paths yet.
 - Milestone timeline and target dates
 - Team capacity (solo / small team / size)

@@ -1,6 +1,6 @@
 # /skill:adopt — Phase 4: Build the Migration Plan
 
-> Part of `/adopt`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:adopt`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 4: Build the Migration Plan
@@ -24,25 +24,25 @@ and the exact replacement text. Offer to fix this immediately before writing the
 
 **Special case — ADRs missing Status field:**
 For each affected ADR, the fix is:
-`/architecture-decision retrofit docs/architecture/adr-[NNNN]-[slug].md`
+`/skill:architecture-decision retrofit docs/architecture/adr-[NNNN]-[slug].md`
 List each ADR as a separate checkable item.
 
 **Special case — GDDs missing sections:**
 For each affected GDD, list which sections are missing and the fix:
-`/design-system retrofit design/gdd/[filename].md`
+`/skill:design-system retrofit design/gdd/[filename].md`
 
 **Infrastructure bootstrap ordering** — always present in this sequence:
 1. Fix ADR formats first (registry depends on reading ADR Status fields)
-2. Run `/architecture-review` → bootstraps `tr-registry.yaml`
-3. Run `/create-control-manifest` → creates manifest with version stamp
-4. Run `/sprint-plan update` → creates `sprint-status.yaml`
-5. Run `/gate-check [phase]` (the gate into the phase the project is in; at Concept there is none — Concept is the default stage, nothing to run) → writes `project.stage` in `project.yaml` (and legacy `stage.txt`) authoritatively
+2. Run `/skill:architecture-review` → bootstraps `tr-registry.yaml`
+3. Run `/skill:create-control-manifest` → creates manifest with version stamp
+4. Run `/skill:sprint-plan update` → creates `sprint-status.yaml`
+5. Run `/skill:gate-check [phase]` (the gate into the phase the project is in; at Concept there is none — Concept is the default stage, nothing to run) → writes `project.stage` in `project.yaml` (and legacy `stage.txt`) authoritatively
 
 **At `workflow: minimal` the plan prescribes none of this sequence.** None of it
 is on the minimal path: ADRs are not expected, the brief's build order is the
-plan (no `/sprint-plan`), and nothing there runs `/gate-check`. The plan's
+plan (no `/skill:sprint-plan`), and nothing there runs `/skill:gate-check`. The plan's
 Step 3 says so in one line and names the path's next step instead —
-`/create-stories` when no stories exist, else `/dev-story`.
+`/skill:create-stories` when no stories exist, else `/skill:dev-story`.
 
 **Existing stories** — note explicitly:
 > "Existing stories continue to work with all template skills — all new format

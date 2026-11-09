@@ -13,7 +13,7 @@ settings or change them without manually editing YAML.
 `project.yaml` → default `collaborative`). The approval gates in Phase 4 and
 Phase 5 follow the pattern in `.pi/docs/automation-modes.md`. **Note**:
 writing to `project.yaml` is a `schema_changes` decision (a default
-`automation_always_ask` category), so `/settings` confirms config writes even
+`automation_always_ask` category), so `/skill:settings` confirms config writes even
 in `autonomous` mode unless the user has removed `schema_changes` from their
 always-ask list.
 
@@ -23,10 +23,10 @@ Determine which of the four forms the user invoked:
 
 | Form | Mode |
 |------|------|
-| `/settings` (no args) | **View-all** (Phase 2) |
-| `/settings <key>` (single arg, no `=`) | **View-one** (Phase 3) |
-| `/settings <key>=<value>` (single arg with `=`) | **Set-yaml** (Phase 4) |
-| `/settings --local <key>=<value>` (`--local` prefix) | **Set-local** (Phase 5) |
+| `/skill:settings` (no args) | **View-all** (Phase 2) |
+| `/skill:settings <key>` (single arg, no `=`) | **View-one** (Phase 3) |
+| `/skill:settings <key>=<value>` (single arg with `=`) | **Set-yaml** (Phase 4) |
+| `/skill:settings --local <key>=<value>` (`--local` prefix) | **Set-local** (Phase 5) |
 
 For Set-yaml and Set-local, `<key>` is a dotted YAML path (e.g.
 `modes.review_mode`, `testing.strict.logic`) and `<value>` is the new value.
@@ -35,8 +35,8 @@ For Set-yaml and Set-local, `<key>` is a dotted YAML path (e.g.
 `=`, if either `<key>` or `<value>` is empty, this is malformed — route to
 Phase 6 (usage) rather than attempting the write. The rule applies in both
 Set-yaml and Set-local routing: for `--local`, strip the `--local` token
-first, then check the remaining operand the same way (so `/settings --local =foo`
-and `/settings --local key=` both go to Phase 6).
+first, then check the remaining operand the same way (so `/skill:settings --local =foo`
+and `/skill:settings --local key=` both go to Phase 6).
 
 Anything else that doesn't match the four forms above → Phase 6 (usage).
 
@@ -92,7 +92,7 @@ both are captured, or the second one silently escapes the set. Let
 > Deliberately phrased without naming those keys. The dead-settings gate asserts
 > that a setting on the allowlist has **no** readers, and it counts any skill
 > file that spells the key. Naming them here to illustrate the split would make
-> `/settings` register as a reader of two settings nothing reads, and the gate
+> `/skill:settings` register as a reader of two settings nothing reads, and the gate
 > would fail — correctly. Spelling a dead path out while explaining why not to
 > use it trips the same wire. Reword instead of adding an exemption: the
 > strictness is the point, so do not re-introduce the literal names to make an
@@ -106,7 +106,7 @@ legitimate; storing it *silently* is the defect.
 (when no arguments)
 
 1. Confirm `project.yaml` exists. If missing, report:
-   > "No `project.yaml` found — run `/start` to create one."
+   > "No `project.yaml` found — run `/skill:start` to create one."
    And exit.
 
 2. Check if `project.local.yaml` exists.
@@ -392,7 +392,7 @@ When the effective value is empty (key not set anywhere), print just:
 
 1. **Whitelist check**: call `is_locally_overridable <key>`.
    - If it returns 1 (locked), print one line:
-     > ``<key> cannot be locally overridden — it's a project-wide setting. Use `/settings <key>=<value>` (no `--local`) to change it for the whole team.``
+     > ``<key> cannot be locally overridden — it's a project-wide setting. Use `/skill:settings <key>=<value>` (no `--local`) to change it for the whole team.``
    - Exit without writing.
 
 2. **Schema validation**: call `validate_enum_value <key> <value>`. If
@@ -413,7 +413,7 @@ When the effective value is empty (key not set anywhere), print just:
    `--local` as the silent route.
 
 3. **Base check**: if `project.yaml` doesn't exist:
-   > "Cannot create `project.local.yaml` — `project.yaml` is missing. Run `/start` to create one first."
+   > "Cannot create `project.local.yaml` — `project.yaml` is missing. Run `/skill:start` to create one first."
    Exit. (Local overrides require a base, per spec.)
 
 4. **Approval gate**: use `AskUserQuestion`:

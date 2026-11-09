@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 2: Guided Mode
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 2. Guided Mode (No Arguments)
@@ -19,14 +19,14 @@ section: find the headings you need with the Grep tool (pattern `^#`, content
 mode) and Read those ranges with offset and limit:
 - **`standard` / `full`**: read `design/gdd/game-concept.md` if it exists —
   extract genre, scope, platform targets, art style, team size, and the engine
-  preference `/brainstorm` recorded (an engine the user named, or "undecided":
-  `/brainstorm` never recommends one, so the recommendation is made here).
+  preference `/skill:brainstorm` recorded (an engine the user named, or "undecided":
+  `/skill:brainstorm` never recommends one, so the recommendation is made here).
 - **`minimal`**: read `design/game-brief.md` if it exists — extract genre,
   scope, platform, and art direction from its fields. Its absence is **expected**
   at `minimal` (the brief is authored *after* engine setup in the minimal path), so
   do not treat a missing brief as a gap — proceed straight to guided selection.
 - If no concept **or** brief exists, inform the user:
-  > "No game concept found. Consider running `/brainstorm` first to discover what
+  > "No game concept found. Consider running `/skill:brainstorm` first to discover what
   > you want to build — it records your engine preference if you have one. Or
   > tell me about your game and I can help you pick."
 

@@ -7,7 +7,7 @@
 
 ### → Next up
 **[Story NNN: title]** — [what it delivers]
-Command: `/story-done [story-path]` for an In Review story, or an In Progress one whose work is written; otherwise `/dev-story [story-path]`
+Command: `/skill:story-done [story-path]` for an In Review story, or an In Progress one whose work is written; otherwise `/skill:dev-story [story-path]`
 
 ### Coming up after that
 - [the next Ready stories in build order, at most 3]

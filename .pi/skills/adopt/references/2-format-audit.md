@@ -1,6 +1,6 @@
 # /skill:adopt — Phase 2: Format Audit
 
-> Part of `/adopt`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:adopt`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 2: Format Audit
@@ -71,7 +71,7 @@ record with a targeted grep (not a full read):
 
 > **The `>?` is load-bearing, and so are `Draft`/`Implemented`.** Both emitters
 > write this field inside a blockquote — `.pi/docs/templates/game-design-document.md`
-> and `/design-system` produce `> **Status**: …` — so an anchor of
+> and `/skill:design-system` produce `> **Status**: …` — so an anchor of
 > `^\*\*Status\*\*:` matches nothing and reports *every* template-compliant GDD
 > as missing its Status. The template's own value list offers `Draft` and
 > `Implemented`, so both must count as valid.
@@ -82,8 +82,8 @@ For each ADR file found, check for these critical sections:
 
 | Section | Impact if missing |
 |---|---|
-| `## Status` | **BLOCKING** — `/story-readiness` ADR status check silently passes everything |
-| `## ADR Dependencies` | HIGH — dependency ordering in `/architecture-review` breaks |
+| `## Status` | **BLOCKING** — `/skill:story-readiness` ADR status check silently passes everything |
+| `## ADR Dependencies` | HIGH — dependency ordering in `/skill:architecture-review` breaks |
 | `## Engine Compatibility` | HIGH — post-cutoff API risk is unknown |
 | `## GDD Requirements Addressed` | MEDIUM — traceability matrix loses coverage |
 | `## Performance Implications` | LOW — not pipeline-critical |
@@ -97,8 +97,8 @@ If `design/gdd/systems-index.md` exists:
 
 1. **Parenthetical status values** — Grep for any Status cell containing
    parentheses: `"Needs Revision ("`, `"In Progress ("`, etc.
-   These break exact-string matching in `/gate-check`, `/create-stories`,
-   and `/architecture-review`. **BLOCKING.**
+   These break exact-string matching in `/skill:gate-check`, `/skill:create-stories`,
+   and `/skill:architecture-review`. **BLOCKING.**
 
 2. **Valid status values** — check that Status column values are only from:
    `Not Started`, `In Progress`, `In Review`, `Designed`, `Approved`, `Needs Revision`
@@ -124,7 +124,7 @@ For each story file found:
 | TR registry | `docs/architecture/tr-registry.yaml` | HIGH — no stable requirement IDs |
 | Control manifest | `docs/architecture/control-manifest.md` | HIGH — no layer rules for stories |
 | Manifest version stamp | In manifest header: `Manifest Version:` | MEDIUM — staleness checks blind |
-| Sprint status | `production/sprint-status.yaml` | MEDIUM — `/sprint-status` falls back to markdown |
+| Sprint status | `production/sprint-status.yaml` | MEDIUM — `/skill:sprint-status` falls back to markdown |
 | Stage file | `project.stage` in `project.yaml` (fallback `production/stage.txt`) | MEDIUM — phase auto-detect unreliable |
 | Engine reference | `docs/engine-reference/[engine]/VERSION.md` | HIGH — ADR engine checks blind |
 | Architecture traceability | `docs/architecture/requirements-traceability.md` | MEDIUM — no persistent matrix |
@@ -192,7 +192,7 @@ of two things, and the message says which:
   not a second `migrate`.
 
 Both files merely *existing* is not exit 3 and must not be reported as a
-conflict: `/start` writes `production/stage.txt` on every new v1.1 project as a
+conflict: `/skill:start` writes `production/stage.txt` on every new v1.1 project as a
 mirror, so agreement is the normal state. The script says
 `the legacy files mirror it (values agree)` and exits 0 for that.
 

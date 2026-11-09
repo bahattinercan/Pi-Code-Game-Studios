@@ -1,4 +1,4 @@
-> Section-authoring guidance, loaded by `/ux-design` for the ACTIVE MODE ONLY.
+> Section-authoring guidance, loaded by `/skill:ux-design` for the ACTIVE MODE ONLY.
 > Never load the other two — one mode applies per invocation.
 
 # Section Guidance — HUD Design Mode
@@ -97,7 +97,7 @@ The guidance you need is below — **do not load `sections-ux-spec.md`; one mode
 file applies per invocation.** For the HUD, apply it as follows.
 
 **HUD States by Gameplay Context (states over time).** Cover at least
-exploration, combat, dialogue/cutscene and paused — `/ux-review` checks for all
+exploration, combat, dialogue/cutscene and paused — `/skill:ux-review` checks for all
 four. Beyond the happy path, capture what changes the HUD mid-gameplay and present
 it as a table for approval:
 
@@ -124,7 +124,7 @@ first when a state would exceed it.
 (pickup, XP gain, objective update, achievement) — trigger system, screen position,
 duration, max simultaneous, priority and **queue behavior**: what happens when two
 arrive at once, which are held during combat, and which are never queued.
-`/ux-review` checks that every notification has queue/priority behavior defined.
+`/skill:ux-review` checks that every notification has queue/priority behavior defined.
 
 **Platform Adaptation.** Does mobile/console require different element sizes or
 positions? Note per-platform overrides — touch targets, safe-area insets, and
@@ -147,7 +147,7 @@ continue without stopping.
 opacity, per-element show/hide, subtitle size — with its range and default.
 
 **Acceptance Criteria.** At least 5 checkbox criteria a QA tester can verify
-without reading another document — `/story-done` closes HUD stories against
+without reading another document — `/skill:story-done` closes HUD stories against
 them. Cover at least: safe-zone margins on every target platform, the correct
 elements in each gameplay context above, the visual budget (screen share in
 exploration and in combat), one accessibility criterion for the committed tier,

@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phase 8: Write and Update Traceability Index
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 8: Write and Update Traceability Index
@@ -181,7 +181,7 @@ If `active.md` does not exist, create it with this block as the initial content.
 Confirm in conversation: "Session state updated."
 
 The traceability index — written to `docs/architecture/requirements-traceability.md`,
-the path `/propagate-design-change` and the Pre-Production gate read; `rtm` mode
+the path `/skill:propagate-design-change` and the Pre-Production gate read; `rtm` mode
 later extends the same file with story and test columns — uses this format:
 
 ```markdown

@@ -1,6 +1,6 @@
 # /skill:ux-design — Sections 5 and 6: Cross-Reference Check and Handoff
 
-> Part of `/ux-design`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:ux-design`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 5. Cross-Reference Check
@@ -53,21 +53,21 @@ Update `production/session-state/active.md` with:
 
 Before presenting options, state clearly:
 
-> "This spec should be validated with `/ux-review` before it enters the
-> implementation pipeline. The Production gate (`/gate-check production`)
-> requires all key screen specs to have passed `/ux-review` at `workflow: full`
+> "This spec should be validated with `/skill:ux-review` before it enters the
+> implementation pipeline. The Production gate (`/skill:gate-check production`)
+> requires all key screen specs to have passed `/skill:ux-review` at `workflow: full`
 > (recommended at `standard`)."
 
 Then use `AskUserQuestion`:
-- "Run `/ux-review [filename]` now, or do something else first?"
+- "Run `/skill:ux-review [filename]` now, or do something else first?"
   - Options:
-    - "Run `/ux-review` now — validate this spec"
+    - "Run `/skill:ux-review` now — validate this spec"
     - "Design another screen first, then review all specs together"
     - "Update the interaction pattern library with new patterns from this spec"
     - "Stop here for this session"
 
 If the user picks "Design another screen first", add a note: "Reminder: run
-`/ux-review` on all completed specs before running `/gate-check production`."
+`/skill:ux-review` on all completed specs before running `/skill:gate-check production`."
 
 ### 6c: Cross-Link Related Specs
 

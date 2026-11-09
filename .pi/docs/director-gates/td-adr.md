@@ -4,7 +4,7 @@
 
 Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
 
-**Trigger**: After an individual ADR is authored (`/architecture-decision`), before
+**Trigger**: After an individual ADR is authored (`/skill:architecture-decision`), before
 it is marked Accepted
 
 **Context to pass**:

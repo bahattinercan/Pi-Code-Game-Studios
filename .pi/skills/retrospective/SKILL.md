@@ -82,8 +82,8 @@ Read the sprint or milestone plan from the appropriate location:
 
 **If the file does not exist or is empty**, output:
 
-> "No sprint data found for [sprint/milestone]. Run `/sprint-plan new` to create a
-> sprint (`/sprint-status` only reads one), or provide the sprint details manually."
+> "No sprint data found for [sprint/milestone]. Run `/skill:sprint-plan new` to create a
+> sprint (`/skill:sprint-status` only reads one), or provide the sprint details manually."
 
 At `workflow: minimal` (resolved above) there are no sprints: offer to look back over the stories
 closed so far instead (`production/epics/*/story-*.md` with `Status: Complete`).
@@ -273,9 +273,9 @@ Otherwise, use `AskUserQuestion`:
   - `[A] Yes — open sprint planning with retro action items and velocity delta pre-populated`
   - `[B] No — I'll reference the retrospective file manually when I'm ready`
 
-If the user selects [A]: Proceed to invoke `/sprint-plan new`, passing the retrospective file path and a summary of the action items and velocity change so the sprint planner can reference them.
+If the user selects [A]: Proceed to invoke `/skill:sprint-plan new`, passing the retrospective file path and a summary of the action items and velocity change so the sprint planner can reference them.
 
-- If this was a milestone retrospective, run `/gate-check` to formally assess readiness for the next phase.
+- If this was a milestone retrospective, run `/skill:gate-check` to formally assess readiness for the next phase.
 
 ### Guidelines
 

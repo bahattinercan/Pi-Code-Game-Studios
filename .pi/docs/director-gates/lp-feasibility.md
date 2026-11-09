@@ -4,7 +4,7 @@
 
 Agent: `lead-programmer` | Model tier: Sonnet (Tier 2 lead — invoked when a domain specialist's feasibility sign-off is needed)
 
-**Trigger**: After the master architecture document is written (`/create-architecture`
+**Trigger**: After the master architecture document is written (`/skill:create-architecture`
 Phase 7b), or when a new architectural pattern is proposed
 
 **Context to pass**:

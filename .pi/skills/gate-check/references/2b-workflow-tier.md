@@ -1,6 +1,6 @@
 # /skill:gate-check — Section 2b: Workflow Tier Adjustment
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 2b. Workflow Tier Adjustment
@@ -36,7 +36,7 @@ across all of them:
 > **The smoke check is excluded from that relaxation, and is the floor.**
 > `qa.level` relaxes *per-story test evidence*; a smoke check is **build health**,
 > not story evidence, and the two are already held apart on exactly this basis in
-> `.pi/docs/coding-standards.md` ("`/smoke-check` is a build-health gate, not
+> `.pi/docs/coding-standards.md` ("`/skill:smoke-check` is a build-health gate, not
 > a per-story evidence gate ... This divergence is intentional"). So a gate file
 > that requires a smoke report keeps requiring it at every `qa.level`.
 >
@@ -98,7 +98,7 @@ a documented escape hatch silently stops working.
 
 This is the rule in `.pi/docs/workflow-modes.md`: a key that matches no
 system is an error, not a no-op. The story skills resolve only in the system →
-override direction, so an orphan key is invisible to them; `/gate-check`, which
+override direction, so an orphan key is invisible to them; `/skill:gate-check`, which
 resolves the whole block, is where it is caught.
 
 Validate each GDD against its own effective tier's section count:

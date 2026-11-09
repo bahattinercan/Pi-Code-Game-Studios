@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 3: Check Test Coverage
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 3: Check Test Coverage
@@ -11,7 +11,7 @@ Draw the story list from, in priority order:
 2. The current sprint plan from `production/sprints/` (most recently modified
    file)
 3. If the `quick` argument was passed, skip this phase entirely and note:
-   "Coverage scan skipped — run `/smoke-check sprint` for full coverage
+   "Coverage scan skipped — run `/skill:smoke-check sprint` for full coverage
    analysis."
 
 For each story in scope:
@@ -34,7 +34,7 @@ Assign a coverage status to each story:
 | **UNKNOWN** | Story file missing or unreadable |
 
 MISSING entries are advisory gaps. They do not cause a FAIL verdict but must
-appear prominently in the report and must be resolved before `/story-done` can
+appear prominently in the report and must be resolved before `/skill:story-done` can
 fully close those stories.
 
 ---

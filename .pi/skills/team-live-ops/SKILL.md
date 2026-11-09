@@ -5,7 +5,7 @@ description: "Orchestrate the live-ops team — live-ops-designer, economy-desig
 # Team Live Ops
 
 **Argument check:** If no season name or event description is provided, output:
-> "Usage: `/team-live-ops [season name or event description] [--review full|lean|solo]` — Provide the name or description of the season or live event to plan."
+> "Usage: `/skill:team-live-ops [season name or event description] [--review full|lean|solo]` — Provide the name or description of the season or live event to plan."
 Then stop immediately without spawning any subagents or reading any files.
 
 When this skill is invoked with a valid argument, orchestrate the live-ops team through a structured planning pipeline.
@@ -110,7 +110,7 @@ never share one:
 These are working drafts; the final documents under `design/live-ops/seasons/`
 are compiled from them (Output Documents).
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (Phases 3 and 4 can run simultaneously).
 
@@ -234,9 +234,9 @@ Verdict: **COMPLETE** — season plan produced and handed off for production.
 
 ## Next Steps
 
-- Run `/design-review` on the season design document for consistency validation.
-- Run `/sprint-plan` to schedule content creation work for the season (at `workflow: minimal`, which has no sprints, add it to the brief's build order instead).
-- Run `/team-release` when the season content is ready to deploy.
+- Run `/skill:design-review` on the season design document for consistency validation.
+- Run `/skill:sprint-plan` to schedule content creation work for the season (at `workflow: minimal`, which has no sprints, add it to the brief's build order instead).
+- Run `/skill:team-release` when the season content is ready to deploy.
 - If the run ended **BLOCKED** on an ethics flag: revise the economy design against
-  `design/live-ops/ethics-policy.md` and re-run `/team-live-ops`; the three steps
+  `design/live-ops/ethics-policy.md` and re-run `/skill:team-live-ops`; the three steps
   above wait for a COMPLETE plan.

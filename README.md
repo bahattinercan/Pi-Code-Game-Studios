@@ -1,11 +1,24 @@
 <p align="center">
-  <h1 align="center">Claude Code Game Studios</h1>
+  <h1 align="center">Claude Code Game Studios — Pi port</h1>
   <p align="center">
-    Turn a single Claude Code session into a full game development studio.
+    Turn a single Pi session into a full game development studio.
     <br />
-    49 agents. 74 skills. One coordinated AI team.
+    49 role definitions. 74 skills. One coordinated AI team.
   </p>
 </p>
+
+> **This is a port.** The original is
+> [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios),
+> built for Claude Code. This fork runs the studio under
+> [Pi](https://pi.dev) instead: `.pi/` in place of `.claude/`, `/skill:<name>`
+> commands, an explicit config step instead of inline shell, and the always-on
+> constraints generated into `.pi/APPEND_SYSTEM.md`. **Read
+> [PORTING.md](PORTING.md) first** — it lists what moved, and the three things
+> that are still pending (the hook extension, the agent registry, path-scoped
+> rule loading).
+>
+> Upstream's Claude Code documentation below has been rewritten only where a
+> Pi user would be misled; treat `PORTING.md` as authoritative where they differ.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
@@ -55,7 +68,7 @@ The result: you still make every decision, but now you have a team that asks the
 | Category | Count | Description |
 |----------|-------|-------------|
 | **Agents** | 49 | Specialized subagents across design, programming, art, audio, narrative, QA, and production |
-| **Skills** | 74 | Slash commands for every workflow phase (`/start`, `/design-system`, `/create-epics`, `/create-stories`, `/dev-story`, `/story-done`, etc.) |
+| **Skills** | 74 | Slash commands for every workflow phase (`/skill:start`, `/skill:design-system`, `/skill:create-epics`, `/skill:create-stories`, `/skill:dev-story`, `/skill:story-done`, etc.) |
 | **Hooks** | 15 | Automated validation on commits, pushes, asset changes, design-doc reads, writes and registries, session lifecycle, agent audit trail, and gap detection |
 | **Rules** | 14 | Path-scoped coding standards enforced when editing gameplay, engine, AI, UI, network code, scene and asset files, and more |
 | **Templates** | 62 | Document templates for GDDs, UX specs, ADRs, sprint plans, HUD design, accessibility, and more |
@@ -104,40 +117,40 @@ The template includes agent sets for all three major engines. Use the set that m
 Type `/` in Claude Code to access all 74 skills:
 
 **Onboarding & Navigation**
-`/start` `/help` `/project-stage-detect` `/setup-engine` `/adopt` `/settings`
+`/skill:start` `/skill:help` `/skill:project-stage-detect` `/skill:setup-engine` `/skill:adopt` `/skill:settings`
 
 **Game Design**
-`/brainstorm` `/map-systems` `/design-system` `/quick-design` `/review-all-gdds` `/propagate-design-change`
+`/skill:brainstorm` `/skill:map-systems` `/skill:design-system` `/skill:quick-design` `/skill:review-all-gdds` `/skill:propagate-design-change`
 
 **Art & Assets**
-`/art-bible` `/asset-spec` `/asset-audit`
+`/skill:art-bible` `/skill:asset-spec` `/skill:asset-audit`
 
 **UX & Interface Design**
-`/ux-design` `/ux-review`
+`/skill:ux-design` `/skill:ux-review`
 
 **Architecture**
-`/create-architecture` `/architecture-decision` `/architecture-review` `/create-control-manifest`
+`/skill:create-architecture` `/skill:architecture-decision` `/skill:architecture-review` `/skill:create-control-manifest`
 
 **Stories & Sprints**
-`/create-epics` `/create-stories` `/dev-story` `/sprint-plan` `/sprint-status` `/story-readiness` `/story-done` `/estimate`
+`/skill:create-epics` `/skill:create-stories` `/skill:dev-story` `/skill:sprint-plan` `/skill:sprint-status` `/skill:story-readiness` `/skill:story-done` `/skill:estimate`
 
 **Reviews & Analysis**
-`/design-review` `/code-review` `/balance-check` `/content-audit` `/scope-check` `/perf-profile` `/tech-debt` `/gate-check` `/consistency-check` `/security-audit`
+`/skill:design-review` `/skill:code-review` `/skill:balance-check` `/skill:content-audit` `/skill:scope-check` `/skill:perf-profile` `/skill:tech-debt` `/skill:gate-check` `/skill:consistency-check` `/skill:security-audit`
 
 **QA & Testing**
-`/qa-plan` `/smoke-check` `/soak-test` `/regression-suite` `/test-setup` `/test-helpers` `/test-evidence-review` `/test-flakiness` `/skill-test` `/skill-improve`
+`/skill:qa-plan` `/skill:smoke-check` `/skill:soak-test` `/skill:regression-suite` `/skill:test-setup` `/skill:test-helpers` `/skill:test-evidence-review` `/skill:test-flakiness` `/skill:skill-test` `/skill:skill-improve`
 
 **Production**
-`/milestone-review` `/retrospective` `/bug-report` `/bug-triage` `/reverse-document` `/playtest-report`
+`/skill:milestone-review` `/skill:retrospective` `/skill:bug-report` `/skill:bug-triage` `/skill:reverse-document` `/skill:playtest-report`
 
 **Release**
-`/release-checklist` `/launch-checklist` `/changelog` `/patch-notes` `/hotfix` `/day-one-patch`
+`/skill:release-checklist` `/skill:launch-checklist` `/skill:changelog` `/skill:patch-notes` `/skill:hotfix` `/skill:day-one-patch`
 
 **Creative & Content**
-`/prototype` `/vertical-slice` `/onboard` `/localize`
+`/skill:prototype` `/skill:vertical-slice` `/skill:onboard` `/skill:localize`
 
 **Team Orchestration** (coordinate multiple agents on a single feature)
-`/team-combat` `/team-narrative` `/team-ui` `/team-release` `/team-polish` `/team-audio` `/team-level` `/team-live-ops` `/team-qa`
+`/skill:team-combat` `/skill:team-narrative` `/skill:team-ui` `/skill:team-release` `/skill:team-polish` `/skill:team-audio` `/skill:team-level` `/skill:team-live-ops` `/skill:team-qa`
 
 ## Does it produce games, or documents?
 
@@ -173,12 +186,13 @@ clutter, not evidence.
 ### Prerequisites
 
 - [Git](https://git-scm.com/)
-- [Claude Code](https://code.claude.com/docs/en/setup) — the native installer is recommended (`npm install -g @anthropic-ai/claude-code` also works, on Node.js 22+)
-- [Python 3](https://www.python.org/) — reads `project.yaml` for every skill and hook; without it every setting silently falls back to its default
-- Bash — runs every hook; built into macOS and Linux, and on Windows it comes with [Git for Windows](https://git-scm.com/downloads/win)
-- **Recommended**: [jq](https://jqlang.github.io/jq/) (for hook validation)
+- [Pi](https://pi.dev) — installed and signed in to at least one provider
+- [Node.js 22+](https://nodejs.org/) — runs `tools/build-append-system.mjs`, which regenerates `.pi/APPEND_SYSTEM.md`
+- [Python 3](https://www.python.org/) — reads `project.yaml` for every skill; without it every setting silently falls back to its default
+- Bash — runs the helper scripts; built into macOS and Linux, and on Windows it comes with [Git for Windows](https://git-scm.com/downloads/win)
+- **Recommended**: [jq](https://jqlang.github.io/jq/)
 
-Hooks fail gracefully if optional tools are missing — you just lose validation — with one deliberate exception: a commit that stages data JSON is blocked when there is no Python to validate it.
+Helpers fail gracefully if optional tools are missing — you lose validation, not the session. The one deliberate exception is a commit that stages data JSON: it is blocked when there is no Python to validate it.
 
 ### Setup
 
@@ -189,42 +203,42 @@ Hooks fail gracefully if optional tools are missing — you just lose validation
    ```
 
 2. **Open Claude Code in the project's root folder** (the one holding
-   `CLAUDE.md` and `project.yaml`) and start a session:
+   `AGENTS.md` and `project.yaml`) and start a session:
    ```bash
    claude
    ```
    Starting it in a subfolder such as `src/` skips the project's hooks, deny
    rules and ask-first permission mode.
 
-3. **Run `/start`** — the system asks where you are (no idea, vague concept,
+3. **Run `/skill:start`** — the system asks where you are (no idea, vague concept,
    clear design, existing work) and guides you to the right workflow. No assumptions.
 
    Or jump directly to a specific skill if you already know what you need:
-   - `/brainstorm` — explore game ideas from scratch
-   - `/setup-engine godot 4.7` — configure your engine if you already know
-   - `/project-stage-detect` — analyze an existing project
+   - `/skill:brainstorm` — explore game ideas from scratch
+   - `/skill:setup-engine godot 4.7` — configure your engine if you already know
+   - `/skill:project-stage-detect` — analyze an existing project
 
 ## Configuration
 
 `project.yaml` at the repo root is the single source of truth for how the
 studio behaves on your project — engine, naming conventions, and a `modes`
-block that controls how much process every skill enforces. `/start` writes it
+block that controls how much process every skill enforces. `/skill:start` writes it
 for you; you rarely need to hand-edit it.
 
 The one question that matters most is **`modes.rigor`** — `minimal`, `standard`,
 or `full`. It's a single front door over six separate knobs (`workflow` —
 which GDD sections are required, `docs.density`, `qa.level`,
 `story_granularity`, `review_mode` — how many director agents review your work,
-and `team.size`), so `/start` asks it once instead of six times:
+and `team.size`), so `/skill:start` asks it once instead of six times:
 
-- **`minimal`** (default) — jam-game speed. No GDDs required, terse docs, minimal QA evidence, solo review. `/start` → `/setup-engine` → `/brainstorm` (a one-page brief) → `/create-stories` → `/dev-story` ↔ `/story-done`.
+- **`minimal`** (default) — jam-game speed. No GDDs required, terse docs, minimal QA evidence, solo review. `/skill:start` → `/skill:setup-engine` → `/skill:brainstorm` (a one-page brief) → `/skill:create-stories` → `/skill:dev-story` ↔ `/skill:story-done`.
 - **`standard`** — 5 required GDD sections, balanced doc depth, standard QA evidence, lean review.
 - **`full`** — all 8 GDD sections, thorough docs, full QA evidence on every story type, full director review.
 
 `minimal` is the default because the heavier tier costs more to reach working
 code without producing a better result, and gives nothing back when someone new
-picks the project up. Raise it in one `/settings` call when your project grows
-— `/help` and `/gate-check` will suggest it when they see the signs.
+picks the project up. Raise it in one `/skill:settings` call when your project grows
+— `/skill:help` and `/skill:gate-check` will suggest it when they see the signs.
 
 Two escape hatches keep one setting from being a blunt instrument.
 **`system_overrides`** holds a single system to a higher standard than the rest
@@ -240,7 +254,7 @@ per-developer in a gitignored `project.local.yaml` without touching the shared
 config. `modes.automation` (how often the AI pauses to ask before it acts) sits
 outside rigor and is likewise personally overridable.
 
-View or change any setting with the `/settings` skill:
+View or change any setting with the `/skill:settings` skill:
 
 ```
 /skill:settings                              # view effective config
@@ -260,7 +274,7 @@ versions, and which files are safe to overwrite vs. which need a manual merge.
 ## Project Structure
 
 ```
-CLAUDE.md                           # Master configuration
+AGENTS.md                           # Master configuration
 .pi/
   settings.json                     # Hooks, permissions, safety rules
   agents/                           # 49 agent definitions (markdown + YAML frontmatter)
@@ -346,14 +360,14 @@ auto mode.
 | `validate-registry.sh` | PreToolUse (Write/Edit) | Warns when a write to the entity or TR-ID registry would delete or renumber an entry, or set a status its header does not list |
 | `validate-assets.sh` | PostToolUse (Write/Edit) | Checks data-file JSON under `assets/`, `Assets/` or `Content/`, and asset naming in Godot's `assets/` only — exits early if the file is under none of them |
 | `session-start.sh` | Session open | Shows current branch and recent commits for orientation |
-| `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/start`) and missing design docs when code or prototypes exist |
+| `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/skill:start`) and missing design docs when code or prototypes exist |
 | `pre-compact.sh` | Before compaction | Logs the compaction (its output does not reach Claude — `session-start.sh` restores context afterwards) |
 | `notify.sh` | Permission prompt, or idle about a minute | Shows Windows toast notification via PowerShell |
 | `session-stop.sh` | Every response end, in the background | Archives `active.md` to session log and records git activity |
 | `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
 | `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
 | `validate-agent-artifact.sh` | Agent stops | Warns when a subagent stops without writing the file its brief named |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.pi/skills/` change |
+| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill:skill-test` after any `.pi/skills/` change |
 
 > **Note**: `validate-commit.sh`, `validate-push.sh`, `validate-read.sh`, `validate-write.sh`, `validate-registry.sh`, `validate-assets.sh` and `validate-skill-change.sh` fire on every Bash, PowerShell, Read, Write or Edit tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
 

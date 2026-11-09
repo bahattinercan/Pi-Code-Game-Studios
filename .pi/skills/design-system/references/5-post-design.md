@@ -1,6 +1,6 @@
 # /skill:design-system — Phase 5: Post-Design Validation
 
-> Part of `/design-system`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:design-system`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 5. Post-Design Validation
@@ -24,7 +24,7 @@ Write `## Summary` and its `> **Quick reference**` line now — after the design
 exists, so the summary distils real content rather than intentions. This runs
 **at every tier**, including `standard` and a voluntary `minimal` GDD: the
 Summary is what lets a later skill scan 20 GDDs and decide which to read in full
-(`/create-epics`, `/architecture-review`, `/review-all-gdds` all grep it), so a
+(`/skill:create-epics`, `/skill:architecture-review`, `/skill:review-all-gdds` all grep it), so a
 GDD without it silently forces those consumers back to full reads.
 
 - **Summary body**: 2–3 sentences — what this system is, what it does for the
@@ -144,13 +144,13 @@ Present a completion summary:
 > - Cross-system conflicts found: [list or "none"]
 
 > **To validate this GDD, open a fresh Claude Code session and run:**
-> `/design-review design/gdd/[system-name].md`
+> `/skill:design-review design/gdd/[system-name].md`
 >
-> **Never run `/design-review` in the same session as `/design-system`.** The reviewing
+> **Never run `/skill:design-review` in the same session as `/skill:design-system`.** The reviewing
 > agent must be independent of the authoring context. Running it here would inherit
 > the full design history, making independent critique impossible.
 
-**NEVER offer to run `/design-review` inline.** Always direct the user to a fresh window.
+**NEVER offer to run `/skill:design-review` inline.** Always direct the user to a fresh window.
 
 ### 5d: Update Systems Index
 
@@ -164,7 +164,7 @@ nothing else in §5 hints the file may be absent.
 
 - **Absent** — say so in one line (*"no `design/gdd/systems-index.md` at this
   workflow tier; nothing to update"*) and skip to §5e. Do **not** offer to create
-  one: `/map-systems` owns that file, and a stub written here would be a systems
+  one: `/skill:map-systems` owns that file, and a stub written here would be a systems
   index listing exactly one system.
 - **Present** — continue:
 
@@ -173,7 +173,7 @@ nothing else in §5 hints the file may be absent.
   offset and limit
 - Update the target system's row:
   - If design-review was run and verdict is APPROVED: Status → "Approved"
-  - If design-review was run and verdict is NEEDS REVISION or MAJOR REVISION NEEDED: Status → "Needs Revision" (that exact string — `/design-review` sets "In Review" only once the revisions are applied)
+  - If design-review was run and verdict is NEEDS REVISION or MAJOR REVISION NEEDED: Status → "Needs Revision" (that exact string — `/skill:design-review` sets "In Review" only once the revisions are applied)
   - If design-review was skipped: Status → "Designed" (pending review)
   - If the user chose "I'll review it myself first": Status → "Designed"
   - Design Doc: link to `design/gdd/[system-name].md`
@@ -199,10 +199,10 @@ Update `production/session-state/active.md` with:
 Use `AskUserQuestion`:
 - "What's next?"
   - Options:
-    - "Run `/consistency-check` — verify this GDD's values don't conflict with existing GDDs (recommended before designing the next system)"
+    - "Run `/skill:consistency-check` — verify this GDD's values don't conflict with existing GDDs (recommended before designing the next system)"
     - "Design next system ([next-in-order])" — if undesigned systems remain
     - "Fix review findings" — if design-review flagged issues
     - "Stop here for this session"
-    - "Run `/gate-check`" — if enough MVP systems are designed
+    - "Run `/skill:gate-check`" — if enough MVP systems are designed
 
 ---

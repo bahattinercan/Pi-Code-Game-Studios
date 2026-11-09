@@ -1,6 +1,6 @@
 # /skill:gate-check — Section 6: Update Stage on PASS
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 6. Update Stage on PASS
@@ -55,9 +55,9 @@ later) while the resolved `modes.workflow` is `minimal` (the `rigor: minimal`
 posture, from the config block above), add one line:
 
 > "You're entering [stage] on `rigor: minimal` — most projects this size run
-> `standard`. Revisit with `/settings modes.rigor=standard`?"
+> `standard`. Revisit with `/skill:settings modes.rigor=standard`?"
 
-Offer it **once**, here at the gate. Route to `/settings` — never change the
+Offer it **once**, here at the gate. Route to `/skill:settings` — never change the
 setting yourself.
 
 ---

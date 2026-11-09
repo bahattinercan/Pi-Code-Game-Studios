@@ -5,7 +5,7 @@ description: "Orchestrate the polish team — performance-analyst, technical-art
 # Team Polish
 
 If no argument is provided, output usage guidance and exit without spawning any agents:
-> Usage: `/team-polish [feature or area to polish] [--review full|lean|solo]` — specify the feature or area to polish (e.g., `combat`, `main menu`, `inventory system`, `level-1`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-polish [feature or area to polish] [--review full|lean|solo]` — specify the feature or area to polish (e.g., `combat`, `main menu`, `inventory system`, `level-1`). Do not use `AskUserQuestion` here; output the guidance directly.
 
 When this skill is invoked with an argument, orchestrate the polish team through a structured pipeline.
 
@@ -39,7 +39,7 @@ below), and the agents that work at them are team members, not director gates.
 `.pi/docs/automation-modes.md` for how each mode changes pipeline behavior.
 
 **`team.size`**: which agents are active (orthogonal to review_mode gate-depth and workflow docs).
-- **`individual`** (default): `performance-analyst` + `technical-artist`. Other agents consulted via these two, not spawned separately. No programmer is active, so the optimisation list's programmer items are not implemented in this run — the report names the list as handed to `/dev-story` (Phase 2).
+- **`individual`** (default): `performance-analyst` + `technical-artist`. Other agents consulted via these two, not spawned separately. No programmer is active, so the optimisation list's programmer items are not implemented in this run — the report names the list as handed to `/skill:dev-story` (Phase 2).
 - **`small`**: + `sound-designer` + `qa-tester` + `engine-programmer`, and `tools-programmer` when Phase 1 traces a cause to a content authoring tool (the full pipeline as documented).
 - **`studio`**: the `small` set, `engine-programmer` included, + an adversarial review pass: Phase 5's qa-tester is told "your job is not to confirm this holds — find how it breaks", and the report says the pass ran. This pipeline has no engine specialist to widen; engine-level work stays with `engine-programmer`.
 A non-core agent needed at `individual` routes through the nearest active core agent with an informational note. **"Phase gate" means any phase that ends in an `AskUserQuestion` decision point this pipeline itself lists** — a transition under Decision Points above, or a **Gate** step written into the pipeline below — **whatever the `automation` mode.** `guided` and `autonomous` change how a gate is passed (it auto-advances, or is recorded with `log_decision`), not whether it is one, so bounded-exception condition (3) below holds at it in every mode. An agent restricted to "phase gates only" is spawned at those points and no others. This active-set scoping applies throughout the pipeline below: any phase that names an agent outside the active set routes through the nearest core agent rather than spawning it.
@@ -110,12 +110,12 @@ Use the `Agent` tool to spawn each team member as a subagent:
 >
 > The `[path]` contract above has a precondition: the path is one *you* named, so
 > a concrete destination must be stated here or every run invents one. Unlike
-> `/team-qa` and `/team-narrative`, whose destinations are fixed by their
+> `/skill:team-qa` and `/skill:team-narrative`, whose destinations are fixed by their
 > consumers, this location has no reader in the repo and was chosen deliberately.
 > **Nothing reads `production/polish/` yet** — say so when reporting, so the user
 > knows the report is a record rather than an input to a later gate.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phases 3 and 4 can run simultaneously).
 
@@ -123,7 +123,7 @@ Launch independent agents in parallel where the pipeline allows it (e.g., Phases
 
 ### Phase 1: Assessment
 Delegate to **performance-analyst**:
-- Profile the target feature/area using `/perf-profile`
+- Profile the target feature/area using `/skill:perf-profile`
 - Identify performance bottlenecks and frame budget violations
 - Measure memory usage and check for leaks
 - Benchmark against target hardware specs
@@ -145,7 +145,7 @@ At `team.size: individual` that is every programmer item, since no programmer is
 active; at any size it includes an item owned by a programmer this pipeline does
 not name (e.g. gameplay-programmer for a gameplay-script hot spot). The report
 lists those items with their owners under
-"Optimisation list handed to `/dev-story`: `production/polish/[area]-report-[date].md`".
+"Optimisation list handed to `/skill:dev-story`: `production/polish/[area]-report-[date].md`".
 A metric they target that is over budget stays a known problem at Phase 6.
 
 ### Phase 3: Visual Polish (parallel with Phase 2)
@@ -186,12 +186,12 @@ be checked, the result is NOT ASSESSED, never READY FOR RELEASE, and the report
 names each gap:
 - A metric with no committed budget. `performance.target_framerate`,
   `performance.frame_budget_ms`, `performance.draw_call_limit` and
-  `performance.memory_ceiling_mb` have no default, and `/perf-profile` reports an
+  `performance.memory_ceiling_mb` have no default, and `/skill:perf-profile` reports an
   unset one as NOT ASSESSED — nothing was compared, so no budget was met.
 - A phase that did not run: BLOCKED, skipped, or its agent outside the active set.
   At `team.size: individual`, sound-designer's audio polish and qa-tester's
   hardening are only consulted through the active agents, not run, and Phase 2's
-  programmer items are handed to `/dev-story` rather than implemented.
+  programmer items are handed to `/skill:dev-story` rather than implemented.
 
 ## Error Recovery Protocol
 
@@ -209,8 +209,8 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## File Write Protocol
@@ -229,12 +229,12 @@ not one per phase. This orchestrator does not write files directly.
 
 ## Output
 
-A summary report covering: performance before/after metrics, visual polish changes, audio polish changes, test results, any optimisation list handed to `/dev-story`, and release readiness assessment.
+A summary report covering: performance before/after metrics, visual polish changes, audio polish changes, test results, any optimisation list handed to `/skill:dev-story`, and release readiness assessment.
 
 ## Next Steps
 
-- If READY FOR RELEASE: run `/release-checklist` for the final pre-release validation.
-- If NEEDS MORE WORK: schedule remaining issues in `/sprint-plan update` (at `workflow: minimal`, which has no sprints, add them to the brief's build order) and re-run `/team-polish` after fixes.
-- If NOT ASSESSED: supply what was missing — commit the unset `performance.*` budgets in `project.yaml` (`/settings`), or run the phases that did not run (raise `team.size`) — then re-run `/team-polish`. Do not treat the area as release-ready.
-- If the report handed an optimisation list to `/dev-story`: implement those items there, then re-run `/team-polish` to measure the gain.
-- Run `/gate-check` for a formal phase gate verdict before handing off to release.
+- If READY FOR RELEASE: run `/skill:release-checklist` for the final pre-release validation.
+- If NEEDS MORE WORK: schedule remaining issues in `/skill:sprint-plan update` (at `workflow: minimal`, which has no sprints, add them to the brief's build order) and re-run `/skill:team-polish` after fixes.
+- If NOT ASSESSED: supply what was missing — commit the unset `performance.*` budgets in `project.yaml` (`/skill:settings`), or run the phases that did not run (raise `team.size`) — then re-run `/skill:team-polish`. Do not treat the area as release-ready.
+- If the report handed an optimisation list to `/skill:dev-story`: implement those items there, then re-run `/skill:team-polish` to measure the gain.
+- Run `/skill:gate-check` for a formal phase gate verdict before handing off to release.

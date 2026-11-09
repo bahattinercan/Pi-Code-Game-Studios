@@ -1,4 +1,4 @@
-> Gate definition, loaded by `/gate-check` for the TARGET PHASE ONLY.
+> Gate definition, loaded by `/skill:gate-check` for the TARGET PHASE ONLY.
 > Never load the other five — one gate applies per invocation.
 
 
@@ -12,11 +12,11 @@
 
 **Recommended (not blocking):**
 - [ ] Concept prototype exists in `prototypes/` with a REPORT.md showing PROCEED verdict
-      (`/prototype [core-mechanic]`) — skipping this means GDDs may be written for an
+      (`/skill:prototype [core-mechanic]`) — skipping this means GDDs may be written for an
       idea that hasn't been played. Acceptable if the concept is proven by other means.
 
 **Quality Checks:**
-- [ ] Game concept has been reviewed (`/design-review` verdict not MAJOR REVISION NEEDED)
+- [ ] Game concept has been reviewed (`/skill:design-review` verdict not MAJOR REVISION NEEDED)
 - [ ] Core loop is described and understood
 - [ ] Target audience is identified
 - [ ] Visual Identity Anchor contains a one-line visual rule and at least 2 supporting visual principles
@@ -30,4 +30,4 @@ only thing that adds one.
 
 - **`full`** — game-concept.md + pillars + Visual Identity Anchor all required
 - **`standard`** — pillars + Visual Identity Anchor → recommended; `game-concept.md` stays required
-- **`minimal`** — gate target is **`design/game-brief.md`** (not `game-concept.md`); the GDD / pillars / Visual Identity Anchor checks **drop** (a brief with content = PASS). `/brainstorm` writes `design/game-brief.md` at this tier (Option A); `game-concept.md` remains the `standard`/`full` concept doc.
+- **`minimal`** — gate target is **`design/game-brief.md`** (not `game-concept.md`); the GDD / pillars / Visual Identity Anchor checks **drop** (a brief with content = PASS). `/skill:brainstorm` writes `design/game-brief.md` at this tier (Option A); `game-concept.md` remains the `standard`/`full` concept doc.

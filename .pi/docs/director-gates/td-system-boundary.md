@@ -4,7 +4,7 @@
 
 Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
 
-**Trigger**: After `/map-systems` Phase 3 dependency mapping is agreed but before
+**Trigger**: After `/skill:map-systems` Phase 3 dependency mapping is agreed but before
 GDD authoring begins — validates that the system structure is architecturally
 sound before teams invest in writing GDDs against it
 

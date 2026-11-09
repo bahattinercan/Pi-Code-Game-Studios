@@ -1,6 +1,6 @@
 # /skill:create-architecture — Phase 0: Load All Context
 
-> Part of `/create-architecture`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:create-architecture`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 0: Load All Context
@@ -46,7 +46,7 @@ not the whole `modules/` directory:
    phase is where those constraints get baked into the architecture.
 
 If no engine is configured, stop and prompt:
-> "No engine is configured. Run `/setup-engine` first. Architecture cannot be
+> "No engine is configured. Run `/skill:setup-engine` first. Architecture cannot be
 > written without knowing which engine and version you are targeting."
 
 ### 0b. Design Context + Technical Requirements Extraction
@@ -63,13 +63,13 @@ need an absence branch** — §0a stops for an unconfigured engine, and these tw
 matter just as much:
 
 - **`systems-index.md` absent** — stop:
-  > "No systems index found. Run `/map-systems` first. An architecture written
+  > "No systems index found. Run `/skill:map-systems` first. An architecture written
   > without it invents layers for systems nobody mapped, and every ADR, epic and
   > story downstream inherits that invention."
   At `minimal` the index is not required (the `workflow` list in SKILL.md) — say so and proceed
   from the brief instead.
 - **`game-concept.md` absent** — at `standard`/`full`, stop and point at
-  `/brainstorm`. At `minimal`, read `design/game-brief.md` in its place; if that
+  `/skill:brainstorm`. At `minimal`, read `design/game-brief.md` in its place; if that
   is absent too, stop — there is no design record to architect against.
 - **Either present but empty or still template placeholders** — treat as absent.
   Present-but-empty is the case that most looks like present.
@@ -112,7 +112,7 @@ ID format. This is the
 complete set of what the architecture must cover.
 
 **The IDs come from the TR registry, not from a fresh count.** Stories and ADRs
-cite TR-IDs, and `/architecture-review` keeps them permanent in
+cite TR-IDs, and `/skill:architecture-review` keeps them permanent in
 `docs/architecture/tr-registry.yaml`. A baseline numbered from 001 on a re-run
 gives a requirement a different ID from the one stories already cite. So, before
 numbering:
@@ -123,7 +123,7 @@ numbering:
   `superseded-by` entries; they were retired on purpose. Every other requirement
   is **provisional**: number it from `bash .pi/scripts/registry.sh next-id tr
   <system>` onwards, so it cannot reuse a registered or retired ID, and mark it
-  `(provisional)`. `/architecture-review` registers it and gives the permanent ID.
+  `(provisional)`. `/skill:architecture-review` registers it and gives the permanent ID.
 - **Registry absent, or `requirements: []`:** every ID is provisional. Say so in
   the baseline's header line, so nobody cites them as permanent.
 

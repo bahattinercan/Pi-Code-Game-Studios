@@ -16,8 +16,8 @@ every file write follows `.pi/docs/automation-modes.md`
 `automation_always_ask` categories always prompt).
 
 **`qa.level` and `testing.strict`** (resolved above) decide what this review may
-call a blocker — the same rules `/story-done` closes stories by, so a BLOCKING
-item here is one that would stop `/story-done`:
+call a blocker — the same rules `/skill:story-done` closes stories by, so a BLOCKING
+item here is one that would stop `/skill:story-done`:
 - **`qa.level: minimal`** waives tests. A Logic, Integration or Config/Data story
   with no test evidence (for Config/Data, no smoke report) is
   `WAIVED (qa.level: minimal)` — not MISSING — and raises no BLOCKING item; a
@@ -33,7 +33,7 @@ item here is one that would stop `/story-done`:
 
 # Test Evidence Review
 
-`/smoke-check` verifies that test files **exist** and **pass**. This skill
+`/skill:smoke-check` verifies that test files **exist** and **pass**. This skill
 goes further — it reviews the **quality** of those tests and evidence documents.
 A test file that exists and passes may still leave critical behaviour uncovered.
 A manual evidence doc that exists may lack the sign-offs required for closure.
@@ -41,7 +41,7 @@ A manual evidence doc that exists may lack the sign-offs required for closure.
 **Output:** Summary report (in conversation) + optional `production/qa/evidence-review-[date].md`
 
 **When to run:**
-- Before QA hand-off sign-off (`/team-qa` Phase 5)
+- Before QA hand-off sign-off (`/skill:team-qa` Phase 5)
 - On any story where test quality is in question
 - As part of milestone review for Logic and Integration story quality audit
 
@@ -50,9 +50,9 @@ A manual evidence doc that exists may lack the sign-offs required for closure.
 ## 1. Parse Arguments
 
 **Modes:**
-- `/test-evidence-review [story-path]` — review a single story's evidence
-- `/test-evidence-review sprint` — review all stories in the current sprint
-- `/test-evidence-review [system-name]` — review all stories in an epic/system
+- `/skill:test-evidence-review [story-path]` — review a single story's evidence
+- `/skill:test-evidence-review sprint` — review all stories in the current sprint
+- `/skill:test-evidence-review [system-name]` — review all stories in an epic/system
 - No argument — ask which scope: "Single story", "Current sprint", "A system"
 
 ---
@@ -71,9 +71,9 @@ the list of story file paths from the sprint plan.
 
 > **If the resolved scope contains ZERO stories, stop here.** Report
 > `NOT ASSESSED — no stories in scope`, name which scope was searched and which
-> path was empty, and route: no sprint file → `/sprint-plan new` (at `workflow: minimal`,
-> which has no sprints, `/test-evidence-review [epic-slug]` instead); a sprint plan
-> listing no stories → `/create-stories [epic-slug]`; a `[system-name]` glob that
+> path was empty, and route: no sprint file → `/skill:sprint-plan new` (at `workflow: minimal`,
+> which has no sprints, `/skill:test-evidence-review [epic-slug]` instead); a sprint plan
+> listing no stories → `/skill:create-stories [epic-slug]`; a `[system-name]` glob that
 > matched nothing → name the glob. Do not continue to Section 3.
 >
 > **Guard the empty scope, not just the per-story unknown.** The verdict
@@ -198,7 +198,7 @@ Missing criteria mean a criterion was never verified.
 ### Sign-off completeness
 
 What closes the story follows the evidence table in
-`.pi/docs/coding-standards.md` — the same rule `/story-done` applies, at every
+`.pi/docs/coding-standards.md` — the same rule `/skill:story-done` applies, at every
 `qa.level`:
 - **Visual/Feel**: the evidence doc (from the test-evidence template) must have
   every sign-off row `[x] Approved`. A blank or missing row is INCOMPLETE.
@@ -338,9 +338,9 @@ wants a persistent record.
 
 After the report:
 
-- For BLOCKING items: "These must be resolved before `/story-done` can mark the
+- For BLOCKING items: "These must be resolved before `/skill:story-done` can mark the
   story Complete. Would you like to address any of them now?"
-- For thin assertions: "Consider running `/test-helpers [system]` to see
+- For thin assertions: "Consider running `/skill:test-helpers [system]` to see
   scaffolded assertion patterns for common cases."
 - For missing sign-offs: "Manual sign-off is required from [role]. Share
   `[evidence-path]` with them to complete sign-off."

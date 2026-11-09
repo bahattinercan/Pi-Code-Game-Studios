@@ -117,15 +117,15 @@ Can the team build at this quality on the projected schedule?]
 
 **Performance targets:** [Confirmed / Revised — list changes if revised]
 
-**Playtest note:** Run `/playtest-report` to structure additional session data
-before running `/gate-check production`.
+**Playtest note:** Run `/skill:playtest-report` to structure additional session data
+before running `/skill:gate-check production`.
 
 **Next steps:**
-1. `/create-epics layer:foundation` — plan Foundation layer epics
-2. `/create-epics layer:core` — plan Core layer epics
-3. `/create-stories [epic-slug]` — break each epic into stories
-4. `/sprint-plan` — use velocity data from this report in the estimate
-5. `/gate-check production` — formally advance to Production
+1. `/skill:create-epics layer:foundation` — plan Foundation layer epics
+2. `/skill:create-epics layer:core` — plan Core layer epics
+3. `/skill:create-stories [epic-slug]` — break each epic into stories
+4. `/skill:sprint-plan` — use velocity data from this report in the estimate
+5. `/skill:gate-check production` — formally advance to Production
 
 ---
 
@@ -135,7 +135,7 @@ before running `/gate-check production`.
 for PROCEED, PIVOT or KILL yet.]
 
 **Next step:** play the slice unguided (at least one documented session), then
-re-run `/vertical-slice` — it resumes from the checkpoint in
+re-run `/skill:vertical-slice` — it resumes from the checkpoint in
 `production/session-state/active.md`.
 
 ---
@@ -145,13 +145,13 @@ re-run `/vertical-slice` — it resumes from the checkpoint in
 [Which GDDs need revision and why — be specific about the failure mode observed.]
 
 **Systems requiring GDD revision:** [List]
-**Architecture decisions to revisit:** [List — use `/architecture-decision` to update]
+**Architecture decisions to revisit:** [List — use `/skill:architecture-decision` to update]
 **Core loop change needed:** [What specifically to change]
 
 **Next steps:**
-1. `/design-system [mechanic]` — revise affected GDDs
-2. `/architecture-decision [decision]` — address architecture issues
-3. `/vertical-slice` — re-validate after revisions
+1. `/skill:design-system [mechanic]` — revise affected GDDs
+2. `/skill:architecture-decision [decision]` — address architecture issues
+3. `/skill:vertical-slice` — re-validate after revisions
 
 ---
 
@@ -160,7 +160,7 @@ re-run `/vertical-slice` — it resumes from the checkpoint in
 [Why the full game loop does not work at this quality level. What specifically
 prevented the player from experiencing the core fantasy. What to do instead.]
 
-**Next step:** `/brainstorm` to explore a new direction, or `/prototype [new-concept]`
+**Next step:** `/skill:brainstorm` to explore a new direction, or `/skill:prototype [new-concept]`
 to test a different concept cheaply before investing in another vertical slice.
 
 ---

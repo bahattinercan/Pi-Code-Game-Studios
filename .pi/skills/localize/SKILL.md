@@ -379,13 +379,13 @@ When `extract` mode finds new or modified strings and `freeze-status.md` shows S
 ## Phase 2J: QA Mode
 
 Localization QA is a dedicated pass that runs after translations are delivered but
-before any locale ships. This is not the same as `/localize validate` (which checks
+before any locale ships. This is not the same as `/skill:localize validate` (which checks
 completeness) — this is a structured playthrough-based quality check.
 
 Spawn `localization-lead` via `Agent` with:
 - The target locale(s) to QA
-- The list of all screens/flows in the game (from `design/gdd/` or `/content-audit` output)
-- The current `/localize validate` report
+- The list of all screens/flows in the game (from `design/gdd/` or `/skill:content-audit` output)
+- The current `/skill:localize validate` report
 - The cultural review report (if it exists)
 
 Ask the localization-lead to produce a QA plan covering:
@@ -461,4 +461,4 @@ Ask: "May I write this localization QA report to `production/localization/loc-qa
 /skill:localize qa              → full localization QA pass
 ```
 
-After `qa` returns PASS or PASS WITH CONDITIONS for every translated locale you ship, include the QA report paths when running `/gate-check release`.
+After `qa` returns PASS or PASS WITH CONDITIONS for every translated locale you ship, include the QA report paths when running `/skill:gate-check release`.

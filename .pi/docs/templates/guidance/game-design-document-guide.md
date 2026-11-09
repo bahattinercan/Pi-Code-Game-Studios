@@ -227,7 +227,7 @@ What information needs to be displayed to the player and when?
 ## Cross-References
 
 Declare every explicit dependency on another GDD's specific mechanic, value, or
-rule. `/review-all-gdds` Phase 2c reads this table — it replaces implicit prose
+rule. `/skill:review-all-gdds` Phase 2c reads this table — it replaces implicit prose
 references with verifiable declarations. If you reference another system's
 behaviour anywhere in the document, it must appear here.
 

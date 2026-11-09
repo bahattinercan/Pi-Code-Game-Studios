@@ -5,7 +5,7 @@
 Agent: `creative-director` | Model tier: Opus | Domain: Vision, pillars, player experience
 
 **Trigger**: Invoked directly, after narrative GDDs, lore documents, dialogue specs
-or world-building documents are authored — no skill spawns it; `/team-narrative`
+or world-building documents are authored — no skill spawns it; `/skill:team-narrative`
 runs its own review, ND-CONSISTENCY
 
 **Context to pass**:

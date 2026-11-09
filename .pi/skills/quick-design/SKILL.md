@@ -12,7 +12,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys automation,workflow
 # Quick Design
 
 This is the **lightweight design path** for changes that don't need a full GDD.
-Full GDD authoring via `/design-system` is the heavyweight path. Use this skill
+Full GDD authoring via `/skill:design-system` is the heavyweight path. Use this skill
 for work under about one week of implementation — tuning adjustments, minor
 behavioral tweaks, small additions to existing systems, or standalone features too
 small to warrant a full document. Most tweaks are hours; the one-week ceiling is
@@ -20,7 +20,7 @@ the limit for a New Small System (see the categories below).
 
 **Output:** `design/quick-specs/[name]-[date].md`
 
-**When to run:** Anytime a change is too small for `/design-system` but too
+**When to run:** Anytime a change is too small for `/skill:design-system` but too
 meaningful to implement without a written rationale.
 
 ---
@@ -49,8 +49,8 @@ First, read the argument and determine which category this change falls into:
 If the change does NOT fit these categories — it introduces a new system with
 significant cross-system dependencies, requires more than one week of
 implementation, or fundamentally alters an existing system's core rules — stop
-and redirect to `/design-system` instead. Verdict: **REDIRECTED** — use
-`/design-system` for this change.
+and redirect to `/skill:design-system` instead. Verdict: **REDIRECTED** — use
+`/skill:design-system` for this change.
 
 If there is no argument, ask the user to describe the change (plain text prompt), then classify it using the criteria above.
 
@@ -64,7 +64,7 @@ Present the inferred classification using `AskUserQuestion`:
   - `[E] New Small System — standalone feature, under one week of work`
   - `[F] This is too large — redirect me to /skill:design-system`
 
-If [F]: stop. Verdict: **REDIRECTED** — use `/design-system` for this change.
+If [F]: stop. Verdict: **REDIRECTED** — use `/skill:design-system` for this change.
 Otherwise: proceed with the selected type.
 
 ---
@@ -246,7 +246,7 @@ Present the draft to the user in full. Then use `AskUserQuestion`:
   - `[C] This grew too large — redirect to /skill:design-system instead`
 
 If [B]: collect the requested changes, revise the draft, and re-present this widget.
-If [C]: stop. Verdict: **REDIRECTED** — use `/design-system` for this change.
+If [C]: stop. Verdict: **REDIRECTED** — use `/skill:design-system` for this change.
 
 If [A]: ask "May I write this Quick Design Spec to
 `design/quick-specs/[kebab-case-title]-[YYYY-MM-DD].md`?"
@@ -279,15 +279,15 @@ Type: [Tuning / Tweak / Addition / New Small System]
 System: [system name]
 GDD update: [Required — pending approval / Applied / Not required]
 
-Next step: This spec is ready for `/story-readiness` validation before
-implementation (at `workflow: minimal`, go straight to `/dev-story`). Reference this spec in the story's GDD Reference field.
+Next step: This spec is ready for `/skill:story-readiness` validation before
+implementation (at `workflow: minimal`, go straight to `/skill:dev-story`). Reference this spec in the story's GDD Reference field.
 ```
 
 ### Pipeline Notes
 
 Verdict: **COMPLETE** — quick design spec written and ready for implementation.
 
-Quick Design Specs **bypass** `/design-review` and `/review-all-gdds` by
+Quick Design Specs **bypass** `/skill:design-review` and `/skill:review-all-gdds` by
 design. They are for small, low-risk, well-scoped changes where the cost of
 the full review pipeline exceeds the risk of the change itself.
 
@@ -300,12 +300,12 @@ Redirect to the full pipeline if any of the following are true:
 - Implementation is likely to exceed one week of work
 
 In those cases: "This change has grown beyond quick-spec scope. I recommend
-using `/design-system` to author a full GDD for this."
+using `/skill:design-system` to author a full GDD for this."
 
 ---
 
 ## Recommended Next Steps
 
-- Run `/story-readiness [story-path]` to validate the story before implementation begins (skip at `rigor: minimal` — `/dev-story` directly) — reference this spec in the story's GDD Reference field
-- Run `/dev-story [story-path]` to implement once the story passes readiness checks
-- If the change is larger than expected, run `/design-system [system-name]` to author a full GDD instead
+- Run `/skill:story-readiness [story-path]` to validate the story before implementation begins (skip at `rigor: minimal` — `/skill:dev-story` directly) — reference this spec in the story's GDD Reference field
+- Run `/skill:dev-story [story-path]` to implement once the story passes readiness checks
+- If the change is larger than expected, run `/skill:design-system [system-name]` to author a full GDD instead

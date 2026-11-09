@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 7: Populate Engine Reference Docs
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 7. Populate Engine Reference Docs
@@ -19,7 +19,7 @@
 "the directory exists and pins a version" is the state of *every* fresh project,
 not an edge case. Both branches below say "create", and following either one
 literally on a pre-populated directory either overwrites curated content or
-leaves `project.yaml` and the CLAUDE.md-imported reference disagreeing.
+leaves `project.yaml` and the AGENTS.md-imported reference disagreeing.
 
 Read `docs/engine-reference/<engine>/VERSION.md` and compare its
 **Engine Version** to the version chosen in Section 3:
@@ -84,7 +84,7 @@ confirmation, then create this minimal file:
 This engine version is within the LLM's training data. Engine reference
 docs are optional but can be added later if agents suggest incorrect APIs.
 
-Run `/setup-engine refresh` to populate full reference docs at any time.
+Run `/skill:setup-engine refresh` to populate full reference docs at any time.
 ```
 
 Do NOT create breaking-changes.md, deprecated-apis.md, etc. — they would

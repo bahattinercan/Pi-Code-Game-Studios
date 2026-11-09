@@ -100,18 +100,18 @@ Widget format:
 ADR-[NNNN] written and registry updated. What would you like to do next?
 [1] Write [next-priority-adr-name] — [brief description from prerequisites list]
 [2] Write [another-priority-adr] — [brief description]  (include ALL remaining ones)
-[N] Start writing GDDs — run `/design-system [first-undesigned-system]` (only show if all prerequisite ADRs are written)
+[N] Start writing GDDs — run `/skill:design-system [first-undesigned-system]` (only show if all prerequisite ADRs are written)
 [N+1] Stop here for this session
 ```
 
-If there are no remaining priority ADRs and no undesigned GDD systems, offer only "Stop here" and suggest running `/architecture-review` in a fresh session.
+If there are no remaining priority ADRs and no undesigned GDD systems, offer only "Stop here" and suggest running `/skill:architecture-review` in a fresh session.
 
 **Always include this fixed notice in the closing output (do NOT omit it):**
 
 > To validate ADR coverage against your GDDs, open a **fresh Claude Code session**
-> and run `/architecture-review`.
+> and run `/skill:architecture-review`.
 >
-> **Never run `/architecture-review` in the same session as `/architecture-decision`.**
+> **Never run `/skill:architecture-review` in the same session as `/skill:architecture-decision`.**
 > The reviewing agent must be independent of the authoring context to give an unbiased
 > assessment. Running it here would invalidate the review.
 
@@ -123,7 +123,7 @@ appears to flow while running on decisions nobody has accepted.
 Instead, tell the user what is now waiting on acceptance:
 
 > "ADR-NNNN is written and `Proposed`. [N] stories remain `Blocked` pending it.
-> Run `/architecture-decision accept ADR-NNNN` when the decision is settled —
+> Run `/skill:architecture-decision accept ADR-NNNN` when the decision is settled —
 > that is what moves them to `Ready`."
 
 List the blocked stories by path so the cost of leaving it Proposed is visible.

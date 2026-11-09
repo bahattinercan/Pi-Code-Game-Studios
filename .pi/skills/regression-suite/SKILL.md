@@ -28,7 +28,7 @@ and known failure points. This skill maintains that list.
 
 **When to run:**
 - After fixing a bug (confirm a regression test was written or identify gap)
-- Before a phase gate — at `qa.level: full`, `/gate-check` requires a regression suite
+- Before a phase gate — at `qa.level: full`, `/skill:gate-check` requires a regression suite
 - As part of sprint close to detect coverage drift
 
 ---
@@ -60,11 +60,11 @@ critical-path *source*, not *whether* the suite runs). Do not enter Step 2c's
 was scanned.
 
 **Modes:**
-- `/regression-suite update` — scan new bug fixes this sprint and check
+- `/skill:regression-suite update` — scan new bug fixes this sprint and check
   for regression test presence; add new tests to the suite manifest
-- `/regression-suite audit` — full audit of all GDD critical paths vs.
+- `/skill:regression-suite audit` — full audit of all GDD critical paths vs.
   existing test coverage; flag paths with no regression test
-- `/regression-suite report` — read-only status report (no writes); suitable
+- `/skill:regression-suite report` — read-only status report (no writes); suitable
   for sprint reviews
 - No argument — if a sprint is clearly active (sprint plan exists with in-progress stories), run `update`. If ambiguous or no active sprint is detected, use `AskUserQuestion`:
   - Prompt: "No subcommand specified. Which mode do you want to run?"
@@ -111,7 +111,7 @@ scope the scan by each system's workflow tier (resolved above):
   exercises as the regression scope (Step 3 maps coverage against those, not GDD
   acceptance criteria). If no smoke report exists, stop with Verdict: **NOT
   ASSESSED — no smoke report to take critical paths from** — there is no
-  critical-path source at minimal without one; run `/smoke-check` first.
+  critical-path source at minimal without one; run `/skill:smoke-check` first.
 
 (Tier affects `audit` mode only; `update` and `report` modes are tier-independent.)
 
@@ -233,13 +233,13 @@ Check for drift indicators:
 > glob returns **zero critical paths**, or the test globs return **zero test
 > files**, do not emit a percentage — report
 > `Coverage: NOT ASSESSED — [no GDDs found | no test files found]` and name which
-> side was empty and the skill that produces it (`/map-systems` and
-> `/design-system` for GDDs, `/test-setup` for the test scaffold).
+> side was empty and the skill that produces it (`/skill:map-systems` and
+> `/skill:design-system` for GDDs, `/skill:test-setup` for the test scaffold).
 >
 > A percentage computed from an empty denominator is not a low score; it is not a
 > number. `0%` reads as "measured and terrible" and `100%` as "measured and
 > perfect" — both are claims about a comparison that never happened. This is the
-> same defect `/scope-check` carries a Phase 4 guard against, in the same words:
+> same defect `/skill:scope-check` carries a Phase 4 guard against, in the same words:
 > *"a percentage computed from no baseline items is not a small number; it is not
 > a number."*
 
@@ -297,11 +297,11 @@ For `report` mode: do not write anything.
 After writing (if approved):
 
 - For each HIGH priority gap: "Consider creating the missing regression test
-  before the next sprint. Run `/test-helpers` to scaffold the test file."
+  before the next sprint. Run `/skill:test-helpers` to scaffold the test file."
 - If bug regression gaps > 0: "These bugs can silently return without regression
   tests. The next sprint should include a story to write the missing tests."
 - If coverage drift detected: "Regression suite may be drifting. Consider
-  running `/regression-suite audit` at the next sprint boundary."
+  running `/skill:regression-suite audit` at the next sprint boundary."
 
 At `workflow: minimal`, which has no sprints, say "next story" for "next sprint" in the three lines above.
 
@@ -310,7 +310,7 @@ Verdict, first match wins:
   suite not generated at qa.level minimal". Tests are not required at this
   level; nothing was scanned or written.
 - **NOT ASSESSED** — the `minimal` stop above: no smoke report to take critical
-  paths from; name `/smoke-check` as the fix.
+  paths from; name `/skill:smoke-check` as the fix.
 - **NOT ASSESSED** — coverage came back `Coverage: NOT ASSESSED — [reason]` (no GDDs or
   no test files); name the reason. Never report COMPLETE over a coverage figure
   that was not computed.
@@ -333,5 +333,5 @@ describe what collaborative mode requires, not universal behavior.
   other work from proceeding (except at `qa.level: full`, where phase gates require the regression suite)
 - **Quarantine is not deletion** — tests with intermittent failures should be
   quarantined (noted in manifest) but not removed; they should be fixed by
-  `/test-flakiness`
+  `/skill:test-flakiness`
 - **Ask before writing** — always confirm before creating or updating the manifest

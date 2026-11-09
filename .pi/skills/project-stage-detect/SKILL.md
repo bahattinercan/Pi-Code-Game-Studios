@@ -111,7 +111,7 @@ track, and the judgement calls.
 
 ### 2. Classify Project Stage
 
-Based on scanned artifacts, determine stage. Check `project.stage` in `project.yaml` first (if present); else `production/stage.txt` (legacy fallback) — either is an explicit override from `/gate-check`. Otherwise, auto-detect using these heuristics (check from most-advanced backward):
+Based on scanned artifacts, determine stage. Check `project.stage` in `project.yaml` first (if present); else `production/stage.txt` (legacy fallback) — either is an explicit override from `/skill:gate-check`. Otherwise, auto-detect using these heuristics (check from most-advanced backward):
 
 > **Always run the heuristics, even when a stage is configured — then COMPARE.**
 > The configured value is authoritative for what the stage *is*; it is not
@@ -131,8 +131,8 @@ Based on scanned artifacts, determine stage. Check `project.stage` in `project.y
 >
 > **A disagreement makes Stage Confidence CONCERNS** (step 4) — ambiguous
 > signals by definition — however complete the artifacts are. One exception: at
-> `workflow: minimal` nothing runs `/gate-check`, so the configured stage stays
-> where `/start` set it. There, report the observed stage and say the configured
+> `workflow: minimal` nothing runs `/skill:gate-check`, so the configured stage stays
+> where `/skill:start` set it. There, report the observed stage and say the configured
 > one is not advanced at this tier; that lag is expected, not a disagreement.
 
 | Stage | Indicators |
@@ -142,8 +142,8 @@ Based on scanned artifacts, determine stage. Check `project.stage` in `project.y
 | **Technical Setup** | Systems index exists, engine not configured |
 | **Pre-Production** | Engine configured, code root has <10 source files |
 | **Production** | code root has 10+ source files, active development |
-| **Polish** | Explicit only (set by `/gate-check` Production → Polish gate) |
-| **Release** | Explicit only (set by `/gate-check` Polish → Release gate) |
+| **Polish** | Explicit only (set by `/skill:gate-check` Production → Polish gate) |
+| **Release** | Explicit only (set by `/skill:gate-check` Polish → Release gate) |
 
 ### 3. Collaborative Gap Identification
 
@@ -161,9 +161,9 @@ for gaps the tier above says to surface):
 
 - "I see combat code (`<code root>/gameplay/combat/`) but no `design/gdd/combat-system.md`. Was this prototyped first, or should we reverse-document?"
 - "You have 15 ADRs but no architecture overview. Should I create one to help new contributors?"
-- (`standard`/`full` only) "I see [N] systems under `<code root>/` but no ADRs in `docs/architecture/`. Were those decisions recorded somewhere else, or should we write the critical ones with `/architecture-decision`?"
+- (`standard`/`full` only) "I see [N] systems under `<code root>/` but no ADRs in `docs/architecture/`. Were those decisions recorded somewhere else, or should we write the critical ones with `/skill:architecture-decision`?"
 - (`standard`/`full` only) "No sprint plans in `production/`. Are you tracking work elsewhere (Jira, Trello, etc.)?"
-- "I found a game concept but no systems index. Have you decomposed the concept into individual systems yet, or should we run `/map-systems`?"
+- "I found a game concept but no systems index. Have you decomposed the concept into individual systems yet, or should we run `/skill:map-systems`?"
 - "Prototypes directory has 3 projects with no READMEs. Were these experiments, or do they need documentation?"
 
 ### 4. Generate Stage Report
@@ -205,7 +205,7 @@ never buried behind it.
 
 ### 5. Role-Filtered Recommendations (Optional)
 
-If user provided a role argument (e.g., `/project-stage-detect programmer`):
+If user provided a role argument (e.g., `/skill:project-stage-detect programmer`):
 
 **Programmer**:
 - Focus on architecture docs, test coverage, missing ADRs
@@ -266,18 +266,18 @@ Wait for user approval before creating the file.
 
 After generating the report, suggest relevant next steps — **only for gaps the
 resolved workflow tier surfaces** (step 3). At `standard`/`minimal`, do not
-suggest authoring optional docs (e.g. don't suggest `/reverse-document` for an
+suggest authoring optional docs (e.g. don't suggest `/skill:reverse-document` for an
 absent GDD at `minimal`, where code is the expected next step):
 
-- **No `design/game-brief.md` at `minimal`?** → `/reverse-document design <code root>`
+- **No `design/game-brief.md` at `minimal`?** → `/skill:reverse-document design <code root>`
   when the code root already holds the game (10 or more source files): it writes
-  the brief from what is built. With little or no code, `/brainstorm`.
-- **Concept exists but no systems index?** → `/map-systems` to decompose into systems
-- **Missing design docs?** → `/reverse-document design <code root>/[system]`
-- **Missing architecture docs?** → `/architecture-decision` or `/reverse-document architecture`
-- **Prototypes need documentation?** → `/reverse-document concept prototypes/[name]`
-- **No sprint plan?** → `/sprint-plan` (not at `rigor: minimal`, where the brief's build order is the plan)
-- **Approaching milestone?** → `/milestone-review`
+  the brief from what is built. With little or no code, `/skill:brainstorm`.
+- **Concept exists but no systems index?** → `/skill:map-systems` to decompose into systems
+- **Missing design docs?** → `/skill:reverse-document design <code root>/[system]`
+- **Missing architecture docs?** → `/skill:architecture-decision` or `/skill:reverse-document architecture`
+- **Prototypes need documentation?** → `/skill:reverse-document concept prototypes/[name]`
+- **No sprint plan?** → `/skill:sprint-plan` (not at `rigor: minimal`, where the brief's build order is the plan)
+- **Approaching milestone?** → `/skill:milestone-review`
 
 ---
 

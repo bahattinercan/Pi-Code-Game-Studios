@@ -1,6 +1,6 @@
 # /skill:review-all-gdds — Phase 7: Handoff
 
-> Part of `/review-all-gdds`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:review-all-gdds`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 7: Handoff

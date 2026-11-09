@@ -1,6 +1,6 @@
 # /skill:design-system — Phase 2: Gather Context
 
-> Part of `/design-system`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:design-system`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 2. Gather Context (Read Phase)
@@ -55,16 +55,16 @@ mode) and Read those ranges with offset and limit.
 > **Mark them inferred** in §5-pre's Quick reference (*"Category: Gameplay
 > (inferred from the brief — no systems index at this tier)"*) so a later reader
 > does not mistake a derivation for an indexed fact. Do **not** write a systems
-> index to hold them: `/map-systems` owns that file (§5d).
+> index to hold them: `/skill:map-systems` owns that file (§5d).
 >
 > Without this rule, an overridden system resolves to `full`, falls through to
 > the fail-fast reads below, and aborts on its first step with *"No game concept
-> found. Run `/brainstorm` first"*.
+> found. Run `/skill:brainstorm` first"*.
 
 - **Game concept**: Read `design/gdd/game-concept.md` — fail if missing:
-  > "No game concept found. Run `/brainstorm` first."
+  > "No game concept found. Run `/skill:brainstorm` first."
 - **Systems index**: Read `design/gdd/systems-index.md` — fail if missing:
-  > "No systems index found. Run `/map-systems` first to map your systems."
+  > "No systems index found. Run `/skill:map-systems` first to map your systems."
 - **Target system**: Find the system in the index. If not listed, warn:
   > "[system-name] is not in the systems index. Would you like to add it, or
   > design it as an off-index system?"
@@ -225,7 +225,7 @@ Domain: [domain]
 
 If no engine reference docs exist (engine not yet configured), show a short note:
 > "No engine configured yet — skipping technical feasibility check. Run
-> `/setup-engine` before moving to architecture if you haven't already."
+> `/skill:setup-engine` before moving to architecture if you haven't already."
 
 **Step 4 — Ask before proceeding:**
 

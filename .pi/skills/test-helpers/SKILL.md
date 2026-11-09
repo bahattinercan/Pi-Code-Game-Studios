@@ -28,13 +28,13 @@ the only place its test runner compiles them (`.pi/docs/directory-structure.md`)
 | Engine | Helper root |
 |---|---|
 | Godot | `tests/helpers/` |
-| Unity | `Assets/Tests/EditMode/Helpers/` — inside the `EditModeTests` assembly `/test-setup` creates. If PlayMode tests need the same helpers, ask before creating `Assets/Tests/Helpers/TestHelpers.asmdef` and referencing it from both test assemblies. |
+| Unity | `Assets/Tests/EditMode/Helpers/` — inside the `EditModeTests` assembly `/skill:test-setup` creates. If PlayMode tests need the same helpers, ask before creating `Assets/Tests/Helpers/TestHelpers.asmdef` and referencing it from both test assemblies. |
 | Unreal | `Source/<Module>/Private/Tests/Helpers/` |
 
 `tests/helpers/` below means the helper root for the project's engine.
 
 **When to run:**
-- After `/test-setup` scaffolds the framework (first time)
+- After `/skill:test-setup` scaffolds the framework (first time)
 - When multiple test files repeat the same setup boilerplate
 - When starting to write tests for a new system
 
@@ -73,10 +73,10 @@ extend the suite.
 ## 1. Parse Arguments
 
 **Modes:**
-- `/test-helpers [system-name]` — generate helpers for a specific system
-  (e.g., `/test-helpers combat`)
-- `/test-helpers all` — generate helpers for all systems with test files
-- `/test-helpers scaffold` — generate only the base helper library (no
+- `/skill:test-helpers [system-name]` — generate helpers for a specific system
+  (e.g., `/skill:test-helpers combat`)
+- `/skill:test-helpers all` — generate helpers for all systems with test files
+- `/skill:test-helpers scaffold` — generate only the base helper library (no
   system-specific helpers); use this on first run
 - No argument — run `scaffold` if no helpers exist, else `all`
 
@@ -89,7 +89,7 @@ Read from `project.yaml` first, falling back to `.pi/docs/technical-preferences.
 - `engine.language` (else the `Language:` value)
 - `testing.framework` (else `Framework:` from the Testing section)
 
-If the engine is not configured in either source: "Engine not configured. Run `/setup-engine` first."
+If the engine is not configured in either source: "Engine not configured. Run `/skill:setup-engine` first."
 
 ---
 
@@ -468,6 +468,6 @@ After writing: Verdict: **COMPLETE** — helper files created.
 
 ## Next Steps
 
-- Run `/test-setup` if the test framework has not been scaffolded yet.
-- Use `/dev-story` to implement stories — helpers reduce boilerplate in new test files.
-- Run `/skill-test` to validate other skills that may need helper coverage.
+- Run `/skill:test-setup` if the test framework has not been scaffolded yet.
+- Use `/skill:dev-story` to implement stories — helpers reduce boilerplate in new test files.
+- Run `/skill:skill-test` to validate other skills that may need helper coverage.

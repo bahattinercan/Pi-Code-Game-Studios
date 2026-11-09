@@ -1,6 +1,6 @@
 # /skill:architecture-decision — Step 4: Guide the Decision Collaboratively
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 4. Guide the decision collaboratively
@@ -16,8 +16,8 @@ a **confirm/adjust** prompt using `AskUserQuestion` — not open-ended questions
   inconclusive, present `UNKNOWN — scan inconclusive, please confirm`, never
   `None`.** The two are not interchangeable: `None` asserts that nothing upstream
   constrains this decision, and a user confirming a prefilled list cannot tell an
-  assertion from a guess. This field is load-bearing — `/architecture-review`
-  flags unaccepted dependencies, `/dev-story` reads it, and the acceptance route
+  assertion from a guess. This field is load-bearing — `/skill:architecture-review`
+  flags unaccepted dependencies, `/skill:dev-story` reads it, and the acceptance route
   in Phase 0 **refuses to accept an ADR whose dependencies are not themselves
   Accepted**. A dependency list that defaulted to empty makes that check pass
   while examining nothing. `UNKNOWN` must be resolved during the confirm/adjust

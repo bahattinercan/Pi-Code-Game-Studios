@@ -1,6 +1,6 @@
 # /skill:test-setup — Phase 1: Detect Engine and Existing State
 
-> Part of `/test-setup`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:test-setup`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 1: Detect Engine and Existing State
@@ -12,7 +12,7 @@
    - If neither source yields a configured engine (project.yaml `engine.name`
      absent/empty and technical-preferences.md shows `[TO BE CONFIGURED]` or is
      missing), stop:
-     "Engine not configured. Run `/setup-engine` first, then re-run `/test-setup`."
+     "Engine not configured. Run `/skill:setup-engine` first, then re-run `/skill:test-setup`."
 
 2. **Check for existing test infrastructure**:
    - Glob `tests/` — does the directory exist?
@@ -27,7 +27,7 @@
 3. **Report findings**:
    - "Engine: [engine]. Test directory: [found / not found]. CI workflow: [found / not found]."
    - If everything already exists AND `force` argument was not passed:
-     "Test infrastructure appears to be in place. Re-run with `/test-setup force`
+     "Test infrastructure appears to be in place. Re-run with `/skill:test-setup force`
      to regenerate. Proceeding will not overwrite existing test files."
 
 If the `force` argument is passed, skip the "already exists" early-exit and

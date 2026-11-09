@@ -1,6 +1,6 @@
 # /skill:prototype — Phase 1: Define the Question
 
-> Part of `/prototype`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:prototype`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 1: Define the Question
@@ -28,7 +28,7 @@ intent before proceeding — with or without a carry-forward note:
 **If "Skip — concept already proven":**
 Ask (plain text, not a widget): "What evidence do you have that the concept works?"
 Record the one-line answer, then stop. Note: "Concept prototype skipped — evidence:
-[answer]." Suggest next step: `/map-systems` or `/design-system [mechanic]`.
+[answer]." Suggest next step: `/skill:map-systems` or `/skill:design-system [mechanic]`.
 
 **If "Mid-production spike"**: skip to the **Spike Mode** section below.
 

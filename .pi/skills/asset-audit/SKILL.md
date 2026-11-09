@@ -62,7 +62,7 @@ the Grep tool (pattern `^#`, content mode) and Read that range with offset
 and limit.
 
 If neither states a size budget — or there is no art bible — the Size section is
-`NOT ASSESSED — no size budget set`, and the report names `/art-bible`, whose
+`NOT ASSESSED — no size budget set`, and the report names `/skill:art-bible`, whose
 Asset Standards section sets budgets, formats and the naming convention.
 
 ---
@@ -73,7 +73,7 @@ Assets live under the engine's asset root: `assets/` on Godot, `Assets/` on
 Unity, `Content/` on Unreal. Resolve the engine and its code root per
 `.pi/docs/code-root-resolution.md`; that code root is the one Phase 3's
 orphan and missing-asset searches read. If it is unresolved, stop:
-`NOT ASSESSED — engine unresolved`, naming `/setup-engine`.
+`NOT ASSESSED — engine unresolved`, naming `/skill:setup-engine`.
 
 Scan the asset root using Glob:
 
@@ -97,7 +97,7 @@ scanned files — Naming, Size, Format, Orphaned — are
 
 These are Godot's conventions. Unity and Unreal name assets in PascalCase, so on
 those engines check names only against a naming rule the art bible states; with
-none, Naming is `NOT ASSESSED — no naming rule for <engine>` (name `/art-bible`).
+none, Naming is `NOT ASSESSED — no naming rule for <engine>` (name `/skill:art-bible`).
 
 **File standards:**
 - Textures: Power-of-two dimensions, correct format (PNG for UI, compressed for 3D), within size budget
@@ -179,6 +179,6 @@ This skill is read-only — it produces a report but does not write files.
 ## Phase 5: Next Steps
 
 - Fix naming violations using the Phase 3 patterns (or the art bible's, where it states its own).
-- If standards were missing, run `/art-bible` to write its Asset Standards section.
+- If standards were missing, run `/skill:art-bible` to write its Asset Standards section.
 - Delete confirmed orphaned assets after manual review.
-- Run `/content-audit` to cross-check asset counts against GDD-specified requirements.
+- Run `/skill:content-audit` to cross-check asset counts against GDD-specified requirements.

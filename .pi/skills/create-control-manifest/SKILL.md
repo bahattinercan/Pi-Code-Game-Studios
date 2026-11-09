@@ -23,7 +23,7 @@ technical preferences and the engine reference docs. The ADRs say *why*; the
 manifest says *what*.
 
 **Writes:** `docs/architecture/control-manifest.md`, after the user's yes.
-**When:** after `/architecture-review` passes and the ADRs are Accepted. Run it
+**When:** after `/skill:architecture-review` passes and the ADRs are Accepted. Run it
 again whenever an ADR is accepted or revised.
 
 Asks follow `.pi/docs/automation-modes.md` (collaborative always asks, guided
@@ -42,10 +42,10 @@ reading any ADR:
 
 | Counts | Meaning | Action |
 |---|---|---|
-| `adrs 0` | No ADRs. | "No ADRs found — run `/architecture-decision` before building a control manifest." Stop. |
+| `adrs 0` | No ADRs. | "No ADRs found — run `/skill:architecture-decision` before building a control manifest." Stop. |
 | `accepted` ≥ 1 | Normal. | The Accepted rows are the set **A**. Name every other ADR, with its status, in the Phase 4 preview: the user approves a manifest knowing what it leaves out. |
 | `accepted 0`, some with a status | No Accepted ADRs. | "[N] ADRs found, none Accepted. A manifest built from Proposed ADRs would encode decisions that may still change." Ask whether to go on with the Proposed ones or stop. **Never write an empty manifest silently.** |
-| every ADR `no_status` | **Malformed ADRs, not an empty Accepted set.** | "[N] ADRs found, none has a `## Status` section, so acceptance cannot be told. Run `/architecture-decision retrofit [file]` on each." Stop. Never treat them as Accepted. |
+| every ADR `no_status` | **Malformed ADRs, not an empty Accepted set.** | "[N] ADRs found, none has a `## Status` section, so acceptance cannot be told. Run `/skill:architecture-decision retrofit [file]` on each." Stop. Never treat them as Accepted. |
 
 Each stop above ends with `Verdict: BLOCKED — [the reason]`. Note the number and
 title of every ADR a rule comes from.
@@ -127,7 +127,7 @@ Rules for every layer, each with its source (the `project.yaml` key,
   3D` row is 3D-only, and a 2D project does not use that engine. When you cannot
   tell whether an entry applies (2D or 3D, a module the project may not include),
   scope the rule ("when using 3D physics: …") or leave it out and list it as
-  unresolved. `/create-stories` reads this file, and rules that do not apply are
+  unresolved. `/skill:create-stories` reads this file, and rules that do not apply are
   rules nobody reads.
 - **Required patterns** from `current-best-practices.md`, when it exists.
 - **Forbidden patterns** from `technical-preferences.md`, copied as written.
@@ -192,10 +192,10 @@ want more changes. Write only on an explicit yes.
 > **Last Updated**: [date]
 > **Manifest Version**: [date]
 > **ADRs Covered**: [ADR-NNNN, ADR-MMMM, ...]
-> **Status**: Active — regenerate with `/create-control-manifest update` when ADRs change
+> **Status**: Active — regenerate with `/skill:create-control-manifest update` when ADRs change
 
 `Manifest Version` is the date this manifest was generated. Stories embed it when
-they are written, and `/story-readiness` compares a story's version with this one
+they are written, and `/skill:story-readiness` compares a story's version with this one
 to find stories written against old rules. It always equals `Last Updated`: the
 same date, for different readers.
 
@@ -292,7 +292,7 @@ These APIs are deprecated or unverified for [engine + version]:
 
 ## Phase 6: Next steps
 
-- No epics yet: "Run `/create-epics layer: foundation`, then `/create-stories
+- No epics yet: "Run `/skill:create-epics layer: foundation`, then `/skill:create-stories
   [epic-slug]`: stories embed this manifest's rules and version."
 - A regeneration: "Updated. Tell the team about the changed rules, above all any
   new Forbidden entries."

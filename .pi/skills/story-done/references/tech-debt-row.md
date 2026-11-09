@@ -3,7 +3,7 @@
 Read only when the user picks "Close and log the advisory deviations as tech debt".
 
 Add one row per advisory deviation to `docs/tech-debt-register.md`, in the table
-`/tech-debt` keeps, so `/tech-debt report` can date it from its `Added` column:
+`/skill:tech-debt` keeps, so `/skill:tech-debt report` can date it from its `Added` column:
 
 ```
 | TD-[next free NNN] | [category] | [deviation] — from [story path] | [files] | [S/M/L/XL] | [Low/Med/High/Critical] | — | Open | [YYYY-MM-DD] | Backlog |
@@ -14,7 +14,7 @@ Add one row per advisory deviation to `docs/tech-debt-register.md`, in the table
 - **Category:** one of Architecture, Code Quality, Test, Documentation, Dependency,
   Performance.
 - **Effort and Impact:** your estimate from the deviation.
-- **Priority:** `—` until `/tech-debt prioritize` scores it.
+- **Priority:** `—` until `/skill:tech-debt prioritize` scores it.
 - **Added:** today.
 
 The file starts with a `## Technical Debt Register` heading, a `Last updated:

@@ -61,7 +61,7 @@ Four authoring modes exist based on the argument:
 > **`accessibility` is the only mode that writes outside `design/ux/`.** Its
 > output is a project-wide standard the per-screen specs consult, not a spec for
 > one screen — `.pi/docs/workflow-catalog.yaml`, the Pre-Production and
-> Polish gates, and `/architecture-review` all check
+> Polish gates, and `/skill:architecture-review` all check
 > `design/accessibility-requirements.md` at that exact path. Do not "tidy" it
 > under `design/ux/`: every one of those checks would stop matching, and the
 > Technical Setup → Pre-Production gate would become unpassable.
@@ -103,7 +103,7 @@ the other two.**
 > The accessibility guidance lives under `templates/guidance/` rather than this
 > skill's `references/` because the template it documents
 > (`.pi/docs/templates/accessibility-requirements.md`) is consumed by
-> `/ux-review` and the gate files too. Same rule applies: load only the part
+> `/skill:ux-review` and the gate files too. Same rule applies: load only the part
 > covering the section you are authoring, never the whole file.
 
 Apply `docs.density` (Section 1) to whatever that file tells you to author — it
@@ -139,7 +139,7 @@ specific sub-topics, additional context or coordination may be needed:
 | Implementation feasibility (engine constraints) | `ui-programmer` — before finalizing component inventory |
 | Gameplay data requirements | `game-designer` — when data ownership is unclear |
 | Narrative/lore visible in the UI | `narrative-director` — for flavor text, item names, lore panels |
-| Accessibility tier decisions | Recorded by this session (`/ux-design accessibility`; the user picks the tier) against the criteria `accessibility-specialist` defines and audits — consult it when a requirement's criterion is unclear |
+| Accessibility tier decisions | Recorded by this session (`/skill:ux-design accessibility`; the user picks the tier) against the criteria `accessibility-specialist` defines and audits — consult it when a requirement's criterion is unclear |
 
 When delegating to another agent via the `Agent` tool:
 - Provide: screen name, game concept summary, the specific question needing expert input
@@ -187,6 +187,6 @@ Verdict: **COMPLETE** — UX spec written and approved section by section.
 
 ## Recommended Next Steps
 
-- Run `/ux-review [filename]` to validate this spec before it enters the implementation pipeline
-- Run `/ux-design [next-screen]` to continue designing remaining screens or flows
-- Run `/gate-check production` once all key screens have approved UX specs
+- Run `/skill:ux-review [filename]` to validate this spec before it enters the implementation pipeline
+- Run `/skill:ux-design [next-screen]` to continue designing remaining screens or flows
+- Run `/skill:gate-check production` once all key screens have approved UX specs

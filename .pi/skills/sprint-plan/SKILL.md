@@ -53,8 +53,8 @@ smaller than the range is planned whole — never padded with invented stories.
   expansion, and the legacy file sits *above* that expansion, so either write
   would freeze director-review depth for good. `--review` covers a one-off. If
   the user wants a different depth to persist, point them to changing
-  `modes.rigor` (`/settings modes.rigor=<minimal|standard|full>`), or to pinning
-  it on purpose with `/settings --local modes.review_mode=<full|lean|solo>` (a
+  `modes.rigor` (`/skill:settings modes.rigor=<minimal|standard|full>`), or to pinning
+  it on purpose with `/skill:settings --local modes.review_mode=<full|lean|solo>` (a
   personal override in `project.local.yaml`).
 
 ---
@@ -85,12 +85,12 @@ smaller than the range is planned whole — never padded with invented stories.
    Grep pattern="^> \*\*Status\*\*" glob="production/epics/**/story-*.md" output_mode="content"
    ```
    Stories live at `production/epics/[epic-slug]/story-NNN-[slug].md` — that is
-   where `/create-stories` writes them and where `/dev-story` looks for them. Plan
+   where `/skill:create-stories` writes them and where `/skill:dev-story` looks for them. Plan
    from the ones marked `Ready`. Use the grep rather than reading each story: at
    this stage you need status and title, not the body.
 
    If the glob returns nothing: "No stories found under `production/epics/`. Run
-   `/create-stories` first (at `standard`/`full`, `/create-epics` before it)."
+   `/skill:create-stories` first (at `standard`/`full`, `/skill:create-epics` before it)."
    Do not proceed to invent work items — a sprint plan that references stories
    which do not exist cannot be implemented. Verdict: **BLOCKED** — no stories to plan.
 
@@ -99,7 +99,7 @@ smaller than the range is planned whole — never padded with invented stories.
    need with the Grep tool (pattern `^#`, content mode) and Read those ranges
    with offset and limit. At `workflow: minimal` there are no
    per-system GDDs — use `design/game-brief.md` instead, and do not treat the
-   absent GDDs as missing work. (Note: `/sprint-plan` is **optional** at
+   absent GDDs as missing work. (Note: `/skill:sprint-plan` is **optional** at
    `minimal` — the brief's Build order already is the plan.)
 
 5. **Check the risk register** at `production/risk-register/` **if it exists**.
@@ -159,10 +159,10 @@ For `new`:
 ## Definition of Done for this Sprint
 - [ ] All Must Have tasks completed
 - [ ] All tasks pass acceptance criteria
-- [ ] QA plan exists (`production/qa/qa-plan-[sprint-slug]-[date].md`, from `/qa-plan sprint`)
+- [ ] QA plan exists (`production/qa/qa-plan-[sprint-slug]-[date].md`, from `/skill:qa-plan sprint`)
 - [ ] All Logic/Integration stories have passing unit/integration tests
-- [ ] Smoke check passed (`/smoke-check sprint`)
-- [ ] QA sign-off report: APPROVED or APPROVED WITH CONDITIONS (`/team-qa sprint`)
+- [ ] Smoke check passed (`/skill:smoke-check sprint`)
+- [ ] QA sign-off report: APPROVED or APPROVED WITH CONDITIONS (`/skill:team-qa sprint`)
 - [ ] No S1 or S2 bugs in delivered features
 - [ ] Design documents updated for any deviations
 - [ ] Code reviewed and merged
@@ -197,14 +197,14 @@ story of its own.
    the plan, name each missing one and the three fixes open to the user: pull in
    the Ready story that builds it (name it, and say if that takes the sprint past
    its `story_granularity` range or needs stories it depends on), write a story
-   for it first with `/create-stories`, or reword the goal to promise only what
+   for it first with `/skill:create-stories`, or reword the goal to promise only what
    the sprint can show. Give them as part of the plan,
    not as a question: the write ask stays the only question, and a user who
    wants a fix says so in reply to it. **Report the gap; do not solve it.** A
    missing prerequisite stays missing in this plan, however small it looks (a
    flat test level, an input map): plan no task for it and put none of its work
    into a picked story, not even as setup. Its work needs a story first, which
-   is `/create-stories`' job. Never add a story the backlog does not
+   is `/skill:create-stories`' job. Never add a story the backlog does not
    hold, and never widen a picked story or edit a story file to cover the gap.
 
 For `update`:
@@ -260,7 +260,7 @@ For `status`:
 
 After generating a new sprint plan, also prepare the `production/sprint-status.yaml` content.
 This is the machine-readable source of truth for story status — read by
-`/sprint-status`, `/story-done`, and `/help` without markdown parsing.
+`/skill:sprint-status`, `/skill:story-done`, and `/skill:help` without markdown parsing.
 
 **Do not write the yaml yet** — hold it in context. The producer feasibility gate (Phase 4, `full` review mode only) may revise the story list; the QA plan check (Phase 5) runs in every mode. Both files are written together after Phase 5 in a single write approval.
 
@@ -345,7 +345,7 @@ its end, so the file you approve already holds everything Phase 5 adds.
 
 Before closing the sprint plan, check whether a QA plan exists for this sprint.
 
-Use `Glob` for `production/qa/qa-plan-*.md` — `/qa-plan` writes `qa-plan-[sprint-slug]-[date].md` — and keep a file whose name or content references this sprint number.
+Use `Glob` for `production/qa/qa-plan-*.md` — `/skill:qa-plan` writes `qa-plan-[sprint-slug]-[date].md` — and keep a file whose name or content references this sprint number.
 
 **If a QA plan is found**: note it in the sprint plan output — "QA Plan: `[path]`" — and proceed.
 
@@ -353,7 +353,7 @@ Use `Glob` for `production/qa/qa-plan-*.md` — `/qa-plan` writes `qa-plan-[spri
 
 > "This sprint has no QA plan. A sprint plan without a QA plan means test requirements are undefined — developers won't know what 'done' looks like from a QA perspective, and the sprint cannot pass the Production → Polish gate without one.
 >
-> Run `/qa-plan sprint` now, before starting any implementation. It takes one session and produces the test case requirements each story needs."
+> Run `/skill:qa-plan sprint` now, before starting any implementation. It takes one session and produces the test case requirements each story needs."
 
 Use `AskUserQuestion`:
 - Prompt: "No QA plan found for this sprint. How do you want to proceed?"
@@ -365,11 +365,11 @@ Wait for this answer before the write ask below — the two are separate questio
 An answer here is never approval to write, even "yes, go ahead" or "once the plan is written":
 ask the write question next and write only after a yes to it.
 
-If [A]: note in the plan "QA plan: run `/qa-plan sprint` before implementation begins."
+If [A]: note in the plan "QA plan: run `/skill:qa-plan sprint` before implementation begins."
 If [B]: add a warning block to the sprint plan document:
 
 ```markdown
-> ⚠️ **No QA Plan**: This sprint was started without a QA plan. Run `/qa-plan sprint`
+> ⚠️ **No QA Plan**: This sprint was started without a QA plan. Run `/skill:qa-plan sprint`
 > before the last story is implemented. The Production → Polish gate requires a QA
 > sign-off report, which requires a QA plan.
 ```
@@ -383,9 +383,9 @@ Verdict: **BLOCKED** — user declined write.
 
 After writing, add:
 
-> **Scope check:** If this sprint includes stories added beyond the original epic scope, run `/scope-check [epic]` to detect scope creep before implementation begins.
+> **Scope check:** If this sprint includes stories added beyond the original epic scope, run `/skill:scope-check [epic]` to detect scope creep before implementation begins.
 
-If the user chose `Run /skill:qa-plan sprint now` in Phase 5, close with "Sprint plan written. Run `/qa-plan sprint` next — then begin implementation."
+If the user chose `Run /skill:qa-plan sprint now` in Phase 5, close with "Sprint plan written. Run `/skill:qa-plan sprint` next — then begin implementation."
 
 ---
 
@@ -393,15 +393,15 @@ If the user chose `Run /skill:qa-plan sprint now` in Phase 5, close with "Sprint
 
 After the sprint plan is written and QA plan status is resolved:
 
-- `/qa-plan sprint` — **required before implementation begins** — defines test cases per story so developers implement against QA specs, not a blank slate
-- `/story-readiness [story-file]` — validate a story is ready before starting it
-- `/dev-story [story-file]` — begin implementing the first story
-- `/sprint-status` — check progress mid-sprint
-- `/scope-check [epic]` — verify no scope creep before implementation begins
+- `/skill:qa-plan sprint` — **required before implementation begins** — defines test cases per story so developers implement against QA specs, not a blank slate
+- `/skill:story-readiness [story-file]` — validate a story is ready before starting it
+- `/skill:dev-story [story-file]` — begin implementing the first story
+- `/skill:sprint-status` — check progress mid-sprint
+- `/skill:scope-check [epic]` — verify no scope creep before implementation begins
 
 **Review mode configuration:** All director gates (producer feasibility, QA review, code review) respect the project review mode, resolved in the block at the top of this skill (`--review` flag → `project.local.yaml` → `modes.review_mode` in `project.yaml` → `production/review-mode.txt` → the `modes.rigor` expansion, which yields `lean` at standard rigor and `solo` at minimal). This skill never asks for it or writes it; Phase 0 says where to point a user who wants a different depth. The mode is one of:
 - `lean` — skip non-phase-gate director gates (the `rigor: standard` value)
 - `full` — run all director gates as spawned sub-agents
 - `solo` — skip all gate spawning unconditionally (single developer, no review)
 
-`modes.review_mode` in `project.yaml` is the primary source; `production/review-mode.txt` is the legacy fallback. Both are read by `/sprint-plan`, `/story-readiness`, `/story-done`, and other gate-using skills at startup.
+`modes.review_mode` in `project.yaml` is the primary source; `production/review-mode.txt` is the legacy fallback. Both are read by `/skill:sprint-plan`, `/skill:story-readiness`, `/skill:story-done`, and other gate-using skills at startup.

@@ -1,6 +1,6 @@
 # /skill:test-setup — Phase 6: Post-Setup Summary
 
-> Part of `/test-setup`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:test-setup`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 6: Post-Setup Summary
@@ -25,12 +25,12 @@ Next steps:
    tests/unit/[system]/[system]_[feature]_test.gd (Godot),
    Assets/Tests/EditMode/[System]Tests.cs (Unity), or
    Source/<Module>/Private/Tests/[System]Test.cpp (Unreal)
-3. Run `/qa-plan sprint` before your first sprint to classify stories and set
+3. Run `/skill:qa-plan sprint` before your first sprint to classify stories and set
    test evidence requirements. At `workflow: minimal` — the default — skip
    this: there are no sprints. At `qa.level: minimal`, also the default, tests
-   are waived, so `/dev-story` writes none. Raise `qa.level` with `/settings`
+   are waived, so `/skill:dev-story` writes none. Raise `qa.level` with `/skill:settings`
    to have it write them
-4. `/smoke-check` before every QA hand-off
+4. `/skill:smoke-check` before every QA hand-off
 
 Gate note: /skill:gate-check Technical Setup → Pre-Production now requires:
 - the engine's test root: tests/unit/ and tests/integration/ (Godot),

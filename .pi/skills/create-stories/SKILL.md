@@ -24,8 +24,8 @@ Foundation epics first, then Core, Feature, Presentation.
 
 **Writes:** `production/epics/[epic-slug]/story-NNN-[slug].md`, the epic's
 `EPIC.md` Stories table, and its row in `production/epics/index.md`.
-**Next:** `/dev-story [story-path]` at `workflow: minimal`; otherwise
-`/story-readiness [story-path]`, then `/dev-story`.
+**Next:** `/skill:dev-story [story-path]` at `workflow: minimal`; otherwise
+`/skill:story-readiness [story-path]`, then `/skill:dev-story`.
 
 Asks follow `.pi/docs/automation-modes.md` (collaborative always asks, guided
 asks on major choices, autonomous logs and goes on; `automation_always_ask`
@@ -69,15 +69,15 @@ With nothing typed, the epic the user's request names ("the loot epic") counts a
 named.
 
 - **Named, but no `EPIC.md` there:** at `standard` and `full`, stop: "No epic at
-  `production/epics/[slug]/EPIC.md`. Run `/create-epics` to create it, or check the
+  `production/epics/[slug]/EPIC.md`. Run `/skill:create-epics` to create it, or check the
   slug with `ls production/epics/`." Never decompose from a guess. At `minimal`,
-  say this tier needs no `/create-epics` epic, take Phase 2's `minimal` branch, and
+  say this tier needs no `/skill:create-epics` epic, take Phase 2's `minimal` branch, and
   name the slug it uses.
 - **Blank, at `minimal`:** take Phase 2's `minimal` branch.
 - **Blank, at `standard` or `full`:** list `production/epics/*/EPIC.md` with each
   status, then ask: "Which epic would you like to break into stories?" with one
   option per epic. **No epics found:** stop and say "No epics found under
-  `production/epics/`. Run `/create-epics layer: foundation` first." Never ask a
+  `production/epics/`. Run `/skill:create-epics layer: foundation` first." Never ask a
   question with no options.
 
 ## Phase 2: Load the inputs
@@ -85,8 +85,8 @@ named.
 ### `minimal`: build the epic from the brief
 
 1. **No `design/game-brief.md`:** stop. "There is no brief to build stories from
-   yet: run `/brainstorm` first; it writes the one-page brief." When the code root
-   already holds the game (10 or more source files), name `/reverse-document design
+   yet: run `/skill:brainstorm` first; it writes the one-page brief." When the code root
+   already holds the game (10 or more source files), name `/skill:reverse-document design
    [code root]` instead.
 2. Read `design/game-brief.md` in full (one page).
 3. **The epic.** `<slug>` is the brief's working title, slugified (`mvp` if it has
@@ -130,7 +130,7 @@ Read no GDD, control manifest, TR registry or ADR at `minimal`. Go to Phase 3.
    Implementation Guidelines inside) and `Engine Compatibility` of each, with
    `md-section.sh extract`. Engine Notes is a story field taken from Engine
    Compatibility, not an ADR section. An ADR with none of these sections predates
-   the template: read it once, and flag it for `/architecture-decision retrofit
+   the template: read it once, and flag it for `/skill:architecture-decision retrofit
    [file]`.
 
 **A named ADR with no file** (`NOT_FOUND`):
@@ -140,7 +140,7 @@ Read no GDD, control manifest, TR registry or ADR at `minimal`. Go to Phase 3.
   on, and write the stories it governs as `Blocked` until it exists.
 - On stopping: "Epic references [ADR-NNNN: title] but no file for it was found in
   `docs/architecture/`. Check the epic's Governing ADRs list, or run
-  `/architecture-decision` to create it. Cannot create stories until the
+  `/skill:architecture-decision` to create it. Cannot create stories until the
   referenced ADR files exist."
 
 **Report before drafting**, with the real state, every ADR on its own with its
@@ -165,7 +165,7 @@ is none.
 | **Config/Data** | balance values and data files only, no new logic |
 
 A mixed story takes the type with the highest implementation risk. The type sets
-the evidence `/story-done` needs.
+the evidence `/skill:story-done` needs.
 
 ## Phase 4: Draft the stories
 
@@ -179,22 +179,22 @@ UI last. For each story:
 - **ADR:** the one that governs how to build it (the requirements table names it).
   - `Accepted`: embed it.
   - `Proposed`: `Status: Blocked`, with "BLOCKED: ADR-NNNN is Proposed — accept it
-    with `/architecture-decision accept ADR-NNNN` once decided".
+    with `/skill:architecture-decision accept ADR-NNNN` once decided".
   - `Deprecated` or `Superseded`: `Status: Blocked`, with "BLOCKED: ADR-NNNN is
     [status] — point the story at [successor] (edit its ADR field;
-    `/create-stories` never rewrites an existing story) before implementing".
+    `/skill:create-stories` never rewrites an existing story) before implementing".
   - An `Accepted` ADR whose `depends_on` names an ADR that is not Accepted: Blocked
     the same way, naming that ADR.
   - Several apply: list them all, the most direct first.
   - None applies: `ADR: N/A — [reason]`, e.g. "pure data configuration". Never
     blank: blank means unchecked.
 - **ADR Version:** the story's **ADR Version** is the ADR's `## Last Verified`
-  date, else its `## Date`, else `unversioned` (the `version` column). `/dev-story`
+  date, else its `## Date`, else `unversioned` (the `version` column). `/skill:dev-story`
   trusts the story's ADR summary while this still matches the ADR.
 - **Engine risk:** from the ADR's Engine Compatibility (its knowledge risk).
 - **Estimate:** propose a t-shirt size from the criteria and the files the story
   touches: `S` (a few hours), `M` (about a day) or `L` (several days). It is a
-  proposal: Phase 6 shows it and the user can change it. `/story-readiness` fails
+  proposal: Phase 6 shows it and the user can change it. `/skill:story-readiness` fails
   a story whose Estimate is still the template's bracket, so never leave it.
 
 ## Phase 5: QA lead review
@@ -256,7 +256,7 @@ exactly:
 | ADR Governing Implementation, ADR Decision Summary, ADR Version | `N/A (minimal — no ADRs)` |
 | Manifest Version, Control Manifest Rules | `N/A (minimal — no control manifest)` |
 | Engine | `engine.name` + `engine.version` |
-| Risk | the level `docs/engine-reference/<engine>/VERSION.md` gives the pinned version (its timeline row, or its overall rating). No file or no level: `NOT ASSESSED (no VERSION.md risk rating)`, never a guess. `/dev-story` reads NOT ASSESSED as HIGH |
+| Risk | the level `docs/engine-reference/<engine>/VERSION.md` gives the pinned version (its timeline row, or its overall rating). No file or no level: `NOT ASSESSED (no VERSION.md risk rating)`, never a guess. `/skill:dev-story` reads NOT ASSESSED as HIGH |
 | Engine Notes | `none (no ADR engine-compatibility analysis at minimal)` |
 | Acceptance Criteria | from the brief's **Player goal & fail state** and the MVP feature, made concrete and testable; never invented from a bare bullet |
 
@@ -269,7 +269,7 @@ At every tier:
 - **Estimate:** the size from Phase 6, with any change the user made.
 - **Dependencies:** name each story this one needs by its path.
 - **Files:** the code and test files the story is planned to create or change,
-  under the code root and test root. `/dev-story` replaces them with the real list.
+  under the code root and test root. `/skill:dev-story` replaces them with the real list.
 
 ### `EPIC.md`
 
@@ -299,11 +299,11 @@ If other epics in `production/epics/` have no stories, list them. Then ask:
 "[N] stories written to `production/epics/[epic-slug]/`. What next?" Options, those
 that apply:
 
-- Start implementing: `/dev-story [first-story-path]` at `minimal`,
-  `/story-readiness [first-story-path]` otherwise (recommended)
-- Create stories for [next epic]: `/create-stories [slug]` (only when an epic has
+- Start implementing: `/skill:dev-story [first-story-path]` at `minimal`,
+  `/skill:story-readiness [first-story-path]` otherwise (recommended)
+- Create stories for [next epic]: `/skill:create-stories [slug]` (only when an epic has
   none)
-- Plan the sprint: `/sprint-plan new` (only when every epic has stories; never at
+- Plan the sprint: `/skill:sprint-plan new` (only when every epic has stories; never at
   `minimal`, where the brief's build order is the plan)
 - Stop here for this session
 

@@ -68,7 +68,7 @@ Read the argument for the launch date or `dry-run` mode. Dry-run mode generates 
 
 ## Phase 2: Gather Project Context
 
-- Read `CLAUDE.md` for tech stack, target platforms, and team structure
+- Read `AGENTS.md` for tech stack, target platforms, and team structure
 - Read the latest milestone in `production/milestones/`
 - Read any existing release checklist in `production/releases/`
 - Read the content calendar in `design/live-ops/content-calendar.md` if it exists
@@ -183,7 +183,7 @@ Generated: [Date]
 - [ ] Full regression test suite passed
 - [ ] Zero S1 (Critical) bugs open
 - [ ] Zero S2 (High) bugs open (or documented exceptions) — at `workflow: full` instead: zero S2 (High) and S3 (Medium) bugs open, no exceptions
-- [ ] Soak test passed (the longest soak `/soak-test` runs, or longer by hand if a play session lasts longer)
+- [ ] Soak test passed (the longest soak `/skill:soak-test` runs, or longer by hand if a play session lasts longer)
 - [ ] Multiplayer stress test passed (if applicable)
 - [ ] All critical user paths tested on every platform
 - [ ] Edge cases tested (full storage, no network, suspend/resume)
@@ -385,5 +385,5 @@ If yes, write the file; the write creates the directory with it.
 
 ## Phase 6: Next Steps
 
-- If `project.stage` is not `Release` (`Polish`, an earlier stage, or unset), run `/gate-check release` first — it is the readiness gate before launch.
-- Coordinate sign-offs and the deployment via `/team-release`.
+- If `project.stage` is not `Release` (`Polish`, an earlier stage, or unset), run `/skill:gate-check release` first — it is the readiness gate before launch.
+- Coordinate sign-offs and the deployment via `/skill:team-release`.

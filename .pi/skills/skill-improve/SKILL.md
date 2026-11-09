@@ -20,7 +20,7 @@ every file write follows `.pi/docs/automation-modes.md`
 Runs an improvement loop on a single skill:
 test → fix → retest → keep or revert.
 
-Its score comes from `/skill-test` static and category checks, which read the
+Its score comes from `/skill:skill-test` static and category checks, which read the
 skill rather than run it: a better score means a better-written skill, not proof
 that it behaves better. To check behaviour, run the skill on a real request
 before and after the change.
@@ -48,7 +48,7 @@ skill reads only `studio-tests/`. Move any specs you wrote there; UPGRADING.md
 
 ## Phase 2: Baseline Test
 
-Run `/skill-test static [name]` and record the baseline score:
+Run `/skill:skill-test static [name]` and record the baseline score:
 - Count of FAILs
 - Count of WARNs
 - Which specific checks failed (Check 1–7)
@@ -73,7 +73,7 @@ If no `category:` field is found, display:
 "Category: not yet assigned — skipping category checks."
 and skip to Phase 3.
 
-If category is found, run `/skill-test category [name]` and record the category baseline:
+If category is found, run `/skill:skill-test category [name]` and record the category baseline:
 - Count of FAILs
 - Count of WARNs
 - Which specific category rubric metrics failed
@@ -144,8 +144,8 @@ in this conversation — so Phase 6 can restore it.
 Write the improved skill to `.pi/skills/[name]/SKILL.md`, and to each
 `references/` file the fix changes.
 
-Re-run `/skill-test static [name]` and record the new static score — measured by that run, never stated from the edit.
-If a category was assigned, also re-run `/skill-test category [name]` and record the new category score.
+Re-run `/skill:skill-test static [name]` and record the new static score — measured by that run, never stated from the edit.
+If a category was assigned, also re-run `/skill:skill-test category [name]` and record the new category score.
 
 Display the comparison:
 ```
@@ -183,6 +183,6 @@ made before this run that were not yet committed.
 
 ## Phase 7: Next Steps
 
-- Run `/skill-test static all` to find the next skill with failures.
-- Run `/skill-improve [next-name]` to continue the loop on another skill.
-- Run `/skill-test audit` to see overall coverage progress.
+- Run `/skill:skill-test static all` to find the next skill with failures.
+- Run `/skill:skill-improve [next-name]` to continue the loop on another skill.
+- Run `/skill:skill-test audit` to see overall coverage progress.

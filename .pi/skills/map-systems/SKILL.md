@@ -21,10 +21,10 @@ When this skill is invoked:
 
 Two modes:
 
-- **No argument**: `/map-systems` — Run the full decomposition workflow (Phases 1-5)
+- **No argument**: `/skill:map-systems` — Run the full decomposition workflow (Phases 1-5)
   to create or update the systems index.
-- **`next`**: `/map-systems next` — Pick the highest-priority undesigned system
-  from the index and hand off to `/design-system` (Phase 6).
+- **`next`**: `/skill:map-systems next` — Pick the highest-priority undesigned system
+  from the index and hand off to `/skill:design-system` (Phase 6).
 
 
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
@@ -50,7 +50,7 @@ every section you author.
 > and in the `## Dependency Map` layer notes. **Do not add a column to the
 > enumeration table** — it is a fixed contract in
 > `.pi/docs/templates/systems-index.md`, and its consumers
-> (`/design-system` §6 and §7, `/create-epics`) are written against the columns it
+> (`/skill:design-system` §6 and §7, `/skill:create-epics`) are written against the columns it
 > defines. Widening it is a schema change, not a formatting choice.
 >
 > **How the consumers actually read it.** Nothing parses this table
@@ -64,7 +64,7 @@ every section you author.
 > At `terse`, the table plus a one-paragraph `## Overview` is the whole output.
 
 **`workflow`** (see `.pi/docs/workflow-modes.md`):
-- `full` / `standard` — required before `/design-system` (systems must be mapped
+- `full` / `standard` — required before `/skill:design-system` (systems must be mapped
   before per-system GDDs are authored).
 - `minimal` — not required (the game brief replaces the systems index). Can
   still be run voluntarily.
@@ -81,7 +81,7 @@ limit.
 **Required:**
 - Read `design/gdd/game-concept.md` (at `minimal`, read `design/game-brief.md`
   instead) — **fail with a clear message if neither is found**:
-  > "No game concept found. Run `/brainstorm` first to create one, then come back
+  > "No game concept found. Run `/skill:brainstorm` first to create one, then come back
   > to decompose it into systems."
 
 **Optional (read if they exist):**
@@ -351,8 +351,8 @@ If the user declined: **Verdict: BLOCKED** — user did not approve the write.
 
 This phase is entered when:
 - The user says "yes" to designing systems after creating the index
-- The user invokes `/map-systems [system-name]`
-- The user invokes `/map-systems next`
+- The user invokes `/skill:map-systems [system-name]`
+- The user invokes `/skill:map-systems next`
 
 ### Step 6a: Select the System
 
@@ -367,24 +367,24 @@ system, or stop here?"
 
 ### Step 6b: Hand Off to /skill:design-system
 
-Once a system is selected, invoke the `/design-system [system-name]` skill.
+Once a system is selected, invoke the `/skill:design-system [system-name]` skill.
 
-The `/design-system` skill handles the full GDD authoring process:
+The `/skill:design-system` skill handles the full GDD authoring process:
 - Gathers context from game concept, systems index, and dependency GDDs
 - Creates a file skeleton immediately
 - Walks through all 8 required sections one at a time (collaborative, incremental)
 - Cross-references existing docs to prevent contradictions
 - Routes to specialist agents for domain expertise
 - Writes each section to file as soon as it's approved
-- Runs `/design-review` when complete
+- Runs `/skill:design-review` when complete
 - Updates the systems index
 
 **Do not duplicate the /skill:design-system workflow here.** This skill owns the systems
-*index*; `/design-system` owns individual system *GDDs*.
+*index*; `/skill:design-system` owns individual system *GDDs*.
 
 ### Step 6c: Loop or Stop
 
-After `/design-system` completes, use `AskUserQuestion`:
+After `/skill:design-system` completes, use `AskUserQuestion`:
 - "Continue to the next system ([next system name])?"
 - "Pick a different system?"
 - "Stop here for this session?"
@@ -398,16 +398,16 @@ If continuing, return to Step 6a.
 After the systems index is created (or after designing some systems), present next actions using `AskUserQuestion`:
 
 - "Systems index is written. What would you like to do next?"
-  - [A] Start designing GDDs — run `/design-system [first-system-in-order]`
-  - [B] Run `/gate-check systems-design` — the Concept → Systems Design gate; offer this only while `project.stage` is still Concept
-  - [C] Run `/gate-check technical-setup` — the Systems Design → Technical Setup gate, once the MVP systems have GDDs
+  - [A] Start designing GDDs — run `/skill:design-system [first-system-in-order]`
+  - [B] Run `/skill:gate-check systems-design` — the Concept → Systems Design gate; offer this only while `project.stage` is still Concept
+  - [C] Run `/skill:gate-check technical-setup` — the Systems Design → Technical Setup gate, once the MVP systems have GDDs
   - [D] Stop here for this session
 
-**The gate-check option ([C]) is worth knowing about**: `/gate-check technical-setup` checks that the Systems Design phase's required artifacts exist and runs the phase-gate directors before you commit to architecture. CD-SYSTEMS and TD-SYSTEM-BOUNDARY are this skill's own gates — they run here, in `full` review mode, not in `/gate-check`.
+**The gate-check option ([C]) is worth knowing about**: `/skill:gate-check technical-setup` checks that the Systems Design phase's required artifacts exist and runs the phase-gate directors before you commit to architecture. CD-SYSTEMS and TD-SYSTEM-BOUNDARY are this skill's own gates — they run here, in `full` review mode, not in `/skill:gate-check`.
 
 After any individual GDD is completed:
-- "Run `/design-review design/gdd/[system].md` in a fresh session to validate quality"
-- "Run `/gate-check technical-setup` when all MVP GDDs are complete"
+- "Run `/skill:design-review design/gdd/[system].md` in a fresh session to validate quality"
+- "Run `/skill:gate-check technical-setup` when all MVP GDDs are complete"
 
 ---
 
@@ -425,10 +425,10 @@ This skill follows the collaborative design principle at every phase:
    - Phase 3: "Dependency ordering correct?"
    - Phase 4: "Priority assignments match your vision?"
    - Phase 5: "May I write the systems index?"
-   - Phase 6: "Start designing, pick different, or stop?" then hand off to `/design-system`
+   - Phase 6: "Start designing, pick different, or stop?" then hand off to `/skill:design-system`
 3. **"May I write to [filepath]?"** before every file write
 4. **Incremental writing**: Update the systems index after each system is designed
-5. **Handoff**: Individual GDD authoring is owned by `/design-system`, which handles
+5. **Handoff**: Individual GDD authoring is owned by `/skill:design-system`, which handles
    incremental section writing, cross-referencing, design review, and index updates
 6. **Session state updates**: Write to `production/session-state/active.md` after
    each milestone (index created, system designed, priorities changed)
@@ -443,13 +443,13 @@ If context reaches or exceeds 70% at any point, append this notice:
 
 > **Context is approaching the limit (≥70%).** The systems index is saved to
 > `design/gdd/systems-index.md`. Open a fresh Claude Code session to continue
-> designing individual GDDs — run `/map-systems next` to pick up where you left off.
+> designing individual GDDs — run `/skill:map-systems next` to pick up where you left off.
 
 ---
 
 ## Recommended Next Steps
 
-- Run `/design-system [first-system-in-order]` to author the first GDD (use design order from the index)
-- Run `/map-systems next` to always pick the highest-priority undesigned system automatically
-- Run `/design-review design/gdd/[system].md` in a fresh session after each GDD is authored
-- Run `/gate-check technical-setup` when all MVP GDDs are authored and reviewed
+- Run `/skill:design-system [first-system-in-order]` to author the first GDD (use design order from the index)
+- Run `/skill:map-systems next` to always pick the highest-priority undesigned system automatically
+- Run `/skill:design-review design/gdd/[system].md` in a fresh session after each GDD is authored
+- Run `/skill:gate-check technical-setup` when all MVP GDDs are authored and reviewed

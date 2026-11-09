@@ -78,7 +78,7 @@ When creating multi-section documents (design docs, architecture docs, lore entr
    create it with every section header and empty bodies
 2. Discuss and draft one section at a time in conversation
 3. Write each section to the file as soon as it's approved (a skill that writes
-   once at the end, such as `/create-architecture`, records approved sections in
+   once at the end, such as `/skill:create-architecture`, records approved sections in
    the session state instead)
 4. Update the session state file after each section
 5. After writing a section, previous discussion about that section can be safely

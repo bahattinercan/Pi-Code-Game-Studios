@@ -62,7 +62,7 @@ Read `project.yaml` to determine the following, falling back to `.pi/docs/techni
 
   > **ABSENT DOES NOT MEAN `false`.** These keys have a reader —
   > this skill — and **no writer in the setup flow**: neither
-  > `/setup-engine` nor `/start` emits a `platform:` block, and only `/settings`
+  > `/skill:setup-engine` nor `/skill:start` emits a `platform:` block, and only `/skill:settings`
   > sets them, when someone runs it, so on most CCGS projects both keys are
   > absent. Defaulting them to `false` would skip **Category 2 (Network and
   > Multiplayer Security) on every project, genuinely multiplayer ones
@@ -79,7 +79,7 @@ Read `project.yaml` to determine the following, falling back to `.pi/docs/techni
   > Over-scanning a single-player game costs a few minutes; under-scanning a
   > multiplayer one ships the category unrun.
   >
-  > Set them explicitly with `/settings platform.multiplayer=true` (they are
+  > Set them explicitly with `/skill:settings platform.multiplayer=true` (they are
   > project-wide, so `--local` is refused). Recording it in `project.yaml` is the
   > fix; this rule is the guard for until someone does.
 
@@ -381,7 +381,7 @@ Choose it by the open findings, first match wins:
 
 ## Re-Audit Trigger
 
-Run `/security-audit` again after remediating any CRITICAL or HIGH findings.
+Run `/skill:security-audit` again after remediating any CRITICAL or HIGH findings.
 At `workflow: standard` and `full`, the Polish → Release gate requires this report with no open CRITICAL or HIGH items.
 ```
 
@@ -401,33 +401,33 @@ Write only after approval.
 
 This report is a required artifact for the **Polish → Release gate** at `workflow: standard` and `full`; the `minimal` gate drops it with everything but smoke and S1 bugs. Say which applies to this project, from the `workflow` resolved above.
 
-After remediating findings, re-run: `/security-audit quick` to confirm CRITICAL/HIGH items are resolved before running `/gate-check release`.
+After remediating findings, re-run: `/skill:security-audit quick` to confirm CRITICAL/HIGH items are resolved before running `/skill:gate-check release`.
 
 Branch on the release recommendation, not on the finding counts alone:
 
 If it is **DO NOT SHIP** (an open CRITICAL, or an open HIGH in a multiplayer game):
-> "⛔ CRITICAL security findings must be resolved before any public release. Do not proceed to `/launch-checklist` until these are addressed."
+> "⛔ CRITICAL security findings must be resolved before any public release. Do not proceed to `/skill:launch-checklist` until these are addressed."
 
 If it is **FIX BEFORE SHIPPING** (open HIGH findings, no CRITICAL, single-player):
-> At `workflow: standard`/`full`: "⚠️ [N] HIGH finding(s) are open. The Polish → Release gate's security audit item requires none — fix them and re-run `/security-audit quick` before `/gate-check release`."
+> At `workflow: standard`/`full`: "⚠️ [N] HIGH finding(s) are open. The Polish → Release gate's security audit item requires none — fix them and re-run `/skill:security-audit quick` before `/skill:gate-check release`."
 >
-> At `minimal`: "⚠️ [N] HIGH finding(s) are open — fix them and re-run `/security-audit quick` before you ship. The `minimal` release gate does not read this report; the open HIGH still makes the recommendation FIX BEFORE SHIPPING."
+> At `minimal`: "⚠️ [N] HIGH finding(s) are open — fix them and re-run `/skill:security-audit quick` before you ship. The `minimal` release gate does not read this report; the open HIGH still makes the recommendation FIX BEFORE SHIPPING."
 
 If it is **NOT ASSESSED**:
 > "Security audit NOT ASSESSED — [each category not assessed, and why]. The report is
-> written. [At `workflow: standard`/`full`:] `/gate-check release` will report its
+> written. [At `workflow: standard`/`full`:] `/skill:gate-check release` will report its
 > security item NOT ASSESSED until [the missing input] is supplied and the audit
 > re-run. [At `minimal`:] The `minimal` release gate does not read this report,
 > but those categories stay unscanned until [the missing input] is supplied."
 >
 > Name the missing input for each category: `engine.name`, the code root, the
-> multiplayer scope (`/settings platform.multiplayer=…`), or — for a category the
+> multiplayer scope (`/skill:settings platform.multiplayer=…`), or — for a category the
 > Phase 3 table marks NOT SOURCEABLE on this engine, the usual cause on Unity and
 > Unreal — a save/serialization module in `docs/engine-reference/<engine>/modules/`
 > (Phase 3), naming that category.
 
 If it is **CLEAR TO SHIP**:
-> "✅ No blocking security findings. Report written to `production/security/`. Include this path when running `/gate-check release`."
+> "✅ No blocking security findings. Report written to `production/security/`. Include this path when running `/skill:gate-check release`."
 
 ---
 

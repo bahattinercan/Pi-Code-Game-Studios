@@ -16,15 +16,15 @@ entity registry (`design/registry/entities.yaml`). Uses a grep-first approach:
 reads the registry once, then targets only the GDD sections that mention
 registered names — no full document reads unless a conflict needs investigation.
 
-**This skill is the write-time safety net.** It catches what `/design-system`'s
-per-section checks may have missed and what `/review-all-gdds`'s holistic review
+**This skill is the write-time safety net.** It catches what `/skill:design-system`'s
+per-section checks may have missed and what `/skill:review-all-gdds`'s holistic review
 catches too late.
 
 **When to run:**
 - After writing each new GDD (before moving to the next system)
-- Before `/review-all-gdds` (so that skill starts with a clean baseline)
-- Before `/create-architecture` (inconsistencies poison downstream ADRs)
-- On demand: `/consistency-check entity:[name]` to check one entity specifically
+- Before `/skill:review-all-gdds` (so that skill starts with a clean baseline)
+- Before `/skill:create-architecture` (inconsistencies poison downstream ADRs)
+- On demand: `/skill:consistency-check entity:[name]` to check one entity specifically
 
 **Output:** Conflict report + optional registry corrections
 
@@ -58,7 +58,7 @@ Read path="design/registry/entities.yaml"
 ```
 
 If the file does not exist or has no entries:
-> "Entity registry is empty. Run `/design-system` to write GDDs — the registry
+> "Entity registry is empty. Run `/skill:design-system` to write GDDs — the registry
 > is populated automatically after each GDD is completed. Nothing to check yet."
 
 Verdict: **NOT ASSESSED — entity registry empty**. Stop: nothing was compared,
@@ -92,7 +92,7 @@ Glob pattern="design/gdd/*.md"
 Exclude the docs that live in `design/gdd/` but are not system GDDs:
 `game-concept.md`, `systems-index.md`, `game-pillars.md`, `gameplay-tags.md`,
 `entity-registry.md`, `fixture-swap-ledger.md`, `sound-bible.md` and any
-`gdd-cross-review-*.md` (the report `/review-all-gdds` writes here).
+`gdd-cross-review-*.md` (the report `/skill:review-all-gdds` writes here).
 
 For `since-last-review` mode:
 ```bash
@@ -368,10 +368,10 @@ next step, then record via `log_decision` (no widget).
 
 ## Recovery / Reference
 
-- **If PASS**: Run `/review-all-gdds` for holistic design-theory review, or
-  `/create-architecture` if all MVP GDDs are complete.
+- **If PASS**: Run `/skill:review-all-gdds` for holistic design-theory review, or
+  `/skill:create-architecture` if all MVP GDDs are complete.
 - **If CONFLICTS FOUND**: Fix the flagged GDDs, then re-run
-  `/consistency-check` to confirm resolution.
+  `/skill:consistency-check` to confirm resolution.
 - **If STALE REGISTRY**: Update the registry (Phase 6), then re-run to verify.
-- Run `/consistency-check` after writing each new GDD to catch issues early,
+- Run `/skill:consistency-check` after writing each new GDD to catch issues early,
   not at architecture time.

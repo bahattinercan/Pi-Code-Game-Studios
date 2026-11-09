@@ -5,7 +5,7 @@
 > **Last Updated**: [Date]
 > **Art Director Sign-Off (AD-ART-BIBLE)**: [Not yet reviewed]
 
-`/art-bible` writes these nine sections in this order and replaces each
+`/skill:art-bible` writes these nine sections in this order and replaces each
 section's `[To be designed]` line as that section is approved. A section still
 holding its placeholder is incomplete; a later run fills only those.
 

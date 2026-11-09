@@ -220,7 +220,7 @@ phases:
         required: true
         artifact:
           glob: "design/accessibility-requirements.md"
-        description: "Run `/ux-design accessibility`. Commit accessibility tier (Basic/Standard/Comprehensive/Exemplary) and feature matrix. UX specs (Phase 4) reference this tier."
+        description: "Run `/skill:ux-design accessibility`. Commit accessibility tier (Basic/Standard/Comprehensive/Exemplary) and feature matrix. UX specs (Phase 4) reference this tier."
 
       - id: interaction-patterns
         name: "Interaction Pattern Library"
@@ -228,7 +228,7 @@ phases:
         required: true
         artifact:
           glob: "design/ux/interaction-patterns.md"
-        description: "Run `/ux-design patterns` to start the pattern library that UX specs reuse. The Technical Setup → Pre-Production gate requires it at `full` (recommended at `standard`)."
+        description: "Run `/skill:ux-design patterns` to start the pattern library that UX specs reuse. The Technical Setup → Pre-Production gate requires it at `full` (recommended at `standard`)."
 
       - id: test-setup
         name: "Test Framework Setup"
@@ -468,7 +468,7 @@ phases:
         name: "Localization QA"
         command: /skill:localize
         required: false
-        description: "Run `/localize qa` for every language you ship; at full the release gate needs PASS or PASS WITH CONDITIONS for each (recommended at standard, dropped at minimal)"
+        description: "Run `/skill:localize qa` for every language you ship; at full the release gate needs PASS or PASS WITH CONDITIONS for each (recommended at standard, dropped at minimal)"
 
       - id: release-checklist
         name: "Release Checklist"

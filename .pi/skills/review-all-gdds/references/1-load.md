@@ -1,6 +1,6 @@
 # /skill:review-all-gdds — Phase 1: Load Everything
 
-> Part of `/review-all-gdds`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:review-all-gdds`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 1: Load Everything
@@ -69,7 +69,7 @@ what to look for.
 
 If the registry is empty or absent: proceed without it. Note in the report:
 "Entity registry is empty — consistency checks rely on full GDD reads only.
-Run `/consistency-check` after this review to populate the registry."
+Run `/skill:consistency-check` after this review to populate the registry."
 
 ### Phase 1c — L1/L2: Section Load
 
@@ -97,7 +97,7 @@ contract below already enumerates: Phase 2 needs Dependencies, Detailed
 Design/Rules, Formulas, Tuning Knobs and Acceptance Criteria; Phase 3 needs
 Player Fantasy and progression/reward structure. Overview is narrative restated
 by the Summary this skill already scanned in Phase 1a, and Edge Cases feeds no
-checklist item here (`/design-review` owns per-GDD completeness). Loading them
+checklist item here (`/skill:design-review` owns per-GDD completeness). Loading them
 put content in three context windows — this one and both sub-agents' — that no
 checklist item ever read.
 
@@ -114,6 +114,6 @@ Report: "Loaded [N] system GDDs covering [M] systems. Pillars: [list]. Anti-pill
 
 If fewer than 2 system GDDs exist (count the files present; an empty one is handled under NOT ASSESSED in Phase 5, not here), stop:
 > "Cross-GDD review requires at least 2 system GDDs. Write more GDDs first,
-> then re-run `/review-all-gdds`."
+> then re-run `/skill:review-all-gdds`."
 
 ---

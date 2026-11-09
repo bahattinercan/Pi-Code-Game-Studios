@@ -9,7 +9,7 @@ for the values it names:
 ```bash
 bash ".pi/hooks/yaml-helper.sh" resolve_config --keys review_mode,automation,automation_always_ask,workflow
 ```
-Resolved above — use as-is. `/adopt` also inspects `project.yaml` and the legacy
+Resolved above — use as-is. `/skill:adopt` also inspects `project.yaml` and the legacy
 config files directly when reporting and writing migration state; that raw
 inspection is deliberate and separate from the resolved values above.
 
@@ -18,9 +18,9 @@ inspection is deliberate and separate from the resolved values above.
 This skill audits an existing project's artifacts for **format compliance** with
 the template's skill pipeline, then produces a prioritised migration plan.
 
-**This is not `/project-stage-detect`.**
-`/project-stage-detect` answers: *what exists?*
-`/adopt` answers: *will what exists actually work with the template's skills?*
+**This is not `/skill:project-stage-detect`.**
+`/skill:project-stage-detect` answers: *what exists?*
+`/skill:adopt` answers: *will what exists actually work with the template's skills?*
 
 A project can have GDDs, ADRs, and stories — and every format-sensitive skill
 will still fail silently or produce wrong results if those artifacts are in the

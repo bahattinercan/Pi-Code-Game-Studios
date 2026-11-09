@@ -37,7 +37,7 @@ It validates:
 4. **Velocity** (how long did this take? That's your real production rate estimate.)
 
 **Earlier in the project?** If you haven't written GDDs yet and want to validate
-whether the core idea is worth designing, run `/prototype` (concept prototype) instead.
+whether the core idea is worth designing, run `/skill:prototype` (concept prototype) instead.
 
 ---
 
@@ -55,7 +55,7 @@ Read the following files to understand the full design intent. Read each GDD, AD
 and the control manifest by section: find the headings you need with
 the Grep tool (pattern `^#`, content mode) and Read those ranges with offset
 and limit.
-- `CLAUDE.md` — tech stack and engine
+- `AGENTS.md` — tech stack and engine
 - `design/gdd/game-concept.md` — core fantasy and game pillars (or
   `design/game-brief.md`, the one-page brief that replaces it at `rigor: minimal` —
   pitch, core loop and "what they feel" line; it has no pillars)
@@ -230,7 +230,7 @@ Once the user returns, ask these questions **one at a time**:
 If any answer is vague, ask: "Can you give me the specific moment where that happened?"
 Precise observations populate the report. Vague ones produce a useless report.
 
-**PROCEED is not available when a validation item is NO.** `/gate-check production`
+**PROCEED is not available when a validation item is NO.** `/skill:gate-check production`
 FAILs a built slice with any NO in its Vertical Slice Validation — a player got
 through the loop without developer guidance (question 1), learned what to do
 within the first 2 minutes (question 2 — longer is a no), the core mechanic feels
@@ -336,17 +336,17 @@ Link to `prototypes/[concept-name]-vertical-slice/REPORT.md`.
 Your vertical slice validated the full game loop. The project is ready for
 Production.
 
-At `workflow: minimal`: `/create-stories` (from the brief), then `/dev-story`
+At `workflow: minimal`: `/skill:create-stories` (from the brief), then `/skill:dev-story`
 on the first story — the rest of this list is the `standard`/`full` path.
 
 Recommended next steps (`standard`/`full`):
-- `/create-epics layer:foundation` — plan Foundation layer epics
-- `/create-epics layer:core` — plan Core layer epics
-- `/create-stories [epic-slug]` — break each epic into implementable stories
-- `/sprint-plan` — plan the first sprint using velocity data from the slice
-- `/gate-check production` — formally advance the stage to Production
+- `/skill:create-epics layer:foundation` — plan Foundation layer epics
+- `/skill:create-epics layer:core` — plan Core layer epics
+- `/skill:create-stories [epic-slug]` — break each epic into implementable stories
+- `/skill:sprint-plan` — plan the first sprint using velocity data from the slice
+- `/skill:gate-check production` — formally advance the stage to Production
 
-**Playtest note:** `/gate-check` will look for documented playtest evidence.
+**Playtest note:** `/skill:gate-check` will look for documented playtest evidence.
 At minimum, 1 documented session with a REPORT.md showing PROCEED is required
 to pass the gate. More sessions give more reliable signal — 3+ is recommended
 before committing the full team to Production, but is not a hard gate.
@@ -363,13 +363,13 @@ Ask: "May I write this to `prototypes/[concept-name]-vertical-slice/PIVOT-NOTE.m
 
 If yes, write the file with: what worked, what failed, the specific systems or
 architecture decisions that need revision, and what the next slice should prove
-differently. When `/vertical-slice` is next run after a PIVOT, check the
+differently. When `/skill:vertical-slice` is next run after a PIVOT, check the
 `prototypes/` directory for a `PIVOT-NOTE.md` — use it to frame the new validation
 question and inform scope decisions.
 
-- Revise affected GDDs with `/design-system [mechanic]`
-- Address architecture issues via `/architecture-decision`
-- Then re-run `/vertical-slice` to validate the revised direction
+- Revise affected GDDs with `/skill:design-system [mechanic]`
+- Address architecture issues via `/skill:architecture-decision`
+- Then re-run `/skill:vertical-slice` to validate the revised direction
 
 **If KILL:**
 
@@ -394,8 +394,8 @@ Ask: "May I append this to `prototypes/GRAVEYARD.md`?" If yes, add one entry:
 - **Next time:** [one specific change for the next time a similar concept is attempted]
 ```
 
-- Return to `/brainstorm` with what you learned
-- Or run `/prototype [new-concept]` to test a new direction cheaply first
+- Return to `/skill:brainstorm` with what you learned
+- Or run `/skill:prototype [new-concept]` to test a new direction cheaply first
 
 **If NOT ASSESSED:**
 
@@ -403,7 +403,7 @@ The slice is built but not validated. Say which reason applied, then finish the
 Phase 5 playthrough and debrief — the `production/session-state/active.md`
 checkpoint is where to resume — and, after asking, update REPORT.md and its
 `prototypes/index.md` row with the verdict. Do not take the slice to
-`/gate-check production` as if it had passed: NOT ASSESSED is not a PROCEED.
+`/skill:gate-check production` as if it had passed: NOT ASSESSED is not a PROCEED.
 
 ---
 

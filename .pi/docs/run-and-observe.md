@@ -1,7 +1,7 @@
 # Run and Observe
 
 Shared procedure for any skill that closes a story which changes something a
-player can see. Used by `/dev-story` (Phase 6) and `/story-done` (Phase 3).
+player can see. Used by `/skill:dev-story` (Phase 6) and `/skill:story-done` (Phase 3).
 **A parse check is not a run, and a story nobody looked at does not close.**
 This file explains how to look.
 
@@ -88,7 +88,7 @@ Builds/Win64/Game.exe -screen-width 1280 -screen-height 720 -screen-fullscreen 0
 
 `-screen-*` are Unity's own player arguments. `--scene`, `--screenshot` and
 `--after` are **yours**, read by the script below. The template does not ship
-it: the first time a Unity story needs a screenshot, `/dev-story` asks to write
+it: the first time a Unity story needs a screenshot, `/skill:dev-story` asks to write
 it, verbatim, to `Assets/Scripts/ScreenshotOnArg.cs`. It needs no scene edit — it boots itself, and does nothing unless the player
 was launched with `--screenshot`:
 
@@ -215,7 +215,7 @@ actually live.
 
 **Cannot:** timing, responsiveness, weight, animation curves, audio sync — the
 "feel" half of Visual/Feel. Godot's `--write-movie` gives a frame sequence; the
-other engines need OS video capture. Feel stays a human check in `/team-qa`.
+other engines need OS video capture. Feel stays a human check in `/skill:team-qa`.
 Say which half the screenshot covered.
 
 ## Reaching the state

@@ -1,6 +1,6 @@
 # /skill:gate-check — Section 3: Run the Gate Check
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 3. Run the Gate Check
@@ -90,10 +90,10 @@ does not turn on.
 For code checks, verify directory structure and file counts.
 
 **Systems Design → Technical Setup gate — cross-GDD review check**:
-Use `Glob('design/gdd/gdd-cross-review-*.md')` to find the `/review-all-gdds` report.
+Use `Glob('design/gdd/gdd-cross-review-*.md')` to find the `/skill:review-all-gdds` report.
 If no file matches: at `full` mark the "cross-GDD review report exists" artifact as
-**FAIL** and surface it prominently ("No `/review-all-gdds` report found in
-`design/gdd/`. Run `/review-all-gdds` before advancing to Technical Setup."); at
+**FAIL** and surface it prominently ("No `/skill:review-all-gdds` report found in
+`design/gdd/`. Run `/skill:review-all-gdds` before advancing to Technical Setup."); at
 `standard` the report is recommended, so mark it **CONCERNS**, not a blocker; at
 `minimal` this gate is not applicable (see the gate file). If a file is found, read it and
 check the verdict line: a FAIL verdict means the cross-GDD consistency check failed
@@ -153,7 +153,7 @@ A report whose `Focus:` line names one pass only (a `consistency` or
 - For performance checks: read the budgets (`performance.target_framerate`,
   `frame_budget_ms`, `draw_call_limit`, `memory_ceiling_mb`) from `project.yaml`
   (else technical-preferences.md) and compare against any profiling data in
-  `tests/performance/` or recent `/perf-profile` output. What a breach *means*
+  `tests/performance/` or recent `/skill:perf-profile` output. What a breach *means*
   is set by `performance.enforce`, taken from the Phase 1 resolved block (it is
   locally overridable, so do not read the file for this one):
   - `warn` (default) — breaches are **CONCERNS**, never Blockers.

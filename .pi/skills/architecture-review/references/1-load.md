@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phase 1: Load Everything
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 1: Load Everything
@@ -66,7 +66,7 @@ without those lines was written before they existed and covers nothing.
   proceeds with [A] and notes it; `autonomous` logs via `log_decision` and
   stands on the prior report.
 - **Only GDDs or ADRs `CHANGED`/`NEW`** — name them, then scope instead of
-  re-running everything: recommend `/architecture-review single-gdd [path]`
+  re-running everything: recommend `/skill:architecture-review single-gdd [path]`
   for just the changed systems. A full re-run stays available on request, and
   a `NEW` ADR warrants one.
 - **Anything else `CHANGED`, `NEW` or `GONE`** — a deleted GDD or ADR, the TR
@@ -75,7 +75,7 @@ without those lines was written before they existed and covers nothing.
   files. These reach every phase, so recommend re-running the review as
   asked, never a `single-gdd` scope, and name each input with what it
   affects — e.g. *"The engine reference changed after the
-  last report: its deprecated-API audit, which `/gate-check` reads, was made
+  last report: its deprecated-API audit, which `/skill:gate-check` reads, was made
   against the old one."*
 - **`RECEIPT: NONE`** — no prior report, or one written before receipts
   existed. Proceed with the full review; this run's report will carry the
@@ -91,7 +91,7 @@ Grep pattern="## Summary" glob="docs/architecture/adr-*.md" output_mode="content
 
 **Fail open on a missing Summary.** Establish the denominator: glob
 `design/gdd/*.md` and count **N**. A scan matching fewer than N means those GDDs
-predate `## Summary` (`/design-system` emits it, but older GDDs lack it) — never
+predate `## Summary` (`/skill:design-system` emits it, but older GDDs lack it) — never
 treat an absent Summary as a system out of scope. A zero-match scan means "no GDD
 carries a Summary yet", not "nothing to review": full-read the unmatched set.
 
@@ -155,7 +155,7 @@ not the same finding:
 |---|---|---|
 | N_adr matches | Normal. | Proceed on the scanned sections. |
 | Some ADRs match, some do not | Those ADRs are missing sections. | Record each as a **structural gap** in the Phase 7 report — a missing `## GDD Requirements Addressed` is itself a traceability finding. |
-| **0 matches, N_adr > 0** | **Malformed ADRs**, not "no architecture". | "[N_adr] ADRs found, none carries a scannable section — run `/architecture-decision retrofit [file]` on each." Do **not** report zero coverage; that would read as a design failure when it is a format failure. |
+| **0 matches, N_adr > 0** | **Malformed ADRs**, not "no architecture". | "[N_adr] ADRs found, none carries a scannable section — run `/skill:architecture-decision retrofit [file]` on each." Do **not** report zero coverage; that would read as a design failure when it is a format failure. |
 
 Escalate to a full read of one ADR only when judging a conflict needs its
 reasoning (Phase 4) — that is a per-ADR decision, not a blanket load.

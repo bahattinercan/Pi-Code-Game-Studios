@@ -56,8 +56,8 @@ the story, epic or sprint the user's request names is the scope.
   stories of one epic.
 
 **Zero stories in scope: stop with `NOT ASSESSED — no stories in scope`.** Name the
-scope and the path that was empty, and route to `/create-stories` (at `standard`
-and `full`, `/create-epics` first). Never print a `Ready: 0 / Needs Work: 0` summary
+scope and the path that was empty, and route to `/skill:create-stories` (at `standard`
+and `full`, `/skill:create-epics` first). Never print a `Ready: 0 / Needs Work: 0` summary
 over an empty list: it reads as a clean result. For `sprint`, "no sprint plan
 found" and "the sprint plan lists no stories" are different reports; say which.
 
@@ -81,7 +81,7 @@ Say "Checking [N] story files." before going on.
 2. **ADRs.** One call gives every ADR's status and layer:
    `bash .pi/scripts/adr-status.sh`. A `no_status` or `UNFILLED` status is a
    malformed ADR: never treat an absent status as a failed one (route:
-   `/architecture-decision retrofit [file]`). An ADR a story cites with no row is missing.
+   `/skill:architecture-decision retrofit [file]`). An ADR a story cites with no row is missing.
 3. **Control manifest.** Only its `Manifest Version` line in
    `docs/architecture/control-manifest.md`. Missing file: note it once.
 4. **TR registry.** Look up each story's TR-IDs, with their `status`, in
@@ -147,7 +147,7 @@ lowers READY by itself.
 - [ ] **TR-ID valid**: each `TR-[system]-NNN` is in the registry with `status:
   active`. `deprecated` or `superseded-by` (quoted or not): NEEDS WORK, Fix: point
   the story at the current requirement. Not in the registry: NEEDS WORK (the story
-  may predate it, or the registry needs `/architecture-review`). Passes with no
+  may predate it, or the registry needs `/skill:architecture-review`). Passes with no
   TR-ID, or no registry.
 - [ ] **Manifest Version current**: the story's `Manifest Version` against the
   manifest's. Older: a gap, because rules added since may apply. It stays a gap
@@ -191,7 +191,7 @@ lowers READY by itself.
 ### Definition of Done
 
 - [ ] **Enough acceptance criteria**: no `ac_below_min` row. The minimums follow
-  `story_granularity`, because `/create-stories` writes to it:
+  `story_granularity`, because `/skill:create-stories` writes to it:
 
   | `story_granularity` | Logic, Integration | Visual/Feel, UI | Config/Data |
   |---|---|---|---|
@@ -284,13 +284,13 @@ with a one-line description and its estimate. When there are none, say which:
 
 **Offer help.** Ask: "Would you like me to draft the missing parts for any of
 these stories?" Options: Yes, draft them / No, that's all. On yes, draft only the
-missing parts, in the conversation. The user, or `/create-stories`, writes them.
+missing parts, in the conversation. The user, or `/skill:create-stories`, writes them.
 
 Redirects:
-- Story file missing: run `/create-stories [epic-slug]` (at `standard` and
-  `full`, `/create-epics` first).
+- Story file missing: run `/skill:create-stories [epic-slug]` (at `standard` and
+  `full`, `/skill:create-epics` first).
 - No design reference and the change is small (under about a week): run
-  `/quick-design [description]` and cite that spec in the story.
+  `/skill:quick-design [description]` and cite that spec in the story.
 - Scope grew past its sizing: split the story, or raise it with the producer.
 
 **End the reply with:**

@@ -1,6 +1,6 @@
 # /skill:design-system — Phase 4: Section-by-Section Design
 
-> Part of `/design-system`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:design-system`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 4. Section-by-Section Design
@@ -145,7 +145,7 @@ describes it. Flag discrepancies.
 level — what the system *does*, not *how it is built*. If implementation questions
 arise during the Overview (e.g., "Should this use an Autoload singleton or a signal
 bus?"), note them as "→ becomes an ADR" and move on. Implementation patterns belong
-in `/architecture-decision`, not the GDD. The GDD describes behavior; the ADR
+in `/skill:architecture-decision`, not the GDD. The GDD describes behavior; the ADR
 describes the technical approach used to achieve it.
 
 ---
@@ -436,7 +436,7 @@ exactly once, so nothing falls through:
 - `Narrative` — dialogue, quests, cutscenes, lore delivery
 - `Audio` — by definition
 
-> **`Gameplay` belongs in this list.** It is the category `/map-systems` assigns
+> **`Gameplay` belongs in this list.** It is the category `/skill:map-systems` assigns
 > to combat, AI and movement — the largest bucket in most action games.
 
 For required systems: **spawn `art-director` via `Agent`** before drafting this section. Provide: system name, game concept, game pillars, art bible sections 1–4 if they exist. Ask them to specify: (1) VFX and visual feedback requirements for this system's events, (2) any animation or visual style constraints, (3) which art bible principles most directly apply to this system. Present their output; do NOT leave this section as `[To be designed]` for visual systems.
@@ -462,7 +462,7 @@ feel targets after implementation is expensive."*
 GDD.** The rule is derived, not category-keyed: if this document references
 another system's mechanic, value or rule anywhere, that reference belongs in the
 table. Where Dependencies names nothing, write *"None — this system references no
-other GDD"* rather than leaving the placeholder. `/review-all-gdds` Phase 2c
+other GDD"* rather than leaving the placeholder. `/skill:review-all-gdds` Phase 2c
 reads this table when it exists.
 
 For the remaining five categories — `Core`, `Progression`, `Economy`,
@@ -497,7 +497,7 @@ Use `AskUserQuestion`:
 For **Visual/Audio** (non-required systems): Coordinate with `art-director` and `audio-director` if detail is needed. Often a brief note suffices at the GDD stage.
 
 > **Asset Spec Flag**: After the Visual/Audio section is written with real content, output this notice:
-> "📌 **Asset Spec** — Visual/Audio requirements are defined. After the art bible is approved, run `/asset-spec system:[system-name]` to produce per-asset visual descriptions, dimensions, and generation prompts from this section."
+> "📌 **Asset Spec** — Visual/Audio requirements are defined. After the art bible is approved, run `/skill:asset-spec system:[system-name]` to produce per-asset visual descriptions, dimensions, and generation prompts from this section."
 
 For **UI Requirements**: Coordinate with `ux-designer` for complex UI systems.
 After writing this section, check whether it contains real content (not just
@@ -505,7 +505,7 @@ After writing this section, check whether it contains real content (not just
 UI requirements, output this flag immediately:
 
 > **📌 UX Flag — [System Name]**: This system has UI requirements. In Phase 4
-> (Pre-Production), run `/ux-design` to create a UX spec for each screen or
+> (Pre-Production), run `/skill:ux-design` to create a UX spec for each screen or
 > HUD element this system contributes to **before** writing epics. Stories that
 > reference UI should cite `design/ux/[screen].md`, not the GDD directly.
 >

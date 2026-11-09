@@ -50,11 +50,11 @@ one-liners). If `design/game-brief.md` exists, read it and refine it instead of 
    every run asks.
 2. **Fill the brief** in conversation, several fields per exchange:
    - **Working title:** the brief's title line. Offer one from the chosen concept and let the user
-     change it; `/create-stories` names the epic folder after it.
+     change it; `/skill:create-stories` names the epic folder after it.
    - **Pitch:** the excited one-liner.
    - **Core loop:** the 2 to 4 steps the player repeats.
    - **Player goal & fail state**: what the player tries to do, and how they lose.
-     `/create-stories` turns it into acceptance criteria.
+     `/skill:create-stories` turns it into acceptance criteria.
    - **MVP:** the short list that makes it the game; each item becomes a story. **More than 7
      items: push back.** Say it is too long for an MVP, propose which items to cut (the ones the
      core loop works without), and keep the brief to 7 or fewer.
@@ -69,11 +69,11 @@ one-liners). If `design/game-brief.md` exists, read it and refine it instead of 
    `design/game-brief.md`, creating folders as needed. Never write `design/gdd/game-concept.md`
    at this tier.
 4. **Next steps.** Read `engine.name` in `project.yaml`:
-   1. `/setup-engine`: configure the engine. List it **only** when `engine.name` is absent or
+   1. `/skill:setup-engine`: configure the engine. List it **only** when `engine.name` is absent or
       empty: on the minimal path it usually ran before this skill.
-   2. `/create-stories`: turn the MVP list into stories. At `minimal` there is no separate
-      `/create-epics` or `/sprint-plan`; the build order is the plan.
-   3. `/dev-story`: the first line of game code.
+   2. `/skill:create-stories`: turn the MVP list into stories. At `minimal` there is no separate
+      `/skill:create-epics` or `/skill:sprint-plan`; the build order is the plan.
+   3. `/skill:dev-story`: the first line of game code.
 
    Then one summary line: the pitch, the number of MVP items, and `design/game-brief.md`. End with
    the line `Verdict: COMPLETE — game brief written; next stop is code.`

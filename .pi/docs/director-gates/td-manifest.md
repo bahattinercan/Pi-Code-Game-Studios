@@ -5,7 +5,7 @@
 Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
 
 **Trigger**: After control-manifest rules are extracted and previewed
-(`/create-control-manifest` Phase 4), before the manifest file is written
+(`/skill:create-control-manifest` Phase 4), before the manifest file is written
 
 **Context to pass**:
 - The Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list)

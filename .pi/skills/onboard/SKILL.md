@@ -48,11 +48,11 @@ the two happened — a reader cannot tell from a green result.
 
 ## Phase 1: Load Project Context
 
-Read CLAUDE.md for project overview and standards.
+Read AGENTS.md for project overview and standards.
 
 Read the relevant agent definition from `.pi/agents/` if a specific role is specified.
 
-`CLAUDE.md` and `.pi/agents/` ship with the framework — no skill creates them. If either is missing, report it as missing from the install.
+`AGENTS.md` and `.pi/agents/` ship with the framework — no skill creates them. If either is missing, report it as missing from the install.
 
 ---
 
@@ -61,12 +61,12 @@ Read the relevant agent definition from `.pi/agents/` if a specific role is spec
 - For programmers: scan the code root (resolve per `.pi/docs/code-root-resolution.md`) for architecture, patterns, key files. An unresolved root means the scan did not run: the sections it feeds read `NOT ASSESSED — code root unresolved`, never a guess at `src/`
 - For designers: scan `design/` for existing design documents
 - For narrative: scan `design/narrative/` for world-building and story docs
-- For QA: scan `tests/` for existing test coverage (`/test-setup` creates it)
+- For QA: scan `tests/` for existing test coverage (`/skill:test-setup` creates it)
 - For production: scan `production/` for current sprint and milestone
 - **No role or area given**: a general orientation — list the top level of `design/`,
   `docs/architecture/`, `production/` and the code root, read
   `production/session-state/active.md` if it exists, and say that a role would
-  focus the next pass (e.g. `/onboard programmer`)
+  focus the next pass (e.g. `/skill:onboard programmer`)
 
 Read recent changes (git log if available) to understand current momentum.
 
@@ -95,7 +95,7 @@ Read recent changes (git log if available) to understand current momentum.
 |------|---------|--------------|
 
 ## Current Standards and Conventions
-[Summary of conventions relevant to this role from CLAUDE.md and agent definition]
+[Summary of conventions relevant to this role from AGENTS.md and agent definition]
 
 ## Current State of Your Area
 [What has been built, what is in progress, what is planned next. Name what
@@ -139,5 +139,5 @@ If yes, write the file, creating the directory if needed.
 Verdict: **COMPLETE** — onboarding document generated.
 
 - Share the onboarding doc with the new contributor before their first session.
-- Run `/sprint-status` to show the new contributor current progress.
-- Run `/help` if the contributor needs guidance on what to work on next.
+- Run `/skill:sprint-status` to show the new contributor current progress.
+- Run `/skill:help` if the contributor needs guidance on what to work on next.

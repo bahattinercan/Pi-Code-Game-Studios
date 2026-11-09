@@ -1,6 +1,6 @@
 # /skill:design-system — Phase 3: Create File Skeleton
 
-> Part of `/design-system`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:design-system`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 3. Create File Skeleton
@@ -109,7 +109,7 @@ Use the template structure from `.pi/docs/templates/game-design-document.md`:
 Ask: "May I create the skeleton file at `design/gdd/[system-name].md`?"
 
 If the user declines: Stop with the following message:
-> "Verdict: **BLOCKED** — skeleton creation declined. The design session cannot proceed without the skeleton file, as all subsequent phases use it as the base. Re-run `/design-system [system]` when ready to create the file."
+> "Verdict: **BLOCKED** — skeleton creation declined. The design session cannot proceed without the skeleton file, as all subsequent phases use it as the base. Re-run `/skill:design-system [system]` when ready to create the file."
 Do not proceed to Section A.
 
 After writing, update `production/session-state/active.md`:

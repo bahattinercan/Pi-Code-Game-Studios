@@ -8,7 +8,7 @@ Closes the implementation loop for a single story by verifying every acceptance 
 ### Files That Must Exist
 | File | Required Fields / Sections | Read-Only? |
 |------|---------------------------|-----------|
-| `production/epics/**/*.md` (the story file) | `Status:` (expected: `In Progress`, or `Ready` if `/dev-story` was skipped — `/dev-story` sets `In Progress`, and `/story-done` is the only skill that closes a story it verified — `/dev-story`'s dependency option `[C]` also sets `Complete`, on a dependency the user says is done, after an ask), `Type:`, `Manifest Version`, TR-ID(s), ADR reference(s), `## Acceptance Criteria`, list of files to create/modify, `## Test Evidence` path | No — status and completion notes written after approval |
+| `production/epics/**/*.md` (the story file) | `Status:` (expected: `In Progress`, or `Ready` if `/skill:dev-story` was skipped — `/skill:dev-story` sets `In Progress`, and `/skill:story-done` is the only skill that closes a story it verified — `/skill:dev-story`'s dependency option `[C]` also sets `Complete`, on a dependency the user says is done, after an ask), `Type:`, `Manifest Version`, TR-ID(s), ADR reference(s), `## Acceptance Criteria`, list of files to create/modify, `## Test Evidence` path | No — status and completion notes written after approval |
 | `docs/architecture/tr-registry.yaml` | Entry per TR-ID with current `requirement` text | Yes |
 | GDD section referenced by each TR-ID | Acceptance criteria and key rules for cross-check | Yes |
 | `docs/architecture/adr-NNNN-[slug].md` (referenced ADR) | `## Decision`, `## Consequences` | Yes |
@@ -36,7 +36,7 @@ Closes the implementation loop for a single story by verifying every acceptance 
 - At `qa.level: full`, a Config/Data story's smoke report is BLOCKING by default (an explicit `testing.strict.config: false` keeps it advisory), and any UNTESTED acceptance criterion blocks; at `standard` only more than half untested blocks
 - For Logic and Integration stories, the test file at the `## Test Evidence` path must **exist** before a COMPLETE verdict is possible — unless `testing.strict` in `project.yaml` sets that type to advisory (`testing.strict.logic`/`.integration: false`), in which case a missing test is recorded as a warning but does not block
 - For Visual/Feel and UI stories, a retained screenshot must exist under `production/qa/evidence/` before a COMPLETE verdict is possible, and for Visual/Feel an evidence doc with every sign-off `[x] Approved` too (UI needs the screenshot only, as `coding-standards.md` says) — unless `testing.strict.visual`/`.ui` is set to `false`, in which case the gap is recorded as a warning but does not block
-- **This skill does not execute the test.** Phase 4 checks that the file exists; nothing runs. A test that exists and FAILS satisfies the gate, so a failing test cannot block a COMPLETE verdict here — this gate is existence, not "exist and pass". Pass/fail is established by `/gate-check` and `/smoke-check`, both of which run a suite and both of which come after story closure. See Phase 3 of `SKILL.md`.
+- **This skill does not execute the test.** Phase 4 checks that the file exists; nothing runs. A test that exists and FAILS satisfies the gate, so a failing test cannot block a COMPLETE verdict here — this gate is existence, not "exist and pass". Pass/fail is established by `/skill:gate-check` and `/skill:smoke-check`, both of which run a suite and both of which come after story closure. See Phase 3 of `SKILL.md`.
 
 ## Verdicts Emitted
 `COMPLETE` / `COMPLETE WITH NOTES` / `NOT ASSESSED` / `BLOCKED`.
@@ -58,7 +58,7 @@ then `COMPLETE`; see the verdict section of `SKILL.md`.
 
 ### Output Guarantees
 - `Status: Complete` is written only after the user explicitly approves: on a COMPLETE or COMPLETE WITH NOTES verdict, or — on a BLOCKED or NOT ASSESSED verdict — only when the user explicitly asks to close anyway (the Phase 7 override, which always prompts as a `scope_changes` decision), with the override risk recorded in `## Completion Notes`
-- `## Completion Notes` always contains: completion date, criteria pass count, deviation summary, test evidence path (or "None required"), code review status, and a Reviewed by line: `lead-programmer`, `/code-review (you said you ran it; not verified here)`, or `self, no independent review` when nobody else reviewed the work
+- `## Completion Notes` always contains: completion date, criteria pass count, deviation summary, test evidence path (or "None required"), code review status, and a Reviewed by line: `lead-programmer`, `/skill:code-review (you said you ran it; not verified here)`, or `self, no independent review` when nobody else reviewed the work
 - Session state always records the final verdict and the next recommended story path
 
 ## Immutability Rules
@@ -76,17 +76,17 @@ then `COMPLETE`; see the verdict section of `SKILL.md`.
 - Never silently overrides a BLOCKED verdict — if the user insists on advancing despite blockers, document the override risk explicitly in `## Completion Notes`
 
 ## Downstream Skill Expects
-**Next skill:** `/gate-check` (Production → Polish gate, or end-of-sprint review)
+**Next skill:** `/skill:gate-check` (Production → Polish gate, or end-of-sprint review)
 - It will read: story files in `production/epics/` checking `Status: Complete` and presence of `## Completion Notes`
 - It will read: `tests/unit/` and `tests/integration/` for test file presence and will run the test suite via Bash
 - It assumes: every Complete Logic story whose `testing.strict.logic` gate resolved to BLOCKING (the default) has a corresponding test file that **exists**; under an explicit `testing.strict.logic: false` a Logic story may be Complete with the test gap documented in `## Completion Notes`
-  > **Existence, not passing.** `/story-done` checks that the test file exists and runs nothing, so a Complete Logic story may carry a test that fails. `/gate-check` running the suite is the FIRST point at which pass/fail is established, so it must never treat a Complete status as evidence the tests passed — it has to run them. That is also why an unconfigured test runner is `NOT ASSESSED` there rather than a silent skip: with no run, nothing upstream has verified the story either.
+  > **Existence, not passing.** `/skill:story-done` checks that the test file exists and runs nothing, so a Complete Logic story may carry a test that fails. `/skill:gate-check` running the suite is the FIRST point at which pass/fail is established, so it must never treat a Complete status as evidence the tests passed — it has to run them. That is also why an unconfigured test runner is `NOT ASSESSED` there rather than a silent skip: with no run, nothing upstream has verified the story either.
 - It assumes: Visual/Feel and UI stories that are Complete have a retained screenshot in `production/qa/evidence/`, and Visual/Feel ones a signed-off evidence doc as well — that gate is BLOCKING by default; only under an explicit `testing.strict.visual`/`.ui: false` may such a story be Complete with the deviation documented in `## Completion Notes`
 - It will read: `production/sprint-status.yaml` for `status: done` entries if that file exists
 
 ## Known Fragile Points
 - The story's `## Test Evidence` path is checked first; when it does not match, Phase 4 searches `tests/unit/[system]/` (or `tests/integration/[system]/`) before flagging the test missing, so a file under a slightly different name is still found — one outside that folder is not
-- The scope check reads the story's `## Files` list (filled by `/create-stories`, replaced by `/dev-story`). A story written before the section existed falls back to the checkpoint's **Files in progress** when it names this story, else reports scope NOT ASSESSED; changes already committed are not seen, since it compares uncommitted files only
+- The scope check reads the story's `## Files` list (filled by `/skill:create-stories`, replaced by `/skill:dev-story`). A story written before the section existed falls back to the checkpoint's **Files in progress** when it names this story, else reports scope NOT ASSESSED; changes already committed are not seen, since it compares uncommitted files only
 - If `Type:` is absent from the story header, test evidence gate enforcement is ADVISORY only — stories can slip through without tests
 - Manifest version staleness check is skipped if `docs/architecture/control-manifest.md` does not exist; the check being skipped is noted in the report but is non-blocking
 - `production/sprint-status.yaml` update is silent (no separate approval); if that file uses a different key structure than expected, the update silently fails and sprint tracking becomes stale

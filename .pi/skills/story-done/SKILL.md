@@ -57,7 +57,7 @@ pair removed, is the story path. With nothing typed:
    closing?" with one option per story.
 3. None: ask for the path. When `production/epics/` holds no story file at all,
    stop:
-   "No stories found in `production/epics/` — run `/create-stories [epic-slug]` to make them (at `standard` and `full`, run `/create-epics` first if there is no epic yet)."
+   "No stories found in `production/epics/` — run `/skill:create-stories [epic-slug]` to make them (at `standard` and `full`, run `/skill:create-epics` first if there is no epic yet)."
 
 **Its facts.** `bash .pi/scripts/story-facts.sh <story-path>` gives the status,
 type, layer, TR-IDs, ADRs, criteria count, test-evidence status and dependencies.
@@ -126,7 +126,7 @@ Take each acceptance criterion in turn:
   image under `production/qa/evidence/[story-slug]/` (`[story-slug]`: the story
   file's name without `.md`) that you opened and saw it in.
   Never describe an image you have not opened; a checkpoint's `Run result:
-  OBSERVED — <text>` is `/dev-story`'s description, to quote as such.
+  OBSERVED — <text>` is `/skill:dev-story`'s description, to quote as such.
 - **Needs a full playtest:** `DEFERRED — requires playtest session`. It does not
   block.
 
@@ -152,7 +152,7 @@ say so: `Test evidence: waived at qa.level minimal`.
 - **Logic:** the exact path in the story's Test Evidence section, else anywhere
   under `tests/unit/[system]/`.
 - **Integration:** the same under `tests/integration/[system]/`, else a playtest
-  record naming this story in `production/qa/playtests/` (`/playtest-report`
+  record naming this story in `production/qa/playtests/` (`/skill:playtest-report`
   writes them there).
 - **UI:** a UI story is satisfied by the retained screenshot of each screen touched,
   under `production/qa/evidence/`. No evidence doc or sign-off needed.
@@ -160,7 +160,7 @@ say so: `Test evidence: waived at qa.level minimal`.
   `production/qa/evidence/[story-slug]-evidence.md` with every sign-off row
   `[x] Approved` (one person may sign every role).
 - **Config/Data:** a `production/qa/smoke-*.md` report; none: "No smoke check
-  report found. Run `/smoke-check`."
+  report found. Run `/skill:smoke-check`."
 - **No Type:** advisory: "Story Type not declared. Add `Type:` to the story header."
 
 A missing item is a gap at the gate level: BLOCKING stops COMPLETE, ADVISORY goes
@@ -173,7 +173,7 @@ Each `CHANGED:` or `GONE:` file: "[file] changed after the evidence was captured
 re-capture it." `RECEIPT: NONE`: "no stamp — whether the evidence is older than the
 code cannot be told". Report these lines; they never change the verdict.
 
-**Run result, every other type.** Take the `Run result:` line from the `/dev-story`
+**Run result, every other type.** Take the `Run result:` line from the `/skill:dev-story`
 checkpoint (only when its **Current task** names this story) or the story's Completion Notes.
 `OBSERVED` with a path: note it. `N/A — <reason>`: accept only a reason that says
 why nothing is observable ("it's a Logic story" is not one). `NOT VERIFIED` on a
@@ -190,7 +190,7 @@ Run, by tier (`minimal` skips 1 and 3):
    files for the names the current GDD text and TR requirement use.
 2. **Manifest:** the story's `Manifest Version` older than the manifest's: ADVISORY,
    "written against manifest v[story]; current is v[current] — run
-   `/story-readiness` to check". No manifest: skip. A `Manifest-Note:` line in the
+   `/skill:story-readiness` to check". No manifest: skip. A `Manifest-Note:` line in the
    story is carried into the deviations as written.
 3. **ADR constraints** (`full`; `standard` for a critical ADR): search for the
    patterns the ADR's Decision or the manifest forbids.
@@ -212,7 +212,7 @@ Read the `review_gate` line above.
 
 - **`skill-gates=skip`:** no agent. Note `QL-TEST-COVERAGE skipped — [Solo | Lean]
   mode` and `LP-CODE-REVIEW skipped — [Solo | Lean] mode`. In `lean` mode, ask: "Did
-  you run `/code-review` on the implemented files?" Options: Yes — it passed or was
+  you run `/skill:code-review` on the implemented files?" Options: Yes — it passed or was
   approved with suggestions / No — skipping review for this story / No — I'll run
   it before the sprint close-out. The answer sets Reviewed by.
 - **`skill-gates=run`:** read `references/review-gates.md` and
@@ -220,7 +220,7 @@ Read the `review_gate` line above.
   it.
 
 **Reviewed by** is never blank: `lead-programmer` when LP-CODE-REVIEW ran;
-`/code-review (you said you ran it; not verified here)` for the lean Yes; `self, no
+`/skill:code-review (you said you ran it; not verified here)` for the lean Yes; `self, no
 independent review` in solo mode, for either No, and when no implementation file
 exists yet.
 
@@ -311,15 +311,15 @@ one (`TODO`):
 ```
 ### Next Up
 **[Story NNN: title]** — [one line]
-Run `/story-done [path]` to close it (In Review) — else `/dev-story [path]` to implement it.
+Run `/skill:story-done [path]` to close it (In Review) — else `/skill:dev-story [path]` to implement it.
 ```
 
-When the `workflow` line above reads `minimal`, print no `/story-readiness` line at
+When the `workflow` line above reads `minimal`, print no `/skill:story-readiness` line at
 all, not even as an option: it is not on that path. With no sprint plan at
-`workflow: standard` or `full`, add "Run `/story-readiness [path]` first."
+`workflow: standard` or `full`, add "Run `/skill:story-readiness [path]` first."
 
 - Only `COMPLETE N of N`: every story is built. Offer: play the build and note what
-  feels wrong; add stories from the brief with `/create-stories`; or `/settings` to
+  feels wrong; add stories from the brief with `/skill:create-stories`; or `/skill:settings` to
   raise `modes.rigor` if the game has outgrown its brief.
 - Only `BLOCKED`, `OTHER` or `NO_STATUS` lines left: there is no Next Up, and the
   build order is **not** done. Name each story with its blocker, `Draft` or `no

@@ -56,7 +56,7 @@ not a filled-in report.** Check first, and stop if the check fails.
    reads the template next.
 4. If **every** required input is ABSENT, stop and report
    **`NOT ASSESSED — NO DATA`** as the whole verdict, naming what was missing and
-   which skill produces it (`/map-systems` for `design/gdd/systems-index.md`, `/design-system` for the GDDs).
+   which skill produces it (`/skill:map-systems` for `design/gdd/systems-index.md`, `/skill:design-system` for the GDDs).
 
 **A verdict of `NOT ASSESSED` is a success.** It is the correct, useful answer to
 "what does the data say?" when there is no data. The failure mode this prevents is
@@ -89,7 +89,7 @@ the two happened — a reader cannot tell from a green result.
    content this audit counts — not `formulas:`/`constants:`). Use those as the
    **planned** named-content set without full-reading the GDDs that own them.
    **If `design/registry/entities.yaml` does not exist or has no entries** (it
-   ships as an empty stub until `/design-system` populates it), skip this step
+   ships as an empty stub until `/skill:design-system` populates it), skip this step
    and rely on the GDD scan below — behaviour is unchanged, only more expensive.
 
 3. **L0 pre-scan**: Before full-reading any GDDs, run **two** greps — they
@@ -296,12 +296,12 @@ After writing the report, ask:
 > "Would you like to create backlog stories for any of the content gaps?"
 
 If yes: for each system the user selects, suggest a story title and point them
-to `/create-stories [epic-slug]` or `/quick-design` depending on the size of the gap.
+to `/skill:create-stories [epic-slug]` or `/skill:quick-design` depending on the size of the gap.
 
 ### --summary mode
 
 Print the Gap Table and Summary directly to conversation. Do not write a file.
-End with: "Run `/content-audit` without `--summary` to write the full report."
+End with: "Run `/skill:content-audit` without `--summary` to write the full report."
 
 ---
 
@@ -309,11 +309,11 @@ End with: "Run `/content-audit` without `--summary` to write the full report."
 
 After the audit, recommend the highest-value follow-up actions:
 
-- If any system is `NOT STARTED` and MVP-tagged → "Run `/design-system [name]` to
+- If any system is `NOT STARTED` and MVP-tagged → "Run `/skill:design-system [name]` to
   add missing content counts to the GDD before implementation begins."
-- If total gap is >50% → "Run `/sprint-plan` to allocate content work across upcoming sprints."
-- If any system is flagged HIGH PRIORITY → "Run `/create-stories [epic-slug]` for each HIGH PRIORITY gap."
-- If `--summary` was used → "Run `/content-audit` (no flag) to write the full report to `docs/`."
+- If total gap is >50% → "Run `/skill:sprint-plan` to allocate content work across upcoming sprints."
+- If any system is flagged HIGH PRIORITY → "Run `/skill:create-stories [epic-slug]` for each HIGH PRIORITY gap."
+- If `--summary` was used → "Run `/skill:content-audit` (no flag) to write the full report to `docs/`."
 
 Close with the verdict that matches the run:
 - Verdict: **COMPLETE** — content audit finished.
@@ -321,4 +321,4 @@ Close with the verdict that matches the run:
   the top), nothing in scope gives a count (no registry entry, and every GDD is
   "Unspecified" or "No auditable content counts"), or a Found count could not be taken
   (`NOT ASSESSED — code root unresolved`); name which, and for missing counts
-  name `/design-system`. Never print COMPLETE for a run that could not compute a gap.
+  name `/skill:design-system`. Never print COMPLETE for a run that could not compute a gap.

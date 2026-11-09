@@ -18,10 +18,10 @@ Resolved above — use as-is. No block → defaults in
 
 Validates UX design documents before they enter the implementation pipeline.
 Acts as the quality gate between UX Design and Visual Design/Implementation in
-the `/team-ui` pipeline.
+the `/skill:team-ui` pipeline.
 
 **Run this skill:**
-- After completing a UX spec with `/ux-design`
+- After completing a UX spec with `/skill:ux-design`
 - Before handing off to `ui-programmer` or `art-director`
 - Before the Pre-Production to Production gate check (which requires key screens
   to have reviewed UX specs)
@@ -46,7 +46,7 @@ when the accessibility tier is uncommitted (below).
 
 ## Phase 1: Parse Arguments
 
-- **Specific file path** (e.g., `/ux-review design/ux/inventory.md`): validate
+- **Specific file path** (e.g., `/skill:ux-review design/ux/inventory.md`): validate
   that one document
 - **`all`**: find all files in `design/ux/` and validate each
 - **`hud`**: validate `design/ux/hud.md` specifically
@@ -57,7 +57,7 @@ For `all`, output a summary table first (file | verdict | primary issue) then
 full detail for each.
 
 **Which checklist a file gets** (a file path, or each file under `all`): its
-`> **Template**:` header line, which `/ux-design` writes — `UX Spec` → Phase 3A,
+`> **Template**:` header line, which `/skill:ux-design` writes — `UX Spec` → Phase 3A,
 `HUD Design` → 3B, `Interaction Pattern Library` → 3C. A file without that line
 is classified by name — `hud.md` → 3B, `interaction-patterns.md` → 3C, anything
 else → 3A — and the report says which checklist it assumed, and why.
@@ -269,9 +269,9 @@ Run all checks against a `hud-design.md`-based document.
 > `Accessibility: NOT ASSESSED — no committed tier (design/accessibility-requirements.md absent)`
 > and do NOT report it as COMPLIANT — a gate compared against an absent standard
 > passes the way an assertion that can never fail passes. The same rule lives in
-> `/team-ui` Phase 4 and is mirrored here so the two cannot drift. If the spec's own
+> `/skill:team-ui` Phase 4 and is mirrored here so the two cannot drift. If the spec's own
 > header states a tier, carry it forward as an **assumption** and say plainly that
-> it was assumed rather than committed. Recommend `/ux-design accessibility` to
+> it was assumed rather than committed. Recommend `/skill:ux-design accessibility` to
 > establish the tier.
 
 ### Pattern Library: [CONSISTENT / INCONSISTENCIES FOUND / N/A]
@@ -295,19 +295,19 @@ Run all checks against a `hud-design.md`-based document.
 **Advisory issues**: [N] — recommended but not blocking
 **Dimensions not assessed**: [N] — [name each, and what would make it checkable]
 
-[For APPROVED]: This spec is ready for handoff to `/team-ui` Phase 2
+[For APPROVED]: This spec is ready for handoff to `/skill:team-ui` Phase 2
 (Visual Design).
 
 [For NOT ASSESSED]: [N] of the four review dimensions could not be evaluated:
 [name them]. The spec may well be sound — this review cannot say either way for
 those dimensions. [For each: the one input that would make it checkable.]
-Handoff to `/team-ui` is not recommended on this result.
+Handoff to `/skill:team-ui` is not recommended on this result.
 
 [For NEEDS REVISION]: Address the [N] blocking issues above, then re-run
-`/ux-review`.
+`/skill:ux-review`.
 
 [For MAJOR REVISION NEEDED]: The spec has fundamental gaps in [areas].
-Recommend returning to `/ux-design` to rework [sections].
+Recommend returning to `/skill:ux-design` to rework [sections].
 ```
 
 ---
@@ -317,15 +317,15 @@ Recommend returning to `/ux-design` to rework [sections].
 This skill is READ-ONLY — it never edits or writes files. It reports findings only.
 
 After delivering the verdict:
-- For **APPROVED**: suggest running `/team-ui` to begin implementation coordination
+- For **APPROVED**: suggest running `/skill:team-ui` to begin implementation coordination
 - For **NOT ASSESSED**: name the missing input per dimension and offer to help
-  produce it (`/ux-design accessibility` for an uncommitted tier, the GDD path
+  produce it (`/skill:ux-design accessibility` for an uncommitted tier, the GDD path
   for absent UI requirements). Do not re-run the review against the same missing
   inputs and report a different verdict — only new inputs change this one
 - For **NEEDS REVISION**: offer to help fix specific gaps ("Would you like me to
   help draft the missing error state?") — but do not auto-fix; wait for user
   instruction
-- For **MAJOR REVISION NEEDED**: suggest returning to `/ux-design` with the
+- For **MAJOR REVISION NEEDED**: suggest returning to `/skill:ux-design` with the
   specific sections to rework
 
 Never block the user from proceeding — the verdict is advisory. Document risks,

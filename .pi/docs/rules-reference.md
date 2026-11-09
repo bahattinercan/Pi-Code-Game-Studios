@@ -12,11 +12,11 @@ Three consequences, and none of them are optional reading:
    framework creates files rather than reads them, so this is the common case,
    not the corner case.
 2. **Context, not enforcement.** A loaded rule is guidance the model weighs, the
-   same as `CLAUDE.md`. Anything that must hold regardless of what the model
+   same as `AGENTS.md`. Anything that must hold regardless of what the model
    decides belongs in a hook — `.pi/hooks/` already enforces JSON validity
    and commit shape that way.
 3. **A rule with no `paths:` loads every session**, at the same priority as
-   `.pi/CLAUDE.md`. That is the lever for a rule that must always apply; it
+   `.pi/AGENTS.md`. That is the lever for a rule that must always apply; it
    costs context in every session, so it is a deliberate trade, not a default.
 
 Where a rule duplicates guidance an agent definition already carries, the two

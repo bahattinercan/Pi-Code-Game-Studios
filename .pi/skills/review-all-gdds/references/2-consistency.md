@@ -1,6 +1,6 @@
 # /skill:review-all-gdds — Phase 2: Cross-GDD Consistency
 
-> Part of `/review-all-gdds`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:review-all-gdds`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 2: Cross-GDD Consistency
@@ -57,7 +57,7 @@ Categories to scan:
 
 **Start from the `## Cross-References` table where a GDD has one.** That table is
 the document's own declaration of what it depends on — `templates/guidance/game-design-document-guide.md`
-tells authors it is machine-checked here, and `/design-system` requires it
+tells authors it is machine-checked here, and `/skill:design-system` requires it
 whenever Dependencies names another GDD. For each row, confirm the `Target GDD`
 exists and the `Specific Element Referenced` is still present in it under that
 name, with the declared `Nature` still accurate.

@@ -35,7 +35,7 @@ v[current]. How do you want to go on?" Options:
 - **Use the old rules — I accept the risk.** Set `Manifest Version` to the current
   date and add `Manifest-Note: Proceeded with old manifest rules on [date] —
   non-compliance risk accepted.` to the story header. Note it under Deviations;
-  `/story-done` carries the note into its deviations.
+  `/skill:story-done` carries the note into its deviations.
 - **Stop — I want to review the manifest first.** No agent runs.
 
 Each option names the story edit it makes, so choosing it is the ask.

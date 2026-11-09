@@ -10,7 +10,7 @@ sections `modes.workflow` and `workflow_overrides` are the source of
 truth for behavior. This document is the implementation pattern.
 
 > **Do not read `effects-map.md` during a skill run.** It is many times the
-> size of everything CLAUDE.md loads per session combined — and it is a
+> size of everything AGENTS.md loads per session combined — and it is a
 > reference for *authoring and changing the spec*, not a runtime input.
 > **This document is self-sufficient** for resolving
 > the tier and applying it: the resolution chain, the three tiers, the required
@@ -75,12 +75,12 @@ in `design/gdd/`, say so — naming the unmatched key and the stems available.
 Silently ignoring it would leave an override that does nothing, unnoticed.
 
 > **Checked where GDDs are expected to already exist — not by the skill that
-> writes them.** `/gate-check` is the single implementing site (see
+> writes them.** `/skill:gate-check` is the single implementing site (see
 > `.pi/skills/gate-check/SKILL.md` §"Per-system overrides"), and it runs at a
 > phase boundary, by which point every in-scope GDD should be on disk. An
 > unmatched key there is genuinely suspicious.
 >
-> `/design-system` **creates** `design/gdd/<system>.md`, so before its first run
+> `/skill:design-system` **creates** `design/gdd/<system>.md`, so before its first run
 > the override key matches no stem *by definition* — that is the healthy case,
 > not an error. It must not report the key as orphaned, and must not refuse to
 > apply the tier it names. The same holds for any other authoring skill running
@@ -130,7 +130,7 @@ the expansion.) Per-system overrides read via
 
 **Default**: `minimal` (the rationale block above `_yaml_helper_defaults` in
 `.pi/hooks/yaml-helper.sh` carries the reasoning and the ordering
-constraint). **Set by**: `/start` (via `modes.rigor`), `/settings`. **Locked to
+constraint). **Set by**: `/skill:start` (via `modes.rigor`), `/skill:settings`. **Locked to
 `project.yaml`** (not locally overridable — divergence would change which
 artifacts must exist on disk).
 
@@ -145,7 +145,7 @@ artifacts must exist on disk).
 > Everything else can be skipped.
 
 > **"Game brief" is a real artifact at `minimal`: `design/game-brief.md`.**
-> `/brainstorm` writes it from the one-page template
+> `/skill:brainstorm` writes it from the one-page template
 > (`.pi/docs/templates/game-brief.md`) when the effective tier is `minimal`,
 > in place of the full-length `design/gdd/game-concept.md` it writes at
 > `standard`/`full`. The two are distinct files for distinct tiers: any check,
@@ -162,7 +162,7 @@ Edge Cases, Dependencies, Tuning Knobs, Acceptance Criteria.
 
 > **Section-name alias.** "Detailed Rules" is the canonical name in the design
 > standard, but the GDD template (`.pi/docs/templates/game-design-document.md`)
-> and `/design-system` author this section under the heading `## Detailed Design`
+> and `/skill:design-system` author this section under the heading `## Detailed Design`
 > (with Core Rules / States / Interactions sub-headings). The two names denote the
 > **same required section** — any skill that detects or validates section presence
 > (`design-review`, `gate-check`, `adopt`, `project-stage-detect`) must accept
@@ -235,9 +235,9 @@ resolution chain above.
 
 Project has `modes.workflow: standard`, `workflow_overrides.system_overrides.combat: full`.
 
-- `/design-system combat` → effective tier **full** → requires all 8 sections
-- `/design-system inventory` → no override → effective tier **standard** → 5 sections + conditional Formulas
-- `/gate-check` (Systems Design → Technical Setup) → requires the combat GDD at 8 sections AND every other MVP GDD at 5 sections before passing
+- `/skill:design-system combat` → effective tier **full** → requires all 8 sections
+- `/skill:design-system inventory` → no override → effective tier **standard** → 5 sections + conditional Formulas
+- `/skill:gate-check` (Systems Design → Technical Setup) → requires the combat GDD at 8 sections AND every other MVP GDD at 5 sections before passing
 
 ---
 
@@ -257,7 +257,7 @@ Project has `modes.workflow: standard`, `workflow_overrides.system_overrides.com
 **Gate enforcement** — `gate-check` uses a different artifact checklist per
 stage per tier (the highest-visibility impact). Each gate's own checklist and
 tier reductions live in `.pi/skills/gate-check/references/gate-<phase>.md`,
-and `/gate-check` loads only the one gate it is running — that is the right
+and `/skill:gate-check` loads only the one gate it is running — that is the right
 place to look, not `effects-map.md`.
 
 **Planning/implementation** — adjust artifact prerequisites:
@@ -272,9 +272,9 @@ flagged as gaps: `project-stage-detect`, `adopt`, `reverse-document`,
 
 ## Workflow Change Mid-Project
 
-When `workflow` changes via `/settings`, emit an informational note:
+When `workflow` changes via `/skill:settings`, emit an informational note:
 
-> "Workflow changed from [old] to [new]. Run `/content-audit` to see what's now
+> "Workflow changed from [old] to [new]. Run `/skill:content-audit` to see what's now
 > required or extra. No automatic migration — existing files stay in place."
 
 No documents are auto-deleted, auto-generated, or blocked. The setting only
@@ -290,7 +290,7 @@ per-skill tables for spec authors, and is not worth loading to apply a knob.
 
 > **All four below are fronted by `modes.rigor`** (`docs.density`,
 > `modes.story_granularity`, `qa.level`, `team.size` — along with `workflow` itself,
-> and `modes.review_mode`, for six fronted knobs total). One question at `/start`
+> and `modes.review_mode`, for six fronted knobs total). One question at `/skill:start`
 > sets all of them; setting any explicitly overrides just that one and leaves its
 > siblings on the rigor level. `team.size` and `modes.review_mode` are the two that
 > also stay overridable from `project.local.yaml` (they are personal-experience

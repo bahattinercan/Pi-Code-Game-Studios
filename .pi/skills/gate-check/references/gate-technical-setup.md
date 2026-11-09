@@ -1,4 +1,4 @@
-> Gate definition, loaded by `/gate-check` for the TARGET PHASE ONLY.
+> Gate definition, loaded by `/skill:gate-check` for the TARGET PHASE ONLY.
 > Never load the other five — one gate applies per invocation.
 
 
@@ -7,13 +7,13 @@
 
 **Required Artifacts:**
 - [ ] Systems index exists at `design/gdd/systems-index.md` with at least MVP systems enumerated
-- [ ] All MVP-tier GDDs exist in `design/gdd/` and individually pass `/design-review`
-- [ ] A cross-GDD review report exists in `design/gdd/` (from `/review-all-gdds`)
+- [ ] All MVP-tier GDDs exist in `design/gdd/` and individually pass `/skill:design-review`
+- [ ] A cross-GDD review report exists in `design/gdd/` (from `/skill:review-all-gdds`)
 
 **Quality Checks:**
 - [ ] All MVP GDDs pass individual design review (8 required sections, no MAJOR REVISION NEEDED verdict)
-- [ ] `/review-all-gdds` verdict is not FAIL (cross-GDD consistency and design theory checks pass). A NOT ASSESSED verdict does not satisfy this: that review could not compare the GDDs, so this item is NOT ASSESSED for the gate. Nor does a focus-run report (its `Focus:` line names one pass only): the other pass never ran, so the item stays open until a review runs both
-- [ ] All cross-GDD consistency issues flagged by `/review-all-gdds` are resolved or explicitly accepted
+- [ ] `/skill:review-all-gdds` verdict is not FAIL (cross-GDD consistency and design theory checks pass). A NOT ASSESSED verdict does not satisfy this: that review could not compare the GDDs, so this item is NOT ASSESSED for the gate. Nor does a focus-run report (its `Focus:` line names one pass only): the other pass never ran, so the item stays open until a review runs both
+- [ ] All cross-GDD consistency issues flagged by `/skill:review-all-gdds` are resolved or explicitly accepted
 - [ ] System dependencies are mapped in the systems index and are bidirectionally consistent
 - [ ] MVP priority tier is defined
 - [ ] No stale GDD references flagged (older GDDs updated to reflect decisions made in later GDDs)

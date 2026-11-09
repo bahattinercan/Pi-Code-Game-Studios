@@ -4,7 +4,7 @@
 
 Agent: `qa-lead` | Model tier: session (inherit)
 
-**Trigger**: After implementation stories are complete — `/story-done` runs it for
+**Trigger**: After implementation stories are complete — `/skill:story-done` runs it for
 each story before marking it Complete
 
 **Context to pass**:

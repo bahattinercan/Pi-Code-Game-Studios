@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 6: Determine Knowledge Gap
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 6. Determine Knowledge Gap

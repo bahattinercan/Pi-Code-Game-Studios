@@ -41,7 +41,7 @@ Act on each story's verdict:
   will not revise it, drop it from this run and name it as dropped in the Phase 6
   list.
 - **NOT ASSESSED:** not an ADEQUATE. Name the missing input, then supply it and ask
-  again, or write the story without specs (the `/qa-plan` line) and mark it
+  again, or write the story without specs (the `/skill:qa-plan` line) and mark it
   `QL-STORY-READY: NOT ASSESSED — [input]` in the Phase 6 list.
 
 A story carries specs only once it is ADEQUATE: untestable criteria cannot be built

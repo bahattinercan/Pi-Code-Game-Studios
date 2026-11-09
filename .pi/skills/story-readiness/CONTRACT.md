@@ -3,7 +3,7 @@
 ## Role in Pipeline
 Validates that a story file contains everything a developer needs to begin
 implementation and produces a READY / NEEDS WORK / BLOCKED / NOT ASSESSED verdict — sits between
-`/create-stories` and `/dev-story`, acting as a blocking gate before any code is written.
+`/skill:create-stories` and `/skill:dev-story`, acting as a blocking gate before any code is written.
 
 ## Inputs Required
 
@@ -18,14 +18,14 @@ implementation and produces a READY / NEEDS WORK / BLOCKED / NOT ASSESSED verdic
 
 > **Tier.** The manifest, TR registry and ADR rows are
 > `standard`/`full` inputs. At `workflow: minimal` the skill is not on the path
-> (`/dev-story` follows `/create-stories` directly); run anyway, it checks
+> (`/skill:dev-story` follows `/skill:create-stories` directly); run anyway, it checks
 > acceptance criteria and scope only and treats Architecture Completeness as N/A
 > except the referenced-ADR rule: an ADR the story references that is missing,
 > `Proposed`, `Deprecated` or `Superseded` BLOCKS at every tier (SKILL.md, the tier note above Design
 > Completeness).
 
 ### Preconditions
-- The story file being validated was produced by `/create-stories` (or follows the same format)
+- The story file being validated was produced by `/skill:create-stories` (or follows the same format)
 - For `sprint` scope: `production/sprint-status.yaml` exists and lists story paths in its `file:` entries
 - For `all` scope: `production/epics/` directory exists and contains story files
 
@@ -58,9 +58,9 @@ None. This skill is strictly read-only and produces no file modifications under 
 **Next skill:** /skill:dev-story
 
 It will rely on this skill's verdict as follows:
-- If verdict is READY: `/dev-story` proceeds with implementation using the story file as its source of truth
-- If verdict is NEEDS WORK, BLOCKED or NOT ASSESSED: `/dev-story` must not be run until the story is corrected (or, for NOT ASSESSED, made readable) and re-validated — a story nobody could evaluate has not been shown ready
-- `/dev-story` reads the same story fields this skill validates — a READY verdict is an implicit guarantee that those fields are present, parseable, and internally consistent:
+- If verdict is READY: `/skill:dev-story` proceeds with implementation using the story file as its source of truth
+- If verdict is NEEDS WORK, BLOCKED or NOT ASSESSED: `/skill:dev-story` must not be run until the story is corrected (or, for NOT ASSESSED, made readable) and re-validated — a story nobody could evaluate has not been shown ready
+- `/skill:dev-story` reads the same story fields this skill validates — a READY verdict is an implicit guarantee that those fields are present, parseable, and internally consistent:
   - `Type:` field is set to a valid story type
   - `## Acceptance Criteria` contains specific, testable checkbox items, at least the minimum for the story's type at the project's `story_granularity` (coarse 3/2/1, balanced 2/2/1, fine 1)
   - `## Test Evidence` specifies a concrete evidence path
@@ -68,7 +68,7 @@ It will rely on this skill's verdict as follows:
   - `Manifest Version:` matches the current control manifest
   - `TR-ID` in `## Context` is present and resolves in `docs/architecture/tr-registry.yaml` (when the registry exists)
   - `## Dependencies` section is present (may say "None")
-  - `## Out of Scope` section is present (checked for existence; `/dev-story` uses it to enforce implementation boundaries)
+  - `## Out of Scope` section is present (checked for existence; `/skill:dev-story` uses it to enforce implementation boundaries)
 
 ## Known Fragile Points
 - If `control-manifest.md` is regenerated with a new `Manifest Version:` date, every story that embeds the old date will fail the manifest version check — a bulk update of all story `Manifest Version:` fields is required before stories can pass readiness again

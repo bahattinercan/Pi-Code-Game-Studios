@@ -1,6 +1,6 @@
 # /skill:gate-check — Sections 4 and 4b: Assessment and Director Panel
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 4. Collaborative Assessment
@@ -16,11 +16,11 @@ For items that can't be automatically verified, **ask the user**:
 
 - "I can't automatically verify that the core loop plays well. Has it been playtested?"
 - "No playtest report found. Has informal testing been done?"
-- "Performance profiling data isn't available. Would you like to run `/perf-profile`?"
+- "Performance profiling data isn't available. Would you like to run `/skill:perf-profile`?"
 
 **Never assume PASS for unverifiable items.** Mark them as MANUAL CHECK NEEDED.
 An answer resolves the item: "no" or "not yet" is a checked, failed item
-(CONCERNS or FAIL, naming the skill that closes it — `/design-review [doc]` for
+(CONCERNS or FAIL, naming the skill that closes it — `/skill:design-review [doc]` for
 an unreviewed concept or GDD) — except a play question at the Production gate
 (a human has played the Vertical Slice; at `minimal`, the core loop is fun on
 the current build), where "not yet" means nobody has played it: NOT ASSESSED
@@ -28,7 +28,7 @@ the current build), where "not yet" means nobody has played it: NOT ASSESSED
 MANUAL CHECK NEEDED, which Section 5 turns into NOT ASSESSED.
 
 This applies to questions about the project's state. Declining an offer to
-produce missing data (e.g. `/perf-profile`) leaves the item NOT ASSESSED; at
+produce missing data (e.g. `/skill:perf-profile`) leaves the item NOT ASSESSED; at
 `performance.enforce: off` it stays out of the verdict.
 
 ---
@@ -100,7 +100,7 @@ Pass each context item as one of three things, so no director has to guess:
 - **Present** — its path or value (`0` blocked stories is a value).
 - **"none"** — the target gate (or an earlier one) requires or recommends it at
   this tier and it does not exist (no architecture document at
-  `/gate-check pre-production`). For the director that is a fact about the
+  `/skill:gate-check pre-production`). For the director that is a fact about the
   project to judge, not a missing input.
 - **"not expected before [phase]"** — the target gate does not ask for it yet;
   name the phase whose gate first does (the architecture document and ADRs

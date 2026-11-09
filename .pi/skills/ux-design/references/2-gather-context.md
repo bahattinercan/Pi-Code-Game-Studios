@@ -1,6 +1,6 @@
 # /skill:ux-design — Sections 2 and 2b: Gather Context and Retrofit Detection
 
-> Part of `/ux-design`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:ux-design`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 2. Gather Context (Read Phase)
@@ -26,7 +26,7 @@ ranges with offset and limit.
 
 - **Game concept**: Read `design/gdd/game-concept.md` — or `design/game-brief.md`,
   the one-page brief that replaces it at `rigor: minimal` — if neither exists, warn:
-  > "No game concept found. Run `/brainstorm` first to establish the game's
+  > "No game concept found. Run `/skill:brainstorm` first to establish the game's
   > foundation before designing UX."
   > Continue anyway if the user asks.
 
@@ -46,7 +46,7 @@ If the player journey file does not exist, note the gap and proceed:
 Also add to the UX spec's Open Questions section:
 > "Player journey map not yet created. Author it from the template at `.pi/docs/templates/player-journey.md` to establish player context for this screen."
 
-> **Do not tell the user to "run `/ux-design` Phase 2b" to create it.** Phase 2b
+> **Do not tell the user to "run `/skill:ux-design` Phase 2b" to create it.** Phase 2b
 > is this step — the one that *reads* the file. That remediation is circular: it
 > sends the user back to the check that just reported the gap. No skill
 > writes `design/player-journey.md`; it is hand-authored from its template.
@@ -122,7 +122,7 @@ If neither source is configured, ask once:
 > "Input methods aren't configured yet. What does this game target?"
 > Options: "Keyboard/Mouse only", "Gamepad only", "Both (PC + Console)", "Touch (mobile)", "All of the above"
 >
-> (Run `/setup-engine` to save this permanently so you won't be asked again.)
+> (Run `/skill:setup-engine` to save this permanently so you won't be asked again.)
 
 Store the answer for the rest of this session. Do **not** ask again per section
 or per screen.

@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 1: Detect Test Setup
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 1: Detect Test Setup
@@ -27,7 +27,7 @@ Before running anything, understand the environment:
    `Source/*/Private/Tests/`) and `tests/smoke/` for actual test files. A
    **test file** is one the engine's test runner executes — a `*_test.gd` suite,
    a C# test class, an Unreal automation test source. Markdown checklists do not
-   count: `/test-setup` always writes `tests/smoke/critical-paths.md`, and
+   count: `/skill:test-setup` always writes `tests/smoke/critical-paths.md`, and
    counting it would hide exactly the zero-test state this step exists to catch.
    If none are found **at `qa.level: minimal`**, tests are waived at this level:
    record the automated row as `WAIVED — qa.level: minimal, no game tests`, skip
@@ -39,7 +39,7 @@ Before running anything, understand the environment:
    verdict NOT ASSESSED.
    If none are found **at `standard` or `full`**, **deliver a NOT ASSESSED verdict — do not merely stop.**
    "Smoke check: **NOT ASSESSED — no game tests found** under
-   [the test root] or `tests/smoke/`. Run `/test-setup` to scaffold the testing
+   [the test root] or `tests/smoke/`. Run `/skill:test-setup` to scaffold the testing
    infrastructure, or point me at where tests live." Then stop.
 
    > A bare halt is the wrong shape here.
@@ -50,7 +50,7 @@ Before running anything, understand the environment:
    > improvement either — the honest result is the one that names what could not
    > be established.
 
-   > **Do not gate on `tests/` existing.** `/test-setup` creates `tests/unit/`
+   > **Do not gate on `tests/` existing.** `/skill:test-setup` creates `tests/unit/`
    > and `tests/integration/` with placeholder files, so the directory tree is
    > present on any project that ran setup — whether or not a single game test
    > was ever written. Count actual test files instead; gated on the directory,
@@ -86,7 +86,7 @@ Before running anything, understand the environment:
 5. **QA plan check**: glob `production/qa/qa-plan-*.md` and take the most
    recently modified file. If found, note the path — it will be used in
    Phase 3 and Phase 4. If not found, note: "No QA plan found. Run
-   `/qa-plan sprint` before smoke-checking for best results." (At `workflow: minimal`,
+   `/skill:qa-plan sprint` before smoke-checking for best results." (At `workflow: minimal`,
    which has no sprints, a QA plan is optional — say so rather than recommend one.)
 
 Report findings before proceeding: "Environment: [engine]. Editor: [the

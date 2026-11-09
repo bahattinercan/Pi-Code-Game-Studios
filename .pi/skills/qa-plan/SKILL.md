@@ -73,11 +73,11 @@ for one missing file.
 > **If the resolved scope contains ZERO stories, stop — do not build a plan.**
 > Report `NOT ASSESSED — no stories in scope`, naming which scope was searched
 > and which path was empty, and route:
-> - no file in `production/sprints/` → "No sprint plan found. Run `/sprint-plan new`."
+> - no file in `production/sprints/` → "No sprint plan found. Run `/skill:sprint-plan new`."
 >   At `workflow: minimal` there are no sprints by design — route instead to
->   `/qa-plan feature: [epic-slug]` or `/qa-plan story: [path]`.
+>   `/skill:qa-plan feature: [epic-slug]` or `/skill:qa-plan story: [path]`.
 > - a sprint plan exists but references no stories → "Sprint plan `[path]` lists no
->   stories. Run `/create-stories [epic-slug]`."
+>   stories. Run `/skill:create-stories [epic-slug]`."
 > - `feature:`/`story:` scope matched nothing → name the glob that came back empty.
 >
 > **The N=0 guard is mandatory.** Without it an empty scope reports "Building QA
@@ -251,7 +251,7 @@ Critical paths to verify before any QA hand-off for this sprint:
 5. Save / load cycle completes without data loss (if save system exists)
 6. Performance is within budget on target hardware (no new frame spikes)
 
-*Smoke tests are verified by the developer via `/smoke-check`. Reference this
+*Smoke tests are verified by the developer via `/skill:smoke-check`. Reference this
 list when running that skill.*
 
 ---
@@ -262,7 +262,7 @@ list when running that skill.*
 |-------|--------------|--------------|-------------------|
 | [story] | [What question must the session answer?] | [N] | [new player / experienced] |
 
-**Sign-off requirement**: Playtest notes must be written with `/playtest-report` to
+**Sign-off requirement**: Playtest notes must be written with `/skill:playtest-report` to
 `production/qa/playtests/` (naming the story) and reviewed by
 the [designer / qa-lead] before the story can be marked COMPLETE.
 
@@ -282,10 +282,10 @@ sign-off rows stay at every level, because the look is not):
 - [ ] Test file exists at the specified path for all Logic and Integration stories *(qa.level standard/full)*
 - [ ] Retained screenshot of each screen touched, in `production/qa/evidence/`, for all Visual/Feel and UI stories *(every qa.level)*
 - [ ] Signed-off evidence doc at `production/qa/evidence/[story-slug]-evidence.md` for all Visual/Feel stories *(every qa.level)*
-- [ ] Smoke check passes (run `/smoke-check sprint` before QA hand-off) *(qa.level standard/full)*
+- [ ] Smoke check passes (run `/skill:smoke-check sprint` before QA hand-off) *(qa.level standard/full)*
 - [ ] No regressions introduced
-- [ ] Code reviewed (via `/code-review` or documented peer review)
-- [ ] Story file updated to `Status: Complete` (via `/story-done`)
+- [ ] Code reviewed (via `/skill:code-review` or documented peer review)
+- [ ] Story file updated to `Status: Complete` (via `/skill:story-done`)
 ````
 
 When generating content, use the actual story titles, GDD formula text, and
@@ -317,9 +317,9 @@ After writing:
 
 Next steps:
 - Share this plan with the team before sprint implementation begins
-- Once all sprint stories are implemented, run `/smoke-check sprint` to gate QA hand-off — not yet, only after implementation is complete
+- Once all sprint stories are implemented, run `/skill:smoke-check sprint` to gate QA hand-off — not yet, only after implementation is complete
 - For Logic/Integration stories, create the test files at the listed paths
-  before marking stories done — `/story-done` checks for them"
+  before marking stories done — `/skill:story-done` checks for them"
 
 Silently append to `production/session-state/active.md` (create the file if it does not exist):
 

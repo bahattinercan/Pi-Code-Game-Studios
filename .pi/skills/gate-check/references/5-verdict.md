@@ -1,6 +1,6 @@
 # /skill:gate-check — Sections 5 and 5a: Verdict and Chain-of-Verification
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 5. Output the Verdict
@@ -27,7 +27,7 @@
 - [?] Core loop playtested — MANUAL CHECK NEEDED
 
 ### Blockers
-1. **No Architecture Decision Records** — Run `/architecture-decision` to create one
+1. **No Architecture Decision Records** — Run `/skill:architecture-decision` to create one
    covering core system architecture before entering production.
 2. **3 test failures** — Fix failing tests in tests/unit/ before advancing.
 
@@ -69,11 +69,11 @@ Emit it when any of:
   is the case that most looks like present.
 - A **quality check's input carries no measured data**. Section 3 compares the
   performance budgets against "profiling data in `tests/performance/` or recent
-  `/perf-profile` output" — and `/perf-profile`'s report template pre-fills
+  `/skill:perf-profile` output" — and `/skill:perf-profile`'s report template pre-fills
   `[16.67ms]` as the budget, so it can render ">99% headroom" from zero profiler
   data. Placeholder numbers are not measurements: a budget nobody set is not a
   budget that was met. Absent data already prompts (Section 4 offers to run
-  `/perf-profile`); this covers data that is *present and hollow*, which is the
+  `/skill:perf-profile`); this covers data that is *present and hollow*, which is the
   case that looks like a measurement.
 - A **test check the tier requires could not be executed** — no test runner is
   configured, or the runner is configured but failed to start. Section 3 runs the
@@ -83,7 +83,7 @@ Emit it when any of:
   `.integration` both default to `true`, so the project's own configuration
   called those gates BLOCKING. A blocking gate that never ran is the unknown this
   verdict exists to name. Remediation is already listed under Section 8's follow-up actions
-  (`/test-setup`); this is what the verdict does with it.
+  (`/skill:test-setup`); this is what the verdict does with it.
 
   > **Scope this to tiers that require tests.** At `qa.level: minimal` no test
   > gates apply at all (see the config block above), so a missing runner there is

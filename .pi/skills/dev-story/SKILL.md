@@ -27,7 +27,7 @@ and `## Files`, and its `production/sprint-status.yaml` entry. The programmer ag
 write the code and tests under the code root and test root
 (`.pi/docs/code-root-resolution.md`). The session checkpoint and the evidence
 stamp are written without an ask.
-**Next:** `/story-done [story-path]`; at `standard` and `full`, `/code-review
+**Next:** `/skill:story-done [story-path]`; at `standard` and `full`, `/skill:code-review
 [files]` first.
 
 Asks follow `.pi/docs/automation-modes.md` (collaborative always asks, guided
@@ -53,7 +53,7 @@ story the checkpoint in `production/session-state/active.md` names and confirm i
 "Continuing work on [title] — is that correct?" None there: ask "Which story are we
 implementing?" with the `TODO` rows of `bash .pi/scripts/story-facts.sh --all`
 as options. No story file under `production/epics/` at all: stop with
-"No stories found in `production/epics/` — run `/create-stories [epic-slug]` to make them (at `standard` and `full`, run `/create-epics` first if there is no epic yet)."
+"No stories found in `production/epics/` — run `/skill:create-stories [epic-slug]` to make them (at `standard` and `full`, run `/skill:create-epics` first if there is no epic yet)."
 
 `bash .pi/scripts/story-facts.sh <story-path>` gives its type, layer, TR-IDs,
 ADRs and dependencies. Then read the story in full.
@@ -68,7 +68,7 @@ project value. Say it in your first reply: `Tier: workflow [value]`. That value,
 
 | Input | `full` | `standard` | `minimal` |
 |---|---|---|---|
-| TR registry `docs/architecture/tr-registry.yaml` | missing: **stop**, "Run `/architecture-review` to bootstrap it" | optional | not expected |
+| TR registry `docs/architecture/tr-registry.yaml` | missing: **stop**, "Run `/skill:architecture-review` to bootstrap it" | optional | not expected |
 | The ADR the story names | missing, `Proposed`, `Deprecated` or `Superseded`: **stop** | the same, only when the story names one | the same, only when the story names one |
 | Control manifest `docs/architecture/control-manifest.md` | missing: warn, go on | missing: warn, go on | not expected |
 
@@ -76,10 +76,10 @@ A story whose ADR field reads `N/A — [reason]` names none.
 
 **The ADR.** `bash .pi/scripts/adr-status.sh <ADR id>` gives its status and
 `version`. Stop messages: `Proposed` — "ADR-NNNN is still Proposed. Accept it with
-`/architecture-decision accept ADR-NNNN` before implementing." `Deprecated` or
+`/skill:architecture-decision accept ADR-NNNN` before implementing." `Deprecated` or
 `Superseded` — "ADR-NNNN is [status]; point the story at [successor] (edit its ADR
-field; `/create-stories` never rewrites an existing story) before implementing."
-`NOT_FOUND` — "ADR file not found. Run `/architecture-decision`, or correct the
+field; `/skill:create-stories` never rewrites an existing story) before implementing."
+`NOT_FOUND` — "ADR file not found. Run `/skill:architecture-decision`, or correct the
 story's ADR field."
 
 **Do not open the ADR.** The story's ADR Decision Summary and Implementation Notes
@@ -93,7 +93,7 @@ are what the programmer reads instead. Compare the ADR's `version` with the stor
   `references/version-mismatch.md`. On a match, do not load it.
 
 Never treat an absent stamp as a stale one: unknown falls back to the story, and
-`/story-readiness` and `/code-review` are the checks that catch drift later.
+`/skill:story-readiness` and `/skill:code-review` are the checks that catch drift later.
 
 **The manifest.** When it exists, compare its `Manifest Version` line with the
 story's. They differ: read `references/version-mismatch.md`.
@@ -174,7 +174,7 @@ paste whole documents into it.
     needs at least one test function." Naming per engine from
     `.pi/rules/test-standards.md`. No random seeds, no time-dependent
     assertions, no external I/O.
-  - `full`: the same, and "every criterion must be covered: `/story-done` blocks on
+  - `full`: the same, and "every criterion must be covered: `/skill:story-done` blocks on
     any untested one."
 - **Output:** the files created or changed, the test functions written, any
   question or blocker, and whether it finished.
@@ -210,12 +210,12 @@ names that is not on disk is a failed step, however fluent the report: resume th
 file. A report of BLOCKED, an error, or "cannot complete": say so at once, go no
 further past what it blocks, and give a partial report
 (`.pi/docs/error-recovery-protocol.md`). Scope too large: split it with
-`/create-stories`. The ADR and the story disagree: report the conflict; never guess.
+`/skill:create-stories`. The ADR and the story disagree: report the conflict; never guess.
 
 **Is the test there?** At `qa.level: standard` and `full`, for a Logic or Integration
 story, look for the file at the Test Evidence path. Missing: at the type's BLOCKING
 level on the `gate_level` line, flag "story unverifiable — test required before
-`/story-done`"; at ADVISORY, note it as a recommendation. At `minimal` there is
+`/skill:story-done`"; at ADVISORY, note it as a recommendation. At `minimal` there is
 nothing to check: tests are waived.
 
 **Does it parse?** Run the check whose exit code answers it, and report the
@@ -240,16 +240,16 @@ without `.md`; `mkdir -p` the folder first), stamp it with
 `bash .pi/scripts/review-receipts.sh hash <each changed file> > production/qa/evidence/[story-slug]/stamp.txt`,
 then open the image and compare it with the criteria. Not waived at `qa.level:
 minimal`. Report exactly one line, plain text starting `Run result:` (no bold:
-`/story-done` reads it as written):
+`/skill:story-done` reads it as written):
 
 - `Run result: OBSERVED — <what was on screen>` with the retained path;
 - `Run result: NOT VERIFIED — <reason>` (no engine, nothing captured); at the
-  default gate level this blocks a Visual/Feel or UI story at `/story-done`;
+  default gate level this blocks a Visual/Feel or UI story at `/skill:story-done`;
 - `Run result: N/A — <reason>` for a story with nothing observable; the reason says
-  why nothing is (`/story-done` does not accept "it's a Logic story").
+  why nothing is (`/skill:story-done` does not accept "it's a Logic story").
 
 Only the feel half of a Visual/Feel criterion (timing, weight) is DEFERRED to
-`/team-qa`: a still cannot show it.
+`/skill:team-qa`: a still cannot show it.
 
 This skill pre-approves `godot` on PATH. An engine run through `engine.path` or
 the executable `commands.test` names asks first: the user approves it once, or
@@ -275,10 +275,10 @@ adds `Bash(<that executable> *)` to `.pi/settings.local.json`.
 ```
 
 At `qa.level: standard` and `full`, add: "Run your test suite and confirm the new
-tests pass before `/story-done`: it checks that the test file exists, and runs
+tests pass before `/skill:story-done`: it checks that the test file exists, and runs
 nothing." At `minimal` leave that out: there are no tests to run. For a Visual/Feel
 or UI story with no retained image, add: "A retained screenshot under
-`production/qa/evidence/[story-slug]/` is required before `/story-done`" (and, for
+`production/qa/evidence/[story-slug]/` is required before `/skill:story-done`" (and, for
 Visual/Feel, the sign-off in `production/qa/evidence/[story-slug]-evidence.md`).
 
 **`## Files`.** Replace the section's body with the list of changed code and test
@@ -304,9 +304,9 @@ this when the Phase 3 ask was declined.
 
 **The run's last reply ends with this block**, the only place the `Run result:` line
 is printed: print it nowhere else in the reply. The Next step goes by the tier you stated in Phase 1 (the `workflow` line,
-never `rigor` or `qa.level`). The Next step: at `minimal`, `/story-done [path]`. At `standard` and `full`,
-`/code-review [files]`, then `/story-done [path]`. INCOMPLETE: `/dev-story [path]`
-to resume. BLOCKED: the action that unblocks it (`/architecture-decision accept
+never `rigor` or `qa.level`). The Next step: at `minimal`, `/skill:story-done [path]`. At `standard` and `full`,
+`/skill:code-review [files]`, then `/skill:story-done [path]`. INCOMPLETE: `/skill:dev-story [path]`
+to resume. BLOCKED: the action that unblocks it (`/skill:architecture-decision accept
 ADR-NNNN`, the dependency to finish, the diff to review).
 
 ```

@@ -1,6 +1,6 @@
 # /skill:architecture-decision — Step 1: Load Engine Context
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 1. Load Engine Context (ALWAYS FIRST)
@@ -43,6 +43,6 @@ Before doing anything else, establish the engine environment:
    ```
 
    If no engine has been configured yet, prompt: "No engine is configured.
-   Run `/setup-engine` first, or tell me which engine you are using."
+   Run `/skill:setup-engine` first, or tell me which engine you are using."
 
 ---

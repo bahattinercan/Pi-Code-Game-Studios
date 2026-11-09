@@ -4,11 +4,11 @@
 
 Agent: `qa-lead` | Model tier: session (inherit)
 
-**Trigger**: Before a story is accepted into a sprint — invoked by `/create-stories`
-and `/story-readiness`
+**Trigger**: Before a story is accepted into a sprint — invoked by `/skill:create-stories`
+and `/skill:story-readiness`
 
 **Context to pass**:
-- Story file path — or, from `/create-stories` (which runs this gate before any
+- Story file path — or, from `/skill:create-stories` (which runs this gate before any
   story is written), the story inline
 - Story type (Logic / Integration / Visual/Feel / UI / Config/Data)
 - Acceptance criteria list (verbatim from the story)

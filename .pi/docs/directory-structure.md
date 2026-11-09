@@ -2,9 +2,11 @@
 
 ```text
 /
-├── CLAUDE.md                    # Master configuration
+├── AGENTS.md                    # Master configuration (Pi reads it as a context file)
+├── PORTING.md                   # What the Pi port changed, and what is still pending
 ├── project.yaml                 # Machine-readable project config — engine, modes, stage (source of truth)
-├── .pi/                     # Agent definitions, skills, hooks, rules, docs
+├── .pi/                         # Skills, agents, rules, hooks, docs, scripts
+│   └── APPEND_SYSTEM.md         # Generated — the constraints that used to be @imports
 ├── <code root>/                 # Game source code — THE PATH IS ENGINE-SPECIFIC, see below
 ├── assets/                      # Game assets (art, audio, vfx, shaders, data)
 ├── design/                      # Game design documents (gdd, narrative, levels, balance)

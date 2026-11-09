@@ -1,6 +1,6 @@
 # /skill:architecture-decision — Step 5: Generate the ADR
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 5. Generate the ADR
@@ -89,7 +89,7 @@ to implement it.]
 
 ### Implementation Guidelines
 [Specific guidance for the programmer implementing this decision — the rules a
-`/create-control-manifest` or `/dev-story` run should follow. State mandates as
+`/skill:create-control-manifest` or `/skill:dev-story` run should follow. State mandates as
 "must / must never" so they extract cleanly.]
 
 ## Alternatives Considered

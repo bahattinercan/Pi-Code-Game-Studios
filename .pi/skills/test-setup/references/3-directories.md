@@ -1,6 +1,6 @@
 # /skill:test-setup — Phase 3: Create Directory Structure
 
-> Part of `/test-setup`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:test-setup`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 3: Create Directory Structure
@@ -59,7 +59,7 @@ Names follow the engine's language (`.pi/rules/test-standards.md`):
 - **Unreal**: class `F[System][Scenario]Test`, test name `<Project>.[System].[Scenario]`
   — `FCombatBaseAttackTest` → `<Project>.Combat.BaseAttack`
   [`<Project>` is the root the filter in `commands.test` uses — write it out:
-  the project name, or the distinct root `/setup-engine` chose]
+  the project name, or the distinct root `/skill:setup-engine` chose]
 
 ## Story Type → Test Evidence
 
@@ -78,14 +78,14 @@ A failed test suite blocks merging.
 ````
 
 The README and this skill's completion summary name the same evidence path —
-`production/qa/evidence/` is where `/smoke-check`, `/test-evidence-review`,
-`/qa-plan` and the evidence table in `.pi/docs/coding-standards.md` read,
+`production/qa/evidence/` is where `/skill:smoke-check`, `/skill:test-evidence-review`,
+`/skill:qa-plan` and the evidence table in `.pi/docs/coding-standards.md` read,
 so a `tests/evidence/` would be a directory nothing reads.
 
 ### `production/qa/evidence/.gitkeep`
 
 Create it empty. Git does not keep an empty directory, and this is where
-`/story-done`, `/smoke-check` and `/test-evidence-review` look for screenshots and
+`/skill:story-done`, `/skill:smoke-check` and `/skill:test-evidence-review` look for screenshots and
 sign-off records — the completion summary lists it, so it must exist.
 
 ### Engine-specific files
@@ -93,7 +93,7 @@ sign-off records — the completion summary lists it, so it must exist.
 #### Godot 4 (`Engine: Godot`)
 
 **Do not write a runner script.** gdUnit4 ships its own command-line runner,
-`res://addons/gdUnit4/bin/GdUnitCmdTool.gd`. The command CI, `/smoke-check`
+`res://addons/gdUnit4/bin/GdUnitCmdTool.gd`. The command CI, `/skill:smoke-check`
 and `commands.test` use is:
 
 ```bash
@@ -200,7 +200,7 @@ found — report it as not assessed, never as a pass. Do not add `-quit`;
 `-runTests` exits by itself. Play Mode is the second line: a separate run with
 its own results file, read the same way, and deleted before each run the same
 way. An Edit Mode run never runs the tests in `Assets/Tests/PlayMode/`, so
-`/smoke-check` runs both whenever that folder holds tests.
+`/skill:smoke-check` runs both whenever that folder holds tests.
 
 #### Unreal Engine (`Engine: Unreal` or `Engine: UE5`)
 
@@ -212,7 +212,7 @@ run reports `No automation tests matched`.
 
 Create `Source/<Module>/Private/Tests/README.md`. `<Project>.` in it — and
 `[ProjectName].` in the CI filter below — is the test root the filter in
-`commands.test` uses: the project name, or the distinct root `/setup-engine`
+`commands.test` uses: the project name, or the distinct root `/skill:setup-engine`
 chose when the project's name is also an engine area. Write that root:
 ```markdown
 # Unreal Automation Tests

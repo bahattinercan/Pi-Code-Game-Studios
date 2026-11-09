@@ -39,7 +39,7 @@ Task:
 **Next step:** [one line — the very next action, concrete enough to resume cold]
 **Blocked on:** [one line, or `nothing`]
 **Files in progress:** [paths, comma-separated, or `none`]
-**Run result:** [`/dev-story` writes its `Run result:` line here, verbatim, for `/story-done` to read; other writers leave this line out]
+**Run result:** [`/skill:dev-story` writes its `Run result:` line here, verbatim, for `/skill:story-done` to read; other writers leave this line out]
 **Open questions:** [one line each, or `none`]
 <!-- /CHECKPOINT -->
 

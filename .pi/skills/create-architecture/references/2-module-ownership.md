@@ -1,6 +1,6 @@
 # /skill:create-architecture — Phase 2: Module Ownership Map
 
-> Part of `/create-architecture`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:create-architecture`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 2: Module Ownership Map

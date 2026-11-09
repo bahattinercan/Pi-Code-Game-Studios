@@ -1,6 +1,6 @@
 # /skill:prototype — Spike Mode
 
-> Part of `/prototype`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:prototype`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 **Triggered by:** `--spike` flag OR "Mid-production spike" entry choice in Phase 1.

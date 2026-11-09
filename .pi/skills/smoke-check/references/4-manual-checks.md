@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 4: Run Manual Smoke Checks
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 4: Run Manual Smoke Checks
@@ -24,7 +24,7 @@ Draw the smoke test checklist from, in priority order (and name the one you used
 no QA plan scope, no `production/qa/smoke-tests.md`, no `tests/smoke/`."* The
 fallback is a real fallback, so nothing is silently skipped here, but without
 that line a report drawn from the generic list reads the same as one drawn from
-this project's own smoke definitions. `/gate-check` validates a smoke report's
+this project's own smoke definitions. `/skill:gate-check` validates a smoke report's
 claims against the repo, and it cannot weigh them without knowing what the
 checklist was drawn from.
 

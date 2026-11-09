@@ -93,7 +93,7 @@ If no argument is provided, ask the user for a bug description before proceeding
 [Any additional context or observations]
 ```
 
-The **Severity** and **Priority** labels use `/bug-triage`'s S and P numbers and
+The **Severity** and **Priority** labels use `/skill:bug-triage`'s S and P numbers and
 names, which it parses out of this file. `P4-Won't fix` is its `P4 — Won't fix /
 Deferred` (an accepted risk), not a wishlist. If you change either ladder, change
 `.pi/skills/bug-triage/SKILL.md` too.
@@ -136,17 +136,17 @@ Produce a verification verdict:
 
 - **VERIFIED FIXED** — the bug is gone by every check that applies: any related test ran and passed, and, where step 4 asked, the user answered `[No longer occurs]` for a named build. With no test run, that play alone is the verification — a manual one, recorded as such: `[user], manual, build [X]`. A changed code path on its own is never a pass
 - **STILL PRESENT** — a related test fails on the bug's case, or the user answered `[Still occurs]`; the fix did not resolve the issue
-- **CANNOT VERIFY** — step 4 was answered `[Not played yet]`: name what is missing or could not run (no related test, `commands.test` unset, a run that did not complete, a Visual or UI bug), and say that playing the reproduction steps settles it — run `/bug-report verify [BUG-ID]` again once played
+- **CANNOT VERIFY** — step 4 was answered `[Not played yet]`: name what is missing or could not run (no related test, `commands.test` unset, a run that did not complete, a Visual or UI bug), and say that playing the reproduction steps settles it — run `/skill:bug-report verify [BUG-ID]` again once played
 
 Ask: "May I update `production/qa/bugs/[bug file]` to set Status: Verified Fixed / Still Present / Cannot Verify?" — naming the file found above, whatever its padding or slug. With the Status, write a `**Verified by**:` line under it: `[test file(s)] — ran and passed`, or `[user], manual, build [X]` for a manual verification.
 
-If STILL PRESENT: reopen the bug, set Status back to Open, and suggest re-running `/hotfix [BUG-ID]`.
+If STILL PRESENT: reopen the bug, set Status back to Open, and suggest re-running `/skill:hotfix [BUG-ID]`.
 
 ---
 
 ## Phase 2D: Close Mode
 
-Read the bug file, found by its number as in verify mode. Confirm Status is `Verified Fixed` before closing. If status is anything else, stop: "Bug [ID] must be Verified Fixed before it can be closed. Run `/bug-report verify [BUG-ID]` first."
+Read the bug file, found by its number as in verify mode. Confirm Status is `Verified Fixed` before closing. If status is anything else, stop: "Bug [ID] must be Verified Fixed before it can be closed. Run `/skill:bug-report verify [BUG-ID]` first."
 
 Show the closure record below and the Status change, then ask: "May I update `production/qa/bugs/[bug file]` to mark it Closed?" Nothing is written before a yes; on no, stop — the bug stays Verified Fixed.
 
@@ -165,7 +165,7 @@ On yes, append the closure record to the bug file:
 
 Then update the top-level `**Status**:` field to `**Status**: Closed`.
 
-After closing, check `production/qa/bug-triage-*.md` — if the bug appears in an open triage report, note: "Bug [ID] is referenced in the triage report. Run `/bug-triage` to refresh the open bug count."
+After closing, check `production/qa/bug-triage-*.md` — if the bug appears in an open triage report, note: "Bug [ID] is referenced in the triage report. Run `/skill:bug-triage` to refresh the open bug count."
 
 ---
 
@@ -193,16 +193,16 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 After saving, suggest based on mode:
 
 **After filing (Description/Analyze mode):**
-- Run `/bug-triage` to prioritize alongside existing open bugs
-- If S1 or S2: run `/hotfix [BUG-ID]` for emergency fix workflow
+- Run `/skill:bug-triage` to prioritize alongside existing open bugs
+- If S1 or S2: run `/skill:hotfix [BUG-ID]` for emergency fix workflow
 
 **After fixing the bug (developer confirms fix is in):**
-- Run `/bug-report verify [BUG-ID]` — confirm the fix actually works before closing
+- Run `/skill:bug-report verify [BUG-ID]` — confirm the fix actually works before closing
 - Never mark a bug closed without verification — a fix that doesn't verify is still Open
 
 **After verify returns CANNOT VERIFY:**
-- Play the reproduction steps on a build with the fix, then run `/bug-report verify [BUG-ID]` again and answer its question
+- Play the reproduction steps on a build with the fix, then run `/skill:bug-report verify [BUG-ID]` again and answer its question
 
 **After verify returns VERIFIED FIXED:**
-- Run `/bug-report close [BUG-ID]` — write the closure record and update status
-- Run `/bug-triage` to refresh the open bug count and remove it from the active list
+- Run `/skill:bug-report close [BUG-ID]` — write the closure record and update status
+- Run `/skill:bug-triage` to refresh the open bug count and remove it from the active list

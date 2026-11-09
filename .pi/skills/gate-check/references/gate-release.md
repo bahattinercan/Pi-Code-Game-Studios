@@ -1,4 +1,4 @@
-> Gate definition, loaded by `/gate-check` for the TARGET PHASE ONLY.
+> Gate definition, loaded by `/skill:gate-check` for the TARGET PHASE ONLY.
 > Never load the other five — one gate applies per invocation.
 
 
@@ -9,13 +9,13 @@
 - [ ] All features from milestone plan are implemented
 - [ ] Content is complete (all levels, assets, dialogue referenced in design docs exist)
 - [ ] Localization strings are externalized (no hardcoded player-facing text in the code root)
-- [ ] QA test plan exists (`/qa-plan` output in `production/qa/`)
-- [ ] QA sign-off report exists (`/team-qa` output — APPROVED or APPROVED WITH CONDITIONS)
+- [ ] QA test plan exists (`/skill:qa-plan` output in `production/qa/`)
+- [ ] QA sign-off report exists (`/skill:team-qa` output — APPROVED or APPROVED WITH CONDITIONS)
 - [ ] All Must Have story test evidence is present (Logic/Integration: test files pass; UI: retained screenshots of each screen touched; Visual/Feel: retained screenshots plus lead sign-off — both in `production/qa/evidence/`, and no `qa.level` waives either)
 - [ ] Smoke check passes cleanly (PASS verdict) on the release candidate build — a full run, not a `quick` one labelled `(quick — …)`
 - [ ] No test regressions from previous sprint (test suite passes fully)
-- [ ] Balance data has been reviewed (`/balance-check` run)
-- [ ] Release checklist completed (`/release-checklist` run)
+- [ ] Balance data has been reviewed (`/skill:balance-check` run)
+- [ ] Release checklist completed (`/skill:release-checklist` run)
 - [ ] Store metadata prepared (if applicable)
 - [ ] Changelog / patch notes drafted
 
@@ -24,9 +24,9 @@
 - [ ] All tests passing
 - [ ] Performance targets met across all target platforms
 - [ ] No known open S1 Critical, S2 High or S3 Medium bugs
-- [ ] No open CRITICAL or HIGH findings in the newest `production/security/security-audit-*.md` whose **Scope** is `full`, as updated by any later `quick` report (the re-run `/security-audit` prescribes after remediation). A later `network`, `save` or `input` report adds its open findings but never clears a category it did not scan — any open CRITICAL or HIGH finding means not ready (a blocker). No `full`-scope audit report means the check could not run: this item is NOT ASSESSED, never passed. A report whose release recommendation is itself NOT ASSESSED makes this item NOT ASSESSED too
+- [ ] No open CRITICAL or HIGH findings in the newest `production/security/security-audit-*.md` whose **Scope** is `full`, as updated by any later `quick` report (the re-run `/skill:security-audit` prescribes after remediation). A later `network`, `save` or `input` report adds its open findings but never clears a category it did not scan — any open CRITICAL or HIGH finding means not ready (a blocker). No `full`-scope audit report means the check could not run: this item is NOT ASSESSED, never passed. A report whose release recommendation is itself NOT ASSESSED makes this item NOT ASSESSED too
 - [ ] Accessibility basics covered (remapping, text scaling if applicable)
-- [ ] Localization verified for all target languages — every translated locale being shipped has a `/localize qa` verdict of PASS or PASS WITH CONDITIONS (`production/localization/loc-qa-[locale]-[date].md`). A FAIL blocks that locale; the others may still ship. A locale with no QA report, or whose QA reported NOT ASSESSED (nobody has played it), has not been verified: this item is NOT ASSESSED, never passed. The source locale (`en`, per `/localize`) is not a target language and needs no `/localize qa` report; a game that ships only its source locale marks this item N/A and says so
+- [ ] Localization verified for all target languages — every translated locale being shipped has a `/skill:localize qa` verdict of PASS or PASS WITH CONDITIONS (`production/localization/loc-qa-[locale]-[date].md`). A FAIL blocks that locale; the others may still ship. A locale with no QA report, or whose QA reported NOT ASSESSED (nobody has played it), has not been verified: this item is NOT ASSESSED, never passed. The source locale (`en`, per `/skill:localize`) is not a target language and needs no `/skill:localize qa` report; a game that ships only its source locale marks this item N/A and says so
 - [ ] Legal requirements met (EULA, privacy policy, age ratings if applicable)
 - [ ] Build compiles and packages cleanly
 

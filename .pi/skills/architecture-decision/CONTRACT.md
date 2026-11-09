@@ -25,7 +25,7 @@ nothing is indistinguishable from a check that passed.
 | `.pi/docs/technical-preferences.md` | `Engine Specialists` section — legacy fallback, used only when `engine.name` is absent or empty in `project.yaml` | Yes — required only when `engine.name` is absent |
 
 ### Preconditions
-- An engine must be configured (`docs/engine-reference/[engine]/VERSION.md` must exist) — if not, the skill prompts to run `/setup-engine` first
+- An engine must be configured (`docs/engine-reference/[engine]/VERSION.md` must exist) — if not, the skill prompts to run `/skill:setup-engine` first
 - The title or subject of the decision must be provided by the user before Step 0 proceeds (if no argument is given, the skill asks)
 - If in **retrofit mode** (`retrofit [path]` argument), the target ADR file must already exist on disk
 - Any conflict with a registered architectural stance in `docs/registry/architecture.yaml` must be resolved or explicitly accepted as an exception before the ADR is drafted (Step 3a is a BLOCKING gate)
@@ -53,7 +53,7 @@ nothing is indistinguishable from a check that passed.
 
 ## Hard Constraints (Never Violate)
 - Never sets `Status: Accepted` without explicit user confirmation — the default on creation is always `Status: Proposed`
-- **Acceptance route: `/architecture-decision accept ADR-NNNN`** — the only path that sets `Accepted`. It refuses when a dependency is still Proposed, and prompts for confirmation regardless of `modes.automation`. Retrofit mode's `Accepted` answer, for a decision already in force, is written as `Proposed` and handed to this route. Without this route acceptance would be enforced by ten skills, owned per the authority below, and reachable by nobody.
+- **Acceptance route: `/skill:architecture-decision accept ADR-NNNN`** — the only path that sets `Accepted`. It refuses when a dependency is still Proposed, and prompts for confirmation regardless of `modes.automation`. Retrofit mode's `Accepted` answer, for a decision already in force, is written as `Proposed` and handed to this route. Without this route acceptance would be enforced by ten skills, owned per the authority below, and reachable by nobody.
 - **Acceptance authority: the user, or `technical-director` on the user's explicit confirmation — no other agent, and not this skill on its own.** Recorded here because every consumer enforces the consequences of acceptance, and without this line nothing would say who can produce it. This narrows *who* may set the field; it does not relax the confirmation rule above.
 - Never assigns an ADR number that is already in use — always scan `docs/architecture/` first and use the next sequential number
 - Never proceeds past the architectural stance conflict check (Step 3a) if a conflict exists — surface the conflict and require resolution or explicit exception acknowledgment before drafting
@@ -63,32 +63,32 @@ nothing is indistinguishable from a check that passed.
 - In retrofit mode: never modifies any existing section — only appends absent sections
 
 ## Downstream Skill Expects
-**Next skills:** `/create-epics`, `/create-stories`, `/dev-story`, `/architecture-review`
+**Next skills:** `/skill:create-epics`, `/skill:create-stories`, `/skill:dev-story`, `/skill:architecture-review`
 
-### `/create-epics` reads ADRs expecting:
+### `/skill:create-epics` reads ADRs expecting:
 - `## Status` field — value must be `Accepted` for epics to reference it
 - `## GDD Requirements Addressed` table — used to link epics to GDD traceability
 - `## Engine Compatibility` section — checked during the Technical Setup → Pre-Production gate
 
-### `/create-stories` reads ADRs expecting:
+### `/skill:create-stories` reads ADRs expecting:
 - `### Implementation Guidelines` (under `## Decision`) — the concrete "must / must never" patterns programmer agents follow; the ADR template carries this subsection
 - `## ADR Dependencies` table — stories referencing a `Depends On` ADR that is still `Proposed` are automatically set `Status: Blocked`
 
-### `/dev-story` reads ADRs expecting:
+### `/skill:dev-story` reads ADRs expecting:
 - `## Decision` (full text, verbatim — not summarized)
 - `### Implementation Guidelines` (under `## Decision`, verbatim)
 - `## Engine Compatibility` (post-cutoff API risks, verification required)
 - `## ADR Dependencies` (to detect if this ADR's dependencies are unresolved)
 
-### `/architecture-review` reads ADRs expecting:
+### `/skill:architecture-review` reads ADRs expecting:
 - All required sections present (it flags gaps)
 - `## Status` is set (required for coverage matrix)
 - `## Engine Compatibility` is stamped with the correct engine version
 
 ## Known Fragile Points
 - If the ADR number scan misses a file (e.g., a file in a subdirectory of `docs/architecture/` or with a non-standard naming pattern), a duplicate number can be assigned — all ADR files must follow the `adr-NNNN-[slug].md` naming convention at the top level of `docs/architecture/`
-- Acceptance mode moves a story from `Blocked` to `Ready` only when the story file, under `production/epics/`, contains a Blocked Status line in any of the forms `/create-stories` writes (`> **Status**: Blocked`, `**Status:** Blocked`, `Status: Blocked`) and this ADR's id. A story blocked pending this ADR that never names its id is not found, and stays `Blocked` until it is updated by hand
-- The `## GDD Requirements Addressed` table is populated based on what the user tells the skill during the collaborative session; if the user does not know which GDDs motivated the decision, this table may be incomplete — `/create-epics` and `/gate-check` both rely on this linkage for traceability
+- Acceptance mode moves a story from `Blocked` to `Ready` only when the story file, under `production/epics/`, contains a Blocked Status line in any of the forms `/skill:create-stories` writes (`> **Status**: Blocked`, `**Status:** Blocked`, `Status: Blocked`) and this ADR's id. A story blocked pending this ADR that never names its id is not found, and stays `Blocked` until it is updated by hand
+- The `## GDD Requirements Addressed` table is populated based on what the user tells the skill during the collaborative session; if the user does not know which GDDs motivated the decision, this table may be incomplete — `/skill:create-epics` and `/skill:gate-check` both rely on this linkage for traceability
 - Engine specialist validation (Step 5.5) is skipped only when **both** sources are unset — `engine.name` absent or empty in `project.yaml` **and** `.pi/docs/technical-preferences.md` still reading `[TO BE CONFIGURED]`. A project configured solely via `project.yaml` **does** get specialist validation. When both are unset, post-cutoff engine API risks are not caught before the ADR is written
 - `docs/registry/architecture.yaml` is append-only by design; if a stance entry becomes permanently invalid (not superseded by another ADR), it must be manually removed — there is no cleanup mechanism
-- In retrofit mode, if the existing ADR has sections present but empty (e.g., a `## Status` heading with no value), the skill treats the section as present and does not fill it — an empty Status is effectively invisible to downstream skills like `/story-readiness`
+- In retrofit mode, if the existing ADR has sections present but empty (e.g., a `## Status` heading with no value), the skill treats the section as present and does not fill it — an empty Status is effectively invisible to downstream skills like `/skill:story-readiness`

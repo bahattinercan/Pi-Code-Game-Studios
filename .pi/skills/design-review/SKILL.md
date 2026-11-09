@@ -101,7 +101,7 @@ existed and covers nothing.
   that prior pass was itself complete, and attention narrows to the flagged
   change even under an instruction to scan everything anyway.
 
-Read the target design document in full. This step needs the whole GDD: read it in ranges by its headings (found with the Grep tool: pattern `^#`, content mode), since a whole-file Read over 40 KB is refused. Read CLAUDE.md to understand project context and standards.
+Read the target design document in full. This step needs the whole GDD: read it in ranges by its headings (found with the Grep tool: pattern `^#`, content mode), since a whole-file Read over 40 KB is refused. Read AGENTS.md to understand project context and standards.
 
 **For cross-document facts, prefer the registry over sibling GDDs.** If
 `design/registry/entities.yaml` exists **and lists entries for this system**,
@@ -119,7 +119,7 @@ lines), so match the path with `-B 8` context to see the owning entry, not a
 
 **If `design/registry/entities.yaml` does not exist, or lists no entry for this
 system** — the file ships as an empty stub, so this is the default until
-`/design-system` has populated it — fall back to reading the related GDDs the
+`/skill:design-system` has populated it — fall back to reading the related GDDs the
 target doc names in its Dependencies section. Bound the read to those, not to
 everything "implied". Do not glob-read all of `design/gdd/`.
 
@@ -368,7 +368,7 @@ If APPROVED (first-pass, no revision needed), proceed directly to the systems-in
 
 If NOT ASSESSED, nothing was reviewed: offer no tracking update and go straight
 to the final closing widget, leading with the skill that produces the missing
-input (e.g. `/design-system [system]` for a GDD that does not exist).
+input (e.g. `/skill:design-system [system]` for a GDD that does not exist).
 
 If NEEDS REVISION or MAJOR REVISION NEEDED, build the options from the findings:
 - `[A] Revise the GDD now — address blocking items together`
@@ -452,7 +452,7 @@ Once the systems-index and review-log widgets are answered, check project state 
 
 Before building options, read:
 - `design/gdd/systems-index.md` — find any system with Status: In Review or Needs Revision (other than the one just reviewed). Read it by section: find the headings with the Grep tool (pattern `^#`, content mode) and Read those ranges with offset and limit.
-- Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md) to determine if `/review-all-gdds` is worth offering (≥2 GDDs)
+- Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md) to determine if `/skill:review-all-gdds` is worth offering (≥2 GDDs)
 - Find the next system with Status: Not Started in design order
 
 Build the option list dynamically — only include options that are genuinely next:

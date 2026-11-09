@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phase 4: Cross-ADR Conflict Detection
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 4: Cross-ADR Conflict Detection

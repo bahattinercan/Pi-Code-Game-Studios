@@ -114,13 +114,13 @@ it is not for, and successful games that serve the same player.
 ## Phase 6: Scope and feasibility
 
 - **Platform.** Ask: "What platforms are you targeting?" `PC (Steam / Epic)` / `Mobile (iOS /
-  Android)` / `Console` / `Web / Browser` / `Multiple platforms`. Record it for `/setup-engine`.
-  Note what the platform implies, without recommending an engine: `/setup-engine` makes that call
+  Android)` / `Console` / `Web / Browser` / `Multiple platforms`. Record it for `/skill:setup-engine`.
+  Note what the platform implies, without recommending an engine: `/skill:setup-engine` makes that call
   against the pinned engine reference.
 - **Engine.** Ask in every automation mode, `autonomous` included: "Do you already have an engine
   you work in?" `Godot` / `Unity` / `Unreal Engine 5` / `No preference — help me decide`. Never
   pick an engine for the user. A named engine is recorded as their preference without second
-  guessing. No preference: "Run `/setup-engine` after this session; it walks through the choice
+  guessing. No preference: "Run `/skill:setup-engine` after this session; it walks through the choice
   with your concept and platform." Make no recommendation here.
 - Art pipeline and how labour-heavy it is; content scope (levels, items, hours); the MVP (the
   smallest build that tests whether the core loop is fun); the biggest technical, design and market
@@ -167,25 +167,25 @@ Write the file, creating folders as needed. Never write `design/game-brief.md` a
 List every step, in order.
 
 **Design-first** (the concept is well defined):
-1. `/setup-engine`: configure the engine and its version-aware reference docs
-2. `/art-bible`: the visual identity, before any GDD. Required before the Technical Setup gate at
+1. `/skill:setup-engine`: configure the engine and its version-aware reference docs
+2. `/skill:art-bible`: the visual identity, before any GDD. Required before the Technical Setup gate at
    `full`; at `standard` only when the game has visual-asset stories
-3. `/design-review design/gdd/game-concept.md`: check the concept is complete
+3. `/skill:design-review design/gdd/game-concept.md`: check the concept is complete
 4. The `creative-director` agent: refine the pillars
-5. `/map-systems`: the systems, their dependencies and priorities, in the systems index
-6. `/design-system`: one GDD per system from step 5
-7. `/create-architecture`: the architecture blueprint and its Required ADR list
-8. `/architecture-decision`: one ADR per decision on that list
-9. `/architecture-review`: the TR registry and traceability matrix (needed before the
+5. `/skill:map-systems`: the systems, their dependencies and priorities, in the systems index
+6. `/skill:design-system`: one GDD per system from step 5
+7. `/skill:create-architecture`: the architecture blueprint and its Required ADR list
+8. `/skill:architecture-decision`: one ADR per decision on that list
+9. `/skill:architecture-review`: the TR registry and traceability matrix (needed before the
    Pre-Production gate)
-10. `/gate-check`: the stage gate before Production
+10. `/skill:gate-check`: the stage gate before Production
 
 **Prototype-first** (the core mechanic is unproven):
-1. `/setup-engine`
-2. `/prototype [core mechanic]`: is it fun, in a day at most, throwaway code
-3. PROCEED: `/art-bible`, then design-first steps 5-10 with what the prototype taught
-4. PIVOT: `/brainstorm` again with the learnings
-5. After design and architecture, `/vertical-slice` before committing to sprints
+1. `/skill:setup-engine`
+2. `/skill:prototype [core mechanic]`: is it fun, in a day at most, throwaway code
+3. PROCEED: `/skill:art-bible`, then design-first steps 5-10 with what the prototype taught
+4. PIVOT: `/skill:brainstorm` again with the learnings
+5. After design and architecture, `/skill:vertical-slice` before committing to sprints
 
 Then a summary: the pitch, pillars, primary player type, engine preference, biggest risk and the
 file path. End with the line `Verdict: COMPLETE — game concept written.`

@@ -1,6 +1,6 @@
 # /skill:gate-check — Sections 7 and 8: Next Step and Follow-Up
 
-> Part of `/gate-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:gate-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 7. Closing Next-Step Widget
@@ -13,20 +13,20 @@
 After the verdict is presented and any stage update is complete (project.yaml + stage.txt), close with a structured next-step prompt using `AskUserQuestion`.
 
 **Tailor the options to the gate that just ran.** The argument names the phase
-being entered, so `/gate-check systems-design` is the Concept → Systems Design gate.
+being entered, so `/skill:gate-check systems-design` is the Concept → Systems Design gate.
 
 **At `workflow: minimal`, skip the menus below.** They walk the phase ladder, and
 the minimal route is not the ladder: offer the first incomplete step of
 `paths.minimal` instead (the `--path minimal` rows from Section 3):
-`/setup-engine`, then `/brainstorm` (or `/reverse-document design [code root]`
+`/skill:setup-engine`, then `/skill:brainstorm` (or `/skill:reverse-document design [code root]`
 when the code root already holds the game: it writes the brief from what is
-built), then `/create-stories`, then `/dev-story` on the next story — the route
-`/help` gives.
+built), then `/skill:create-stories`, then `/skill:dev-story` on the next story — the route
+`/skill:help` gives.
 
-For **Concept → Systems Design** (`/gate-check systems-design`) PASS — option [A] is
-`/map-systems` when `design/gdd/systems-index.md` does not exist yet (many
+For **Concept → Systems Design** (`/skill:gate-check systems-design`) PASS — option [A] is
+`/skill:map-systems` when `design/gdd/systems-index.md` does not exist yet (many
 projects write it during Concept, as the workflow catalog orders it), otherwise
-`/design-system [first system in the index's design order]`:
+`/skill:design-system [first system in the index's design order]`:
 ```
 Gate passed. What would you like to do next?
 [A] Run /skill:map-systems — decompose the concept into systems and a design order (recommended next step)
@@ -35,7 +35,7 @@ Gate passed. What would you like to do next?
 [C] Stop here for this session
 ```
 
-For **Systems Design → Technical Setup** (`/gate-check technical-setup`) PASS:
+For **Systems Design → Technical Setup** (`/skill:gate-check technical-setup`) PASS:
 ```
 Gate passed. What would you like to do next?
 [A] Run /skill:create-architecture — produce your master architecture blueprint and ADR work plan (recommended next step)
@@ -43,9 +43,9 @@ Gate passed. What would you like to do next?
 [C] Stop here for this session
 ```
 
-> **Note for the Systems Design → Technical Setup PASS**: `/create-architecture` is the required next step before writing any ADRs. It produces the master architecture document and a prioritized list of ADRs to write. Running `/architecture-decision` without this step means writing ADRs without a blueprint — skip it at your own risk.
+> **Note for the Systems Design → Technical Setup PASS**: `/skill:create-architecture` is the required next step before writing any ADRs. It produces the master architecture document and a prioritized list of ADRs to write. Running `/skill:architecture-decision` without this step means writing ADRs without a blueprint — skip it at your own risk.
 
-For **Technical Setup → Pre-Production** (`/gate-check pre-production`) PASS:
+For **Technical Setup → Pre-Production** (`/skill:gate-check pre-production`) PASS:
 ```
 Gate passed. What would you like to do next?
 [A] Run /skill:create-control-manifest — generate the layer rules manifest from your Accepted ADRs (first, if docs/architecture/control-manifest.md does not exist yet)
@@ -57,13 +57,13 @@ Gate passed. What would you like to do next?
 > **Note for the Technical Setup → Pre-Production PASS**: The Pre-Production sequence is deliberately ordered
 > to validate fun before committing to detailed planning:
 >
-> 1. `/create-control-manifest` — extract technical rules from Accepted ADRs, if not done yet (`/create-epics` requires it at `full`)
-> 2. `/vertical-slice` — build the Vertical Slice **FIRST**, before writing epics or stories
-> 3. Playtest → `/playtest-report` — at least 1 documented session, 3+ better before committing the full team. `/gate-check production` treats the slice as recommended: skipped → CONCERNS, unplayed → NOT ASSESSED
-> 4. `/ux-design [screen]` — UX specs for main menu, core HUD, pause menu (if not done)
-> 5. `/create-epics layer:foundation` then `/create-epics layer:core` — plan after fun is validated
-> 6. `/create-stories [epic-slug]` for each epic
-> 7. `/sprint-plan new`
+> 1. `/skill:create-control-manifest` — extract technical rules from Accepted ADRs, if not done yet (`/skill:create-epics` requires it at `full`)
+> 2. `/skill:vertical-slice` — build the Vertical Slice **FIRST**, before writing epics or stories
+> 3. Playtest → `/skill:playtest-report` — at least 1 documented session, 3+ better before committing the full team. `/skill:gate-check production` treats the slice as recommended: skipped → CONCERNS, unplayed → NOT ASSESSED
+> 4. `/skill:ux-design [screen]` — UX specs for main menu, core HUD, pause menu (if not done)
+> 5. `/skill:create-epics layer:foundation` then `/skill:create-epics layer:core` — plan after fun is validated
+> 6. `/skill:create-stories [epic-slug]` for each epic
+> 7. `/skill:sprint-plan new`
 >
 > **Why prototype before epics?** If the prototype reveals the core loop needs to change,
 > epics written before that discovery will be partially wrong. Validate fun cheaply first,
@@ -77,44 +77,44 @@ For all other gates, offer the two most logical next steps for that phase plus "
 
 Based on the verdict, suggest specific next steps:
 
-- **No art bible?** → `/art-bible` to create the visual identity specification
-- **Art bible exists but no asset specs?** → `/asset-spec system:[name]` to generate per-asset visual specs and generation prompts from approved GDDs
-- **No game concept?** → `/brainstorm` to create one
-- **No systems index?** → `/map-systems` to decompose the concept into systems
-- **Missing design docs?** → `/reverse-document` or delegate to `game-designer`
-- **Small design change needed?** → `/quick-design` for changes under about one week of implementation (bypasses full GDD pipeline)
-- **No UX specs?** → `/ux-design [screen name]` to author specs, or `/team-ui [feature]` for full pipeline
-- **UX specs not reviewed?** → `/ux-review [file]` or `/ux-review all` to validate
-- **No accessibility requirements doc?** → `/ux-design accessibility` to write `design/accessibility-requirements.md`
-- **No interaction pattern library?** → `/ux-design patterns` to initialize it
-- **Concept or a GDD not reviewed?** → `/design-review [doc]`
-- **GDDs not cross-reviewed?** → `/review-all-gdds` (run after all MVP GDDs are individually approved)
-- **Cross-GDD consistency issues?** → fix flagged GDDs, then re-run `/review-all-gdds`
-- **No test framework?** → `/test-setup` to scaffold the framework for your engine
-- **No QA plan for current sprint?** → `/qa-plan sprint` to generate one before implementation begins
-- **Missing ADRs?** → `/architecture-decision` for individual decisions
-- **No master architecture doc?** → `/create-architecture` for the full blueprint
-- **ADRs missing engine compatibility sections?** → Re-run `/architecture-decision`
+- **No art bible?** → `/skill:art-bible` to create the visual identity specification
+- **Art bible exists but no asset specs?** → `/skill:asset-spec system:[name]` to generate per-asset visual specs and generation prompts from approved GDDs
+- **No game concept?** → `/skill:brainstorm` to create one
+- **No systems index?** → `/skill:map-systems` to decompose the concept into systems
+- **Missing design docs?** → `/skill:reverse-document` or delegate to `game-designer`
+- **Small design change needed?** → `/skill:quick-design` for changes under about one week of implementation (bypasses full GDD pipeline)
+- **No UX specs?** → `/skill:ux-design [screen name]` to author specs, or `/skill:team-ui [feature]` for full pipeline
+- **UX specs not reviewed?** → `/skill:ux-review [file]` or `/skill:ux-review all` to validate
+- **No accessibility requirements doc?** → `/skill:ux-design accessibility` to write `design/accessibility-requirements.md`
+- **No interaction pattern library?** → `/skill:ux-design patterns` to initialize it
+- **Concept or a GDD not reviewed?** → `/skill:design-review [doc]`
+- **GDDs not cross-reviewed?** → `/skill:review-all-gdds` (run after all MVP GDDs are individually approved)
+- **Cross-GDD consistency issues?** → fix flagged GDDs, then re-run `/skill:review-all-gdds`
+- **No test framework?** → `/skill:test-setup` to scaffold the framework for your engine
+- **No QA plan for current sprint?** → `/skill:qa-plan sprint` to generate one before implementation begins
+- **Missing ADRs?** → `/skill:architecture-decision` for individual decisions
+- **No master architecture doc?** → `/skill:create-architecture` for the full blueprint
+- **ADRs missing engine compatibility sections?** → Re-run `/skill:architecture-decision`
   or manually add Engine Compatibility sections to existing ADRs
-- **Missing control manifest?** → `/create-control-manifest` (requires Accepted ADRs)
-- **Missing epics?** → `/create-epics layer: foundation` then `/create-epics layer: core` (requires control manifest)
-- **Missing stories for an epic?** → `/create-stories [epic-slug]` (run after each epic is created)
-- **Stories not implementation-ready?** → `/story-readiness` to validate stories before developers pick them up
+- **Missing control manifest?** → `/skill:create-control-manifest` (requires Accepted ADRs)
+- **Missing epics?** → `/skill:create-epics layer: foundation` then `/skill:create-epics layer: core` (requires control manifest)
+- **Missing stories for an epic?** → `/skill:create-stories [epic-slug]` (run after each epic is created)
+- **Stories not implementation-ready?** → `/skill:story-readiness` to validate stories before developers pick them up
 - **Tests failing?** → delegate to `lead-programmer` or `qa-tester`
-- **No playtest data?** → `/playtest-report`
-- **No playtest sessions beyond the minimum?** → Additional sessions give more reliable signal. 3+ total is recommended before committing the full team. Use `/playtest-report` to structure findings.
-- **No Difficulty Curve doc?** → Author `design/difficulty-curve.md` by hand from the template at `.pi/docs/templates/difficulty-curve.md`. (`/quick-design` is a related session but writes to `design/quick-specs/`, not to this path — use it to think the curve through, then copy the outcome here.)
+- **No playtest data?** → `/skill:playtest-report`
+- **No playtest sessions beyond the minimum?** → Additional sessions give more reliable signal. 3+ total is recommended before committing the full team. Use `/skill:playtest-report` to structure findings.
+- **No Difficulty Curve doc?** → Author `design/difficulty-curve.md` by hand from the template at `.pi/docs/templates/difficulty-curve.md`. (`/skill:quick-design` is a related session but writes to `design/quick-specs/`, not to this path — use it to think the curve through, then copy the outcome here.)
 - **No player journey map?** → Author `design/player-journey.md` by hand from the template at `.pi/docs/templates/player-journey.md`.
 
 > **Neither of these has a skill that writes it — do not name one.**
-> "`/ux-design` Phase 2b" is the step that *reads* `design/player-journey.md`,
-> so it lands the user back at the check that just failed. `/quick-design`
+> "`/skill:ux-design` Phase 2b" is the step that *reads* `design/player-journey.md`,
+> so it lands the user back at the check that just failed. `/skill:quick-design`
 > writes `design/quick-specs/[name]-[date].md` and leaves this gate still
 > failing. Say plainly that both docs are hand-authored from their templates.
-- **Need a quick sprint check?** → `/sprint-status` for current sprint progress snapshot
-- **Performance unknown?** → `/perf-profile`
-- **Not localized?** → `/localize`
-- **No security audit, or open CRITICAL/HIGH findings?** → `/security-audit` (after fixes, `/security-audit quick` to confirm)
-- **Ready for release?** → `/launch-checklist`
+- **Need a quick sprint check?** → `/skill:sprint-status` for current sprint progress snapshot
+- **Performance unknown?** → `/skill:perf-profile`
+- **Not localized?** → `/skill:localize`
+- **No security audit, or open CRITICAL/HIGH findings?** → `/skill:security-audit` (after fixes, `/skill:security-audit quick` to confirm)
+- **Ready for release?** → `/skill:launch-checklist`
 
 ---

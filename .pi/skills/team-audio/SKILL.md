@@ -6,7 +6,7 @@ description: "Orchestrate the audio team — audio-director, sound-designer, tec
 # Team Audio
 
 If no argument is provided, output usage guidance and exit without spawning any agents:
-> Usage: `/team-audio [feature or area to design audio for] [--review full|lean|solo]` — specify the feature or area to design audio for (e.g., `combat`, `main menu`, `forest biome`, `boss encounter`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-audio [feature or area to design audio for] [--review full|lean|solo]` — specify the feature or area to design audio for (e.g., `combat`, `main menu`, `forest biome`, `boss encounter`). Do not use `AskUserQuestion` here; output the guidance directly.
 
 When this skill is invoked with an argument, orchestrate the audio team through a structured pipeline.
 
@@ -119,7 +119,7 @@ the "Save to" step uses. One file per agent, so parallel steps never share one:
 These are working drafts; the durable record is the audio design document you
 compile from them.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 3. **Orchestrate the audio team** in sequence:
 
@@ -223,8 +223,8 @@ document**: the orchestrator already holds every input, so it compiles and write
 ## Next Steps
 
 - Review the audio design doc with the audio-director before implementation begins.
-- Use `/dev-story` to implement the audio manager and event system once the design is approved.
-- Run `/asset-audit` after audio assets are created to verify naming and format compliance.
+- Use `/skill:dev-story` to implement the audio manager and event system once the design is approved.
+- Run `/skill:asset-audit` after audio assets are created to verify naming and format compliance.
 - If there was no sound bible, create one before the next audio pass: ask the
   `audio-director` agent to draft `design/audio/sound-bible.md` from
   `.pi/docs/templates/sound-bible.md`, starting from this run's Step 1
@@ -246,6 +246,6 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess

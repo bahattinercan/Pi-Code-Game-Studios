@@ -21,7 +21,7 @@ When a GDD changes, the architecture decisions written against it may no longer
 hold. This skill finds every ADR the change touches, compares what the ADR assumed
 with what the GDD says now, and walks the user through each one.
 
-**Example:** `/propagate-design-change design/gdd/combat-system.md`
+**Example:** `/skill:propagate-design-change design/gdd/combat-system.md`
 
 Asks follow `.pi/docs/automation-modes.md` (collaborative always asks, guided
 asks on major choices, autonomous logs and goes on; `automation_always_ask`
@@ -37,7 +37,7 @@ nothing to check (Phase 4).
 ## Phase 1: The GDD path
 
 The text typed after the skill name, with any `--review <mode>` pair removed, is the
-changed GDD. It is required. Missing: "Usage: `/propagate-design-change
+changed GDD. It is required. Missing: "Usage: `/skill:propagate-design-change
 design/gdd/[system].md` — give the path to the GDD that changed." Not a file:
 "[path] not found. Check the path and try again."
 
@@ -82,7 +82,7 @@ Key changes affecting architecture:
 ```
 
 **Other GDDs that use these facts.** When `design/registry/entities.yaml` does not
-exist or has no entries (it ships as an empty stub until `/design-system` fills it),
+exist or has no entries (it ships as an empty stub until `/skill:design-system` fills it),
 skip this; the ADR check below still runs. Otherwise it records which GDDs depend on
 this system's facts: search it for `source: design/gdd/[filename]`. For each entity, constant or formula this GDD owns
 whose value the diff changed, its `referenced_by:` list names the GDDs that may now
@@ -115,7 +115,7 @@ The union of the two is the affected set **M**.
 | Result | Meaning | Action |
 |---|---|---|
 | **M ≥ 1** | Normal. | Go on. The N − M others are out of scope for this check: never describe them as verified unaffected. |
-| **M = 0**, and every in-scope ADR lacks GDD Requirements Addressed (`missing` column) | Traceability cannot be computed. | "[N] ADRs found, none has a 'GDD Requirements Addressed' section — traceability cannot be computed (a pre-production gate blocker). Run `/architecture-decision retrofit [adr]`." Stop. |
+| **M = 0**, and every in-scope ADR lacks GDD Requirements Addressed (`missing` column) | Traceability cannot be computed. | "[N] ADRs found, none has a 'GDD Requirements Addressed' section — traceability cannot be computed (a pre-production gate blocker). Run `/skill:architecture-decision retrofit [adr]`." Stop. |
 | **M = 0**, the sections exist | No ADR references this GDD. | "No ADR references [gdd] — no architecture impact." Stop. |
 
 Read `docs/architecture/requirements-traceability.md` when it exists.
@@ -225,7 +225,7 @@ EOF
 ```
 
 This is the one form this skill writes. `adr-status.sh` reads it as Superseded, so
-`/dev-story` and `/create-stories` block the stories that still point at it. The
+`/skill:dev-story` and `/skill:create-stories` block the stories that still point at it. The
 new ADR, once written, records which one it replaces. Change nothing else in the
 ADR: its content stays.
 
@@ -253,10 +253,10 @@ need writing or updating.
 
 From the resolutions:
 
-- ADRs marked Superseded: "Run `/architecture-decision [title]` to write the
-  replacement, then `/propagate-design-change` again to check coverage."
+- ADRs marked Superseded: "Run `/skill:architecture-decision [title]` to write the
+  replacement, then `/skill:propagate-design-change` again to check coverage."
 - ADRs to update in place: the fields to change in each.
-- Many ADRs affected: "Run `/architecture-review` once they are updated, to check
+- Many ADRs affected: "Run `/skill:architecture-review` once they are updated, to check
   the traceability matrix still holds together."
 
 End with `Verdict: COMPLETE — change impact report saved` after the Phase 9 write,

@@ -4,7 +4,7 @@
 
 Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
 
-**Trigger**: After the master architecture document is drafted (`/create-architecture`
+**Trigger**: After the master architecture document is drafted (`/skill:create-architecture`
 Phase 7), and after any major architecture revision
 
 **Context to pass**:

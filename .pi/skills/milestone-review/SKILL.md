@@ -80,7 +80,7 @@ report whole:
 Grep pattern="^## (Sprint Goal|Capacity|Tasks|Carryover|Risks|Progress|Burndown Assessment|Emerging Risks|Definition of Done)" glob="production/sprints/sprint-*.md" output_mode="content" -A 12
 ```
 
-> **These alternates are the headings `/sprint-plan` emits** (`## Sprint Goal`,
+> **These alternates are the headings `/skill:sprint-plan` emits** (`## Sprint Goal`,
 > not `## Goal`) — not what a milestone review might expect. A pattern that
 > matches only one real heading still returns a non-zero count, so the
 > zero-match escape hatch below never fires and the review aggregates a fraction
@@ -111,7 +111,7 @@ blocked story count are `NOT ASSESSED — NO DATA`, not zero.
 ## Phase 2: Scan Codebase Health
 
 - Scan for `TODO`, `FIXME`, `HACK` markers that indicate incomplete work
-- Count open bugs by severity for Quality Metrics from `production/qa/bugs/` (one grep of the `**Severity**` and `**Status**` lines, as `/bug-triage` does); with no bug files, the bug lines are `NOT ASSESSED — NO DATA`, not zero
+- Count open bugs by severity for Quality Metrics from `production/qa/bugs/` (one grep of the `**Severity**` and `**Status**` lines, as `/skill:bug-triage` does); with no bug files, the bug lines are `NOT ASSESSED — NO DATA`, not zero
 - Check the risk register at `production/risk-register/` if it exists (hand-authored from `.pi/docs/templates/risk-register-entry.md`; no skill writes it, so absence is normal — note it rather than skipping risk assessment silently)
 
 ---
@@ -247,5 +247,5 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 
 ## Phase 5: Next Steps
 
-- Run `/gate-check` for a formal phase gate verdict if this milestone marks a development phase boundary.
-- Run `/sprint-plan` to adjust the next sprint based on the scope recommendations above (at `workflow: minimal`, which has no sprints, adjust the brief's build order instead).
+- Run `/skill:gate-check` for a formal phase gate verdict if this milestone marks a development phase boundary.
+- Run `/skill:sprint-plan` to adjust the next sprint based on the scope recommendations above (at `workflow: minimal`, which has no sprints, adjust the brief's build order instead).

@@ -1,6 +1,6 @@
 # /skill:adopt — Phase 5: Present Summary and Ask to Write
 
-> Part of `/adopt`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:adopt`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 5: Present Summary and Ask to Write

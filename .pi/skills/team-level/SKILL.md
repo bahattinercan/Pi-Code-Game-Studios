@@ -6,7 +6,7 @@ description: "Orchestrate the level team — level-designer, narrative-director,
 # Team Level
 
 If no argument is provided, output usage guidance and exit without spawning any agents or reading any design files:
-> Usage: `/team-level [level name or area to design] [--review full|lean|solo]` — specify the level or area to design (e.g., `forest temple`, `tutorial village`, `final boss arena`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-level [level name or area to design] [--review full|lean|solo]` — specify the level or area to design (e.g., `forest temple`, `tutorial village`, `final boss arena`). Do not use `AskUserQuestion` here; output the guidance directly.
 
 When this skill is invoked:
 
@@ -116,7 +116,7 @@ file per agent, so the parallel steps never share one:
 These are working drafts; the durable record is the level design document you
 compile from them (`design/levels/[level-name].md`).
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 3. **Orchestrate the level design team** in sequence:
 
@@ -164,7 +164,7 @@ The level-designer should:
 
 Use `AskUserQuestion` with options:
 - (a) Proceed with a placeholder reference — mark the connection as UNRESOLVED in the level doc and list it in the open cross-level dependencies section of the summary report
-- (b) Pause and run `/team-level [area-name]` first to establish that area
+- (b) Pause and run `/skill:team-level [area-name]` first to establish that area
 
 Do NOT invent content for the missing adjacent area.
 
@@ -252,9 +252,9 @@ Verdict: **BLOCKED** — one or more agents blocked, or an agent was skipped (`.
 
 ## Next Steps
 
-- Run `/design-review design/levels/[level-name].md` to validate the completed level design doc.
-- Run `/dev-story` to implement level content once the design is approved.
-- Run `/qa-plan` to generate a QA test plan for this level.
+- Run `/skill:design-review design/levels/[level-name].md` to validate the completed level design doc.
+- Run `/skill:dev-story` to implement level content once the design is approved.
+- Run `/skill:qa-plan` to generate a QA test plan for this level.
 
 ## Error Recovery Protocol
 
@@ -272,6 +272,6 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess

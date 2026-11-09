@@ -57,8 +57,8 @@ change meaning. This is what the programmer reads instead of the ADR.]
 
 ## Files
 
-*The code and test files this story creates or changes. `/create-stories` lists the
-planned ones; `/dev-story` replaces the list with the files it changed; `/story-done`
+*The code and test files this story creates or changes. `/skill:create-stories` lists the
+planned ones; `/skill:dev-story` replaces the list with the files it changed; `/skill:story-done`
 checks scope against it.*
 
 - [path under the code root]
@@ -93,7 +93,7 @@ checks scope against it.*
 
 **Story Type**: [type]
 **Required evidence**:
-- Logic: `tests/unit/[system]/[story-slug]_test.[ext]` — must exist and pass (`/story-done` checks that it EXISTS; pass/fail is established by `/gate-check` and `/smoke-check`, both later)
+- Logic: `tests/unit/[system]/[story-slug]_test.[ext]` — must exist and pass (`/skill:story-done` checks that it EXISTS; pass/fail is established by `/skill:gate-check` and `/skill:smoke-check`, both later)
 - Integration: `tests/integration/[system]/[story-slug]_test.[ext]` OR playtest doc
 - Visual/Feel: a retained screenshot in `production/qa/evidence/` + sign-off in `production/qa/evidence/[story-slug]-evidence.md`
 - UI: a retained screenshot of each screen touched, in `production/qa/evidence/`

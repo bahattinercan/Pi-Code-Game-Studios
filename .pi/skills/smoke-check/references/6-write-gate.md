@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 6: Write and Gate
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 6: Write and Gate
@@ -53,7 +53,7 @@ resolved:
 
 [List each failing automated test or smoke check with a one-line description]
 
-Fix the failures and run `/smoke-check` again to re-gate before QA hand-off."
+Fix the failures and run `/skill:smoke-check` again to re-gate before QA hand-off."
 
 **If verdict is FAIL and the gate is advisory** (`testing.strict.config: false`):
 
@@ -63,7 +63,7 @@ hand-off is not blocked. Resolve these before release:
 [List each failing automated test or smoke check with a one-line description]
 
 QA hand-off: share `production/qa/qa-plan-[sprint].md` with the qa-tester
-agent to begin manual verification. Re-run `/smoke-check` once the failures
+agent to begin manual verification. Re-run `/skill:smoke-check` once the failures
 are fixed."
 
 **If verdict is NOT ASSESSED:**
@@ -77,10 +77,10 @@ executable not found, no build, build not launched this session, platform
 unavailable]
 
 [For each, the one thing that would make it runnable — e.g. 'confirm the suite
-result from your IDE or CI', 'run `/setup-engine`', 'set `engine.path`',
+result from your IDE or CI', 'run `/skill:setup-engine`', 'set `engine.path`',
 'produce a build', 'launch the build and play the checks'.]
 
-Re-run `/smoke-check` once any of those is resolved."
+Re-run `/skill:smoke-check` once any of those is resolved."
 
 This outcome is **not governed by `testing.strict.config`**. That setting decides
 whether a *failure* blocks hand-off; it has nothing to say about a check that
@@ -93,7 +93,7 @@ their behalf.
 
 "Smoke check passed with warnings. The build is ready for manual QA.
 
-Advisory items to resolve before running `/story-done` on affected stories:
+Advisory items to resolve before running `/skill:story-done` on affected stories:
 [list MISSING test evidence entries, and any runner warning — e.g. the orphan
 count]
 

@@ -21,13 +21,13 @@
 > UX specs. This document captures the project-wide accessibility commitments,
 > the feature matrix across all systems, the test plan, and the audit history.
 > It is created once during Technical Setup by the UX designer with
-> `/ux-design accessibility` — you pick the tier, against the criteria
+> `/skill:ux-design accessibility` — you pick the tier, against the criteria
 > accessibility-specialist sets and audits against — then updated as features
 > are added and audits are completed. If a feature conflicts with a commitment
 > made here, this document wins — change the feature, not the commitment,
 > unless the producer approves a formal revision.
 >
-> **When to update**: After each `/gate-check` pass, after any accessibility
+> **When to update**: After each `/skill:gate-check` pass, after any accessibility
 > audit, and whenever a new game system is added to `systems-index.md`.
 
 ---

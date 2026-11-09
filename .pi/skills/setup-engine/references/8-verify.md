@@ -1,15 +1,15 @@
 # /skill:setup-engine — Sections 8 and 8.5: Verify and Read Back
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
-## 8. Verify the CLAUDE.md Import
+## 8. Verify the AGENTS.md Import
 
 **This import was already written in Section 4 — do not edit it again and do not
-ask again.** Section 4 sets it as part of the same CLAUDE.md write, anchored to
+ask again.** Section 4 sets it as part of the same AGENTS.md write, anchored to
 the `ENGINE-REFERENCE-IMPORT` marker. This step only confirms the result.
 
-Read `CLAUDE.md` and confirm the line under the marker reads:
+Read `AGENTS.md` and confirm the line under the marker reads:
 
 ```markdown
 @docs/engine-reference/<engine>/VERSION.md
@@ -48,8 +48,8 @@ Each one means two files this skill just wrote disagree, or describe something
 that is not there.
 
 One is expected on a new Godot project: `commands.test` names the gdUnit4
-runner under `addons/gdUnit4/`, which `/test-setup` installs later. Report that
-line as expected, name `/test-setup` as the step that clears it, and never edit
+runner under `addons/gdUnit4/`, which `/skill:test-setup` installs later. Report that
+line as expected, name `/skill:test-setup` as the step that clears it, and never edit
 `commands.test` to make it go away. Every other `[DIFFERS]` line is resolved here.
 
 **`[NOT CHECKED]` is not a pass.** Each such line names why a comparison could
@@ -57,6 +57,6 @@ not be made -- an absent binary, a missing `project.godot`. Say which ones
 applied. A comparison that could not run has not established agreement.
 
 The script emits observations and never a verdict, per the convention in
-CLAUDE.md. The judgement is yours and the user's.
+AGENTS.md. The judgement is yours and the user's.
 
 ---

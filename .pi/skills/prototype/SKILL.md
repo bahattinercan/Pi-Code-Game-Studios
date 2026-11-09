@@ -19,7 +19,7 @@ block → defaults in `.pi/docs/config-resolution.md`.
 This is the **concept prototype** — a fast, throwaway build that answers one question:
 *"Is this core idea actually fun to interact with?"*
 
-**Default use** — run right after `/brainstorm` and `/setup-engine`, before writing
+**Default use** — run right after `/skill:brainstorm` and `/skill:setup-engine`, before writing
 GDDs or architecture docs. Its verdict determines whether the concept is worth the
 investment of full design documentation.
 
@@ -28,7 +28,7 @@ design change, or technical question. Pass `--spike` to activate spike mode: a
 lightweight ~4-hour build with no GDD prerequisites and no phase gate implications.
 
 **Already have GDDs and architecture complete?** To validate the full game loop
-before committing to Production, run `/vertical-slice` instead.
+before committing to Production, run `/skill:vertical-slice` instead.
 
 ---
 

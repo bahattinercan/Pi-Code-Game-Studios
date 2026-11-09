@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phases 5 and 5b: Engine Cross-Check and Design Revision Flags
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 5: Engine Compatibility Cross-Check

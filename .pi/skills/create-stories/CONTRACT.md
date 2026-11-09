@@ -2,8 +2,8 @@
 
 ## Role in Pipeline
 Decomposes a single epic into implementable story files by tracing GDD acceptance
-criteria through ADR decisions and manifest rules — sits between `/create-epics`
-and `/story-readiness` + `/dev-story`.
+criteria through ADR decisions and manifest rules — sits between `/skill:create-epics`
+and `/skill:story-readiness` + `/skill:dev-story`.
 
 ## Inputs Required
 
@@ -19,14 +19,14 @@ and `/story-readiness` + `/dev-story`.
 > **Tier.** The rows above are the `standard`/`full` inputs. At `workflow: minimal`
 > the only input is `design/game-brief.md`: the skill writes
 > `production/epics/<slug>/EPIC.md` itself from the brief (or uses one that already
-> exists there, never rewriting it), needs no `/create-epics`
+> exists there, never rewriting it), needs no `/skill:create-epics`
 > run, and reads no GDD, ADR, control manifest or TR registry. Each story traces to
 > `Brief MVP feature N` instead of a TR-ID, and its ADR lines read
 > `N/A (minimal — no ADRs)` (SKILL.md, the `minimal` branch of Phase 2 and the
 > `minimal` field mapping in Phase 7).
 
 ### Preconditions
-- `/create-epics` has been run and the target `EPIC.md` has `Status: Ready`
+- `/skill:create-epics` has been run and the target `EPIC.md` has `Status: Ready`
 - The EPIC.md contains a populated `## GDD Requirements` table (not empty)
 - All governing ADRs listed in the EPIC.md exist as files
 - Foundation epics have stories created before Core epics are started; Core before Feature; Feature before Presentation
@@ -49,11 +49,11 @@ and `/story-readiness` + `/dev-story`.
 - Every story file has a `## Test Evidence` section stating the expected evidence location for its type
 - Every story file has a `## Acceptance Criteria` section with at least one checkbox item copied from the GDD — at `minimal`, derived from `design/game-brief.md` (its Player goal & fail state and the MVP feature the story implements)
 - Every story file has a `## Dependencies` section naming each story it needs by path (may say "None" but is never omitted)
-- Every story file has a `## Files` section listing the code and test files it is planned to create or change; `/dev-story` replaces the list with the files it changed, and `/story-done` checks scope against it
+- Every story file has a `## Files` section listing the code and test files it is planned to create or change; `/skill:dev-story` replaces the list with the files it changed, and `/skill:story-done` checks scope against it
 - The EPIC.md `## Stories` table is updated with a row per story including `#`, `Story` title, `Type`, `Status`, and `ADR`
 - Stories with a `Proposed` ADR have `Status: Blocked` and a note: `BLOCKED: ADR-NNNN is Proposed — accept it with /skill:architecture-decision accept ADR-NNNN once decided`; a `Deprecated` or `Superseded` ADR blocks the same way, naming its successor
 - Every story file has an `Engine` and a `Risk` field. `Risk` is taken from `docs/engine-reference/<engine>/VERSION.md`; when that file is missing or assigns no level, `Risk` is **`NOT ASSESSED (no VERSION.md risk rating)`** — never a guessed level
-- **`NOT ASSESSED` is an emittable value of the `Risk` field**, and downstream readers must handle it. `/dev-story` treats it as HIGH when deciding whether to hand work to the engine specialist: an unknown risk is not a low one
+- **`NOT ASSESSED` is an emittable value of the `Risk` field**, and downstream readers must handle it. `/skill:dev-story` treats it as HIGH when deciding whether to hand work to the engine specialist: an unknown risk is not a low one
 
 ## Immutability Rules
 - READS but does NOT modify: the epic's GDD, all ADR files, `docs/architecture/tr-registry.yaml`, `docs/architecture/control-manifest.md`
@@ -85,8 +85,8 @@ It assumes:
 - `## Test Evidence` specifies an exact file path or evidence doc path where proof will be stored
 
 ## Known Fragile Points
-- If the story file format (header field names, section names, checkbox syntax) changes, `/story-readiness` will silently skip checks for fields it cannot parse — stories may pass readiness that should fail
+- If the story file format (header field names, section names, checkbox syntax) changes, `/skill:story-readiness` will silently skip checks for fields it cannot parse — stories may pass readiness that should fail
 - If `control-manifest.md` is regenerated with a new `Manifest Version:` date after stories are written, all existing stories will show a stale manifest version and fail the readiness manifest check — every story in the epic will need its `Manifest Version:` updated
-- If a governing ADR is renumbered or its file is renamed after stories are written, the `ADR Governing Implementation:` reference in story files will point to a missing file and `/story-readiness` will BLOCK those stories
-- If `tr-registry.yaml` deprecates or supersedes a TR-ID that is already embedded in story files, `/story-readiness` will flag those stories as NEEDS WORK
+- If a governing ADR is renumbered or its file is renamed after stories are written, the `ADR Governing Implementation:` reference in story files will point to a missing file and `/skill:story-readiness` will BLOCK those stories
+- If `tr-registry.yaml` deprecates or supersedes a TR-ID that is already embedded in story files, `/skill:story-readiness` will flag those stories as NEEDS WORK
 - The EPIC.md Stories table update is append-style: a return visit appends rows only for new stories, so a hand-edited table that drops the story numbers can gain duplicate rows

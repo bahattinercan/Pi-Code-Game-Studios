@@ -1,6 +1,6 @@
 # /skill:test-setup — Phase 5: Create Smoke Test Seed
 
-> Part of `/test-setup`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:test-setup`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 5: Create Smoke Test Seed
@@ -11,7 +11,7 @@ Create `tests/smoke/critical-paths.md`:
 # Smoke Test: Critical Paths
 
 **Purpose**: Run these 10-15 checks in under 15 minutes before any QA hand-off.
-**Run via**: `/smoke-check` (which reads this file)
+**Run via**: `/skill:smoke-check` (which reads this file)
 **Update**: Add new entries when new core systems are implemented.
 
 ## Core Stability (always run)

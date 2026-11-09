@@ -29,7 +29,7 @@ Generated: [Date]
 - [ ] No regression from previous build
 - [ ] Soak test passed (4+ hours continuous play)
 
-> The release gate (`/gate-check release`) blocks any open S1–S3 bug at `workflow: full`,
+> The release gate (`/skill:gate-check release`) blocks any open S1–S3 bug at `workflow: full`,
 > with no exceptions; at `standard` and `minimal` it blocks open S1 only, and an open
 > S2 or S3 is a risk to record in the Rationale.
 

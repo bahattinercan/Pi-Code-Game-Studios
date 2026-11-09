@@ -19,7 +19,7 @@ scope creep.
 Locate the baseline scope document for the given argument:
 
 - **Feature name** → read `design/gdd/[feature].md` or matching file in `design/`
-- **Sprint number** (e.g., `sprint-3`) → read `production/sprints/sprint-003.md` (the name `/sprint-plan` writes) or similar
+- **Sprint number** (e.g., `sprint-3`) → read `production/sprints/sprint-003.md` (the name `/skill:sprint-plan` writes) or similar
 - **Milestone** → read `production/milestones/[name].md`
 
 If the document is not found, report the missing file and stop. Do not proceed without
@@ -142,11 +142,11 @@ After presenting the report, offer concrete follow-up:
   the baseline document, or point the skill at where the work actually lives).
   Do not offer a re-run against the same inputs — it will produce the same
   non-answer.
-- **CONCERNS** → offer to identify the 2–3 additions with best cut ratio. Reference `/sprint-plan update` to formally re-scope (if the project has no sprint plan, as on the default minimal workflow, re-scope by editing the brief's build order).
-- **FAIL** → recommend escalating to producer. Reference `/sprint-plan update` for re-planning (if the project has no sprint plan, as on the default minimal workflow, edit the brief's build order) or `/estimate` to re-baseline timeline.
+- **CONCERNS** → offer to identify the 2–3 additions with best cut ratio. Reference `/skill:sprint-plan update` to formally re-scope (if the project has no sprint plan, as on the default minimal workflow, re-scope by editing the brief's build order).
+- **FAIL** → recommend escalating to producer. Reference `/skill:sprint-plan update` for re-planning (if the project has no sprint plan, as on the default minimal workflow, edit the brief's build order) or `/skill:estimate` to re-baseline timeline.
 
 End every verdict except NOT ASSESSED with:
-> "Run `/scope-check [name]` again after cuts are made to verify the verdict improves."
+> "Run `/skill:scope-check [name]` again after cuts are made to verify the verdict improves."
 
 (NOT ASSESSED ends with what would make it assessable, above — a re-run against
 the same inputs would repeat the non-answer.)

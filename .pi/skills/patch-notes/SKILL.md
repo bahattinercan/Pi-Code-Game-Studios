@@ -88,8 +88,8 @@ If no version is provided, ask the user before proceeding.
 **If no changelog data is available** (neither `production/releases/[version]/skill:changelog.md`
 nor a `docs/CHANGELOG.md` entry for this version exists, and git log is empty or unavailable):
 
-> "No changelog data found for [version]. Run `/changelog [version]` first to generate the
-> internal changelog, then re-run `/patch-notes [version]`."
+> "No changelog data found for [version]. Run `/skill:changelog [version]` first to generate the
+> internal changelog, then re-run `/skill:patch-notes [version]`."
 
 Verdict: **BLOCKED** — stop here without generating notes.
 
@@ -247,5 +247,5 @@ If no, write nothing.
 Verdict: **COMPLETE** — patch notes generated and saved. (If the write was
 declined: Verdict: **COMPLETE** — patch notes generated and shown, not saved.)
 
-- Run `/release-checklist` to verify all other release gates are met before publishing.
+- Run `/skill:release-checklist` to verify all other release gates are met before publishing.
 - Share the patch notes draft with the community-manager for tone review before posting publicly.

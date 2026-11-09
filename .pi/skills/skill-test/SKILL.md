@@ -25,10 +25,10 @@ runs entirely within the existing skill/hook/template architecture.
 
 | Mode | Command | Purpose | Token Cost |
 |------|---------|---------|------------|
-| `static` | `/skill-test static [name\|all]` | Structural linter — 7 compliance checks per skill, plus agent, delegation and compatibility observations | Low (~1k/skill) |
-| `spec` | `/skill-test spec [name]` | Behavioral verifier — evaluates assertions in a skill's or agent's test spec | Medium (~5k each) |
-| `category` | `/skill-test category [name\|all]` | Category rubric — checks a skill or agent against its category-specific metrics | Low (~2k each) |
-| `audit` | `/skill-test audit` | Coverage report — skills, agent specs, last test dates | Low (~3k total) |
+| `static` | `/skill:skill-test static [name\|all]` | Structural linter — 7 compliance checks per skill, plus agent, delegation and compatibility observations | Low (~1k/skill) |
+| `spec` | `/skill:skill-test spec [name]` | Behavioral verifier — evaluates assertions in a skill's or agent's test spec | Medium (~5k each) |
+| `category` | `/skill:skill-test category [name\|all]` | Category rubric — checks a skill or agent against its category-specific metrics | Low (~2k each) |
+| `audit` | `/skill:skill-test audit` | Coverage report — skills, agent specs, last test dates | Low (~3k total) |
 
 **What a pass proves.** Every mode reads files; none runs the skill. `static`:
 the file has the structure a skill needs, not that it behaves. `spec`: read
@@ -66,7 +66,7 @@ Then go on with `studio-tests/`.
 (`.pi/agents/[name].md`). With no catalog entry, use whichever of those two
 files exists. Only when neither exists, report "'[name]' is neither a skill in
 `.pi/skills/` nor an agent in `.pi/agents/`." and stop. A name that is
-also an ordinary word is still a name: `/skill-test spec help` tests the `/help`
+also an ordinary word is still a name: `/skill:skill-test spec help` tests the `/skill:help`
 skill, never a request for this skill's usage.
 
 The 7 checks lint SKILL.md structure, so they are skills-only. Given an agent
@@ -116,14 +116,14 @@ description or body promises a review, audit, check, gate, or readiness
 judgement.
 
 **WARN** (never FAIL) if none are present and the skill's output is an artifact
-or a value rather than a judgement. `/settings` is the reference case: it prints
+or a value rather than a judgement. `/skill:settings` is the reference case: it prints
 and writes configuration and has no verdict to give. Do not invent one to
 satisfy this check.
 
 > A narrower list — gate verdicts only, hard FAIL on anything else — would wrongly
-> fail skills for reasons that are not their fault: `/prototype` and
-> `/vertical-slice` advertise `PROCEED`/`PIVOT`/`KILL` in their own descriptions,
-> `/adopt` and `/security-audit` rank by severity, and `/settings` has no verdict
+> fail skills for reasons that are not their fault: `/skill:prototype` and
+> `/skill:vertical-slice` advertise `PROCEED`/`PIVOT`/`KILL` in their own descriptions,
+> `/skill:adopt` and `/skill:security-audit` rank by severity, and `/skill:settings` has no verdict
 > by design. A linter that produces false failures on legitimate patterns stops
 > being trusted.
 
@@ -138,7 +138,7 @@ The skill must contain ask-before-write language. Look for:
 
 ### Check 5 — Next-Step Handoff
 The skill must end with a recommended next action or follow-up path. Look for:
-- A final section mentioning another skill (e.g., `/story-done`, `/gate-check`)
+- A final section mentioning another skill (e.g., `/skill:story-done`, `/skill:gate-check`)
 - "Recommended next" or "next step" phrasing
 - A "Follow-Up" or "After this" section
 
@@ -298,7 +298,7 @@ Look up the spec path from `studio-tests/catalog.yaml` — use the
 If either is missing:
 - Missing skill or agent: the Phase 1 message.
 - Missing spec path in catalog: "No spec path set for '[name]' in catalog.yaml."
-- Spec file not found at path: "Spec file missing at [path]. Run `/skill-test audit`
+- Spec file not found at path: "Spec file missing at [path]. Run `/skill:skill-test audit`
   to see coverage gaps."
 
 ### Step 2 — Read Both Files
@@ -310,7 +310,7 @@ the agent file, and the test spec file, completely.
 
 **Evaluate against what the model running it can see.** A skill runs in a
 session, and a spawned agent in its own context, and both have the project's
-`CLAUDE.md` loaded along with every file it imports on an `@path` line (a
+`AGENTS.md` loaded along with every file it imports on an `@path` line (a
 spawned agent quotes `coordination-rules.md` word for word without reading it).
 Read those files too. A rule stated there counts for every skill and agent —
 cite the file it came from. Where the skill's or agent's own file contradicts
@@ -345,7 +345,7 @@ Code loads into the agent at launch:
 **For a skill**, check each of the spec's **Static Assertions** against the
 skill's frontmatter and body (`SKILL.md` and its `references/` files) the same
 way; a literal value is an exact
-comparison. `/skill-test static` runs only its 7 fixed checks, so a spec's own
+comparison. `/skill:skill-test static` runs only its 7 fixed checks, so a spec's own
 static lines — a verdict keyword, a phase, "May I write" before a named file —
 are evaluated here or nowhere.
 
@@ -480,7 +480,7 @@ name the missing section, and never borrow another category's metrics.
 Read the skill's `SKILL.md` and every file in its `references/` folder, or the
 agent's `.pi/agents/[name].md`, fully,
 and the project context Phase 2B Step 3 describes — a metric met by a rule in
-`CLAUDE.md` or a file it imports is met, citing that file. Its rule for
+`AGENTS.md` or a file it imports is met, citing that file. Its rule for
 redirect and escalation cases decides the domain, deferral and escalation
 metrics too (D2, D3, L2, S1–S3, O2).
 
@@ -591,9 +591,9 @@ Agent coverage:  49/49 specs (100%)
 
 No file writes in audit mode.
 
-Offer: "Would you like to run `/skill-test static all` to check structural
-compliance across all skills? `/skill-test category all` to run category rubric
-checks? Or `/skill-test spec [name]` to run a specific behavioral test?"
+Offer: "Would you like to run `/skill:skill-test static all` to check structural
+compliance across all skills? `/skill:skill-test category all` to run category rubric
+checks? Or `/skill:skill-test spec [name]` to run a specific behavioral test?"
 
 ---
 
@@ -601,12 +601,12 @@ checks? Or `/skill-test spec [name]` to run a specific behavioral test?"
 
 After any mode completes, offer contextual follow-up:
 
-- After `static [name]`: "Run `/skill-test spec [name]` to validate behavioral
+- After `static [name]`: "Run `/skill:skill-test spec [name]` to validate behavioral
   correctness if a test spec exists."
 - After `static all` with failures: "Address NON-COMPLIANT skills first. Run
-  `/skill-test static [name]` individually for detailed remediation guidance."
+  `/skill:skill-test static [name]` individually for detailed remediation guidance."
 - After `spec [name]` PASS: "Update `studio-tests/catalog.yaml` to record this
-  pass date. Consider running `/skill-test audit` to find the next spec gap."
+  pass date. Consider running `/skill:skill-test audit` to find the next spec gap."
 - After `spec [name]` FAIL: "Review the failing assertions and update the skill
   or agent, or the test spec, to resolve the mismatch."
 - After `audit`: "Start with the critical-priority gaps. Use the spec template

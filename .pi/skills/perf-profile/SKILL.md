@@ -57,13 +57,13 @@ same way at every level:
 | Value | Effect on this profile's findings |
 |-------|-----------------------------------|
 | `warn` (default) | Violations are reported as findings. They do not block; CI logs them without failing. |
-| `block` | Violations are **blockers**. Say so explicitly in the report — a `block` project treats an over-budget system as release-stopping, and `/gate-check` will FAIL the Polish gate on it. |
+| `block` | Violations are **blockers**. Say so explicitly in the report — a `block` project treats an over-budget system as release-stopping, and `/skill:gate-check` will FAIL the Polish gate on it. |
 | `off` | Budgets are informational only. Still report measured values, but do not raise violations as findings or recommendations to fix. |
 
 Only `warn`, `block` and `off` are recognized. Surface any other value to the
 user and fall back to `warn` rather than guessing.
 
-> The value is locally overridable (`/settings --local performance.enforce=block`),
+> The value is locally overridable (`/skill:settings --local performance.enforce=block`),
 > so use the resolved block above rather than reading `project.yaml` — a
 > teammate's stricter local setting is meant to bite on their machine only.
 
@@ -96,9 +96,9 @@ wrapper asks the user every time). Empty output means that budget is not set.
 > **Resolve these budgets from `project.yaml`, not from prose.** Phase 0 above
 > states these four budgets "are profiled the same way at every level". A user
 > who set `performance.target_framerate: 60` in `project.yaml` has it ignored if
-> the budget is read from design docs or CLAUDE.md instead.
+> the budget is read from design docs or AGENTS.md instead.
 
-Then fall back to design docs or CLAUDE.md for anything config does not carry:
+Then fall back to design docs or AGENTS.md for anything config does not carry:
 
 - Target FPS (e.g., 60fps = 16.67ms frame budget)
 - Memory budget (total and per-system)
@@ -153,7 +153,7 @@ per the Collaboration Protocol: *"May I write this profiling report to
 > **Name the destination — do not just render the template into the
 > conversation.** A profile that lives only in the transcript is gone the moment
 > the session ends, and no two runs can be compared. `production/polish/`
-> is the same location `/team-polish` writes, deliberately: a profile taken by
+> is the same location `/skill:team-polish` writes, deliberately: a profile taken by
 > either route belongs in one place, or the comparison this skill exists to enable
 > cannot be made.
 >
@@ -205,9 +205,9 @@ Activate this phase only if any hotspot has Fix Effort rated M or L.
 Present significant-effort items and ask the user to choose for each:
 
 - **A) Implement the optimization** (proceed with fix now or schedule it — at `workflow: minimal`, which has no sprints, add it to the brief's build order)
-- **B) Reduce feature scope** (run `/scope-check [feature]` to analyze trade-offs)
+- **B) Reduce feature scope** (run `/skill:scope-check [feature]` to analyze trade-offs)
 - **C) Accept the performance hit and defer to Polish phase** (log as known issue)
-- **D) Escalate to technical-director for an architectural decision** (run `/architecture-decision`)
+- **D) Escalate to technical-director for an architectural decision** (run `/skill:architecture-decision`)
 
 If multiple items are deferred to Polish (choice C), record them under `### Deferred to Polish`.
 
@@ -224,9 +224,9 @@ other outcome is the `NOT ASSESSED — NO DATA` path above.
 
 ## Phase 6: Next Steps
 
-- If bottlenecks require architectural change: run `/architecture-decision`.
-- If scope reduction is needed: run `/scope-check [feature]`.
-- To schedule optimizations: run `/sprint-plan update` (at `workflow: minimal`, which has no sprints, add them to the brief's build order instead).
+- If bottlenecks require architectural change: run `/skill:architecture-decision`.
+- If scope reduction is needed: run `/skill:scope-check [feature]`.
+- To schedule optimizations: run `/skill:sprint-plan update` (at `workflow: minimal`, which has no sprints, add them to the brief's build order instead).
 
 ### Rules
 - Never optimize without measuring first — gut feelings about performance are unreliable

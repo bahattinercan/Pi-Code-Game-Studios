@@ -104,7 +104,7 @@ wrong value diagnosable — `review_mode: solo (rigor:minimal)` when `project.ya
 
 | Step | Source | Applies to |
 |---|---|---|
-| 1 | `project.local.yaml` | any setting on the `/settings --local` whitelist (12 keys — `modes.review_mode`, `modes.automation`, `modes.automation_always_ask`, `team.size`, all five `testing.strict.*`, `performance.enforce`, `features.*`) |
+| 1 | `project.local.yaml` | any setting on the `/skill:settings --local` whitelist (12 keys — `modes.review_mode`, `modes.automation`, `modes.automation_always_ask`, `team.size`, all five `testing.strict.*`, `performance.enforce`, `features.*`) |
 | 2 | `project.yaml` | all keys |
 | 3 | legacy plain-text mirror | `modes.review_mode` → `production/review-mode.txt`; `project.stage` → `production/stage.txt` |
 | 4 | **`modes.rigor` expansion** | the six knobs `rigor` fronts — `modes.workflow`, `docs.density`, `qa.level`, `modes.story_granularity`, `modes.review_mode`, `team.size` |
@@ -127,10 +127,10 @@ default rather than propagating a nonsense mode into every skill.
 > never written down anywhere — it follows the project's rigor level and will
 > move if that level moves.
 
-> **Read scope == write whitelist.** Anything `/settings --local` may *write*
+> **Read scope == write whitelist.** Anything `/skill:settings --local` may *write*
 > is also *read* during resolution. If the read scope were ever narrower,
-> `/settings --local modes.review_mode=solo` would write a value
-> that `/settings` accepted and displayed and every skill then ignored. The
+> `/skill:settings --local modes.review_mode=solo` would write a value
+> that `/skill:settings` accepted and displayed and every skill then ignored. The
 > test suite asserts the two lists stay in step — adding a setting to one
 > without the other reproduces that bug.
 >
@@ -139,7 +139,7 @@ default rather than propagating a nonsense mode into every skill.
 > implementation gap, not a design.
 
 > **A key OUTSIDE the whitelist, hand-written into `project.local.yaml`, is
-> reported rather than swallowed.** `/settings --local` refuses to
+> reported rather than swallowed.** `/skill:settings --local` refuses to
 > write one, but the file exists to be edited by hand, so that path needs its own
 > guard. `modes.rigor: full` written there is a real key with a legal value, so
 > `validate_yaml_enum` passes it — and then resolution never consults the local
@@ -184,7 +184,7 @@ these six to the lean row. That default was `standard`; it changed because the
 heavier tier costs more to reach working code without producing a better
 result. See the rationale block above `_yaml_helper_defaults`
 in `.pi/hooks/yaml-helper.sh` for the reasoning and the ordering
-constraint. Raising the tier is one question in `/start` or one `/settings`
+constraint. Raising the tier is one question in `/skill:start` or one `/skill:settings`
 call, and `settings-guidance.md § 4`'s upward triggers are written to fire from
 this starting state. (`team.size` is the one knob the flip does not move:
 `minimal` and `standard` both yield `individual`, and only `full` opts into the
@@ -211,11 +211,11 @@ expansion), unlike the four on-disk knobs, which are locked.
 > and none of the six fronted knobs may appear in it.
 
 **`testing.strict.*` has no central default on purpose.** Its unset default
-differs per skill by design: `/smoke-check` treats unset as **blocking** (it is a
-build-health gate), while `/story-done` and `/dev-story` apply the per-story-type
+differs per skill by design: `/skill:smoke-check` treats unset as **blocking** (it is a
+build-health gate), while `/skill:story-done` and `/skill:dev-story` apply the per-story-type
 table in `.pi/docs/coding-standards.md`. The `testing.strict` line therefore
 reports only the *configured state* (`unset` where absent). The `gate_level` line
-(below) applies that table and names `/smoke-check`'s own default beside `config`.
+(below) applies that table and names `/skill:smoke-check`'s own default beside `config`.
 
 **The `engine` line is reported from `project.yaml` only.** The `engine_values`
 line (below) adds the per-field fallback to `.pi/docs/technical-preferences.md`,
@@ -245,7 +245,7 @@ condition below degrades to defaults and is named on `notes:`:
 | Condition | Behavior |
 |---|---|
 | `project.yaml` absent | legacy → defaults; `notes: project.yaml absent` |
-| `project.yaml` **empty** | defaults; `notes: project.yaml is EMPTY`. Distinct from absent on purpose — a truncated write or an interrupted `/setup-engine` looks like this |
+| `project.yaml` **empty** | defaults; `notes: project.yaml is EMPTY`. Distinct from absent on purpose — a truncated write or an interrupted `/skill:setup-engine` looks like this |
 | Malformed YAML | unparseable keys resolve empty and fall through |
 | Tab-indented lines | rejected, and the **line numbers are named** on `notes:` |
 | CRLF line endings | parsed correctly (the Windows default) |
@@ -282,7 +282,7 @@ is not: the key is present but resolves to nothing, which is also what a key
 with an empty value does on purpose (the "Key present, value empty" row above),
 and `resolve_config` does not tell the two apart. When a setting seems ignored,
 check the structure of its key in the file: one scalar on the key's own line and
-no list under it. `/settings` shows the value that is actually in effect.
+no list under it. `/skill:settings` shows the value that is actually in effect.
 
 Merging a repeated block and taking the last value of a repeated key are fixed
 rules here, but most other YAML tools keep only the last block. Combine repeated
@@ -292,7 +292,7 @@ blocks rather than rely on the merge.
 
 `resolve_config` is also safe to call from a hook, but session-start does **not**
 call it. The block would cost tokens on every session whether or not any skill
-needs config, and it would go stale mid-session as `/settings` writes land. The
+needs config, and it would go stale mid-session as `/skill:settings` writes land. The
 per-skill body call is fresher and only loads where it is used. Session start
 still prints the resolved review mode and any schema errors, which is the part a
 human reads.
@@ -304,9 +304,9 @@ every failure mode above are covered by the framework's own test suite under
 `tests/`, along with the `modes.rigor` expansion and its precedence in both
 directions. Two properties are asserted that are easy to lose:
 
-- The local **read** scope and the `/settings --local` **write** whitelist stay
-  in step. If they drift, `/settings` accepts and displays a value that every
+- The local **read** scope and the `/skill:settings --local` **write** whitelist stay
+  in step. If they drift, `/skill:settings` accepts and displays a value that every
   skill then ignores.
-- The expansion is *reachable* (`/start` asks about it) and *legible*
-  (`/settings` reports derived values rather than "(not set)"). A correct
+- The expansion is *reachable* (`/skill:start` asks about it) and *legible*
+  (`/skill:settings` reports derived values rather than "(not set)"). A correct
   expansion nobody is asked about and no view displays would be worth nothing.

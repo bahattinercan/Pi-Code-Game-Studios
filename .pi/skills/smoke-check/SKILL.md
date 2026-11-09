@@ -36,7 +36,7 @@ gates). Distinct axis from `workflow`.
 
 ## Parse Arguments
 
-Arguments can be combined: `/smoke-check sprint --platform console`
+Arguments can be combined: `/skill:smoke-check sprint --platform console`
 
 **Base mode** (first argument, default: `sprint`):
 - `sprint` — full smoke check against the current sprint's stories
@@ -91,7 +91,7 @@ describe what collaborative mode requires, not universal behavior.
 - **Never auto-fix failures** — report them and state what must be resolved.
   Do not attempt to edit source code or test files.
 - **PASS WITH WARNINGS does not block QA hand-off** — it records advisory
-  gaps for `/story-done` to follow up on.
+  gaps for `/skill:story-done` to follow up on.
 - **`quick` argument** skips Phase 3 (coverage scan) and Phase 4 Batch 3.
   Use it for rapid re-checks after fixing a specific failure.
 - Use `AskUserQuestion` for all manual smoke check verification.

@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phase 2: Extract Technical Requirements
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 2: Extract Technical Requirements from Every GDD
@@ -12,7 +12,7 @@ if it exists. Index existing entries by `id` and by normalized `requirement`
 text (lowercase, trimmed). This prevents ID renumbering across review runs.
 
 Then read the Technical Requirements Baseline in `docs/architecture/architecture.md`
-if it exists. `/create-architecture` numbers each requirement the registry did not
+if it exists. `/skill:create-architecture` numbers each requirement the registry did not
 hold as `(provisional)`, from the registry's next free ID, and ADRs written from
 the baseline may already cite those IDs.
 

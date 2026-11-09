@@ -55,8 +55,8 @@ All stories must have appropriate test evidence before they can be marked Done:
 The **Default Gate Level** applies when `testing.strict` is not set in
 `project.yaml`. A project may override it per test type: `testing.strict.logic`,
 `.integration`, `.visual`, `.ui`, and `.config` each take `true` (BLOCKING) or
-`false` (ADVISORY). `/story-done`, `/story-readiness`, `/dev-story`,
-`/gate-check`, and `/smoke-check` resolve the effective level from that setting,
+`false` (ADVISORY). `/skill:story-done`, `/skill:story-readiness`, `/skill:dev-story`,
+`/skill:gate-check`, and `/skill:smoke-check` resolve the effective level from that setting,
 falling back to the defaults above when it is absent.
 
 > **Why Visual and UI block.** "Retained" is load-bearing — the screenshot must
@@ -66,8 +66,8 @@ falling back to the defaults above when it is absent.
 > gate gets deferred in favour of whatever does block, and the result is a
 > well-tested game that looks wrong.
 
-> **Exception — `/smoke-check`.** The ADVISORY default for **Config/Data** above
-> applies to *per-story evidence* gates. `/smoke-check` is a build-health gate,
+> **Exception — `/skill:smoke-check`.** The ADVISORY default for **Config/Data** above
+> applies to *per-story evidence* gates. `/skill:smoke-check` is a build-health gate,
 > not a per-story evidence gate, so its own unset default for
 > `testing.strict.config` is **BLOCKING**. The two defaults differ on purpose.
 

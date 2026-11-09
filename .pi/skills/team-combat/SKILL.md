@@ -5,7 +5,7 @@ description: "Orchestrate the combat team — game-designer, gameplay-programmer
 # Team Combat
 
 **Argument check:** If no combat feature description is provided, output:
-> "Usage: `/team-combat [combat feature description] [--review full|lean|solo]` — Provide a description of the combat feature to design and implement (e.g., `melee parry system`, `ranged weapon spread`)."
+> "Usage: `/skill:team-combat [combat feature description] [--review full|lean|solo]` — Provide a description of the combat feature to design and implement (e.g., `melee parry system`, `ranged weapon spread`)."
 Then stop immediately without spawning any subagents or reading any files.
 
 When this skill is invoked with a valid argument, orchestrate the combat team through a structured pipeline.
@@ -39,7 +39,7 @@ below), and the agents that work at them are team members, not director gates.
 `automation` drives the Decision Points note above. See the Decision Points note above and
 `.pi/docs/automation-modes.md` for how each mode changes pipeline behavior.
 
-`workflow` sizes the Phase 1 design document the way `/design-system` does:
+`workflow` sizes the Phase 1 design document the way `/skill:design-system` does:
 `## Summary` plus all 8 sections at `full`; at `standard`, Overview, Detailed
 Design, Edge Cases, Dependencies and Acceptance Criteria, plus Formulas whenever
 the mechanic defines numeric rules (a combat mechanic almost always does); at
@@ -111,8 +111,8 @@ names one; most are fixed by the skill that already reads them:
 | 2 engine specialist | `docs/architecture/[feature]-engine-notes.md` | see note below |
 | 3 gameplay-programmer, ai-programmer, technical-artist | the code root and `assets/` — the files the Phase 3 approval lists | outside the bounded exception: asked once for the set (File Write Protocol) |
 | 3 sound-designer | `production/combat/[feature]-audio-events.md` | this skill |
-| 5 qa-tester (test cases) | `production/qa/test-cases/[feature]-cases.md` | `/team-qa` Phase 4 |
-| 5 qa-tester (bugs) | `production/qa/bugs/BUG-[NNNN].md` | `/team-qa` Phase 5 |
+| 5 qa-tester (test cases) | `production/qa/test-cases/[feature]-cases.md` | `/skill:team-qa` Phase 4 |
+| 5 qa-tester (bugs) | `production/qa/bugs/BUG-[NNNN].md` | `/skill:team-qa` Phase 5 |
 
 Phase 6 is a spoken status report, not an artifact — no path, and none needed.
 
@@ -126,7 +126,7 @@ Phase 6 is a spoken status report, not an artifact — no path, and none needed.
 > reporting, so the sketch is understood as a record rather than an input to a
 > later gate.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -138,8 +138,8 @@ Delegate to **game-designer**:
 - Output: completed design document, drafted to `production/combat/[feature]-gdd-draft.md`
 
 `design/` is outside the bounded write exception above, so the game-designer
-drafts and **you** write the GDD — the pattern `/team-level` and
-`/team-narrative` use. At the Phase 1 decision point, present the draft and ask
+drafts and **you** write the GDD — the pattern `/skill:team-level` and
+`/skill:team-narrative` use. At the Phase 1 decision point, present the draft and ask
 via `AskUserQuestion`: "May I write the design document to
 `design/gdd/[feature].md`?" Write it on approval; nothing is written under
 `design/` before that answer.
@@ -218,8 +218,8 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## File Write Protocol
@@ -261,6 +261,6 @@ Verdict: **BLOCKED** — one or more phases could not complete, or an agent was 
 
 ## Next Steps
 
-- Run `/code-review` on the implemented combat code before closing stories.
-- Run `/balance-check` to validate combat formulas and tuning values.
-- Run `/team-polish` if VFX, audio, or performance polish is needed.
+- Run `/skill:code-review` on the implemented combat code before closing stories.
+- Run `/skill:balance-check` to validate combat formulas and tuning values.
+- Run `/skill:team-polish` if VFX, audio, or performance polish is needed.

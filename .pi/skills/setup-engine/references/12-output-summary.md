@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 12: Output Summary
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 12. Output Summary
@@ -14,7 +14,7 @@ Engine:          [name] [version]
 Language:        [GDScript | C# | GDScript + C# | C# | C++ + Blueprint | Blueprint + C++]
 Knowledge Risk:  [LOW/MEDIUM/HIGH]
 Reference Docs:  [created/skipped]
-CLAUDE.md:       [updated]
+AGENTS.md:       [updated]
 Tech Prefs:      [created/updated]
 project.yaml:    [created/updated]
 Agent Config:    [verified]
@@ -31,7 +31,7 @@ Then print **one** Next-Steps list, matching the resolved `workflow` tier:
 3. Run /skill:create-stories to turn the brief's MVP list into stories
 4. Run /skill:dev-story — first line of game code
 ```
-(No `/map-systems`, `/design-system`, `/prototype`, or `/sprint-plan` at
+(No `/skill:map-systems`, `/skill:design-system`, `/skill:prototype`, or `/skill:sprint-plan` at
 `minimal` — the brief replaces the GDDs and its build order is the plan.)
 
 **`standard` / `full` — the full pipeline:**

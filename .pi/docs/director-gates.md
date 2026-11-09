@@ -28,7 +28,7 @@ Agent by prefix: `CD-` creative-director · `TD-` technical-director ·
 |---------|---------|-----------------|
 | CD-PILLARS | Pillar stress test after pillars are defined | cd-pillars.md |
 | CD-GDD-ALIGN | GDD pillar alignment after a system GDD is authored | cd-gdd-align.md |
-| CD-SYSTEMS | Systems decomposition vision check after `/map-systems` | cd-systems.md |
+| CD-SYSTEMS | Systems decomposition vision check after `/skill:map-systems` | cd-systems.md |
 | CD-NARRATIVE | Narrative consistency of story/lore documents | cd-narrative.md |
 | CD-PLAYTEST | Player experience validation of playtest reports | cd-playtest.md |
 | CD-PHASE-GATE | Creative readiness at phase transition | cd-phase-gate.md |
@@ -51,7 +51,7 @@ Agent by prefix: `CD-` creative-director · `TD-` technical-director ·
 | LP-FEASIBILITY | Implementation feasibility of the architecture | lp-feasibility.md |
 | LP-CODE-REVIEW | Code review of an implemented story | lp-code-review.md |
 | QL-STORY-READY | Acceptance-criteria testability before sprint | ql-story-ready.md |
-| QL-TEST-COVERAGE | Test coverage review for one story before it closes (`/story-done`) | ql-test-coverage.md |
+| QL-TEST-COVERAGE | Test coverage review for one story before it closes (`/skill:story-done`) | ql-test-coverage.md |
 | ND-CONSISTENCY | Narrative consistency of writer deliverables | nd-consistency.md |
 | AD-VISUAL | Visual consistency of art/tech-art decisions | ad-visual.md |
 
@@ -63,10 +63,10 @@ Review intensity controls whether gates run.
 
 **Global config**: `modes.review_mode` in `project.yaml` — one word: `full`,
 `lean`, or `solo`. Legacy fallback: `production/review-mode.txt` (single line,
-same values); `project.yaml` wins when both are present. `/start` never writes
+same values); `project.yaml` wins when both are present. `/skill:start` never writes
 it: left unset, it follows `modes.rigor` (`minimal` → `solo`, `standard` →
 `lean`, `full` → `full`). Set it explicitly only with
-`/settings modes.review_mode=<value>`.
+`/skill:settings modes.review_mode=<value>`.
 
 **Per-run override**: any gate-using skill accepts `--review [full|lean|solo]`,
 overriding the global config for that run only.
@@ -74,10 +74,10 @@ overriding the global config for that run only.
 | Mode | What runs |
 |------|-----------|
 | `full` | All gates active — every workflow step reviewed |
-| `lean` | PHASE-GATEs only (`/gate-check`) — per-skill gates skipped. The `rigor: standard` value |
+| `lean` | PHASE-GATEs only (`/skill:gate-check`) — per-skill gates skipped. The `rigor: standard` value |
 | `solo` | No director gates anywhere (game jams, prototypes, max speed). **Default** — the `rigor: minimal` value |
 
-**One exception:** `/team-narrative` runs ND-CONSISTENCY in every review mode
+**One exception:** `/skill:team-narrative` runs ND-CONSISTENCY in every review mode
 whenever narrative-director is on the team — it is that pipeline's only
 narrative consistency check, not an optional review.
 
@@ -106,7 +106,7 @@ Apply the resolved mode:
 > **PHASE-GATE panel width is a second, independent axis.** `review_mode` decides
 > whether the four PHASE-GATEs run at all; `modes.workflow` decides how many of
 > them run — `minimal` → PR only, `standard` → TD + PR, `full` → all four. The
-> rule and its rationale live in `/gate-check` Section 4b, the only skill that
+> rule and its rationale live in `/skill:gate-check` Section 4b, the only skill that
 > spawns PHASE-GATEs. Every other gate in this index is single-director and
 > unaffected. Width never softens a verdict: the escalation rule below applies
 > unchanged to whoever ran.
@@ -149,7 +149,7 @@ also lacked an input answers with the problem's word and names the missing
 input in its rationale. An artifact the skill reports as absent is information,
 not a missing input. At a phase gate,
 a missing artifact the target phase requires is a finding (NOT READY or
-CONCERNS); one `/gate-check` passes as "not expected before [phase]" or "not
+CONCERNS); one `/skill:gate-check` passes as "not expected before [phase]" or "not
 required at `workflow: [tier]`" is not a finding — a phase gate judges
 readiness for the phase being entered, not a later one.
 
@@ -174,7 +174,7 @@ For phase gates, record in `docs/architecture/architecture.md` or
 
 ## Parallel Gate Protocol
 
-At checkpoints needing multiple directors (most common at `/gate-check`):
+At checkpoints needing multiple directors (most common at `/skill:gate-check`):
 
 ```
 Spawn in parallel (issue all `Agent` calls before waiting for any result):
@@ -198,6 +198,6 @@ Collect every verdict from the directors that ran, then apply escalation rules:
 | **Systems Design** | TD-SYSTEM-BOUNDARY, CD-SYSTEMS, PR-SCOPE, CD-GDD-ALIGN (per GDD) | ND-CONSISTENCY, AD-VISUAL, TD-CHANGE-IMPACT (on GDD revision) |
 | **Technical Setup** | TD-ARCHITECTURE, TD-ADR (per ADR), TD-MANIFEST, LP-FEASIBILITY, AD-ART-BIBLE | TD-ENGINE-RISK |
 | **Pre-Production** | PR-EPIC, QL-STORY-READY (per story), PR-SPRINT, the PHASE-GATE panel (via gate-check — PR at `minimal`, TD + PR at `standard`, all four at `full`) | CD-PLAYTEST |
-| **Production** | LP-CODE-REVIEW (per story), QL-STORY-READY, PR-SPRINT (per sprint), QL-TEST-COVERAGE (per story, via `/story-done`) | PR-MILESTONE, AD-VISUAL, TD-CHANGE-IMPACT (on GDD revision) |
+| **Production** | LP-CODE-REVIEW (per story), QL-STORY-READY, PR-SPRINT (per sprint), QL-TEST-COVERAGE (per story, via `/skill:story-done`) | PR-MILESTONE, AD-VISUAL, TD-CHANGE-IMPACT (on GDD revision) |
 | **Polish** | CD-PLAYTEST, PR-MILESTONE | AD-VISUAL |
 | **Release** | The PHASE-GATE panel (via gate-check — PR at `minimal`, TD + PR at `standard`, all four at `full`) | — |

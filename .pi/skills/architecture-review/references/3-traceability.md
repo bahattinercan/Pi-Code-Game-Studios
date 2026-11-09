@@ -1,6 +1,6 @@
 # /skill:architecture-review — Phases 3 and 3b: Traceability Matrix and Story Linkage
 
-> Part of `/architecture-review`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-review`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 3: Build the Traceability Matrix
@@ -40,7 +40,7 @@ For each technical requirement extracted in Phase 2, search the ADRs:
 > of them will refuse.
 >
 > `🟡` is **not** a pass state: it caps the verdict at **CONCERNS**, and names the
-> route out — `/architecture-decision accept ADR-NNNN`. That route is the only
+> route out — `/skill:architecture-decision accept ADR-NNNN`. That route is the only
 > thing that moves an ADR to `Accepted`; without it, grading `Proposed` as
 > covered would be the only option, which is why it must never be graded so.
 
@@ -72,7 +72,7 @@ Requirements Traceability Matrix (RTM).
 
 Glob `production/epics/**/*.md` (excluding EPIC.md index files) to establish the
 denominator. Then collect the fields with **targeted section greps, not a full
-read of each story** — the same two-grep form `/test-evidence-review` uses for
+read of each story** — the same two-grep form `/skill:test-evidence-review` uses for
 this identical extraction:
 
 ```

@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 3: Look Up Current Version
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 3. Look Up Current Version

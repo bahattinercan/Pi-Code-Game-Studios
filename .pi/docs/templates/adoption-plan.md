@@ -6,7 +6,7 @@
 > **Template version**: v1.0+
 
 Work through these steps in order. Check off each item as you complete it.
-Re-run `/adopt` anytime to check remaining gaps.
+Re-run `/skill:adopt` anytime to check remaining gaps.
 
 ---
 
@@ -25,27 +25,27 @@ Re-run `/adopt` anytime to check remaining gaps.
 ## Step 3: Bootstrap Infrastructure
 
 [At `workflow: minimal`, replace 3a–3d with one line: "Not on the minimal path —
-the brief's build order is the plan. Next: `/create-stories` (or `/dev-story`
+the brief's build order is the plan. Next: `/skill:create-stories` (or `/skill:dev-story`
 once stories exist)."]
 
 ### 3a. Register existing requirements (creates tr-registry.yaml)
-Run `/architecture-review` — even if ADRs already exist, this run bootstraps
+Run `/skill:architecture-review` — even if ADRs already exist, this run bootstraps
 the TR registry from your existing GDDs and ADRs.
 **Time**: 1 session (review can be long for large codebases)
 - [ ] tr-registry.yaml created
 
 ### 3b. Create control manifest
-Run `/create-control-manifest`
+Run `/skill:create-control-manifest`
 **Time**: 30 min
 - [ ] docs/architecture/control-manifest.md created
 
 ### 3c. Create sprint tracking file
-Run `/sprint-plan update`
+Run `/skill:sprint-plan update`
 **Time**: 5 min (if sprint plan already exists as markdown)
 - [ ] production/sprint-status.yaml created
 
 ### 3d. Set authoritative project stage
-Run `/gate-check [current-phase]` (the gate into the phase the project is in;
+Run `/skill:gate-check [current-phase]` (the gate into the phase the project is in;
 at Concept there is none — Concept is the default stage, nothing to run)
 **Time**: 5 min
 - [ ] `project.stage` in `project.yaml` written (legacy `production/stage.txt` also updated)
@@ -75,5 +75,5 @@ regenerated. Do not regenerate stories that are in progress or done.
 
 ## Re-run
 
-Run `/adopt` again after completing Step 3 to verify all blocking and high gaps
+Run `/skill:adopt` again after completing Step 3 to verify all blocking and high gaps
 are resolved. The new run will reflect the current state of the project.

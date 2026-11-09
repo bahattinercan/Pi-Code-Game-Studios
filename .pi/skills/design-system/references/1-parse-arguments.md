@@ -1,6 +1,6 @@
 # /skill:design-system — Phase 1: Parse Arguments & Validate
 
-> Part of `/design-system`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:design-system`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 1. Parse Arguments & Validate
@@ -37,9 +37,9 @@ A system name or retrofit path is **required**. If missing:
    - Options: `[A] Yes — design [system-name]` / `[B] Pick a different system` / `[C] Stop here`
    - If [A]: proceed with that system name. If [B]: ask which system to design (plain text). If [C]: exit.
 3. If no systems index exists, fail with:
-   > "Usage: `/design-system <system-name>` — e.g., `/design-system movement`
-   > Or to fill gaps in an existing GDD: `/design-system retrofit design/gdd/[system-name].md`
-   > No systems index found. Run `/map-systems` first to map your systems and get the design order."
+   > "Usage: `/skill:design-system <system-name>` — e.g., `/skill:design-system movement`
+   > Or to fill gaps in an existing GDD: `/skill:design-system retrofit design/gdd/[system-name].md`
+   > No systems index found. Run `/skill:map-systems` first to map your systems and get the design order."
 
 **Detect retrofit mode:**
 If the argument starts with `retrofit` or the argument is a file path to an
@@ -91,7 +91,7 @@ The resolved tier determines which GDD sections are **required** (applied in §4
 **`## Summary` is required at every tier and is not one of the 8** — §5-pre
 authors it unconditionally (*"This runs at every tier"*). The per-tier lists
 below do not repeat it, and a GDD checked against a tier list alone would pass
-with no Summary, the one section `/review-all-gdds` and the tiered-loading
+with no Summary, the one section `/skill:review-all-gdds` and the tiered-loading
 readers depend on. Read every list below as "`## Summary`, plus:".
 - `full` — all 8 sections
 - `standard` — Overview, Detailed Design, Edge Cases, Dependencies, Acceptance
@@ -106,7 +106,7 @@ readers depend on. Read every list below as "`## Summary`, plus:".
   unless `workflow_overrides` force them (`tuning_knobs: true` forces Tuning Knobs)
 
   > **Do not gate this on a category token.** A test such as "the category is
-  > combat / economy / progression / AI" matches tokens `/map-systems` does not
+  > combat / economy / progression / AI" matches tokens `/skill:map-systems` does not
   > write — `templates/systems-index.md` defines the categories as `Core ·
   > Gameplay · Progression · Economy · Persistence · UI · Audio · Narrative ·
   > Meta` and lists **combat and AI as example systems under `Gameplay`**. A

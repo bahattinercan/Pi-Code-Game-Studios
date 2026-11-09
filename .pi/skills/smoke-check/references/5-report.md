@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 5: Generate Report
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 5: Generate Report
@@ -55,7 +55,7 @@ will determine whether the automated test row contributes to a FAIL verdict."
 
 **Summary**: [N] covered, [N] manual, [N] missing, [N] expected.
 
-[If `quick`:] "Coverage: not checked (quick run) — run `/smoke-check sprint`
+[If `quick`:] "Coverage: not checked (quick run) — run `/skill:smoke-check sprint`
 before hand-off." in place of the table and summary.
 
 ---
@@ -75,7 +75,7 @@ before hand-off." in place of the table and summary.
 ### Missing Test Evidence
 
 Stories that must have test evidence before they can be marked COMPLETE via
-`/story-done`:
+`/skill:story-done`:
 
 - **[story title]** (`[path]`) — Logic story has no test file.
   Expected location: `tests/unit/[system]/[story-slug]_test.[ext]`

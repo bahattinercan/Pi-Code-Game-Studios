@@ -12,7 +12,7 @@ The following stories are ready to pick up:
 1. [Story name] — [one line] — Est: [estimate]
 2. [Story name] — [one line] — Est: [estimate]
 
-Run `/story-readiness [path]` to confirm a story is ready before starting.
+Run `/skill:story-readiness [path]` to confirm a story is ready before starting.
 ```
 
 **Every Must Have story Complete or Blocked:** print the close-out sequence.
@@ -20,12 +20,12 @@ Run `/story-readiness [path]` to confirm a story is ready before starting.
 ```
 ### Sprint Close-Out Sequence
 All Must Have stories are complete. QA sign-off is required before advancing.
-1. `/smoke-check sprint` — the critical path still works end to end
-2. `/team-qa sprint` — test case execution, bug triage, sign-off report
-3. `/retrospective` — what went well, what didn't, action items
-4. `/gate-check` — only when advancing a stage, after `/team-qa` returns
+1. `/skill:smoke-check sprint` — the critical path still works end to end
+2. `/skill:team-qa sprint` — test case execution, bug triage, sign-off report
+3. `/skill:retrospective` — what went well, what didn't, action items
+4. `/skill:gate-check` — only when advancing a stage, after `/skill:team-qa` returns
    APPROVED or APPROVED WITH CONDITIONS
-5. `/sprint-plan new` — the next sprint
+5. `/skill:sprint-plan new` — the next sprint
 ```
 
 Should Have stories still unstarted: list them beside the sequence, so the user can

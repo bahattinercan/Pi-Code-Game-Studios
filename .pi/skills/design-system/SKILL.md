@@ -120,7 +120,7 @@ This skill follows the collaborative design principle at every step:
    - Phase 4 (each section): Design questions, approach options, draft approval
    - Phase 5: "May I update the entity registry? May I update the systems
      index? What's next?" — **not** "Run design review?": §5c forbids offering
-     `/design-review` inline, because the reviewing agent must not inherit this
+     `/skill:design-review` inline, because the reviewing agent must not inherit this
      session's design history. Phase 5c presents the hand-off; it never asks.
 3. **"May I write to [filepath]?"** before the skeleton and before each section write
 4. **Incremental writing**: Each section is written to file immediately after approval
@@ -141,14 +141,14 @@ shows context at or above 70%. If so, append this notice to the response:
 
 > **Context is approaching the limit (≥70%).** Your progress is saved — all approved
 > sections are written to `design/gdd/[system-name].md`. When you're ready to continue,
-> open a fresh Claude Code session and run `/design-system [system-name]` — it will
+> open a fresh Claude Code session and run `/skill:design-system [system-name]` — it will
 > detect which sections are complete and resume from the next one.
 
 ---
 
 ## Recommended Next Steps
 
-- Run `/design-review design/gdd/[system-name].md` in a **fresh session** to validate the completed GDD independently
-- Run `/consistency-check` to verify this GDD's values don't conflict with other GDDs
-- Run `/map-systems next` to move to the next highest-priority undesigned system
-- Run `/gate-check technical-setup` when all MVP GDDs are authored and reviewed
+- Run `/skill:design-review design/gdd/[system-name].md` in a **fresh session** to validate the completed GDD independently
+- Run `/skill:consistency-check` to verify this GDD's values don't conflict with other GDDs
+- Run `/skill:map-systems next` to move to the next highest-priority undesigned system
+- Run `/skill:gate-check technical-setup` when all MVP GDDs are authored and reviewed

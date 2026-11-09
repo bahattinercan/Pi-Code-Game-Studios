@@ -33,7 +33,7 @@ List all captured evidence below. Store files in the same directory as this
 document or in `production/qa/evidence/[story-slug]/`.
 
 **The file must actually be on disk.** Visual/Feel and UI gates are BLOCKING by
-default, and `/story-done` and `/test-evidence-review` glob for the image — a
+default, and `/skill:story-done` and `/skill:test-evidence-review` glob for the image — a
 filename listed here with no file beside it does not satisfy the gate.
 
 | # | Filename | What It Shows | Acceptance Criterion |
@@ -70,7 +70,7 @@ If nothing notable: *No significant observations.*
 ## Sign-Off
 
 A **Visual/Feel** story needs the lead sign-off below — the art-director, or the
-designer who owns the feature — before `/story-done` marks it COMPLETE. A **UI**
+designer who owns the feature — before `/skill:story-done` marks it COMPLETE. A **UI**
 story is closed by the retained screenshot of each screen it touched; a sign-off
 here is welcome but not required (`.pi/docs/coding-standards.md`).
 
@@ -82,7 +82,7 @@ someone deliberately reviews the evidence before marking complete.
 | Lead (art-director / designer) | | | [ ] Approved |
 
 *Optional:* add a row for anyone else whose review your team wants, such as the
-developer or the QA lead. `/story-done` and `/test-evidence-review` treat every
+developer or the QA lead. `/skill:story-done` and `/skill:test-evidence-review` treat every
 row in this table as required, so add one only for someone who will sign.
 
 **Any sign-off can be marked "Deferred — [reason]"** if the person is

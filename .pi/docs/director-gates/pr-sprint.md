@@ -4,7 +4,7 @@
 
 Agent: `producer` | Model tier: Opus | Domain: Scope, timeline, dependencies, production risk
 
-**Trigger**: Before finalising a sprint plan (`/sprint-plan`), and after any
+**Trigger**: Before finalising a sprint plan (`/skill:sprint-plan`), and after any
 mid-sprint scope change
 
 **Context to pass**:

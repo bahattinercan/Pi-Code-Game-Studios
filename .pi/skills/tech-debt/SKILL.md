@@ -112,7 +112,7 @@ Then use `AskUserQuestion` to collect the **estimated fix effort**:
   - `[D] XL — Extra Large (over 1 week)`
 
 Then use `AskUserQuestion` to collect the **impact if left unfixed** — the
-register's Impact column, which `/tech-debt prioritize` scores:
+register's Impact column, which `/skill:tech-debt prioritize` scores:
 - Prompt: "What does this cost if it is never fixed?"
 - Options: `[A] Low` / `[B] Med` / `[C] High` / `[D] Critical`
 
@@ -135,7 +135,7 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 
 Read the debt register at `docs/tech-debt-register.md`. If it does not exist:
 Verdict: **NOT ASSESSED** — no register at `docs/tech-debt-register.md`; run
-`/tech-debt scan` first. Stop.
+`/skill:tech-debt scan` first. Stop.
 
 Score each item from its own columns: `impact ÷ effort`, with Impact `Low` 1,
 `Med` 2, `High` 3, `Critical` 4 and Effort `S` 1, `M` 2, `L` 3, `XL` 4, rounded to
@@ -158,7 +158,7 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 ## Phase 2D: Report Mode
 
 Read the debt register. If it does not exist: Verdict: **NOT ASSESSED** — no
-register to report on; run `/tech-debt scan` first. Stop.
+register to report on; run `/skill:tech-debt scan` first. Stop.
 
 Generate summary statistics:
 
@@ -175,8 +175,8 @@ Output the report to the user. This mode is read-only — no files are written. 
 
 ## Phase 3: Next Steps
 
-- Run `/sprint-plan` to schedule high-priority debt items into the next sprint (at `workflow: minimal`, which has no sprints, add them to the brief's build order instead).
-- Run `/tech-debt report` at the start of each sprint to track debt trends over time.
+- Run `/skill:sprint-plan` to schedule high-priority debt items into the next sprint (at `workflow: minimal`, which has no sprints, add them to the brief's build order instead).
+- Run `/skill:tech-debt report` at the start of each sprint to track debt trends over time.
 
 ### Debt Register Format
 
@@ -190,7 +190,7 @@ Total items: [N] | Estimated total effort: [T-shirt sizes summed]
 | TD-001 | [Cat] | [Description] | [files] | [S/M/L/XL] | [Low/Med/High/Critical] | [Score] | [Open / Resolved YYYY-MM-DD / Accepted — reason] | [YYYY-MM-DD] | [Sprint to fix or "Backlog"] |
 ```
 
-Every skill that adds a row — this one, and `/story-done` when it logs
+Every skill that adds a row — this one, and `/skill:story-done` when it logs
 deviations as debt — writes all ten columns in this order, and a skill that
 creates the file writes the header and table head above first:
 
@@ -198,13 +198,13 @@ creates the file writes the header and table head above first:
   register (`TD-001` in a new one). IDs are never reused.
 - **Category** — one of the six categories under Scan Mode, written without
   "Debt": `Architecture`, `Code Quality`, `Test`, `Documentation`, `Dependency`,
-  `Performance` — the spelling `/story-done` writes, so Report Mode groups them once.
+  `Performance` — the spelling `/skill:story-done` writes, so Report Mode groups them once.
 - **Description** — what the debt is and why it was taken on.
 - **Files** — the affected paths, comma-separated; `—` when the debt has no single file.
 - **Effort** — `S`, `M`, `L` or `XL`, as in Add Mode; `—` if not yet estimated.
 - **Impact** — `Low`, `Med`, `High` or `Critical`: the cost if left unfixed; `—`
   if not yet judged.
-- **Priority** — the score `/tech-debt prioritize` writes; `—` until it runs.
+- **Priority** — the score `/skill:tech-debt prioritize` writes; `—` until it runs.
 - **Status** — `Open` when added. `Resolved YYYY-MM-DD` records the day the debt
   was fixed; `Accepted — reason` records a conscious decision to keep it.
 - **Added** — the day the row was written, `YYYY-MM-DD`. Report Mode counts items

@@ -20,13 +20,13 @@ reviews that cannot be done per-GDD in isolation:
    together: dominant strategies, broken economies, cognitive overload, pillar
    drift, competing progression loops
 
-**This is distinct from `/design-review`**, which reviews one GDD for internal
+**This is distinct from `/skill:design-review`**, which reviews one GDD for internal
 completeness. This skill reviews the *relationships* between all GDDs.
 
 **When to run:**
 - After all MVP-tier GDDs are individually approved
 - After any GDD is significantly revised mid-production
-- Before `/create-architecture` begins (architecture built on inconsistent GDDs
+- Before `/skill:create-architecture` begins (architecture built on inconsistent GDDs
   inherits those inconsistencies)
 
 Every `AskUserQuestion` call follows `.pi/docs/automation-modes.md`

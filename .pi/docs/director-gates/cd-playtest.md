@@ -4,12 +4,12 @@
 
 Agent: `creative-director` | Model tier: Opus | Domain: Vision, pillars, player experience
 
-**Trigger**: After playtest reports are generated (`/playtest-report`), or after
+**Trigger**: After playtest reports are generated (`/skill:playtest-report`), or after
 any session that produces player feedback
 
 **Context to pass**:
 - Playtest report — its file path, or its content inline when the calling skill
-  reviews before saving (`/playtest-report` does)
+  reviews before saving (`/skill:playtest-report` does)
 - Game pillars and core fantasy statement
 - The specific hypothesis being tested
 

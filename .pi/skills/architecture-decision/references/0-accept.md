@@ -1,16 +1,16 @@
 # /skill:architecture-decision — Acceptance Mode
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 **If the argument starts with `accept` followed by an ADR id**
 
-(e.g., `/architecture-decision accept ADR-0005`):
+(e.g., `/skill:architecture-decision accept ADR-0005`):
 
 Enter **acceptance mode**. This is the *only* path in the framework that moves an
 ADR from `Proposed` to `Accepted`. Authoring always produces `Proposed`
 (Step 5), while
-`/create-control-manifest`, `/create-epics`, `/create-stories` and `/gate-check`
+`/skill:create-control-manifest`, `/skill:create-epics`, `/skill:create-stories` and `/skill:gate-check`
 all require `Accepted` — so without this mode an ADR would enter a state it
 never leaves.
 
@@ -29,7 +29,7 @@ never leaves.
    > "ADR-0005's dependency section is [absent / UNKNOWN], so I cannot tell what
    > this decision rests on. An empty dependency list and an unexamined one look
    > identical here, and only one of them is safe to accept. Run
-   > `/architecture-decision retrofit <path>` to establish it."
+   > `/skill:architecture-decision retrofit <path>` to establish it."
 
    A dependency check reading a field that defaults to empty is the vacuous-pass
    shape this gate exists to prevent — the check would examine nothing and report
@@ -39,7 +39,7 @@ never leaves.
    > "ADR-0005 depends on ADR-0002, which is still Proposed. Accept ADR-0002
    > first — an accepted decision resting on an unaccepted one is not a decision,
    > it is a deferral with a different label."
-   This is the same dependency rule `/architecture-review` already flags; here it
+   This is the same dependency rule `/skill:architecture-review` already flags; here it
    is enforced rather than reported.
 4. **Confirm with the user, always.** Per `CONTRACT.md`, acceptance authority is
    **the user, or `technical-director` on the user's explicit confirmation — no
@@ -53,7 +53,7 @@ never leaves.
 5. **Find the stories this will unblock, BEFORE the prompt in step 4.** Grep
    every story for a Blocked Status line —
    `Grep pattern="Status\**:\**\s*Blocked" path="production/epics" glob="**/story-*.md" output_mode="files_with_matches"`,
-   which matches `> **Status**: Blocked` (the form `/create-stories` writes),
+   which matches `> **Status**: Blocked` (the form `/skill:create-stories` writes),
    `**Status:** Blocked` and `Status: Blocked` — and keep the files that name
    this ADR's id as the reason they are blocked. That pairing is what "blocked
    pending this ADR" means — a story blocked for an unrelated reason will not
@@ -63,7 +63,7 @@ never leaves.
    successor does not re-point it.
    > **Stories live only under `production/epics/`.** A flat top-level stories
    > directory does not exist and no skill creates one — never write or match a
-   > path outside `production/epics/`. `/dev-story` matches entries *by file
+   > path outside `production/epics/`. `/skill:dev-story` matches entries *by file
    > path*, so a story recorded under any other path silently fails to match and
    > never gets picked up.
 
@@ -72,10 +72,10 @@ never leaves.
    shown the effect.** If none match, say "no stories are waiting on this" — that
    is useful information, not an empty result to omit.
 6. On confirmation, `Edit` the `## Status` line to `Accepted`. Leave an existing
-   `## Date` as it is: it records when the ADR was written, and `/create-stories`
+   `## Date` as it is: it records when the ADR was written, and `/skill:create-stories`
    stamps stories with it (or `## Last Verified`), so rewriting it on acceptance
    would make every story drafted against the Proposed ADR look out of date to
-   `/dev-story`. **If that section is absent, add it** with today's date — retrofit
+   `/skill:dev-story`. **If that section is absent, add it** with today's date — retrofit
    mode already owns this shape, and acceptance must not fail on a template that
    predates the field.
 7. Then set each story found in step 5 from `Blocked` to `Ready`. Unblocking is a

@@ -21,7 +21,7 @@ question is the last thing in the reply: no path, note or advice after it. A ski
 question is not an answer: ask again in plain text.
 
 The questions in Phases 2, 4 and 5 shape the project, so they are asked in every automation mode.
-The engine is not one of them: `/setup-engine` chooses it. Phase 6's last question follows a
+The engine is not one of them: `/skill:setup-engine` chooses it. Phase 6's last question follows a
 `modes.automation` already in `project.yaml`, per `.pi/docs/automation-modes.md`; with none
 set, ask it.
 
@@ -49,7 +49,7 @@ not asked (Phases 4 and 5).
 
 **Returning user** (an engine is set and `concept` is present): ask nothing. Say the engine, the
 concept or brief found, and the review mode: `modes.review_mode` if set, otherwise the one
-`modes.rigor` implies (`minimal` → `solo`, `standard` → `lean`, `full` → `full`). Suggest `/help` for the next step, add the
+`modes.rigor` implies (`minimal` → `solo`, `standard` → `lean`, `full` → `full`). Suggest `/skill:help` for the next step, add the
 template-remote note if it applies, and stop.
 
 ## Phase 2: Ask where the user is
@@ -69,19 +69,19 @@ their situation and route from that.
 
 Name the immediate next step only. The full path waits for Phase 6, after the rigor is known.
 
-- **A, no idea:** starting from zero is fine. `/brainstorm open` explores freely; `/brainstorm
-  [hint]` starts from a word or theme. Next step: `/brainstorm open`, or a hint if one comes to
+- **A, no idea:** starting from zero is fine. `/skill:brainstorm open` explores freely; `/skill:brainstorm
+  [hint]` starts from a word or theme. Next step: `/skill:brainstorm open`, or a hint if one comes to
   mind. Describe it as "turns no idea into a written design the next step builds from"; how long
   that design is depends on the rigor, so leave that for Phase 6.
 - **B, vague idea:** ask for the idea in a few words, take it as it is, and name
-  `/brainstorm [their words]`.
+  `/skill:brainstorm [their words]`.
 - **C, clear concept:** ask for the concept in one sentence (genre and core mechanic), as plain
-  text. Then ask: "How would you like to proceed?" Options: `Formalize it first` (`/brainstorm
-  [concept]` writes it down) / `Jump straight in` (`/setup-engine` now, write the design after).
+  text. Then ask: "How would you like to proceed?" Options: `Formalize it first` (`/skill:brainstorm
+  [concept]` writes it down) / `Jump straight in` (`/skill:setup-engine` now, write the design after).
   The next step is their pick.
 - **D, existing work:** say what Phase 1 found ("N source files under `[code_root]`, N design
-  documents, engine [X / not set]"). Next step: `/setup-engine` when no engine is set and there is
-  no more than a concept; otherwise `/project-stage-detect`.
+  documents, engine [X / not set]"). Next step: `/skill:setup-engine` when no engine is set and there is
+  no more than a concept; otherwise `/skill:project-stage-detect`.
 
 Then say: "I'll lay out the full path in a moment."
 
@@ -124,11 +124,11 @@ What I'll set up
 
 Then ask with the question tool: "Save these to `project.yaml` (and the stage to
 `production/stage.txt`)?" Options: `Save them` / `Don't save`. Ask no question about the rigor
-itself: the card shows it, and `/settings` changes it.
+itself: the card shows it, and `/skill:settings` changes it.
 
 - **Save them:** run `bash .pi/scripts/set-stage.sh "[stage]"`, then, only when rigor was not
   already set, `bash .pi/scripts/config-set.sh modes.rigor [value]`. Check the read-back rows
-  match. Say: "Saved. Rigor `[value]` sets six other settings; `/settings` shows them and changes
+  match. Say: "Saved. Rigor `[value]` sets six other settings; `/skill:settings` shows them and changes
   any of them."
 - **Don't save**, or anything other than an explicit yes: write nothing, keep the values for this
   run, and say they were not saved.
@@ -155,43 +155,43 @@ unless the Phase 4 save was declined (then say it was not saved).
 Say: "Here's your path at rigor `[value]`. Every skill still runs at any rigor; rigor changes
 what's required, not what's allowed."
 
-The path starts with the step Phase 3 named. When that was `/brainstorm` (paths A and B, and C's
-`Formalize it first`), list `/brainstorm` first and `/setup-engine` second: each runs without the
+The path starts with the step Phase 3 named. When that was `/skill:brainstorm` (paths A and B, and C's
+`Formalize it first`), list `/skill:brainstorm` first and `/skill:setup-engine` second: each runs without the
 other.
 
 **`minimal`: 4 steps to running code**
-1. `/setup-engine`: choose and configure the engine
-2. `/brainstorm`: write the one-page `design/game-brief.md`
-3. `/create-stories`: turn the brief's MVP list into stories (no epics or sprint plan needed)
-4. `/dev-story`: the first line of game code
+1. `/skill:setup-engine`: choose and configure the engine
+2. `/skill:brainstorm`: write the one-page `design/game-brief.md`
+3. `/skill:create-stories`: turn the brief's MVP list into stories (no epics or sprint plan needed)
+4. `/skill:dev-story`: the first line of game code
 
 **`standard`**
-- Concept: `/setup-engine` → `/brainstorm` → `/prototype` → `/art-bible` → `/gate-check`
-- Systems Design: `/map-systems` → `/design-system` (once per system) → `/review-all-gdds` →
-  `/gate-check`
-- Architecture: `/create-architecture` → `/architecture-decision` (once per decision) →
-  `/create-control-manifest` → `/architecture-review` → `/test-setup` → `/ux-design`
-  (accessibility and interaction patterns) → `/gate-check`
-- Pre-Production: `/ux-design` (HUD and key screens) → `/create-epics` → `/create-stories` →
-  `/sprint-plan` → `/gate-check`
-- Production: `/dev-story`
+- Concept: `/skill:setup-engine` → `/skill:brainstorm` → `/skill:prototype` → `/skill:art-bible` → `/skill:gate-check`
+- Systems Design: `/skill:map-systems` → `/skill:design-system` (once per system) → `/skill:review-all-gdds` →
+  `/skill:gate-check`
+- Architecture: `/skill:create-architecture` → `/skill:architecture-decision` (once per decision) →
+  `/skill:create-control-manifest` → `/skill:architecture-review` → `/skill:test-setup` → `/skill:ux-design`
+  (accessibility and interaction patterns) → `/skill:gate-check`
+- Pre-Production: `/skill:ux-design` (HUD and key screens) → `/skill:create-epics` → `/skill:create-stories` →
+  `/skill:sprint-plan` → `/skill:gate-check`
+- Production: `/skill:dev-story`
 
-Each `/gate-check` moves the project one stage, and only when it passes.
+Each `/skill:gate-check` moves the project one stage, and only when it passes.
 
-**`full`:** everything in `standard`, plus `/vertical-slice` and `/playtest-report` in
-Pre-Production and `/design-review` after each GDD.
+**`full`:** everything in `standard`, plus `/skill:vertical-slice` and `/skill:playtest-report` in
+Pre-Production and `/skill:design-review` after each GDD.
 
 **Path D with existing work** (stage `Systems Design` or later, or code on disk) gets this instead.
 Print only the steps that apply, and for the brief only the one source that applies. At `minimal`:
-1. `/project-stage-detect`: what stage the project is at and what is missing
-2. `/adopt`: whether the existing files are in the format the skills read
-3. `/setup-engine`: only when no engine is set; leave it out when `engine` names one
-4. The brief, only if `concept` is absent: `/reverse-document design [code_root]` when the code
+1. `/skill:project-stage-detect`: what stage the project is at and what is missing
+2. `/skill:adopt`: whether the existing files are in the format the skills read
+3. `/skill:setup-engine`: only when no engine is set; leave it out when `engine` names one
+4. The brief, only if `concept` is absent: `/skill:reverse-document design [code_root]` when the code
    root holds 10 or more source files (it writes the brief from the game), and then do not mention
-   `/brainstorm` at all; `/brainstorm` only when it holds fewer
+   `/skill:brainstorm` at all; `/skill:brainstorm` only when it holds fewer
 
-At `standard` and `full`, steps 1 to 3, then `/design-system retrofit [path]`,
-`/architecture-decision retrofit [path]`, `/architecture-review` and `/gate-check`.
+At `standard` and `full`, steps 1 to 3, then `/skill:design-system retrofit [path]`,
+`/skill:architecture-decision retrofit [path]`, `/skill:architecture-review` and `/skill:gate-check`.
 
 Present `minimal` as the documented floor, not a lesser mode, and name its trade once: no GDDs, so
 design problems show up in code.

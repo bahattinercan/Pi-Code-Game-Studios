@@ -5,7 +5,7 @@ description: "Orchestrate the narrative team — narrative-director, writer, wor
 # Team Narrative
 
 If no argument is provided, output usage guidance and exit without spawning any agents:
-> Usage: `/team-narrative [narrative content description] [--review full|lean|solo]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-narrative [narrative content description] [--review full|lean|solo]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`). Do not use `AskUserQuestion` here; output the guidance directly.
 
 When this skill is invoked with an argument, orchestrate the narrative team through a structured pipeline.
 
@@ -112,16 +112,16 @@ cover, so **you** write those after one approval (see "Write the finals"):
 | localization-lead | `production/narrative/[content-slug]/i18n-review.md` | stays in `production/` — a review, not a design document |
 
 > **The final destination is not a free choice.** `design/narrative/` is read by
-> `/asset-spec`, `/design-review`, `/localize`, `/onboard`,
-> `/project-stage-detect`, `/team-level` and the `cd-narrative` director gate.
+> `/skill:asset-spec`, `/skill:design-review`, `/skill:localize`, `/skill:onboard`,
+> `/skill:project-stage-detect`, `/skill:team-level` and the `cd-narrative` director gate.
 > An artifact written anywhere else is invisible to all seven.
 >
 > The `[path]` contract above has a precondition: the path is one *you* named. A
 > skill that states the contract but names no concrete destination leaves every
-> run to invent one, which defeats it. `/team-qa` Phase 4 carries the same
+> run to invent one, which defeats it. `/skill:team-qa` Phase 4 carries the same
 > requirement for the same reason.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phase 2 agents can run simultaneously).
 
@@ -206,8 +206,8 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## File Write Protocol
@@ -238,6 +238,6 @@ Verdict: **BLOCKED** — [reason]
 
 ## Next Steps
 
-- Run `/design-review` on the narrative documents for consistency validation.
-- Run `/localize extract` to extract new strings for translation after dialogue is finalized.
-- Run `/dev-story` to implement dialogue triggers and narrative events in-engine.
+- Run `/skill:design-review` on the narrative documents for consistency validation.
+- Run `/skill:localize extract` to extract new strings for translation after dialogue is finalized.
+- Run `/skill:dev-story` to implement dialogue triggers and narrative events in-engine.

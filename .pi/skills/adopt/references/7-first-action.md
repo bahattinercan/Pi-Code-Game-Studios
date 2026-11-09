@@ -1,6 +1,6 @@
 # /skill:adopt — Phase 7: Offer First Action
 
-> Part of `/adopt`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:adopt`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 7: Offer First Action
@@ -57,6 +57,6 @@ Use `AskUserQuestion`:
   - "Run /skill:project-stage-detect for a broader health check"
   - "Done — I'll work through the plan at my own pace"
 
-> **Adoption plan saved to `docs/adoption-plan-[date].md`.** Re-run `/adopt` at any time to re-check remaining gaps as you complete them.
+> **Adoption plan saved to `docs/adoption-plan-[date].md`.** Re-run `/skill:adopt` at any time to re-check remaining gaps as you complete them.
 
 ---

@@ -17,7 +17,7 @@ defaults in `.pi/docs/config-resolution.md`.
 This skill validates whether the project is ready to advance to the next development
 phase. It checks for required artifacts, quality standards, and blockers.
 
-**Distinct from `/project-stage-detect`**: That skill is diagnostic ("where are we?").
+**Distinct from `/skill:project-stage-detect`**: That skill is diagnostic ("where are we?").
 This skill is prescriptive ("are we ready to advance?" with a formal verdict).
 
 ## Production Stages (7)
@@ -38,7 +38,7 @@ The project progresses through these stages:
 
 ## 1. Parse Arguments
 
-**Target phase:** `$ARGUMENTS` with any `--review <mode>` pair removed (blank = auto-detect current stage, then validate next transition). `/gate-check --review full` names no phase.
+**Target phase:** `$ARGUMENTS` with any `--review <mode>` pair removed (blank = auto-detect current stage, then validate next transition). `/skill:gate-check --review full` names no phase.
 
 Note: in `solo` mode, director spawns (CD-PHASE-GATE, TD-PHASE-GATE, PR-PHASE-GATE, AD-PHASE-GATE) are skipped — gate-check becomes artifact-existence checks only. In `lean` mode, the phase-gate directors still run (phase gates are the purpose of lean mode); how many of them run is set by `workflow` below.
 
@@ -61,7 +61,7 @@ controls which artifacts are required. `modes.rigor` sets both together; set
 `qa.level` explicitly to vary enforcement alone. At `minimal`, no test gates apply — the
 test-evidence and unit-test artifact items become non-required and the
 Section 3 `testing.strict` check is a no-op; the smoke check is not relaxed (Section 2b) —
-but at this level `/smoke-check` runs without game tests (its automated row reads
+but at this level `/skill:smoke-check` runs without game tests (its automated row reads
 WAIVED), so the build check (`commands.smoke`, else `commands.build`, when set) and
 the launch and critical-path checks are the floor — a build nobody launched is
 NOT ASSESSED — and a project with no tests can still pass. At `standard`,
@@ -80,9 +80,9 @@ adds engine sub-specialists. It never skips a director — skipping directors is
 when set explicitly (a full-rigor project gets the `studio` set; lighter tiers
 get `individual`).
 
-- **With argument**: `/gate-check production` — validate readiness for that specific phase
+- **With argument**: `/skill:gate-check production` — validate readiness for that specific phase
 - **No argument**: Auto-detect current stage using the same heuristics as
-  `/project-stage-detect`, then **confirm with the user before running**:
+  `/skill:project-stage-detect`, then **confirm with the user before running**:
 
   Use `AskUserQuestion`:
   - Prompt: "Detected stage: **[current stage]**. Running gate for [Current] → [Next] transition. Is this correct?"
@@ -147,7 +147,7 @@ This skill follows the collaborative design principle:
    what to do next; only the stage write is bound to it (Section 6)
 5. **Get approval**: "May I write this gate check report to production/gate-checks/?"
 6. **Never auto-fix**: If required artifacts are missing, report the FAIL verdict and
-   name the skill to run (e.g. "run `/test-setup`"). Do NOT create missing files or
+   name the skill to run (e.g. "run `/skill:test-setup`"). Do NOT create missing files or
    re-run the gate automatically. Creating files to manufacture a PASS defeats the
    gate's purpose.
 

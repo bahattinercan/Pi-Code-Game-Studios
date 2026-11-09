@@ -63,18 +63,18 @@ Validates whether the project is ready to advance from one development phase to 
 
 | Gate Passed | Enabled downstream skill |
 |-------------|-------------------------|
-| Concept → Systems Design | `/map-systems` — or `/design-system` for the first system when `design/gdd/systems-index.md` already exists |
-| Systems Design → Technical Setup | `/create-architecture` first — the master architecture and the ADR work plan (it needs an engine, so `/setup-engine` if none is configured) — then `/architecture-decision` |
-| Technical Setup → Pre-Production | `/create-control-manifest` if `docs/architecture/control-manifest.md` does not exist yet, then `/vertical-slice`; `/create-epics` and `/create-stories` once the slice has validated the core loop |
-| Pre-Production → Production | `/dev-story`, `/sprint-plan`, `/story-readiness` |
-| Production → Polish | `/perf-profile`, `/playtest-report`, `/smoke-check` |
-| Polish → Release | `/launch-checklist`, `/team-release` (the release checklist, changelog and security audit are done before this gate) |
+| Concept → Systems Design | `/skill:map-systems` — or `/skill:design-system` for the first system when `design/gdd/systems-index.md` already exists |
+| Systems Design → Technical Setup | `/skill:create-architecture` first — the master architecture and the ADR work plan (it needs an engine, so `/skill:setup-engine` if none is configured) — then `/skill:architecture-decision` |
+| Technical Setup → Pre-Production | `/skill:create-control-manifest` if `docs/architecture/control-manifest.md` does not exist yet, then `/skill:vertical-slice`; `/skill:create-epics` and `/skill:create-stories` once the slice has validated the core loop |
+| Pre-Production → Production | `/skill:dev-story`, `/skill:sprint-plan`, `/skill:story-readiness` |
+| Production → Polish | `/skill:perf-profile`, `/skill:playtest-report`, `/skill:smoke-check` |
+| Polish → Release | `/skill:launch-checklist`, `/skill:team-release` (the release checklist, changelog and security audit are done before this gate) |
 
 - Downstream skills read `project.stage` from `project.yaml` (fallback `production/stage.txt`) to confirm their phase is active before proceeding
-- `/create-epics` reads `docs/architecture/control-manifest.md` — required at `full`, read if present at `standard` — and the Pre-Production → Production gate checks it
+- `/skill:create-epics` reads `docs/architecture/control-manifest.md` — required at `full`, read if present at `standard` — and the Pre-Production → Production gate checks it
 
 ## Known Fragile Points
-- `project.stage` in `project.yaml` (with legacy `production/stage.txt` as fallback) is the authoritative stage indicator — if either is manually edited to a wrong value outside of `/gate-check`, auto-detection in future sessions will be incorrect; never edit them outside `/gate-check`'s stage write
+- `project.stage` in `project.yaml` (with legacy `production/stage.txt` as fallback) is the authoritative stage indicator — if either is manually edited to a wrong value outside of `/skill:gate-check`, auto-detection in future sessions will be incorrect; never edit them outside `/skill:gate-check`'s stage write
 - The Production → Polish gate runs the test suite via Bash. If the test runner command is not configured or fails to start (e.g. gdUnit4 is not installed at `addons/gdUnit4/`), the test check yields `NOT ASSESSED`, which outranks PASS — so the gate cannot advance a stage on the strength of a suite that never ran. With a concern also found, the verdict is CONCERNS, and its override is not offered while that check is NOT ASSESSED
 - The Pre-Production → Production gate has a hard Vertical Slice validation block; any subjective checklist item (e.g., "core mechanic feels good") requires a user response via `AskUserQuestion` — if the user answers without playing the build, a false PASS is possible
 - Gate report files in `production/gate-checks/` are not validated for completeness by any downstream skill; a partial report written due to a session interruption will look identical to a complete one

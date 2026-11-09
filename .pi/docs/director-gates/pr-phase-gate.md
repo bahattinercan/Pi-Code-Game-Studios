@@ -4,11 +4,11 @@
 
 Agent: `producer` | Model tier: Opus | Domain: Scope, timeline, dependencies, production risk
 
-**Trigger**: At every `/gate-check` director panel — producer is on the panel at every `modes.workflow`; spawn in parallel with the rest of it (alone at `minimal`, with TD-PHASE-GATE at `standard`, with TD-PHASE-GATE, CD-PHASE-GATE and AD-PHASE-GATE at `full`)
+**Trigger**: At every `/skill:gate-check` director panel — producer is on the panel at every `modes.workflow`; spawn in parallel with the rest of it (alone at `minimal`, with TD-PHASE-GATE at `standard`, with TD-PHASE-GATE, CD-PHASE-GATE and AD-PHASE-GATE at `full`)
 
 **Context to pass**:
 - Target phase name and the resolved `workflow` tier
-- The target gate's required and recommended artifacts at the resolved tier (from `/gate-check`'s loaded gate file)
+- The target gate's required and recommended artifacts at the resolved tier (from `/skill:gate-check`'s loaded gate file)
 - Sprint and milestone artifacts present — at `minimal`, the Build order in `design/game-brief.md` is the plan (that tier has no sprint plan)
 - Team size (`team.size`) and sprint capacity (from the current sprint plan, if one exists)
 - Current blocked story count

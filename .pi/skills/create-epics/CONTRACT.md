@@ -22,18 +22,18 @@ traceability — sits between architecture review and story decomposition.
 > SKILL.md relaxes them by `workflow`: at `standard`, GDDs need the 5 required
 > sections (+ conditional Formulas), only critical (Foundation-layer) ADRs are
 > expected and traced, and the control manifest is read if present, not required.
-> At `minimal` the skill is optional and off the path (`/create-stories`
+> At `minimal` the skill is optional and off the path (`/skill:create-stories`
 > synthesizes the epic itself), and it says so first; if run, it skips the GDD and
 > architecture reads, reads only `design/game-brief.md` (stopping if that is
 > missing), takes its order from the brief's Build order instead of
 > `systems-index.md`, and requires no GDD, ADR, architecture document, TR registry
 > or control manifest. A short brief is one epic slugged from the brief's working
-> title, the slug `/create-stories` uses when nothing is typed; a user who asks for
+> title, the slug `/skill:create-stories` uses when nothing is typed; a user who asks for
 > the work grouped gets one epic per group of MVP features.
 
 ### Preconditions
-- `/create-control-manifest` has been run and `docs/architecture/control-manifest.md` exists
-- `/architecture-review` has passed (at minimum Foundation and Core ADRs are Accepted)
+- `/skill:create-control-manifest` has been run and `docs/architecture/control-manifest.md` exists
+- `/skill:architecture-review` has passed (at minimum Foundation and Core ADRs are Accepted)
 - All in-scope GDDs have status `Approved` or `Designed` in `systems-index.md`
 - The target layer's GDDs are stable — do not run for Feature layer until Core is nearly complete
 
@@ -47,7 +47,7 @@ traceability — sits between architecture review and story decomposition.
 
 ### Output Guarantees
 - Every EPIC.md contains a `## Governing ADRs` table with at least one row (or a documented note if none apply)
-- Every EPIC.md contains a `## GDD Requirements` table where each row has a `TR-ID` and an `ADR Coverage` cell: `ADR-NNNN ✅` (an Accepted ADR), `❌ No ADR`, or `❌ No ADR (ADR-NNNN Proposed)` when the only ADR addressing it is not Accepted, so `/create-stories` still sees that ADR and blocks its story
+- Every EPIC.md contains a `## GDD Requirements` table where each row has a `TR-ID` and an `ADR Coverage` cell: `ADR-NNNN ✅` (an Accepted ADR), `❌ No ADR`, or `❌ No ADR (ADR-NNNN Proposed)` when the only ADR addressing it is not Accepted, so `/skill:create-stories` still sees that ADR and blocks its story
 - The `GDD:` field in the EPIC.md header is a valid relative path to the source GDD
 - The `Layer:` field is one of: Foundation, Core, Feature, Presentation
 - The `Status:` field is set to `Ready`
@@ -84,8 +84,8 @@ It assumes:
 - `Status: Ready` does not by itself mean no stories exist — an EPIC.md updated in place keeps its stories; read its `Stories:` line
 
 ## Known Fragile Points
-- If the EPIC.md template structure changes (section names, header field names, table column order), `/create-stories` will silently fail to parse governance data and may produce incomplete or incorrect stories
-- If `tr-registry.yaml` is regenerated with renumbered IDs after EPIC.md files are written, the TR-IDs in existing EPIC.md files become stale and mislead `/create-stories`
-- If an ADR is retroactively changed from `Accepted` to `Proposed` after the epic is written, the EPIC.md still shows it as governing. `/create-stories` reads every named ADR's current status with `adr-status.sh` and blocks the stories, but the epic's coverage column stays stale until `/create-epics` updates the epic in place
-- If `systems-index.md` layer assignments change after epics are created, the `Layer:` field in existing EPIC.md files will be incorrect and `/create-stories` will use the wrong layer context
+- If the EPIC.md template structure changes (section names, header field names, table column order), `/skill:create-stories` will silently fail to parse governance data and may produce incomplete or incorrect stories
+- If `tr-registry.yaml` is regenerated with renumbered IDs after EPIC.md files are written, the TR-IDs in existing EPIC.md files become stale and mislead `/skill:create-stories`
+- If an ADR is retroactively changed from `Accepted` to `Proposed` after the epic is written, the EPIC.md still shows it as governing. `/skill:create-stories` reads every named ADR's current status with `adr-status.sh` and blocks the stories, but the epic's coverage column stays stale until `/skill:create-epics` updates the epic in place
+- If `systems-index.md` layer assignments change after epics are created, the `Layer:` field in existing EPIC.md files will be incorrect and `/skill:create-stories` will use the wrong layer context
 - `production/epics/index.md` rows are matched to epics by slug — an epic whose slug changes gets a new row, and the old row stays behind

@@ -5,7 +5,7 @@ description: "Orchestrate the UI team through the UX pipeline — authoring, vis
 # Team UI
 
 If no argument is provided, output usage guidance and exit without spawning any agents or reading any design files:
-> Usage: `/team-ui [UI feature description] [--review full|lean|solo]` — describe the screen or UI feature to build (e.g., `inventory screen`, `main menu`, `combat HUD`). Do not use `AskUserQuestion` here; output the guidance directly.
+> Usage: `/skill:team-ui [UI feature description] [--review full|lean|solo]` — describe the screen or UI feature to build (e.g., `inventory screen`, `main menu`, `combat HUD`). Do not use `AskUserQuestion` here; output the guidance directly.
 
 When this skill is invoked, orchestrate the UI team through a structured pipeline.
 
@@ -112,9 +112,9 @@ uses. One file per agent, so the parallel Phase 4 reviews never share one:
 | 4 ux-designer, art-director, accessibility-specialist | `production/ui/[feature-name]/review-[agent].md`, one each |
 
 The UX spec itself (Phase 1b) and any pattern-library update are under `design/`,
-outside the bounded exception: `/ux-design` or the agent asks before writing them.
+outside the bounded exception: `/skill:ux-design` or the agent asks before writing them.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phase 4 review agents can run simultaneously).
 
@@ -149,7 +149,7 @@ is absent:
   and must NOT report the accessibility gate as passed.**
 - The ux-designer states which tier they designed against as an explicit
   assumption, so a later reader can see it was assumed rather than committed.
-- Recommend `/ux-design accessibility` to establish the tier.
+- Recommend `/skill:ux-design accessibility` to establish the tier.
 
 Absence of a concept doc (neither `design/gdd/game-concept.md` nor
 `design/game-brief.md`), `design/player-journey.md` or `design/ux/hud.md` is not
@@ -161,7 +161,7 @@ than inferring it.
 > "interaction-patterns.md does not exist — no existing patterns to reuse."
 
 Then use `AskUserQuestion` with options:
-- (a) Run `/ux-design patterns` first to establish the pattern library, then continue
+- (a) Run `/skill:ux-design patterns` first to establish the pattern library, then continue
 - (b) Proceed without the pattern library — ui-programmer will treat all patterns created as new and add each to a new `design/ux/interaction-patterns.md` at completion
 
 Do NOT invent or assume patterns from the feature name or GDD alone. If the user chooses (b), explicitly instruct ui-programmer in Phase 3 to treat all patterns as new and document them in `design/ux/interaction-patterns.md` when implementation is complete. Note the pattern library status (created / absent / updated) in the final summary report.
@@ -170,23 +170,23 @@ Summarize the context in a brief for the ux-designer: what the player is doing, 
 
 ### Phase 1b: UX Spec Authoring
 
-Invoke `/ux-design [feature name]` skill OR delegate directly to ux-designer to produce `design/ux/[feature-name].md` following the `ux-spec.md` template.
+Invoke `/skill:ux-design [feature name]` skill OR delegate directly to ux-designer to produce `design/ux/[feature-name].md` following the `ux-spec.md` template.
 
 If designing the HUD, use the `hud-design.md` template instead of `ux-spec.md`.
 
 > **Notes on special cases:**
-> - For HUD design specifically, invoke `/ux-design` with `argument: hud` (e.g., `/ux-design hud`).
-> - For the interaction pattern library, run `/ux-design patterns` once at project start and update it whenever new patterns are introduced during later phases.
+> - For HUD design specifically, invoke `/skill:ux-design` with `argument: hud` (e.g., `/skill:ux-design hud`).
+> - For the interaction pattern library, run `/skill:ux-design patterns` once at project start and update it whenever new patterns are introduced during later phases.
 
 Output: `design/ux/[feature-name].md` with all required spec sections filled.
 
 ### Phase 1c: UX Review
 
-After the spec is complete, invoke `/ux-review design/ux/[feature-name].md`.
+After the spec is complete, invoke `/skill:ux-review design/ux/[feature-name].md`.
 
 **Gate**: Do not proceed to Phase 2 until the verdict is APPROVED. If the verdict is NEEDS REVISION, the ux-designer must address the flagged issues in the same spec — it is kept and revised, never discarded — and re-run the review. The user may explicitly accept a NEEDS REVISION risk and proceed, but this must be a conscious decision — present the specific concerns via `AskUserQuestion` before asking whether to proceed.
 
-A **NOT ASSESSED** verdict blocks the same way, and the user may override it the same way. Its fix is an input, not a revision: present the dimensions `/ux-review` could not assess and the missing input for each (e.g. `/ux-design accessibility` for an uncommitted tier). Re-running the review without that input returns the same verdict, so offer to produce the input first.
+A **NOT ASSESSED** verdict blocks the same way, and the user may override it the same way. Its fix is an input, not a revision: present the dimensions `/skill:ux-review` could not assess and the missing input for each (e.g. `/skill:ux-design accessibility` for an uncommitted tier). Re-running the review without that input returns the same verdict, so offer to produce the input first.
 
 When the user proceeds past NEEDS REVISION or NOT ASSESSED, the final report records the override: the verdict, the concerns or unassessed dimensions left open, and that the user chose to proceed.
 
@@ -241,10 +241,10 @@ All three review streams must report before proceeding to Phase 5.
 
 ## Quick Reference — When to Use Which Skill
 
-- `/ux-design` — Author a new UX spec for a screen, flow, or HUD from scratch
-- `/ux-review` — Validate a completed UX spec before implementation
-- `/team-ui [feature]` — Full pipeline from concept through polish (calls `/ux-design` and `/ux-review` internally)
-- `/quick-design` — Small UI changes that don't need a full new UX spec
+- `/skill:ux-design` — Author a new UX spec for a screen, flow, or HUD from scratch
+- `/skill:ux-review` — Validate a completed UX spec before implementation
+- `/skill:team-ui [feature]` — Full pipeline from concept through polish (calls `/skill:ux-design` and `/skill:ux-review` internally)
+- `/skill:quick-design` — Small UI changes that don't need a full new UX spec
 
 ## Error Recovery Protocol
 
@@ -262,8 +262,8 @@ partial report.** A skipped agent's section stays a named gap — never fill it 
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; once it is decided, accept it with `/architecture-decision accept ADR-NNNN`
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; once it is decided, accept it with `/skill:architecture-decision accept ADR-NNNN`
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## File Write Protocol
@@ -279,7 +279,7 @@ delegated to sub-agents and sub-skills. The two follow **different** rules:
   **Implementation files** (ui-programmer's code under the code root) are outside
   those bounds: ui-programmer returns the files it will create or change, you ask
   once for the set, and it writes after a yes.
-- **Sub-skills** (`/ux-design`) are not sub-agents and the exception does not reach
+- **Sub-skills** (`/skill:ux-design`) are not sub-agents and the exception does not reach
   them. They follow the normal Collaboration Protocol and ask before writing.
 
 This orchestrator does not write files directly.
@@ -299,6 +299,6 @@ Verdict: **BLOCKED** — pipeline halted; surface the blocker and its phase befo
 
 ## Next Steps
 
-- Run `/ux-review` on the final spec if not yet approved.
-- Run `/code-review` on the UI implementation before closing stories.
-- Run `/team-polish` if visual or audio polish pass is needed.
+- Run `/skill:ux-review` on the final spec if not yet approved.
+- Run `/skill:code-review` on the UI implementation before closing stories.
+- Run `/skill:team-polish` if visual or audio polish pass is needed.

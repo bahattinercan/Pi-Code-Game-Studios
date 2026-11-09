@@ -19,4 +19,4 @@ Command: `[/command]`
 - [Next required step name] (`/command`)
 
 ---
-Approaching **[next phase]** gate → run `/gate-check` when ready.
+Approaching **[next phase]** gate → run `/skill:gate-check` when ready.

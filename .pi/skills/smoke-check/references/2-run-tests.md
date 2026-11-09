@@ -1,6 +1,6 @@
 # /skill:smoke-check — Phase 2: Run Automated Tests
 
-> Part of `/smoke-check`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:smoke-check`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## Phase 2: Run Automated Tests
@@ -16,7 +16,7 @@
 - Build check (the WAIVED path only)
 
 **Run `commands.test` from `project.yaml` when it is set** — it is the
-project's own test command, the one `/setup-engine` wrote and CI runs. Use the
+project's own test command, the one `/skill:setup-engine` wrote and CI runs. Use the
 per-engine default below only when `commands.test` is absent, and say in the
 report which of the two you ran. Wrap it in a timeout (`timeout 900 …`): **a
 timeout (exit 124) is a gate FAILURE, never a pass** — the run never completed
@@ -87,8 +87,8 @@ is NOT ASSESSED, never a pass**: tests outside `Assets/` are never compiled, and
 Unity then reports `result="Passed"` with exit 0 over zero tests.
 
 **Play Mode is a second run.** `-testPlatform EditMode` — this default, and
-`commands.test` as `/setup-engine` writes it — never runs the integration tests
-`/test-setup` scaffolds under `Assets/Tests/PlayMode/`. When that folder holds a
+`commands.test` as `/skill:setup-engine` writes it — never runs the integration tests
+`/skill:test-setup` scaffolds under `Assets/Tests/PlayMode/`. When that folder holds a
 test file and the command you ran did not already pass `-testPlatform PlayMode`,
 run Play Mode the same way, into its own results file, and read it by the same
 rules:
@@ -133,7 +133,7 @@ the plain path elsewhere; `$PWD` alone fails when `MSYS_NO_PATHCONV` is set.
 Either way, say in the report what you changed and tell the user to fix
 `commands.test` in `project.yaml` — never edit `project.yaml` without asking.
 `<Project>.` in the filter is the root the tests are named under: the project
-name, or the distinct root `/setup-engine` chose when the project's name is
+name, or the distinct root `/skill:setup-engine` chose when the project's name is
 also an engine area — read one test's name string under
 `Source/*/Private/Tests/` if unsure.
 ```bash
@@ -158,8 +158,8 @@ Read the output, not the exit code: a failing test and a run that matched nothin
 
 **Unknown engine / not configured:**
 "Engine not configured in `project.yaml` or
-`.pi/docs/technical-preferences.md`. Run `/setup-engine` to specify the
-engine, then re-run `/smoke-check`."
+`.pi/docs/technical-preferences.md`. Run `/skill:setup-engine` to specify the
+engine, then re-run `/skill:smoke-check`."
 
 **If the test runner is not available in this environment** (no editor
 executable resolved in Phase 1 step 3, runner script not found, etc.), report
@@ -190,7 +190,7 @@ Phase 1 step 1). With no suite to run, run the project's own boot check:
 `commands.smoke` when set, else `commands.build` when set, with the executable
 Phase 1 step 3 resolved, under the same timeout rules (`timeout 900`, or
 `timeout 1800` for `commands.build`; a timeout is a FAIL). On Godot, run the
-import line above first. Read the result as `/setup-engine` documents it:
+import line above first. Read the result as `/skill:setup-engine` documents it:
 Godot `smoke` exits 0 even on a parse error, so a `SCRIPT ERROR` line in its
 output is a FAIL, and so is `Can't run project: no main scene defined` — the
 game cannot launch; Unity `smoke` exits 1 on a compile error; any other

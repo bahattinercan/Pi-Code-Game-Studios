@@ -4,7 +4,7 @@
 
 Agent: `art-director` | Model tier: session (inherit) | Domain: Visual identity, art bible, visual production readiness
 
-**Trigger**: After the art bible is drafted (`/art-bible`), before asset production begins
+**Trigger**: After the art bible is drafted (`/skill:art-bible`), before asset production begins
 
 **Context to pass**:
 - Art bible path (`design/art/art-bible.md`)

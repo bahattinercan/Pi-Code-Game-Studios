@@ -4,11 +4,11 @@
 
 Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
 
-**Trigger**: At `/gate-check` when `modes.workflow` is `standard` or `full` — the panel narrows by workflow; spawn in parallel with the rest of it (PR-PHASE-GATE, plus CD-PHASE-GATE and AD-PHASE-GATE at `full`)
+**Trigger**: At `/skill:gate-check` when `modes.workflow` is `standard` or `full` — the panel narrows by workflow; spawn in parallel with the rest of it (PR-PHASE-GATE, plus CD-PHASE-GATE and AD-PHASE-GATE at `full`)
 
 **Context to pass**:
 - Target phase name and the resolved `workflow` tier
-- The target gate's required and recommended artifacts at the resolved tier (from `/gate-check`'s loaded gate file)
+- The target gate's required and recommended artifacts at the resolved tier (from `/skill:gate-check`'s loaded gate file)
 - Architecture document path (if exists)
 - Engine reference path
 - ADR list

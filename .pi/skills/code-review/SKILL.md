@@ -48,7 +48,7 @@ the two happened — a reader cannot tell from a green result.
 
 ## Phase 1: Load Target Files
 
-Read the target file(s) in full. Read CLAUDE.md for project coding standards.
+Read the target file(s) in full. Read AGENTS.md for project coding standards.
 
 ---
 
@@ -75,7 +75,7 @@ If no engine is configured (no `engine.name` in `project.yaml`, and `technical-p
 
 ## Phase 3: ADR Compliance Check
 
-**Argument:** `/code-review [file(s)]` may optionally include a story file path as the last argument (e.g., `/code-review Assets/Scripts/Combat/Attack.cs production/epics/combat/story-001.md`). If a story path is provided, read it to extract the governing ADR reference.
+**Argument:** `/skill:code-review [file(s)]` may optionally include a story file path as the last argument (e.g., `/skill:code-review Assets/Scripts/Combat/Attack.cs production/epics/combat/story-001.md`). If a story path is provided, read it to extract the governing ADR reference.
 
 Search for ADR references in, in priority order:
 1. The story file (if provided as argument)
@@ -84,9 +84,9 @@ Search for ADR references in, in priority order:
 
 Look for patterns like `ADR-NNNN` or `docs/architecture/adr-` (either case).
 
-If no ADR references found, note: "No ADR references found — ADR compliance check skipped. For full ADR compliance review, provide the story path: `/code-review [files] [story-path]`."
+If no ADR references found, note: "No ADR references found — ADR compliance check skipped. For full ADR compliance review, provide the story path: `/skill:code-review [files] [story-path]`."
 
-For each referenced ADR, load **only the sections this check needs — never an unbounded full read.** A substantial ADR exceeds the 25k-token `Read` cap, and a capped read's only recovery is paging the remainder — the most expensive way to read a file. Use the same pattern as `/dev-story` and `/create-stories`:
+For each referenced ADR, load **only the sections this check needs — never an unbounded full read.** A substantial ADR exceeds the 25k-token `Read` cap, and a capped read's only recovery is paging the remainder — the most expensive way to read a file. Use the same pattern as `/skill:dev-story` and `/skill:create-stories`:
 
 1. **Map the headings** (cheap — line numbers only): `Grep pattern="^## " path="[adr-file]" output_mode="content" -n`
 2. **Bounded-read only `## Decision` and `## Consequences`**, using the line numbers to set `Read(offset, limit)` spans that end where the next heading begins. If the heading map is empty (a nonstandard ADR predating the template), fall back to one full `Read`; if that truncates at the cap, grep for the decision/consequence content directly rather than paging the remainder.
@@ -274,5 +274,5 @@ Use `AskUserQuestion`:
     - `[B] Stop here`
 
 If an ARCHITECTURAL VIOLATION is found:
-- If the violation contradicts an **existing ADR**: fix the implementation to comply with `docs/architecture/[adr-file].md`. If the design has legitimately changed, run `/architecture-decision` to formally *revise* the existing ADR — do not create a competing one.
-- If **no ADR exists** for the pattern that was violated: run `/architecture-decision` to document the correct approach before fixing the code.
+- If the violation contradicts an **existing ADR**: fix the implementation to comply with `docs/architecture/[adr-file].md`. If the design has legitimately changed, run `/skill:architecture-decision` to formally *revise* the existing ADR — do not create a competing one.
+- If **no ADR exists** for the pattern that was violated: run `/skill:architecture-decision` to document the correct approach before fixing the code.

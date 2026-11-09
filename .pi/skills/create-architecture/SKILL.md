@@ -18,7 +18,7 @@ This skill produces `docs/architecture/architecture.md` — the master architect
 document that translates all approved GDDs into a concrete technical blueprint.
 It sits between design and implementation, and must exist before sprint planning begins.
 
-**Distinct from `/architecture-decision`**: ADRs record individual point decisions.
+**Distinct from `/skill:architecture-decision`**: ADRs record individual point decisions.
 This skill creates the whole-system blueprint that gives ADRs their context.
 
 See `.pi/docs/director-gates.md` for the full check pattern. Individual gate definitions live in `.pi/docs/director-gates/[gate-id].md` — the spawned agent reads its own gate file; do not read it in the parent session.
@@ -117,9 +117,9 @@ unsure, present 2-4 options with pros/cons before asking them to decide.
 
 ## Recommended Next Steps
 
-- Run `/architecture-decision [title]` for each required ADR listed in Phase 6 — Foundation layer ADRs first
-- Run `/architecture-review` — bootstraps the Requirements Traceability Matrix and TR registry from the ADRs just written, and gives each provisional TR-ID its permanent one. Required before the Pre-Production gate.
-- Run `/test-setup` to scaffold `tests/unit/`, `tests/integration/`, CI workflow, and an example test (required for gate-check)
-- Run `/ux-design` to initialize `design/ux/interaction-patterns.md` and `design/accessibility-requirements.md` (required for gate-check)
-- Run `/create-control-manifest` once the required ADRs are written to produce the layer rules manifest
-- Run `/gate-check pre-production` when all required ADRs, `/test-setup`, and `/ux-design` are complete
+- Run `/skill:architecture-decision [title]` for each required ADR listed in Phase 6 — Foundation layer ADRs first
+- Run `/skill:architecture-review` — bootstraps the Requirements Traceability Matrix and TR registry from the ADRs just written, and gives each provisional TR-ID its permanent one. Required before the Pre-Production gate.
+- Run `/skill:test-setup` to scaffold `tests/unit/`, `tests/integration/`, CI workflow, and an example test (required for gate-check)
+- Run `/skill:ux-design` to initialize `design/ux/interaction-patterns.md` and `design/accessibility-requirements.md` (required for gate-check)
+- Run `/skill:create-control-manifest` once the required ADRs are written to produce the layer rules manifest
+- Run `/skill:gate-check pre-production` when all required ADRs, `/skill:test-setup`, and `/skill:ux-design` are complete

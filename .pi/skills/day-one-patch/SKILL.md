@@ -47,7 +47,7 @@ it from the stage value:
 - **No file in `production/gate-checks/`**, or none recording a release-gate
   verdict: report `Release gate: NOT ASSESSED — no gate-check record found`. Do
   not proceed silently. Say plainly that the reduced QA scope below is justified
-  by a gate nobody can find, and ask whether to run `/gate-check` first or
+  by a gate nobody can find, and ask whether to run `/skill:gate-check` first or
   proceed with a full QA pass instead.
 - **The most recent record is FAIL, CONCERNS or NOT ASSESSED**: name it and stop.
   A day-one patch on top of a build that never passed its gate is not a day-one
@@ -83,7 +83,7 @@ Use `AskUserQuestion`:
 - Show: table of deferred bugs (ID, severity, reason deferred)
 - Options: `[A] Approve this scope` / `[B] Adjust — I want to add or remove items` / `[C] No day-one patch needed`
 
-If [C]: output "No day-one patch required. Proceed to `/launch-checklist`." Stop.
+If [C]: output "No day-one patch required. Proceed to `/skill:launch-checklist`." Stop.
 
 ### Step 2c — Check total scope
 
@@ -139,7 +139,7 @@ For config/data-only fixes: make the change directly (no programmer agent needed
 
 ## Phase 5: Patch QA Gate
 
-This is a lightweight QA pass — not a full `/team-qa`. The patch is already QA-approved from the release gate; we are only re-verifying the changed areas.
+This is a lightweight QA pass — not a full `/skill:team-qa`. The patch is already QA-approved from the release gate; we are only re-verifying the changed areas.
 
 Spawn `qa-lead` via `Agent` with:
 - List of all changed files
@@ -149,12 +149,12 @@ Spawn `qa-lead` via `Agent` with:
 Ask qa-lead to determine: **Is a targeted smoke check sufficient, or do any fixes touch systems that require a broader regression?**
 
 Run the required QA scope:
-- **Targeted smoke check** — run `/smoke-check` (it takes no system argument)
+- **Targeted smoke check** — run `/skill:smoke-check` (it takes no system argument)
 - **Broader regression** — run the affected systems' tests in the engine's test root (`tests/unit/` and `tests/integration/` Godot, `Assets/Tests/` Unity, `Source/<Module>/Private/Tests/` Unreal — `.pi/docs/directory-structure.md`) with `commands.test` from `project.yaml`, narrowed to the affected suites where the runner allows — never a runner line written from memory. If `commands.test` is unset, the broader regression is NOT ASSESSED; say so.
 
 QA verdict must be PASS or PASS WITH WARNINGS before proceeding. If FAIL: scope the failing fix out of the day-one patch and defer to 1.1.
 
-**If the QA verdict is `NOT ASSESSED`, that is not a pass.** `/smoke-check` returns
+**If the QA verdict is `NOT ASSESSED`, that is not a pass.** `/skill:smoke-check` returns
 it when the suite never ran — no build, no runner, or a result nobody confirmed.
 Do not proceed on it and do not re-read it as PASS WITH WARNINGS: the warnings
 value means somebody looked and saw something minor, and this means nobody looked.
@@ -234,10 +234,10 @@ Ask: "May I write this patch record to `production/releases/day-one-patch-[versi
 
 After the patch record is written:
 
-1. Run `/patch-notes` to generate the player-facing version of the patch notes
-2. Run `/bug-report verify [BUG-ID]` for each fixed bug after the patch is live
-3. Run `/bug-report close [BUG-ID]` for each verified fix
-4. Schedule a post-launch review 48–72 hours after launch using `/retrospective [milestone-name]` for the launch milestone in `production/milestones/`
+1. Run `/skill:patch-notes` to generate the player-facing version of the patch notes
+2. Run `/skill:bug-report verify [BUG-ID]` for each fixed bug after the patch is live
+3. Run `/skill:bug-report close [BUG-ID]` for each verified fix
+4. Schedule a post-launch review 48–72 hours after launch using `/skill:retrospective [milestone-name]` for the launch milestone in `production/milestones/`
 
 **If any S1 bugs remain open after the patch:**
 > "⚠️ S1 bugs remain open and were not patched. These are accepted risks. Document them in the rollback plan trigger conditions — if they occur at scale, rollback may be preferable to a follow-up patch."
@@ -256,6 +256,6 @@ Use `AskUserQuestion`:
 - **Scope discipline is everything** — resist scope creep; every addition increases risk
 - **Rollback plan first, always** — a patch without a rollback plan is irresponsible
 - **Deferred is not forgotten** — every deferred bug is listed in the record's
-  "Deferred to 1.1" table; run `/bug-triage` afterwards to schedule them into the 1.1 sprint
+  "Deferred to 1.1" table; run `/skill:bug-triage` afterwards to schedule them into the 1.1 sprint
   (if the project has no sprint plan, as on the default minimal workflow, into the brief's build order)
-- **Player communication is part of the patch** — `/patch-notes` is a required output, not optional
+- **Player communication is part of the patch** — `/skill:patch-notes` is a required output, not optional

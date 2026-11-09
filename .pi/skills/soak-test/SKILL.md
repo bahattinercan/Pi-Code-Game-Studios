@@ -36,7 +36,7 @@ human does the actual playing.**
 **Output:** `production/qa/soak-test-[date]-[duration].md`
 
 **When to run:**
-- Polish phase — before `/gate-check release`
+- Polish phase — before `/skill:gate-check release`
 - After fixing a memory or stability issue (regression soak)
 - When extended play has not been formally tracked
 
@@ -316,9 +316,9 @@ After writing:
 2. Record each checkpoint as you play
 3. Complete the Post-Session Analysis section when done
 4. File bugs from 'Issues Found' to `production/qa/bugs/`
-5. Run `/bug-triage sprint` after the session to integrate any S1/S2 issues (at `workflow: minimal`, which has no sprints: `/bug-triage full`)
+5. Run `/skill:bug-triage sprint` after the session to integrate any S1/S2 issues (at `workflow: minimal`, which has no sprints: `/skill:bug-triage full`)
 
-If the verdict is FAIL, run `/smoke-check` again after fixing the issues."
+If the verdict is FAIL, run `/skill:smoke-check` again after fixing the issues."
 
 ---
 

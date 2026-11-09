@@ -33,13 +33,13 @@ Resolved above — use as-is; `--review` overrides `review_mode`. No block →
 defaults in `.pi/docs/config-resolution.md`.
 
 **Stage check — before anything is spawned.** This skill ships a release, and
-`/gate-check release` is the readiness gate that must pass first; only its PASS
+`/skill:gate-check release` is the readiness gate that must pass first; only its PASS
 sets `project.stage` to `Release`. If the resolved `project.stage` is anything
 else — `Polish`, an earlier stage, or not set — stop before Phase 1 and spawn
 nothing:
 
 > "The release readiness gate has not passed (project.stage: [stage]) — run
-> `/gate-check release` first."
+> `/skill:gate-check release` first."
 
 Then ask with `AskUserQuestion`, in every `automation` mode — an override is never
 taken on the user's behalf: `[A] Stop — I'll run /skill:gate-check release (recommended)`
@@ -126,7 +126,7 @@ agent standing in for one outside the active set writes that agent's file:
 | Phase / agent | Writes to | Destination fixed by |
 |---|---|---|
 | 1 producer | `production/releases/release-plan-[version].md` | this skill |
-| 2 release-manager | `production/releases/release-checklist-[version].md` | `/release-checklist` |
+| 2 release-manager | `production/releases/release-checklist-[version].md` | `/skill:release-checklist` |
 | 3 qa-lead | `production/releases/qa-gate-[version].md` | this skill |
 | 3 devops-engineer | `production/releases/build-[version].md` | this skill |
 | 3 security-engineer | `production/releases/security-signoff-[version].md` | this skill |
@@ -135,20 +135,20 @@ agent standing in for one outside the active set writes that agent's file:
 | 4 performance-analyst | `production/releases/performance-signoff-[version].md` | this skill |
 | 4 analytics-engineer | `production/releases/analytics-signoff-[version].md` | this skill |
 | 5 go/no-go | `production/releases/go-no-go-[version].md` | this skill |
-| 6 release-manager | `docs/patch-notes/[version].md` | `/patch-notes` |
+| 6 release-manager | `docs/patch-notes/[version].md` | `/skill:patch-notes` |
 | 6 community-manager | `production/releases/announcement-[version].md` | this skill |
 | 7 release-manager | `production/releases/release-report-[version].md` | this skill |
 
 > **Every one of those thirteen outputs needs a stated destination.**
-> `production/releases/` is where `/release-checklist` already writes, and
-> `docs/patch-notes/[version].md` is where `/patch-notes` already writes, so the
+> `production/releases/` is where `/skill:release-checklist` already writes, and
+> `docs/patch-notes/[version].md` is where `/skill:patch-notes` already writes, so the
 > release record lands in one place regardless of which skill produced it.
 >
 > **A separate file per agent, not one appended record.** Phase 3 and Phase 4
 > spawn agents in parallel; two agents appending to one file race, and the loser's
 > section vanishes silently.
 
-> **Why this does not violate the Collaboration Protocol.** `CLAUDE.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
+> **Why this does not violate the Collaboration Protocol.** `AGENTS.md` requires an agent to ask "May I write this to [filepath]?" before Write/Edit. A subagent spawned here writes **without** asking, and that is a deliberate, bounded exception rather than an oversight — the same call already made for `consistency-check` appending to `active.md`. The exception holds only when all three are true: (1) the path is one **you** named in the prompt, so the user approved the destination when they approved the phase; (2) it is a new artifact under `production/`, `docs/` or `tests/`, never an edit to existing source or config; (3) the phase that produced it is itself gated by an `AskUserQuestion` before the pipeline advances. Outside those three, the agent must ask. **Do not "fix" this by asking per subagent** — a prompt per agent per phase makes an orchestrator unusable, which is why the exception exists.
 
 Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -164,13 +164,13 @@ Delegate to **producer**:
 ### Phase 2: Release Candidate
 Delegate to **release-manager**:
 - Bump version numbers in all relevant files on `main`; the commit carrying the bump is the release candidate. Development is trunk-based — a release is a tag on `main` (applied in Phase 6), not a branch
-- Confirm the release checklist from Polish (`/release-checklist`, run before `/gate-check release`) is complete for this candidate; run it now only if none exists
+- Confirm the release checklist from Polish (`/skill:release-checklist`, run before `/skill:gate-check release`) is complete for this candidate; run it now only if none exists
 - Cut a `release/[version]` branch from the candidate only if this release needs stabilising (a freeze, platform certification) — bug fixes only there, and every fix lands on `main` as well
 - Output: release candidate commit (plus the `release/*` branch, if one was cut) and checklist
 
 ### Phase 3: Quality Gate (parallel)
 Delegate in parallel:
-- **qa-lead**: Execute full regression test suite. Test all critical paths. Verify no open bugs at the severities `/gate-check release` blocks for this `workflow`: S1 at every tier, S2 and S3 too at `full`. Sign off on quality.
+- **qa-lead**: Execute full regression test suite. Test all critical paths. Verify no open bugs at the severities `/skill:gate-check release` blocks for this `workflow`: S1 at every tier, S2 and S3 too at `full`. Sign off on quality.
 - **devops-engineer**: Build release artifacts for all target platforms. Verify builds are clean and reproducible. Run automated tests in CI.
 - **security-engineer** *(if game has online features, multiplayer, or player data)*: Conduct pre-release security audit. Review authentication, anti-cheat, data privacy compliance. Sign off on security posture.
 - **network-programmer** *(if game has multiplayer)*: Sign off on netcode stability. Verify lag compensation, reconnect handling, and bandwidth usage under load.
@@ -230,13 +230,13 @@ Before tagging or deploying, use `AskUserQuestion`:
 
 Only after explicit approval, delegate to **release-manager** + **devops-engineer**:
 - Tag the release in version control
-- Finalize the changelog drafted in Polish (`/changelog`), adding what changed since the gate
+- Finalize the changelog drafted in Polish (`/skill:changelog`), adding what changed since the gate
 - Deploy to staging for final smoke test
 - Deploy to production (only if the user approved production above)
-- Human team action: Monitor dashboards and error rates for 48 hours post-release. Schedule a follow-up retrospective using `/retrospective` at the 48-hour mark.
+- Human team action: Monitor dashboards and error rates for 48 hours post-release. Schedule a follow-up retrospective using `/skill:retrospective` at the 48-hour mark.
 
 In parallel with deployment, delegate to **release-manager**:
-- Finalize the patch notes drafted in Polish using `/patch-notes [version]` — release-manager carries that skill and the Bash access its `git log` step needs; `community-manager` has neither
+- Finalize the patch notes drafted in Polish using `/skill:patch-notes [version]` — release-manager carries that skill and the Bash access its `git log` step needs; `community-manager` has neither
 
 Then hand those patch notes to **community-manager**:
 - Prepare launch announcement (store page updates, social media, community post)
@@ -268,8 +268,8 @@ partial report.** Full procedure: `.pi/docs/error-recovery-protocol.md`.
 
 Common blockers:
 - Input file missing (story not found, GDD absent) → redirect to the skill that creates it
-- ADR status is Proposed → do not implement; accept it with `/architecture-decision accept ADR-NNNN` once decided
-- Scope too large → split into two stories via `/create-stories`
+- ADR status is Proposed → do not implement; accept it with `/skill:architecture-decision accept ADR-NNNN` once decided
+- Scope too large → split into two stories via `/skill:create-stories`
 - Conflicting instructions between ADR and story → surface the conflict, do not guess
 
 ## File Write Protocol
@@ -300,5 +300,5 @@ Verdict: **BLOCKED** — release halted; the stage check stopped it, go/no-go wa
 ## Next Steps
 
 - Monitor post-release dashboards for 48 hours.
-- Run `/retrospective` if significant issues occurred during the release.
-- `project.stage` reads `Release` unless the stage check was overridden: `/gate-check release` is the Polish → Release readiness gate, run before this skill. After an override the stage still reads what it did. Only `/gate-check` changes `project.stage` (on a PASS, or a CONCERNS whose risks the user accepted), so this skill never writes it or `production/stage.txt`. `Release` is the terminal stage in the `project.stage` enum — there is no post-launch stage value. Record live/post-launch status in the release report, not in `project.stage`.
+- Run `/skill:retrospective` if significant issues occurred during the release.
+- `project.stage` reads `Release` unless the stage check was overridden: `/skill:gate-check release` is the Polish → Release readiness gate, run before this skill. After an override the stage still reads what it did. Only `/skill:gate-check` changes `project.stage` (on a PASS, or a CONCERNS whose risks the user accepted), so this skill never writes it or `production/stage.txt`. `Release` is the terminal stage in the `project.stage` enum — there is no post-launch stage value. Record live/post-launch status in the release report, not in `project.stage`.

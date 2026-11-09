@@ -60,7 +60,7 @@ A test framework installed at sprint four costs 3 sprints.
   If a test runner file exists, leave it as-is.
 - **Always ask before creating files** — Phase 2 requires explicit approval.
 - **Engine detection is non-negotiable** — if the engine is not configured,
-  stop and redirect to `/setup-engine`. Do not guess.
+  stop and redirect to `/skill:setup-engine`. Do not guess.
 - **`force` flag skips the "already exists" early-exit but never overwrites.**
   It means "create any missing files even if the directory already exists."
 - For Unity CI, note that the `UNITY_LICENSE` secret must be configured

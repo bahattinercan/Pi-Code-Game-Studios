@@ -1,6 +1,6 @@
 # /skill:architecture-decision — Steps 3a and 3b: Gather Context
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 3. Gather context
@@ -67,7 +67,7 @@ and Read those ranges with offset and limit.
    `## Consequences` (the sections that carry reasoning, not just facts) via
    `Read(offset, limit)` from the heading map.
 
-Read GDDs the same way `/design-system` Step 2b does: only GDDs the registry
+Read GDDs the same way `/skill:design-system` Step 2b does: only GDDs the registry
 or the ADR list names as directly relevant, and only their `## Dependencies`,
 `## Formulas`, and `## Edge Cases` sections
 (`Grep pattern="^## (Dependencies|Formulas|Edge Cases)" ... -A 40`) — never a

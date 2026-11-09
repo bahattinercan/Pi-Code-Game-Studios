@@ -9,7 +9,7 @@ This skill is read-only — it reports findings but writes no files.
 
 This skill figures out exactly where you are in the game development pipeline and
 tells you what comes next. It is **lightweight** — not a full audit. For a full
-gap analysis, use `/project-stage-detect`.
+gap analysis, use `/skill:project-stage-detect`.
 
 ## Live Project State
 
@@ -66,7 +66,7 @@ skills in production/polish, etc.).
 **First, take `workflow` from the config block above.** If it is `minimal`, the
 project is on the minimal path, not the phase ladder: skip the rest of this step,
 read the session context (**Step 3**), then go to **Step 4m**. At that tier, do
-not map `project.stage` — nothing on the minimal path runs `/gate-check`, so
+not map `project.stage` — nothing on the minimal path runs `/skill:gate-check`, so
 the stage reads Concept however far the
 project has got, and walking the Concept phase would send a project that already
 has stories back to the concept doc, art bible and systems map.
@@ -177,7 +177,7 @@ Label these differently — show what's been detected, then note it may be ongoi
 ## Step 4m: The Minimal Path (`workflow: minimal` only)
 
 At `minimal` the route is the catalog's `paths.minimal`, not a phase: engine →
-`design/game-brief.md` → stories → `/dev-story` ↔ `/story-done`. Resolve it in
+`design/game-brief.md` → stories → `/skill:dev-story` ↔ `/skill:story-done`. Resolve it in
 one call:
 
 ```
@@ -188,13 +188,13 @@ Map the statuses exactly as in Step 4. `implement` and `story-done` are
 `NO_CHECK` by design — the story status lines below are their check. The next
 step is the first of these that applies:
 
-1. `engine-setup` not PRESENT → `/setup-engine`
-2. `game-brief` not PRESENT → `/reverse-document design [code root]` when the
+1. `engine-setup` not PRESENT → `/skill:setup-engine`
+2. `game-brief` not PRESENT → `/skill:reverse-document design [code root]` when the
    code root already holds the game (10 or more source files, the test Step 2
    uses for `production`): at `minimal` it writes `design/game-brief.md` from
-   what is built. Otherwise `/brainstorm` (at `minimal` it writes the one-page
+   what is built. Otherwise `/skill:brainstorm` (at `minimal` it writes the one-page
    brief), which on a built game would start a new idea.
-3. `create-stories` not PRESENT → `/create-stories` with no argument (at
+3. `create-stories` not PRESENT → `/skill:create-stories` with no argument (at
    `minimal` it builds the stories straight from the brief's MVP list)
 4. Stories exist → the list below was printed by `.pi/scripts/story-status.sh`
    before you read this skill: one line per unfinished story, **already in
@@ -212,14 +212,14 @@ bash ".pi/scripts/story-status.sh"
    line.** The list is already current; do not run the script again, and do
    not re-read or re-rank the story files:
    an `In Review` story is closed before an `In Progress` one continues — its
-   work is written, and `/story-done` is quick.
+   work is written, and `/skill:story-done` is quick.
    - `IN_REVIEW` → its work is written and waiting to be closed:
-     `/story-done [path]`
+     `/skill:story-done [path]`
    - `IN_PROGRESS` → it is **not** done — whatever the code or commits
-     suggest, only `/story-done` makes a story Complete. Recommend
-     `/story-done [path]` only if the user, `active.md` or the git log says
-     its implementation is written; otherwise `/dev-story [path]` to carry on
-   - `TODO` → `/dev-story [path]`
+     suggest, only `/skill:story-done` makes a story Complete. Recommend
+     `/skill:story-done [path]` only if the user, `active.md` or the git log says
+     its implementation is written; otherwise `/skill:dev-story [path]` to carry on
+   - `TODO` → `/skill:dev-story [path]`
    - a `BLOCKED` story → name it and its blocker; it is never Next up
    - **no `IN_REVIEW`, `IN_PROGRESS` or `TODO` line, but `BLOCKED`, `OTHER` or
      `NO_STATUS` lines remain** → nothing can be built next, and the build
@@ -230,13 +230,13 @@ bash ".pi/scripts/story-status.sh"
      once it can be built)
    - **every story `Complete` (or `Done`)** → the brief's build order is done.
      Say so, and offer three ways on: play the build; add the next stories from
-     the brief with `/create-stories`; or, if the game has outgrown a one-page
-     brief, `/settings` to raise `modes.rigor`.
+     the brief with `/skill:create-stories`; or, if the game has outgrown a one-page
+     brief, `/skill:settings` to raise `modes.rigor`.
 
 **At `minimal`, never present any of these as required or as a blocker:** the
-game concept doc, art bible, systems map, GDDs, `/create-epics`, a sprint plan,
-`/gate-check`, or sprint close-out (`/smoke-check`, `/team-qa`,
-`/retrospective`). The brief replaces the design docs and its build order
+game concept doc, art bible, systems map, GDDs, `/skill:create-epics`, a sprint plan,
+`/skill:gate-check`, or sprint close-out (`/skill:smoke-check`, `/skill:team-qa`,
+`/skill:retrospective`). The brief replaces the design docs and its build order
 replaces the sprint plan (`.pi/docs/workflow-modes.md` — `minimal` floor).
 Every one of them still runs if the user asks for it; mention one only when the
 user's argument asks about it.
@@ -299,7 +299,7 @@ Command: `[/command]`
 - [Next required step name] (`/command`)
 
 ---
-Approaching **[next phase]** gate → run `/gate-check` when ready.
+Approaching **[next phase]** gate → run `/skill:gate-check` when ready.
 ```
 
 **At `minimal`** use this shape instead — no phase label, no gate line. `N`
@@ -317,7 +317,7 @@ names no finished story, so ✓ Done gives their count, not their titles:
 
 ### → Next up
 **[Story NNN: title]** — [what it delivers]
-Command: `/story-done [story-path]` for an In Review story, or an In Progress one whose work is written; otherwise `/dev-story [story-path]`
+Command: `/skill:story-done [story-path]` for an In Review story, or an In Progress one whose work is written; otherwise `/skill:dev-story [story-path]`
 
 ### Coming up after that
 - [the next Ready stories in build order, at most 3]
@@ -341,7 +341,7 @@ Skip this step at `minimal` — the minimal path has no phase gates.
 
 After the current phase's steps, check if the user is likely approaching a gate:
 - If all required steps in the current phase are complete (or nearly complete),
-  add: "You're close to the **[Current] → [Next]** gate. Run `/gate-check` when ready."
+  add: "You're close to the **[Current] → [Next]** gate. Run `/skill:gate-check` when ready."
 - If multiple required steps remain, skip the gate warning — it's not relevant yet.
 
 ---
@@ -353,10 +353,10 @@ After the recommendations, if the user seems stuck or confused, add:
 ```
 ---
 Need more detail?
-- `/project-stage-detect` — full gap analysis with all missing artifacts listed
-- `/gate-check` — formal readiness check for your next phase
-- `/start` — re-orient from scratch
-- `/settings` — if the process feels mismatched to your project, adjust
+- `/skill:project-stage-detect` — full gap analysis with all missing artifacts listed
+- `/skill:gate-check` — formal readiness check for your next phase
+- `/skill:start` — re-orient from scratch
+- `/skill:settings` — if the process feels mismatched to your project, adjust
   `modes.rigor`. Apply the change-triggers in
   `.pi/docs/settings-guidance.md § 4`: a **lower** tier when the user sounds
   overwhelmed by process (and rigor isn't already `minimal`), or a **higher** tier
@@ -366,10 +366,10 @@ Need more detail?
 
 Only show this if the user's input suggested confusion (e.g. "I don't know", "stuck",
 "lost", "not sure"). Don't show it for simple "what's next?" queries. Show the
-`/settings` rigor line only when a `settings-guidance.md § 4` trigger actually
+`/skill:settings` rigor line only when a `settings-guidance.md § 4` trigger actually
 fires — the user sounds overwhelmed (and rigor isn't already `minimal`), or the
 project has outgrown its tier — not on every confused query. At `minimal`, leave
-out the `/gate-check` line: the minimal path has no phase gates (Step 4m).
+out the `/skill:gate-check` line: the minimal path has no phase gates (Step 4m).
 
 ---
 

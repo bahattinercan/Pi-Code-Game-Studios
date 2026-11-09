@@ -76,9 +76,9 @@ certification track.
 
 ## Phase 2: Load Project Context
 
-- Read `CLAUDE.md` for project context, version information, and platform targets.
+- Read `AGENTS.md` for project context, version information, and platform targets.
 - Read the current milestone from `production/milestones/` to understand what features and content should be included in this release.
-- Read the open bugs from `production/qa/bugs/`: grep the `**Severity**` and `**Status**` lines of `production/qa/bugs/*.md`, as `/bug-triage` does. A bug is open unless its Status is `Closed` or `Verified Fixed`. The bug items use the thresholds `/gate-check release` applies for the resolved `workflow`: at `full` an open S1, S2 or S3 bug fails its item; at `standard` and `minimal` only an open S1 does, and an open S2 or S3 is listed in the Rationale as a risk. Each failing bug is named in the Rationale as a blocking item. **No bug files in `production/qa/bugs/`** → the bug items read `NOT ASSESSED — no bug records` — never zero and never ticked, since an absent record and a clean one must not produce the same checklist; bugs are filed with `/bug-report`.
+- Read the open bugs from `production/qa/bugs/`: grep the `**Severity**` and `**Status**` lines of `production/qa/bugs/*.md`, as `/skill:bug-triage` does. A bug is open unless its Status is `Closed` or `Verified Fixed`. The bug items use the thresholds `/skill:gate-check release` applies for the resolved `workflow`: at `full` an open S1, S2 or S3 bug fails its item; at `standard` and `minimal` only an open S1 does, and an open S2 or S3 is listed in the Rationale as a risk. Each failing bug is named in the Rationale as a blocking item. **No bug files in `production/qa/bugs/`** → the bug items read `NOT ASSESSED — no bug records` — never zero and never ticked, since an absent record and a clean one must not produce the same checklist; bugs are filed with `/skill:bug-report`.
 
 ---
 
@@ -246,7 +246,7 @@ emitting every track; if it cannot be determined, emit
 > **Certification rows belong here, in one `cert_tier`-gated subsection.** Do not
 > put them in the PC, Console and Mobile device blocks: those are selected by the
 > command argument and default to `all`, so an `itch` project running
-> `/release-checklist` with no argument would be handed the Steamworks SDK rows
+> `/skill:release-checklist` with no argument would be handed the Steamworks SDK rows
 > *and* the Lotcheck rows, which the `cert_tier` rule at the top of this skill
 > forbids.
 >
@@ -317,6 +317,6 @@ If yes, write the file, creating the directory if needed.
 
 ## Phase 6: Next Steps
 
-- Draft the changelog or patch notes (`/changelog`, `/patch-notes`) if not done — the release gate checks them.
-- Run `/gate-check release` — the Polish → Release gate reads this checklist.
-- After a PASS: `/launch-checklist`, then coordinate the release via `/team-release`.
+- Draft the changelog or patch notes (`/skill:changelog`, `/skill:patch-notes`) if not done — the release gate checks them.
+- Run `/skill:gate-check release` — the Polish → Release gate reads this checklist.
+- After a PASS: `/skill:launch-checklist`, then coordinate the release via `/skill:team-release`.

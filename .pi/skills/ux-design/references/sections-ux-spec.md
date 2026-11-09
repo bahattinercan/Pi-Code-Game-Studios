@@ -1,4 +1,4 @@
-> Section-authoring guidance, loaded by `/ux-design` for the ACTIVE MODE ONLY.
+> Section-authoring guidance, loaded by `/skill:ux-design` for the ACTIVE MODE ONLY.
 > Never load the other two — one mode applies per invocation.
 
 # Section Guidance — UX Spec Mode
@@ -241,7 +241,7 @@ Walk through the ux-designer agent's standard checklist for this screen:
 - Any motion or animation that needs a reduced-motion alternative
 
 If no accessibility tier has been defined for this project, note the gap in the UX spec's Open Questions section:
-> "Accessibility tier not yet defined — consider WCAG-AA as a baseline. Run `/gate-check` to see whether this blocks any phase gates."
+> "Accessibility tier not yet defined — consider WCAG-AA as a baseline. Run `/skill:gate-check` to see whether this blocks any phase gates."
 Then continue to the next section without stopping.
 
 ---
@@ -261,7 +261,7 @@ Note: aim to flag any element where a 40% text expansion (common in translations
 
 #### Section I: Acceptance Criteria
 
-Write at least 5 specific, testable criteria that a QA tester can verify without reading any other design document. These become the pass/fail conditions for `/story-done`.
+Write at least 5 specific, testable criteria that a QA tester can verify without reading any other design document. These become the pass/fail conditions for `/skill:story-done`.
 
 **Format**: Use checkboxes. Each criterion must be verifiable by a human tester:
 

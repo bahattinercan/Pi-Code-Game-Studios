@@ -14,7 +14,7 @@ bash ".pi/hooks/yaml-helper.sh" resolve_config --keys story_granularity,workflow
 This is a fast situational awareness check, not a sprint review. It reads the
 current sprint plan and story files, scans for status markers, and produces a
 concise snapshot in under 30 lines. For detailed sprint management, use
-`/sprint-plan update` or `/milestone-review`.
+`/skill:sprint-plan update` or `/skill:milestone-review`.
 
 **This skill is read-only.** It never proposes changes, never asks to write
 files, and makes at most one concrete recommendation.
@@ -29,9 +29,9 @@ at `balanced` (`rigor: standard`), **AC-sized** at `fine`.
 
 **Argument:** `$ARGUMENTS` (blank = use current sprint)
 
-- If an argument is given (e.g., `/sprint-status 3`), search
+- If an argument is given (e.g., `/skill:sprint-status 3`), search
   `production/sprints/` for a file matching `sprint-003.md`, `sprint-03.md`, `sprint-3.md`,
-  or similar (`/sprint-plan` writes three digits). Report which file was found.
+  or similar (`/skill:sprint-plan` writes three digits). Report which file was found.
 - If no argument is given, find the most recently modified file in
   `production/sprints/` and treat it as the current sprint.
 - If `production/sprints/` does not exist or is empty:
@@ -56,15 +56,15 @@ bash ".pi/scripts/story-status.sh"
        `IN_REVIEW`, `IN_PROGRESS` or `TODO` line. The list is already
        current; do not run the script again, and do not re-rank the story files — an `In Review` story is closed before an
        `In Progress` one continues: its work is written. Recommend
-       `/story-done [path]` for `IN_REVIEW`, `/dev-story [path]` for
+       `/skill:story-done [path]` for `IN_REVIEW`, `/skill:dev-story [path]` for
        `IN_PROGRESS` or `TODO`. Name any `BLOCKED` story with its blocker; it is
        never Next.
     3. Every story `Complete` (or `Done`) → "Build order done: [M] of [M]
        stories complete." Offer three ways on: play the build; add the next
-       stories from the brief with `/create-stories`; or `/settings` to raise
+       stories from the brief with `/skill:create-stories`; or `/skill:settings` to raise
        `modes.rigor` if the game has outgrown a one-page brief.
     4. `STORIES none` — no story files at all → "No stories yet. Run
-       `/create-stories` to turn the brief's build order into stories."
+       `/skill:create-stories` to turn the brief's build order into stories."
     5. No `IN_REVIEW`, `IN_PROGRESS` or `TODO` line, yet the `COMPLETE` line
        is short of the total — every unfinished story is `BLOCKED`, `OTHER`
        (such as `Draft`) or `NO_STATUS`. There is **no Next**, and the build
@@ -75,7 +75,7 @@ bash ".pi/scripts/story-status.sh"
        finishing the first `Draft` or unstatused story and setting its Status
        to `Ready`.
   - **At `standard` or `full`**, report: "No sprint files found. Start a sprint
-    with `/sprint-plan new`." Then stop.
+    with `/skill:sprint-plan new`." Then stop.
 
 Read the sprint file in full. Extract:
 - Sprint number and goal
@@ -118,7 +118,7 @@ fall back to markdown scanning:
 4. If a file is referenced but does not exist, classify as MISSING and note it.
 
 When using the fallback, add a note at the bottom of the output:
-"⚠ No `sprint-status.yaml` found — status inferred from markdown. Run `/sprint-plan update` to generate one."
+"⚠ No `sprint-status.yaml` found — status inferred from markdown. Run `/skill:sprint-plan update` to generate one."
 
 Optionally (fast check only — do not do a deep scan): grep the code root for a
 directory or file name that matches the story's system slug to check for
@@ -138,7 +138,7 @@ After collecting status for all stories, check each IN PROGRESS story for stalen
   **no date**, which is not the same as being stale — report it as "never
   stamped" and do not compute an age for it.
 
-> **The `\*{0,2}` wrappers are why this works at all.** `/create-stories` emits
+> **The `\*{0,2}` wrappers are why this works at all.** `/skill:create-stories` emits
 > `> **Last Updated**: …`, so a pattern requiring `:` immediately after the word
 > matches no story. Combined with the "no match = never stamped" rule directly
 > above, that failure is silent: every in-progress story reports as never
@@ -233,7 +233,7 @@ less than 40% of the sprint time remains:
 
 ```
 SPRINT AT RISK: [N] Must Have stories are not complete with [X]% of sprint
-time remaining. Recommend replanning with `/sprint-plan update`.
+time remaining. Recommend replanning with `/skill:sprint-plan update`.
 ```
 
 **Completion flag** — if all Must Have stories are DONE:
@@ -246,7 +246,7 @@ All Must Haves complete. Team can pull from Should Have backlog.
 
 ```
 NOTE: [N] story files referenced in the sprint plan are missing.
-Run `/story-readiness sprint` to validate story file coverage.
+Run `/skill:story-readiness sprint` to validate story file coverage.
 ```
 
 ---
@@ -257,11 +257,11 @@ This skill is read-only. It reports observed facts from files on disk.
 
 - It does not update the sprint plan
 - It does not change story status
-- It does not propose scope cuts (that is `/sprint-plan update`)
+- It does not propose scope cuts (that is `/skill:sprint-plan update`)
 - It makes at most one recommendation per run
 
 For more detail on a specific story, the user can read the story file directly
-or run `/story-readiness [path]`.
+or run `/skill:story-readiness [path]`.
 
-For sprint replanning, use `/sprint-plan update`.
-For end-of-sprint retrospective, use `/retrospective`.
+For sprint replanning, use `/skill:sprint-plan update`.
+For end-of-sprint retrospective, use `/skill:retrospective`.

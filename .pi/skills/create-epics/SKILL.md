@@ -24,7 +24,7 @@ nearly done describe a design that will have changed.
 
 **Writes:** `production/epics/[epic-slug]/EPIC.md` per epic and its row in
 `production/epics/index.md`, each after its own yes.
-**Next:** `/create-stories [epic-slug]` per epic. This skill never writes a story.
+**Next:** `/skill:create-stories [epic-slug]` per epic. This skill never writes a story.
 
 Asks follow `.pi/docs/automation-modes.md` (collaborative always asks, guided
 asks on major choices, autonomous logs and goes on; `automation_always_ask`
@@ -55,17 +55,17 @@ The text typed after the skill name, with any `--review <mode>` pair removed:
 in-scope system's own GDD bar comes from its `system_overrides` row, when it has one.
 
 **At `minimal`, tell the user first:** this step is optional at this tier, because
-`/create-stories` builds the epic from `design/game-brief.md` by itself. Then go on
+`/skill:create-stories` builds the epic from `design/game-brief.md` by itself. Then go on
 when they asked for epics.
 
 ## Phase 2: Load the inputs
 
 ### `minimal`: the brief
 
-Read `design/game-brief.md`. None: stop, "No `design/game-brief.md` — run `/start`
-or `/brainstorm` first." Never ask for GDDs, a systems index, an architecture
+Read `design/game-brief.md`. None: stop, "No `design/game-brief.md` — run `/skill:start`
+or `/skill:brainstorm` first." Never ask for GDDs, a systems index, an architecture
 document, ADRs, a TR registry or a control manifest, and never send the user to
-`/design-system`, `/map-systems` or `/create-architecture` first: this tier has none
+`/skill:design-system`, `/skill:map-systems` or `/skill:create-architecture` first: this tier has none
 by design.
 
 Report first, word for word:
@@ -76,24 +76,24 @@ At minimal this step is optional: /skill:create-stories builds the epic from the
 ```
 
 The epics come from the brief's MVP feature list, in its **Build order**. A short
-brief is one epic, slugged from the brief's working title (the slug `/create-stories`
+brief is one epic, slugged from the brief's working title (the slug `/skill:create-stories`
 uses when nothing is typed). When the user asks for the work grouped, make one epic
 per group of MVP features that ship together. Every epic names its slug, since
-`/create-stories` needs it typed.
+`/skill:create-stories` needs it typed.
 
 ### `standard` and `full`: the design and the architecture
 
 1. **The system GDDs.** `bash .pi/scripts/gdd-structure-check.sh` lists every
    system GDD; the game concept, systems index, pillars, cross-reviews and the other
    non-system documents are left out for you. Their count is **N**. N is 0: stop,
-   "No system GDDs found in `design/gdd/` — run `/design-system` first."
+   "No system GDDs found in `design/gdd/` — run `/skill:design-system` first."
 2. **What is in scope.** Each GDD's `## Summary` quick reference gives its layer and
    priority. A GDD with no Summary (older GDDs predate it) takes its layer from
    `design/gdd/systems-index.md`. Never treat an absent `## Summary` as an absent system:
    it never drops one from scope.
 3. **The architecture.** `docs/architecture/architecture.md` is required at both
    tiers: missing, stop with
-   "No `docs/architecture/architecture.md` — run `/create-architecture` first." Never invent module boundaries.
+   "No `docs/architecture/architecture.md` — run `/skill:create-architecture` first." Never invent module boundaries.
 4. **For in-scope systems only**, by section, never whole:
    - each GDD's Overview and Acceptance Criteria
      (`bash .pi/scripts/md-section.sh extract design/gdd/<file>.md "Overview"`);
@@ -127,7 +127,7 @@ module from `architecture.md` (at `minimal`, the brief's feature group).
 - **covered** when an **Accepted** ADR addresses it;
 - **untraced** otherwise. A requirement whose only ADR is `Proposed` (or any other
   status) is untraced, never covered: its row reads `❌ No ADR (ADR-NNNN Proposed)`,
-  so `/create-stories` still sees that ADR and blocks its story.
+  so `/skill:create-stories` still sees that ADR and blocks its story.
 
 Untraced requirements are listed under **Untraced Requirements**. The ⚠️ warning
 below is for each untraced requirement at `full`, and only for untraced
@@ -147,7 +147,7 @@ Foundation-layer requirements at `standard`; any other untraced requirement at
 
 The warning, when it applies: "⚠️ [N] requirements in [system] have no Accepted ADR.
 Their stories will be written with no governing ADR, or Blocked on a Proposed one.
-Run `/architecture-decision` first if they need a decision, or go on and accept the
+Run `/skill:architecture-decision` first if they need a decision, or go on and accept the
 gap."
 
 Then ask, **for this epic alone**: "Shall I create Epic: [name]?" Options: Yes,
@@ -175,7 +175,7 @@ For each epic the user said yes to, in order:
 [name]. Update it in place, or skip it?" Options: Update in place / Skip this epic.
 An update edits only what this skill owns (the header fields other than Stories,
 Overview, Governing ADRs, GDD Requirements, Definition of Done) and leaves the
-`**Stories**` line and any `## Stories` table as they are: `/create-stories` wrote
+`**Stories**` line and any `## Stories` table as they are: `/skill:create-stories` wrote
 them, and resetting them orphans the stories already there.
 
 **New:** ask "May I write `production/epics/[epic-slug]/EPIC.md` and add its row to
@@ -198,7 +198,7 @@ whole at every density.
 > **GDD**: design/gdd/[file].md
 > **Architecture Module**: [module]
 > **Status**: Ready
-> **Stories**: Not yet created — run `/create-stories [epic-slug]`
+> **Stories**: Not yet created — run `/skill:create-stories [epic-slug]`
 
 ## Overview
 
@@ -219,7 +219,7 @@ whole at every density.
 
 ## Definition of Done
 
-- Every story implemented, reviewed and closed with `/story-done`
+- Every story implemented, reviewed and closed with `/skill:story-done`
 - Every acceptance criterion of design/gdd/[file].md verified
 - Logic and Integration stories have passing tests in the test root
 - Visual/Feel and UI stories have retained screenshots in `production/qa/evidence/`
@@ -247,7 +247,7 @@ Engine: [name version]
 ## Phase 6: Close
 
 At `standard` and `full`, once Foundation and Core epics exist, add: "Foundation and
-Core epics are what the Pre-Production → Production gate needs. `/gate-check
+Core epics are what the Pre-Production → Production gate needs. `/skill:gate-check
 production` checks readiness." Never at `minimal`.
 
 Every epic's content comes from the GDDs, ADRs and architecture docs (the brief at

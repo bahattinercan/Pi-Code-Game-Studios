@@ -1,6 +1,6 @@
 # /skill:ux-design — Section 4: Section-by-Section Authoring
 
-> Part of `/ux-design`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:ux-design`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 4. Section-by-Section Authoring

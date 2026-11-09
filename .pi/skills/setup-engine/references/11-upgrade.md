@@ -1,6 +1,6 @@
 # /skill:setup-engine — Section 11: Upgrade Subcommand
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 ## 11. Upgrade Subcommand
@@ -14,7 +14,7 @@
 - Step 5 — Update VERSION.md
 - Step 6 — Post-Upgrade Reminder
 
-If invoked as `/setup-engine upgrade [old-version] [new-version]`:
+If invoked as `/skill:setup-engine upgrade [old-version] [new-version]`:
 
 ### Step 1 — Read Current Version State
 

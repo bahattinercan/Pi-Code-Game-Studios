@@ -4,7 +4,7 @@
 
 Agent: `creative-director` | Model tier: Opus | Domain: Vision, pillars, player experience
 
-**Trigger**: After the systems index is written by `/map-systems` — validates the
+**Trigger**: After the systems index is written by `/skill:map-systems` — validates the
 complete system set before GDD authoring begins
 
 **Context to pass**:

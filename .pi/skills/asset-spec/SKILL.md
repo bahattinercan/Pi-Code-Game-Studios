@@ -121,10 +121,10 @@ Write the file:
 
 After writing, tell the user:
 > "Entity inventory saved. Next steps:
-> - Run `/ux-design [screen name]` for each UI screen in the inventory
-> - Run `/asset-spec system:[name]`, `level:[name]` or `character:[name]` for each
+> - Run `/skill:ux-design [screen name]` for each UI screen in the inventory
+> - Run `/skill:asset-spec system:[name]`, `level:[name]` or `character:[name]` for each
 >   visual entity — whichever of the three the entity belongs to
-> - Or run `/asset-spec` again to work through the inventory one item at a time"
+> - Or run `/skill:asset-spec` again to work through the inventory one item at a time"
 
 ---
 
@@ -156,14 +156,14 @@ content mode) and Read those ranges with offset and limit.
 
 ### Required reads:
 - **Art bible**: Read `design/art/art-bible.md` — fail if missing:
-  > "No art bible found. Run `/art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."
+  > "No art bible found. Run `/skill:art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."
 
   **Exception — the minimal path.** If there is no art bible but
   `design/game-brief.md` exists (at `rigor: minimal` no art bible is required),
   do not fail: anchor the specs in the brief's **Art & audio direction** line,
   and say so at the top of the output — "Anchored to the brief's one-line art
   direction; there is no art bible, so colour, shape and asset-standard rules
-  below are proposals, not constraints." Offer `/art-bible` once, as optional.
+  below are proposals, not constraints." Offer `/skill:art-bible` once, as optional.
   The written spec follows the same anchor: its header reads
   `> **Art direction**: design/game-brief.md (Art & audio direction) — no art bible`
   in place of the `> **Art Bible**:` line, each asset carries
@@ -175,7 +175,7 @@ content mode) and Read those ranges with offset and limit.
 
 ### Source doc reads (by target type):
 - **system**: Read `design/gdd/[target-name].md`. Extract the **Visual/Audio Requirements** section. If it doesn't exist or reads `[To be designed]`:
-  > "The Visual/Audio section of `design/gdd/[target-name].md` is empty. Either run `/design-system [target-name]` to complete the GDD, or describe the visual needs manually."
+  > "The Visual/Audio section of `design/gdd/[target-name].md` is empty. Either run `/skill:design-system [target-name]` to complete the GDD, or describe the visual needs manually."
   Use `AskUserQuestion`: `[A] Describe needs manually` / `[B] Stop — complete the GDD first`
 - **level**: Read `design/levels/[target-name].md`. Extract art requirements, asset list, VFX needs, and the art-director's production concept specs from Step 4.
 - **character** or **entity**: Read `design/narrative/characters/[target-name].md` or search `design/narrative/` and `design/assets/entity-inventory.md` for a matching entry. Extract visual description, role, and any specified distinguishing features.
@@ -412,5 +412,5 @@ Every phase follows: **Identify → Confirm → Generate → Review → Approve 
 
 ## Recommended Next Steps
 
-- Run `/asset-spec [next-context]` to continue speccing remaining systems, levels, or characters
-- Run `/asset-audit` to validate delivered assets against the written specs and identify gaps or mismatches
+- Run `/skill:asset-spec [next-context]` to continue speccing remaining systems, levels, or characters
+- Run `/skill:asset-audit` to validate delivered assets against the written specs and identify gaps or mismatches

@@ -1,7 +1,7 @@
 # Agent Teams (experimental — opt-in)
 
 > On-demand reference. Demoted out of `coordination-rules.md` (an always-loaded
-> CLAUDE.md import) in v1.1 — read this when actually considering a team, not
+> AGENTS.md import) in v1.1 — read this when actually considering a team, not
 > on every turn.
 
 Multiple independent Claude Code *sessions* running simultaneously, coordinated

@@ -1,11 +1,11 @@
 # /skill:architecture-decision — Retrofit Mode
 
-> Part of `/architecture-decision`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:architecture-decision`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
 **If the argument starts with `retrofit` followed by a file path**
 
-(e.g., `/architecture-decision retrofit docs/architecture/adr-0001-event-system.md`):
+(e.g., `/skill:architecture-decision retrofit docs/architecture/adr-0001-event-system.md`):
 
 Enter **retrofit mode**:
 
@@ -13,14 +13,14 @@ Enter **retrofit mode**:
    in ranges by its headings (found with the Grep tool: pattern `^#`, content
    mode), since a whole-file Read over 40 KB is refused.
 2. Identify which template sections are present by scanning headings:
-   - `## Status` — **BLOCKING if missing**: `/story-readiness` cannot check ADR acceptance
+   - `## Status` — **BLOCKING if missing**: `/skill:story-readiness` cannot check ADR acceptance
    - `## ADR Dependencies` — HIGH if missing: dependency ordering breaks
    - `## Engine Compatibility` — HIGH if missing: post-cutoff risk unknown. A
      present table with no **Layer** row is HIGH too: the ADR counts as critical
      wherever it is read, so at `standard` its advisory items become blockers
    - `## GDD Requirements Addressed` — MEDIUM if missing: traceability lost
-   - `## Date` — MEDIUM if missing, and no `## Last Verified` either: `/create-stories`
-     stamps stories with it and `/dev-story` compares against it, so without it a
+   - `## Date` — MEDIUM if missing, and no `## Last Verified` either: `/skill:create-stories`
+     stamps stories with it and `/skill:dev-story` compares against it, so without it a
      story can never tell whether the ADR changed
 3. Present to the user:
    ```
@@ -58,8 +58,8 @@ Enter **retrofit mode**:
    - Append each missing section to the ADR file using the Edit tool.
    - For **Date** (counted only when there is no `## Last Verified`): append
      `## Date` with today's date — even when it is the only missing section, the
-     case `/dev-story` sends you here for — and say that it records the retrofit,
+     case `/skill:dev-story` sends you here for — and say that it records the retrofit,
      not when the decision was made.
    - **Never modify any existing section.** Only append or fill absent sections.
-6. Suggest: "Run `/architecture-review` to re-validate coverage now that this ADR
+6. Suggest: "Run `/skill:architecture-review` to re-validate coverage now that this ADR
    has its Status and Dependencies fields."

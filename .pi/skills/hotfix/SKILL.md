@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Hotfix
 
-> **Explicit invocation only**: This skill should only run when the user explicitly requests it with `/hotfix`. Do not auto-invoke based on context matching.
+> **Explicit invocation only**: This skill should only run when the user explicitly requests it with `/skill:hotfix`. Do not auto-invoke based on context matching.
 
 ## Phase 1: Assess Severity
 
-Read the bug description or ID. Assess severity on `/bug-triage`'s scale:
+Read the bug description or ID. Assess severity on `/skill:bug-triage`'s scale:
 
 - **S1 (Critical)**: Crash, data loss, or complete feature failure — the game cannot proceed (rate a security issue by that impact)
 - **S2 (High)**: Major feature broken, but the game is still playable
@@ -128,18 +128,18 @@ After approvals, determine the QA scope required before deploying the hotfix. Sp
 Ask qa-lead: **Is a full smoke check sufficient, or does this fix require a targeted team-qa pass?**
 
 Apply the verdict:
-- **Smoke check sufficient** — run `/smoke-check` against the hotfix build. If PASS or
+- **Smoke check sufficient** — run `/skill:smoke-check` against the hotfix build. If PASS or
   PASS WITH WARNINGS, proceed to Phase 6 (carry the warnings into the hotfix record).
   If **FAIL**, do not deploy: return to Phase 4 with the failing checks, get the
   revised fix approved there, implement it (Phase 4b), then re-run Phase 5's
   approvals — qa-tester's regression run among them — and this QA step. A hotfix
   that breaks the smoke suite is a second incident, not a fix.
-- **Targeted QA pass required** — run `/team-qa feature: [affected-system]` scoped to the changed system only. If QA returns APPROVED or APPROVED WITH CONDITIONS, proceed to Phase 6; if NOT APPROVED or BLOCKED, handle it as a smoke-check FAIL above.
-- **Full QA required** — S1 fixes that touch core systems may require a full `/team-qa sprint`. This delays deployment but prevents a bad patch.
+- **Targeted QA pass required** — run `/skill:team-qa feature: [affected-system]` scoped to the changed system only. If QA returns APPROVED or APPROVED WITH CONDITIONS, proceed to Phase 6; if NOT APPROVED or BLOCKED, handle it as a smoke-check FAIL above.
+- **Full QA required** — S1 fixes that touch core systems may require a full `/skill:team-qa sprint`. This delays deployment but prevents a bad patch.
 
 **If the QA step returns `NOT ASSESSED`, the gate did not run — treat it as unmet,
-not as met.** `/smoke-check` returns it when the suite never executed and
-`/team-qa` when a cycle produced no executed evidence. **A NOT ASSESSED result is
+not as met.** `/skill:smoke-check` returns it when the suite never executed and
+`/skill:team-qa` when a cycle produced no executed evidence. **A NOT ASSESSED result is
 not a pass** — from either skill — and under time pressure the permissive reading
 is the one that will feel reasonable,
 which is exactly why it is written down here. Either obtain the missing result —
@@ -184,7 +184,7 @@ hotfix record's Status stays IN PROGRESS, and say so.
 > tagged from `main`, which is the single most common hotfix regression.
 
 Update the original bug file if one exists — find it in `production/qa/bugs/`
-by its number, as `/bug-report verify` does. Ask first: "May I update
+by its number, as `/skill:bug-report verify` does. Ask first: "May I update
 `production/qa/bugs/[bug file]` with the fix record below and set its Status to
 `Fixed — Pending Verification`?"
 
@@ -232,16 +232,16 @@ Next: /skill:bug-report verify [BUG-ID] after deploy to confirm resolution
 
 ## Phase 7: Post-Deploy Verification
 
-After deploying, run `/bug-report verify [BUG-ID]` to confirm the fix resolved the issue in the deployed build.
+After deploying, run `/skill:bug-report verify [BUG-ID]` to confirm the fix resolved the issue in the deployed build.
 
-If VERIFIED FIXED: run `/bug-report close [BUG-ID]` to formally close it.
+If VERIFIED FIXED: run `/skill:bug-report close [BUG-ID]` to formally close it.
 If STILL PRESENT: the hotfix failed — immediately re-open, assess rollback, and escalate.
-If CANNOT VERIFY: the fix is unconfirmed — do not close the bug; play its reproduction steps in the deployed build, then run `/bug-report verify [BUG-ID]` again and answer its manual-play question to settle it.
+If CANNOT VERIFY: the fix is unconfirmed — do not close the bug; play its reproduction steps in the deployed build, then run `/skill:bug-report verify [BUG-ID]` again and answer its manual-play question to settle it.
 
-Schedule a post-incident review within 48 hours. `/retrospective` reviews a
+Schedule a post-incident review within 48 hours. `/skill:retrospective` reviews a
 sprint or milestone, not an incident: record the review with
 `.pi/docs/templates/incident-response.md`, and raise its lessons at the next
-`/retrospective`.
+`/skill:retrospective`.
 
 Use `AskUserQuestion`:
 - Prompt: "Hotfix complete. What's the next step?"

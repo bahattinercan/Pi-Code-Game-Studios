@@ -43,7 +43,7 @@ Read `design/gdd/game-concept.md` — or `design/game-brief.md`, the one-page br
 that replaces it at `rigor: minimal`. Read it by section: find the headings you need
 with the Grep tool (pattern `^#`, content mode) and Read those ranges with offset
 and limit. If neither exists, fail with:
-> "No game concept found. Run `/brainstorm` first — the art bible is authored after the game concept is approved."
+> "No game concept found. Run `/skill:brainstorm` first — the art bible is authored after the game concept is approved."
 
 Extract from game-concept.md (from the brief: working title, pitch, "Who it's for /
 what they feel" line and "Art & audio direction" line — it has no pillars, Visual
@@ -351,8 +351,8 @@ Before presenting next steps, check project state:
 
 Use `AskUserQuestion` for next steps. Only include options that are genuinely next based on the state check above:
 
-At `workflow: minimal`, the pool is `/create-stories` (no stories yet) or
-`/dev-story [next story]`, plus Stop here — the GDD/architecture pool below is
+At `workflow: minimal`, the pool is `/skill:create-stories` (no stories yet) or
+`/skill:dev-story [next story]`, plus Stop here — the GDD/architecture pool below is
 `standard`/`full` only.
 
 **Option pool — include only if not already done:**
@@ -367,7 +367,7 @@ At `workflow: minimal`, the pool is `/create-stories` (no stories yet) or
 
 Assign letters A, B, C… only to the options actually included. Mark the most logical pipeline-advancing option as `(recommended)`.
 
-> **Always include** (`standard`/`full` only) `/create-architecture` and Stop here as options — these are always valid next steps once the art bible is complete.
+> **Always include** (`standard`/`full` only) `/skill:create-architecture` and Stop here as options — these are always valid next steps once the art bible is complete.
 
 ---
 
@@ -394,8 +394,8 @@ Every section follows: **Question → Options → Decision → Draft (from art-d
 ## Recommended Next Steps
 
 After the art bible is approved:
-- Run `/map-systems` to decompose the concept into game systems before authoring GDDs
-- Run `/setup-engine` if the engine is not yet configured (asset standards may need revisiting after engine selection)
-- Run `/design-system [first-system]` to start authoring per-system GDDs
-- Run `/consistency-check` once GDDs exist to validate them against the art bible's visual rules
-- Run `/create-architecture` to produce the master architecture document
+- Run `/skill:map-systems` to decompose the concept into game systems before authoring GDDs
+- Run `/skill:setup-engine` if the engine is not yet configured (asset standards may need revisiting after engine selection)
+- Run `/skill:design-system [first-system]` to start authoring per-system GDDs
+- Run `/skill:consistency-check` once GDDs exist to validate them against the art bible's visual rules
+- Run `/skill:create-architecture` to produce the master architecture document

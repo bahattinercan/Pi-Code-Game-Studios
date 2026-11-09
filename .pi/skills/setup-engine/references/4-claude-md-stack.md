@@ -1,9 +1,9 @@
-# /skill:setup-engine — Section 4: Update CLAUDE.md Technology Stack
+# /skill:setup-engine — Section 4: Update AGENTS.md Technology Stack
 
-> Part of `/setup-engine`. `SKILL.md` names when to read this file; the settings it
+> Part of `/skill:setup-engine`. `SKILL.md` names when to read this file; the settings it
 > resolved and the rules under its later headings still apply here.
 
-## 4. Update CLAUDE.md Technology Stack
+## 4. Update AGENTS.md Technology Stack
 
 ### Language Selection (Godot only)
 
@@ -17,7 +17,7 @@ If Godot was chosen, ask the user which language to use **before** showing the p
 >
 > Which will this project primarily use?"
 
-Record the choice. It determines the CLAUDE.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
+Record the choice. It determines the AGENTS.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
 
 ### Primary Language (Unreal)
 
@@ -28,8 +28,8 @@ preference. The answer sets `engine.language` (`"C++"` or `"Blueprint"`).
 
 ---
 
-Read `CLAUDE.md` and show the user the proposed Technology Stack changes.
-Ask: "May I write these engine settings to `CLAUDE.md`?"
+Read `AGENTS.md` and show the user the proposed Technology Stack changes.
+Ask: "May I write these engine settings to `AGENTS.md`?"
 
 Wait for confirmation before making any edits.
 
@@ -57,7 +57,7 @@ The Language line follows the primary-language answer above: the first form for
 
 ### Engine reference import
 
-In the same CLAUDE.md write, set the **Engine Version Reference** import to the
+In the same AGENTS.md write, set the **Engine Version Reference** import to the
 chosen engine. Find the line marked `ENGINE-REFERENCE-IMPORT` (an
 `@docs/engine-reference/<engine>/VERSION.md` line under its comment) and Edit it
 to point at the configured engine:
@@ -66,7 +66,7 @@ to point at the configured engine:
 - Unreal → `@docs/engine-reference/unreal/VERSION.md`
 
 This keeps a Unity or Unreal project from loading the Godot reference in every
-session. It is idempotent — re-running `/setup-engine` for a different
+session. It is idempotent — re-running `/skill:setup-engine` for a different
 engine rewrites the same line. (The target `docs/engine-reference/<engine>/`
 directory is created in Section 7, Populate Engine Reference Docs, if it does not yet exist.)
 

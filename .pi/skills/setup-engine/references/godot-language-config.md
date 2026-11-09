@@ -1,21 +1,21 @@
 # Godot Language Configuration — setup-engine reference
 
-Lookup tables for `/setup-engine`, split out of the skill body so they cost
+Lookup tables for `/skill:setup-engine`, split out of the skill body so they cost
 nothing on invocations that are not Godot. Read this file only when the
 chosen engine is Godot, and then only the subsection for the chosen language.
 
-Referenced from Sections 4, 5 and 5.5 of `/setup-engine` by the names A1, A2
+Referenced from Sections 4, 5 and 5.5 of `/skill:setup-engine` by the names A1, A2
 and A3.
 
 **In this file:**
 
-- A1. CLAUDE.md Technology Stack Templates
+- A1. AGENTS.md Technology Stack Templates
 - A2. Naming Conventions
 - A3. Engine Specialists Routing
 
 ---
 
-### A1. CLAUDE.md Technology Stack Templates
+### A1. AGENTS.md Technology Stack Templates
 
 **GDScript:**
 ```markdown
